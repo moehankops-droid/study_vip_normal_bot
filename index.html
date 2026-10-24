@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <title>Grade 8 English Study Bot - VIP Normal</title>
+  <!-- Telegram Web App JS SDK -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <style>
     :root {
       --bg: #0d0f12;
@@ -508,10 +510,15 @@
 
   <!-- JAVASCRIPT LOGIC -->
   <script>
+    // Telegram Web App Initialization
+    if (window.Telegram && window.Telegram.WebApp) {
+      window.Telegram.WebApp.ready();
+      window.Telegram.WebApp.expand();
+    }
+
     // Global State Variables
     let userXP = parseInt(localStorage.getItem('vip_normal_xp')) || 150;
     let userName = localStorage.getItem('vip_normal_name') || 'Moe Han';
-    let userLevel = parseInt(localStorage.getItem('vip_normal_lvl')) || 1;
     let winCount = parseInt(localStorage.getItem('vip_normal_wins')) || 0;
     let loseCount = parseInt(localStorage.getItem('vip_normal_loses')) || 0;
     
@@ -522,7 +529,6 @@
     // Initial UI Binding
     document.getElementById('xp').innerText = userXP;
     document.getElementById('user-name-display').innerText = userName;
-    document.getElementById('user-lvl-display').innerText = 'Lv. ' + userLevel;
     document.getElementById('win-count').innerText = winCount + 'W';
     document.getElementById('lose-count').innerText = loseCount + 'L';
 
@@ -560,185 +566,7 @@
       }
     }
 
-    // VIP STATUS CHECKER
-    function checkVipStatus() {
-      let badge = document.getElementById('vip-status-badge');
-      let btn = document.getElementById('buy-vip-btn');
-          // VIP STATUS CHECKER
-    function checkVipStatus() {
-      let badge = document.getElementById('vip-status-badge');
-      let btn = document.getElementById('buy-vip-btn');
-      let vipSection = document.getElementById('vip-content-section');
-      let expiryText = document.getElementById('vip-expiry-text');
-      let tierDisplay = document.getElementById('user-tier-display');
-
-      isVip = Date.now() < vipExpiryTime;
-
-      if (isVip) {
-        let remainingDays = Math.ceil((vipExpiryTime - Date.now()) / (1000 * 60 * 60 * 24));
-        if (badge) {
-          badge.innerText = '✨ VIP ACTIVE';
-          badge.style.background = 'rgba(46,213,115,0.1)';
-          badge.style.border = '1px solid var(--success)';
-          badge.style.color = 'var(--success)';
-        }
-        if (tierDisplay) {
-          tierDisplay.innerText = '👑 VIP Normal (1 Mo)';
-          tierDisplay.style.color = 'var(--success)';
-        }
-        if (btn) {
-          btn.innerText = '✅ VIP သက်တမ်းရှိနေပါပြီ';
-          btn.disabled = true;
-          btn.style.opacity = '0.7';
-        }
-        if (vipSection) {
-          vipSection.style.display = 'block';
-        }
-        if (expiryText) {
-          expiryText.innerText = `⏳ ကျန်ရှိသည့် သက်တမ်း: ရက်ပေါင်း ${remainingDays} ရက်`;
-        }
-      } else {
-        if (badge) {
-          badge.innerText = '🔒 Locked';
-          badge.style.background = 'rgba(255,255,255,0.05)';
-          badge.style.border = '1px solid var(--text-sub)';
-          badge.style.color = 'var(--text-sub)';
-        }
-        if (tierDisplay) {
-          tierDisplay.innerText = '🔒 Normal Mode';
-          tierDisplay.style.color = 'var(--warning)';
-        }
-        if (btn) {
-          btn.innerText = '⭐ 500 XP ဖြင့် 1 လစာ VIP ဝယ်မည်';
-          btn.disabled = false;
-          btn.style.opacity = '1';
-        }
-        if (vipSection) {
-          vipSection.style.display = 'none';
-        }
-        if (expiryText) {
-          expiryText.innerText = '';
-        }
-      }
-    }
-
-    function buyVipMode() {
-      const vipCost = 500;
-      
-      if (userXP < vipCost) {
-        alert(`❌ XP မလုံလောက်ပါ! VIP 1 လစာ ဝယ်ရန် ${vipCost} XP လိုအပ်ပါသည်။ (လက်ရှိ XP: ${userXP} XP)`);
-        return;
-      }
-
-      if (confirm(`⭐ 500 XP ဖြင့် 1 လစာ (30 ရက်) VIP Normal Mode ကို ဝယ်ယူမှာ သေချာပါသလား?`)) {
-        userXP -= vipCost;
-        
-        const thirtyDaysInMillis = 30 * 24 * 60 * 60 * 1000;
-        vipExpiryTime = Date.now() + thirtyDaysInMillis;
-        isVip = true;
-        
-        localStorage.setItem('vip_normal_xp', userXP);
-        localStorage.setItem('vip_normal_expiry', vipExpiryTime);
-        
-        document.getElementById('xp').innerText = userXP;
-        checkVipStatus();
-        updateTelegramShareLink();
-        
-        alert("🎉 ဂုဏ်ယူပါတယ်! VIP Normal Mode ကို အောင်မြင်စွာ ဝယ်ယူပြီးပါပြီ။");
-      }
-    }
-
-    // Telegram Share Link Builder
-    function updateTelegramShareLink() {
-      let statusText = isVip ? '👑 VIP Normal (1 Mo)' : '📚 Normal Student';
-      const shareText = encodeURIComponent(`🔥 Grade 8 VIP Normal Bot Result!\n👤 အမည်: ${userName}\n⭐ XP: ${userXP}\n🏆 Status: ${statusText}\n\n--- Moe Han's Study App ---`);
-      let tgBtn = document.getElementById('tg-share-btn');
-      if(tgBtn) {
-        tgBtn.href = `https://t.me/share/url?url=&text=${shareText}`;
-      }
-    }
-
-    // Build Level Grids
-    function buildLevelGrids() {
-      let tGrid = document.getElementById('tense-level-grid');
-      if(tGrid) {
-        tGrid.innerHTML = '';
-        for(let i=1; i<=20; i++) {
-          tGrid.innerHTML += `<div class="level-btn" onclick="alert('Tense Level ${i}')">Lv.${i}</div>`;
-        }
-      }
-      let vGrid = document.getElementById('verb-level-grid');
-      if(vGrid) {
-        vGrid.innerHTML = '';
-        for(let i=1; i<=30; i++) {
-          vGrid.innerHTML += `<div class="level-btn" onclick="alert('Verb Level ${i}')">Lv.${i}</div>`;
-        }
-      }
-    }
-
-    // Challenge Timer & Logic
-    let timerInterval;
-    function startEssayChallenge() {
-      let topic = document.getElementById('opponent-given-topic').value.trim();
-      if(!topic) {
-        alert("ကျေးဇူးပြု၍ ခေါင်းစဉ်တစ်ခု ထည့်သွင်းပါ။");
-        return;
-      }
-      document.getElementById('display-topic').innerText = topic;
-      document.getElementById('topic-setup-box').style.display = 'none';
-      document.getElementById('essay-writing-box').style.display = 'block';
-      
-      let timeLeft = 420;
-      clearInterval(timerInterval);
-      timerInterval = setInterval(() => {
-        let m = Math.floor(timeLeft / 60);
-        let s = timeLeft % 60;
-        document.getElementById('timer-display').innerText = `⏱️ ${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
-        if(timeLeft <= 0) {
-          clearInterval(timerInterval);
-          submitEssay();
-        }
-        timeLeft--;
-      }, 1000);
-    }
-
-    function submitEssay() {
-      clearInterval(timerInterval);
-      let text = document.getElementById('essay-input').value.trim();
-      let words = text ? text.split(/\s+/).filter(Boolean).length : 0;
-      
-      if (words < 30) {
-        alert(`❌ စာလုံးရေ အလွန်နည်းနေပါသည်! (လက်ရှိ: ${words} လုံး)\nအနည်းဆုံး စာလုံးရေ ၃၀ ကျော် ရေးသားရပါမည်။ ယခုအကြိမ် ရှုံးနိမ့် (Lose) ೆಂದು သတ်မှတ်ပါသည်။`);
-        
-        loseCount++;
-        localStorage.setItem('vip_normal_loses', loseCount);
-        document.getElementById('lose-count').innerText = loseCount + 'L';
-        
-        document.getElementById('essay-writing-box').style.display = 'none';
-        document.getElementById('topic-setup-box').style.display = 'block';
-        return;
-      }
-      
-      let earnedXP = words >= 80 ? 100 : 50;
-      userXP += earnedXP;
-      winCount++;
-      
-      localStorage.setItem('vip_normal_xp', userXP);
-      localStorage.setItem('vip_normal_wins', winCount);
-      
-      document.getElementById('xp').innerText = userXP;
-      document.getElementById('win-count').innerText = winCount + 'W';
-      
-      document.getElementById('res-word-count').innerText = `📝 စာလုံးရေ: ${words} လုံး (အောင်မြင်သည်)`;
-      document.getElementById('res-vocab-count').innerText = `🌟 Grade 8 Vocab: ${Math.floor(words/12)} လုံး သုံးထားသည်`;
-      document.getElementById('res-xp-earned').innerText = `🎉 ရရှိသော XP: +${earnedXP} XP`;
-      
-      document.getElementById('essay-writing-box').style.display = 'none';
-      document.getElementById('essay-result-box').style.display = 'block';
-      updateTelegramShareLink();
-    }
-
-    function resetChallenge() {
+        function resetChallenge() {
       document.getElementById('opponent-given-topic').value = '';
       document.getElementById('essay-input').value = '';
       document.getElementById('essay-result-box').style.display = 'none';
@@ -752,5 +580,6 @@
       updateTelegramShareLink();
     });
   </script>
+
 </body>
 </html>
