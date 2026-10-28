@@ -33,19 +33,19 @@
             display: flex;
             justify-content: space-around;
             background: #252525;
-            padding: 8px;
+            padding: 6px;
             border-radius: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             border: 1px solid #333;
         }
         .nav-tab {
             background: none;
             border: none;
             color: #aaa;
-            font-size: 14px;
+            font-size: 12px;
             font-weight: bold;
             cursor: pointer;
-            padding: 8px 12px;
+            padding: 6px 8px;
             border-radius: 8px;
             transition: 0.2s;
         }
@@ -113,7 +113,7 @@
             border: 1px solid #444;
         }
         
-        .start-btn, .action-btn, .finish-btn, .edit-btn, .tg-btn, .next-btn { 
+        .start-btn, .action-btn, .finish-btn, .edit-btn, .tg-btn, .next-btn, .shop-btn, .tour-btn { 
             background: #4caf50; 
             color: white; 
             border: none; 
@@ -135,6 +135,32 @@
         .tg-btn:hover { background: #0077b5; }
         .next-btn { background: #2196f3; display: none; }
         .next-btn:hover { background: #1976d2; }
+
+        /* Shop & Tournament Cards Style */
+        .shop-card, .tour-card {
+            background: #252525;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: 10px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .shop-info h4, .tour-info h4 { margin: 0 0 4px 0; color: #fff; font-size: 14px; }
+        .shop-info p, .tour-info p { margin: 0; color: #aaa; font-size: 12px; }
+        .buy-btn {
+            background: #ff9800;
+            color: #121212;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 13px;
+        }
+        .buy-btn:hover { background: #f57c00; }
 
         .question-box { 
             font-size: 17px; 
@@ -213,7 +239,6 @@
         }
         .leaderboard-item:last-child { border-bottom: none; }
 
-        /* Special Weekly Champion Glowing Banner */
         .weekly-banner {
             background: linear-gradient(135deg, #ffd700, #ff8c00);
             color: #121212;
@@ -238,10 +263,11 @@
     <div class="nav-tabs">
         <button class="nav-tab active" onclick="switchTab('home-tab')">🏠 ပင်မ</button>
         <button class="nav-tab" onclick="switchTab('quiz-tab')">📝 Quiz</button>
+        <button class="nav-tab" onclick="switchTab('shop-tab')">🛒 Shop & Tour</button>
         <button class="nav-tab" onclick="switchTab('leaderboard-tab')">🏆 Leaderboard</button>
     </div>
 
-    <!-- Home Tab (Modern Dashboard Design) -->
+    <!-- Home Tab -->
     <div id="home-tab" class="tab-content active">
         <div class="home-hero">
             <h2>English Grammar Hub</h2>
@@ -279,6 +305,41 @@
         </div>
     </div>
 
+    <!-- Shop & Tournament Tab -->
+    <div id="shop-tab" class="tab-content">
+        <h3 style="color: #ff9800; margin-top: 0; font-size: 16px;">🏆 Sunday Tournament</h3>
+        <div class="tour-card" style="background: linear-gradient(135deg, #2e7d32, #1b5e20); border: 1px solid #4caf50;">
+            <div class="tour-info">
+                <h4 style="color: #fff;">တနင်္ဂနွေနေ့ ပြိုင်ပွဲကြီး</h4>
+                <p style="color: #c8e6c9;">ဝင်ကြေး: 🪙 2500 | နိုင်သူဆု: 🪙 10000</p>
+            </div>
+            <button class="buy-btn" style="background: #ffd700;" onclick="joinTournament()">ဝင်မည် 🚀</button>
+        </div>
+
+        <h3 style="color: #ff9800; font-size: 16px; margin-top: 20px;">🛒 Item Shop (ပစ္စည်းဆိုင်)</h3>
+        <div class="shop-card">
+            <div class="shop-info">
+                <h4>⚡ Streak Shield</h4>
+                <p>Streak မပြတ်အောင် ကာကွယ်မည်</p>
+            </div>
+            <button class="buy-btn" onclick="buyItem('Streak Shield', 1000)">🪙 1000</button>
+        </div>
+        <div class="shop-card">
+            <div class="shop-info">
+                <h4>🎟️ Tournament Pass</h4>
+                <p>တနင်္ဂနွေပြိုင်ပွဲ အခမဲ့ဝင်လက်မှတ်</p>
+            </div>
+            <button class="buy-btn" onclick="buyItem('Tournament Pass', 2000)">🪙 2000</button>
+        </div>
+        <div class="shop-card">
+            <div class="shop-info">
+                <h4>💡 Answer Hint</h4>
+                <p>မေးခွန်းအဖြေ အရိပ်အမြွက်</p>
+            </div>
+            <button class="buy-btn" onclick="buyItem('Answer Hint', 500)">🪙 500</button>
+        </div>
+    </div>
+
     <!-- Leaderboard Tab -->
     <div id="leaderboard-tab" class="tab-content">
         <div id="weekly-winner-container"></div>
@@ -290,7 +351,6 @@
             </div>
         </div>
         
-        <!-- Telegram Share Button -->
         <a id="share-tg-btn" href="#" target="_blank" class="tg-btn">📤 Telegram သို့ ရမှတ်မျှဝေရန်</a>
     </div>
 </div>
@@ -367,7 +427,6 @@
 
           scoresList.sort((a, b) => b.score - a.score);
 
-          // Special Weekly Champion Banner
           const topWinner = scoresList[0];
           winnerContainer.innerHTML = `
               <div class="weekly-banner">
@@ -408,7 +467,6 @@
 <script>
 let playerName = "";
 let score = 0;
-// LocalStorage မှ Coins ကို အမြဲဦးစားပေးဖတ်မည် (မပျောက်စေရန်)
 let money = parseInt(localStorage.getItem('quizCoins')) || 0;
 let streak = 0;
 let currentQuiz = null;
@@ -428,8 +486,9 @@ function switchTab(tabId) {
     
     if(tabId === 'home-tab') document.querySelectorAll('.nav-tab')[0].classList.add('active');
     if(tabId === 'quiz-tab') document.querySelectorAll('.nav-tab')[1].classList.add('active');
+    if(tabId === 'shop-tab') document.querySelectorAll('.nav-tab')[2].classList.add('active');
     if(tabId === 'leaderboard-tab') {
-        document.querySelectorAll('.nav-tab')[2].classList.add('active');
+        document.querySelectorAll('.nav-tab')[3].classList.add('active');
         if (typeof window.loadLeaderboardFromFirebase === 'function') {
             window.loadLeaderboardFromFirebase();
         }
@@ -517,8 +576,6 @@ function updateHeader() {
     document.getElementById("score-count").innerText = score;
     document.getElementById("money-count").innerText = money;
     document.getElementById("streak-count").innerText = streak;
-    
-    // Home Dashboard Stats update
     document.getElementById("home-streak").innerText = `${streak} 🔥`;
     document.getElementById("home-money").innerText = `${money} 🪙`;
 }
@@ -577,7 +634,7 @@ function loadNextQuestion() {
 
 function checkAnswer(button, selected, correct, explanation) {
     const buttons = document.querySelectorAll('.options button');
-    buttons.forEach(btn => btn.disabled = true); // ခလုတ်များကို ပိတ်မည်
+    buttons.forEach(btn => btn.disabled = true);
 
     const expBox = document.getElementById("explanation-box");
     expBox.style.display = "block";
@@ -596,9 +653,7 @@ function checkAnswer(button, selected, correct, explanation) {
         
         streak += 1;
         score += streak; 
-        money += 50; // မှန်တိုင်း 50 Coins ဝင်မည်
-        
-        // Coins များကို LocalStorage တွင် ချက်ချင်းသိမ်းမည် (မပျောက်စေရန်)
+        money += 50; 
         localStorage.setItem('quizCoins', money);
     } else {
         button.style.background = "#3c1f1f";
@@ -614,10 +669,33 @@ function checkAnswer(button, selected, correct, explanation) {
 
     updateHeader();
 
-    // အလိုအလျောက် ကျော်သွားခြင်း (setTimeout) ကို လုံးဝဖြုတ်လိုက်ပြီး 
-    // Next ခလုတ်ကိုသာ ပေါ်လာစေရန် လုပ်ဆောင်ထားပါသည် (Manual Control)
     if (nextBtn) {
         nextBtn.style.display = "block";
+    }
+}
+
+/* Shop Item Purchase Logic */
+function buyItem(itemName, price) {
+    if (money >= price) {
+        money -= price;
+        localStorage.setItem('quizCoins', money);
+        updateHeader();
+        alert(`🎉 ${itemName} ကို အောင်မြင်စွာ ဝယ်ယူပြီးပါပြီ!`);
+    } else {
+        alert(`❌ Coins မလုံလောက်ပါ။ (လိုအပ်သော Coins: ${price})`);
+    }
+}
+
+/* Tournament Join Logic (2500 Fee) */
+function joinTournament() {
+    const fee = 2500;
+    if (money >= fee) {
+        money -= fee;
+        localStorage.setItem('quizCoins', money);
+        updateHeader();
+        alert(`🏆 Sunday Tournament သို့ အောင်မြင်စွာ ဝင်ရောက်စာရင်းပေးသွင်းပြီးပါပြီ! (ဝင်ကြေး 🪙 ${fee} ဖြတ်ပြီးပါပြီ)`);
+    } else {
+        alert(`❌ ဝင်ကြေး 🪙 ${fee} မလုံလောက်ပါ။ Quiz ဆော့ပြီး Coins ထပ်စုဆောင်းပါ။`);
     }
 }
 
