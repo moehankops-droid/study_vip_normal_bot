@@ -1017,33 +1017,29 @@ function buyItem(itemName, price) {
 
 function joinTournament() {
     const fee = 2500;
-    const tourContainer = document.querySelector('.tour-card');
+    
+    // VIP status နဲ့ Tournament ဝင်ထားပြီးသားလားဆိုတာကို အရင်စစ်မည်
+    isVip = localStorage.getItem('isVipUser') === 'true';
+    let isAlreadyJoined = localStorage.getItem('joinedTournament') === 'true';
+    money = parseInt(localStorage.getItem('quizCoins')) || 0;
 
-    if (isVip) {
-        alert("👑 VIP ဖြစ်သည့်အတွက် Tournament သို့ ဝင်ကြေး အခမဲ့ဖြင့် စာရင်းပေးသွင်းပြီးပါပြီ!");
+    // အကယ်၍ VIP ဖြစ်နေပြီ (သို့) အရင်ကတည်းက ဝင်ပြီးသားဆိုရင်
+    if (isVip || isAlreadyJoined) {
+        alert("👑 သင်သည် VIP ဖြစ်ပြီးသားဖြစ်သည် (သို့မဟုတ်) အရင်ကတည်းက Tournament သို့ စာရင်းပေးသွင်းပြီးဖြစ်ပါသည်။ ဝင်ကြေး အခမဲ့ဖြင့် ပါဝင်ပြီးပါပြီ!");
         return;
     }
     
+    // မဝင်ရသေးရင် ဝင်ကြေး 2500 ဖြတ်ပြီး ဝင်ခွင့်ပေးမည်
     if (money >= fee) {
         money -= fee;
         localStorage.setItem('quizCoins', money);
-        localStorage.setItem('joinedTournament', 'true'); // Tournament ဝင်ထားကြောင်း မှတ်ထားမည်
+        localStorage.setItem('joinedTournament', 'true'); // ဝင်ပြီးကြောင်း အမြဲမှတ်ထားမည်
         updateHeader();
         playSound('correct');
-
-        // ဝင်ပြီးသားဖြစ်သွားရင် မျက်နှာပြင်မှာ ပေါ်လာအောင် ပြောင်းမည်
-        tourContainer.innerHTML = `
-            <div class="tour-info">
-                <h4 style="color: #3fb950;">✅ စာရင်းပေးသွင်းပြီးပါပြီ</h4>
-                <p style="color: #d3f9d8;">အပတ်စဉ်ပြိုင်ပွဲတွင် ပါဝင်နေပါပြီ။ ဆက်လက်ကြိုးစားပါ!</p>
-            </div>
-            <b style="color: #3fb950; font-size: 14px;">Joined 🚀</b>
-        `;
-        
         alert(`🏆 Tournament သို့ အောင်မြင်စွာ ဝင်ရောက်စာရင်းပေးသွင်းပြီးပါပြီ!`);
     } else {
         playSound('wrong');
-        alert(`❌ ဝင်ကြေး 🪙 ${fee} မလုံလောက်ပါ။ Coins ထပ်စုပါ သို့မဟုတ် VIP ဝယ်ယူခြင်းဖြင့် ဝင်ကြေးအခမဲ့ ရယူနိုင်ပါသည်!`);
+        alert(`❌ ဝင်ကြေး 🪙 ${fee} မလုံလောက်ပါ။ Coins ထပ်စုပါ သို့မဟုတ် VIP ဝယ်ယူပါ။`);
     }
 }
 
