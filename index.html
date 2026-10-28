@@ -3,631 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Grammar Quiz - Global Leaderboard</title>
+    <title>English Grammar Quiz App</title>
     <style>
-        * { box-sizing: border-box; }
-        body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: #121212; 
-            color: #e0e0e0; 
-            margin: 0; 
-            padding: 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-        }
-        .container { 
-            background: #1e1e1e; 
-            padding: 20px; 
-            border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-            width: 100%; 
-            max-width: 450px; 
-            text-align: center; 
-            border: 1px solid #333;
-        }
-        
-        /* Navigation Tabs */
-        .nav-tabs {
-            display: flex;
-            justify-content: space-around;
-            background: #252525;
-            padding: 8px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            border: 1px solid #333;
-        }
-        .nav-tab {
-            background: none;
-            border: none;
-            color: #aaa;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: 0.2s;
-        }
-        .nav-tab.active {
-            background: #4caf50;
-            color: white;
-        }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        /* Modern Home Dashboard UI */
-        .home-hero {
-            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+        body {
+            font-family: 'Myanmar Standard', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
             padding: 20px;
-            border-radius: 16px;
-            margin-bottom: 15px;
-            border: 1px solid #4caf50;
-            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
-        .home-hero h2 { margin: 0 0 8px 0; color: #fff; font-size: 22px; }
-        .home-hero p { margin: 0; color: #c8e6c9; font-size: 13px; }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        .stat-card {
-            background: #252525;
-            padding: 12px;
+        .container {
+            background: white;
+            padding: 25px;
             border-radius: 12px;
-            border: 1px solid #333;
-            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 600px;
         }
-        .stat-card span { font-size: 12px; color: #aaa; display: block; }
-        .stat-card b { font-size: 16px; color: #fff; margin-top: 4px; display: block; }
-
-        .header { 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            margin-bottom: 10px; 
-            font-weight: bold; 
-            font-size: 14px; 
-            border-bottom: 1px solid #333; 
-            padding-bottom: 8px; 
-        }
-        .streak { color: #ff9800; }
-        .score { color: #4caf50; }
-        .money { color: #ffd700; }
-
-        .study-timer { 
-            background: #2a2a2a; 
-            color: #00e676; 
-            font-weight: bold; 
-            font-size: 15px; 
-            padding: 8px 12px;
-            border-radius: 10px;
-            margin-bottom: 15px;
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid #444;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
         }
-        
-        .start-btn, .action-btn, .finish-btn, .edit-btn, .tg-btn { 
-            background: #4caf50; 
-            color: white; 
-            border: none; 
-            padding: 14px 20px; 
-            border-radius: 12px; 
-            font-size: 16px; 
-            cursor: pointer; 
-            margin-top: 15px; 
-            width: 100%; 
-            font-weight: bold; 
-            transition: 0.2s; 
+        .coin-box {
+            background: #fff3cd;
+            color: #856404;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-weight: bold;
         }
-        .start-btn:hover, .action-btn:hover { background: #43a047; }
-        .finish-btn { background: #ff5252; margin-top: 10px; }
-        .finish-btn:hover { background: #e53935; }
-        .edit-btn { background: #ff9800; font-size: 14px; padding: 8px; margin-top: 5px; }
-        .edit-btn:hover { background: #f57c00; }
-        .tg-btn { background: #0088cc; margin-top: 10px; text-decoration: none; display: block; text-align: center; line-height: normal; }
-        .tg-btn:hover { background: #0077b5; }
-
-        .question-box { 
-            font-size: 17px; 
-            margin: 15px 0 20px 0; 
-            font-weight: bold; 
-            color: #ffffff; 
-            text-align: left; 
-            line-height: 1.5;
-        }
-        
-        .options { 
-            display: flex; 
-            flex-direction: column; 
-            gap: 12px; 
-            margin-top: 15px; 
-        }
-        
-        .options button { 
-            background: #2a2a2a; 
-            color: #e0e0e0; 
-            border: 1px solid #444; 
-            border-radius: 12px; 
-            width: 100%; 
-            text-align: left; 
-            padding: 14px 16px; 
-            font-size: 15px; 
-            font-weight: 600; 
-            cursor: pointer; 
-            transition: 0.2s ease;
-        }
-        .options button:hover { 
-            background: #333333; 
-            border-color: #4caf50; 
-            color: #ffffff; 
-        }
-
-        .explanation { 
-            margin-top: 15px; 
-            padding: 12px; 
-            background: #1b2e1b; 
-            border: 1px solid #2e7d32; 
-            text-align: left; 
-            font-size: 13px; 
-            color: #a5d6a7; 
-            display: none; 
-            border-radius: 10px; 
-            line-height: 1.4;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background: #2a2a2a;
-            border: 1px solid #444;
-            border-radius: 10px;
-            color: white;
-            font-size: 16px;
-            text-align: center;
-        }
-
-        .leaderboard-list {
-            text-align: left;
-            background: #252525;
-            padding: 12px 15px;
-            border-radius: 10px;
-            margin-top: 10px;
-            border: 1px solid #333;
-        }
-        .leaderboard-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #333;
-            font-size: 13px;
-        }
-        .leaderboard-item:last-child { border-bottom: none; }
-
-        /* Special Weekly Champion Glowing Banner */
-        .weekly-banner {
-            background: linear-gradient(135deg, #ffd700, #ff8c00);
-            color: #121212;
-            padding: 15px;
-            border-radius: 14px;
+        .question-box {
+            font-size: 18px;
+            font-weight: bold;
             margin-bottom: 15px;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            border: 2px solid #fff;
-            animation: glow 1.5s infinite alternate;
         }
-        @keyframes glow {
-            0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
-            100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.9); }
+        .options-list {
+            list-style: none;
+            padding: 0;
+        }
+        .option-btn {
+            display: block;
+            width: 100%;
+            padding: 10px 15px;
+            margin: 8px 0;
+            background: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+        .option-btn:hover {
+            background: #e2e6ea;
+        }
+        .result-box {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            background: #e9ecef;
+            display: none;
+        }
+        .next-btn {
+            margin-top: 15px;
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            display: none;
+            width: 100%;
+        }
+        .next-btn:hover {
+            background: #0056b3;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Tab Navigation Bar -->
-    <div class="nav-tabs">
-        <button class="nav-tab active" onclick="switchTab('home-tab')">🏠 ပင်မ</button>
-        <button class="nav-tab" onclick="switchTab('quiz-tab')">📝 Quiz</button>
-        <button class="nav-tab" onclick="switchTab('leaderboard-tab')">🏆 Leaderboard</button>
+    <div class="header">
+        <h3 id="question-number">Question 1 / 100</h3>
+        <div class="coin-box">🪙 Coins: <span id="coinDisplay">0</span></div>
     </div>
 
-    <!-- Home Tab (Modern Dashboard Design) -->
-    <div id="home-tab" class="tab-content active">
-        <div class="home-hero">
-            <h2>English Grammar Hub</h2>
-            <p>မိနစ် ၂၀ စာကျက်ချိန် • ရမှတ်နှင့် 🪙 Coins များ စုဆောင်းစို့</p>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <span>⚡ Streak အမြင့်ဆုံး</span>
-                <b id="home-streak" style="color: #ff9800;">0 🔥</b>
-            </div>
-            <div class="stat-card">
-                <span>🪙 စုစုပေါင်း Coins</span>
-                <b id="home-money" style="color: #ffd700;">0 🪙</b>
-            </div>
-        </div>
-        
-        <div id="user-setup-box">
-            <div style="text-align: left; margin-bottom: 5px; font-size: 13px; color: #ff9800;">သင့်နာမည် (Username) ထည့်ပါ:</div>
-            <input type="text" id="username-input" placeholder="ဥပမာ - Moe Han" maxlength="15">
-            <button class="start-btn" onclick="saveInitialUsername()">နာမည်သိမ်းမည်</button>
-        </div>
+    <div class="question-box" id="questionText">မေးခွန်းကို တင်နေပါသည်...</div>
+    
+    <div class="options-list" id="optionsContainer">
+        <!-- Options တွေဒီမှာပေါ်မယ် -->
     </div>
 
-    <!-- Quiz Tab -->
-    <div id="quiz-tab" class="tab-content">
-        <div class="header">
-            <span class="streak">🔥 <span id="streak-count">0</span></span>
-            <span class="score">⭐ <span id="score-count">0</span></span>
-            <span class="money">🪙 <span id="money-count">0</span></span>
-        </div>
-        <div id="quiz-container">
-            <p style="color: #aaa; font-size: 14px; margin: 30px 0;">ပထမဆုံး 'ပင်မ' Tab မှတဆင့် Username ထည့်ပြီးမှ Quiz စတင်နိုင်ပါသည်။</p>
-            <button class="start-btn" onclick="startQuiz()">Quiz စတင်မည် (Start)</button>
-        </div>
-    </div>
+    <div class="result-box" id="resultDiv"></div>
 
-    <!-- Leaderboard Tab -->
-    <div id="leaderboard-tab" class="tab-content">
-        <div id="weekly-winner-container"></div>
-        
-        <div class="leaderboard-list">
-            <strong style="color: #ff9800; font-size: 14px;">🏆 ကမ္ဘာ့ထိပ်ဆုံး ရမှတ်များ & Coins</strong>
-            <div id="high-scores" style="margin-top: 8px;">
-                <p style="color: #777; font-size: 13px; text-align: center;">ဒေတာများ ရယူနေပါသည်...</p>
-            </div>
-        </div>
-        
-        <!-- Telegram Share Button -->
-        <a id="share-tg-btn" href="#" target="_blank" class="tg-btn">📤 Telegram သို့ ရမှတ်မျှဝေရန်</a>
-    </div>
+    <button class="next-btn" id="nextBtn" onclick="nextQuestion()">နောက်တစ်ပုဒ်သို့ (Next) ➡️</button>
 </div>
 
-<!-- Firebase SDKs -->
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getDatabase, ref, set, get, onValue, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyClv4XqqbYFcRowwpV8StLFWwbjaOx-5gQ",
-    authDomain: "study-bot-61a39.firebaseapp.com",
-    databaseURL: "https://study-bot-61a39-default-rtdb.firebaseio.com",
-    projectId: "study-bot-61a39",
-    storageBucket: "study-bot-61a39.firebasestorage.app",
-    messagingSenderId: "637683324139",
-    appId: "1:637683324139:web:db8c8af2ebeaa555f69aae"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-
-  window.saveScoreToFirebase = function(name, finalScore, finalMoney) {
-      const cleanName = name.replace(/[.#$\/\[\]]/g, "_").trim();
-      const userScoreRef = ref(db, 'scores/' + cleanName);
-
-      get(userScoreRef).then((snapshot) => {
-          let existingScore = 0;
-          if (snapshot.exists()) {
-              existingScore = snapshot.val().score || 0;
-          }
-
-          if (finalScore >= existingScore) {
-              set(userScoreRef, {
-                  name: name,
-                  score: finalScore,
-                  money: finalMoney,
-                  timestamp: Date.now()
-              }).then(() => {
-                  alert(`🎉 ဂုဏ်ယူပါတယ်! (${finalScore} မှတ် နှင့် 🪙 ${finalMoney} Coins) ကို သိမ်းဆည်းပြီးပါပြီ။`);
-                  switchTab('leaderboard-tab');
-              }).catch((error) => {
-                  alert("❌ သိမ်းဆည်းရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
-              });
-          } else {
-              alert(`ℹ️ သင်၏ ယခင်အမှတ်အမြင့်ဆုံး (${existingScore} မှတ်) ကသာ ပိုများနေပါသသည်။`);
-              switchTab('leaderboard-tab');
-          }
-      });
-  };
-
-  window.loadLeaderboardFromFirebase = function() {
-      const scoresRef = ref(db, 'scores');
-      const topScoresQuery = query(scoresRef, orderByChild('score'), limitToLast(10));
-      
-      onValue(topScoresQuery, (snapshot) => {
-          const lbContainer = document.getElementById("high-scores");
-          const winnerContainer = document.getElementById("weekly-winner-container");
-          const shareBtn = document.getElementById("share-tg-btn");
-
-          let cleanUrl = "https://moehankopsdroid.github.io/study_vip_normal_bot/";
-
-          if (!snapshot.exists()) {
-              lbContainer.innerHTML = `<p style="color: #777; font-size: 13px; text-align: center;">မှတ်တမ်း မရှိသေးပါ။</p>`;
-              winnerContainer.innerHTML = '';
-              shareBtn.href = `https://t.me/share/url?url=${encodeURIComponent(cleanUrl)}&text=${encodeURIComponent("🔥 English Grammar Quiz မှာ အမှတ်လာဆော့ကြပါဦး!")}`;
-              return;
-          }
-
-          let scoresList = [];
-          snapshot.forEach((childSnapshot) => {
-              scoresList.push(childSnapshot.val());
-          });
-
-          scoresList.sort((a, b) => b.score - a.score);
-
-          // Special Weekly Champion Banner
-          const topWinner = scoresList[0];
-          winnerContainer.innerHTML = `
-              <div class="weekly-banner">
-                  <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #333;">🌟 Weekly Champion 🌟</div>
-                  <div style="font-size: 20px; font-weight: bold; margin: 4px 0; color: #000;">👑 ${topWinner.name}</div>
-                  <div style="font-size: 14px; font-weight: bold; color: #b71c1c;">⭐ ${topWinner.score} မှတ် | 🪙 ${topWinner.money || 0} Coins</div>
-              </div>
-          `;
-
-          let html = "";
-          let myScoreText = "English Grammar Quiz Leaderboard:\n";
-          scoresList.forEach((item, index) => {
-              let isMe = (item.name === localStorage.getItem("quizUsername"));
-              let itemStyle = isMe ? "background: #2e4a2e; border: 1px solid #4caf50; border-radius: 8px; padding: 6px 10px; margin-bottom: 5px;" : "padding: 6px 10px; border-bottom: 1px solid #333;";
-              let rankIcon = index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : `#${index + 1}`;
-              let userMoney = item.money || 0;
-
-              html += `
-                  <div class="leaderboard-item" style="${itemStyle} display: flex; justify-content: space-between; align-items: center;">
-                      <span><b>${rankIcon} ${item.name}</b> ${isMe ? ' (ကိုယ့်အမှတ်)' : ''}</span>
-                      <span><b style="color: #4caf50;">${item.score}pts</b> | <b style="color: #ffd700;">🪙${userMoney}</b></span>
-                  </div>
-              `;
-              myScoreText += `${rankIcon} ${item.name}: ${item.score} မှတ် (🪙 ${userMoney} Coins)\n`;
-          });
-          lbContainer.innerHTML = html;
-
-          let shareText = encodeURIComponent(`🏆 **English Grammar Quiz Weekly Leaderboard** 🏆\n\n${myScoreText}\n🔗 ဆော့ကစားရန်: ${cleanUrl}`);
-          shareBtn.href = `https://t.me/share/url?url=${encodeURIComponent(cleanUrl)}&text=${shareText}`;
-      });
-  };
-
-  window.loadLeaderboardFromFirebase();
-</script>
-
+<!-- မေးခွန်း ၁၀၀ ပါဝင်သော Bank ကို တိုက်ရည်ချိတ်ဆက်ရန် သို့မဟုတ် ထည့်ရန် -->
 <script src="questions.js"></script>
 
 <script>
-let playerName = "";
-let score = 0;
-let money = 0;
-let streak = 0;
-let currentQuiz = null;
-let studyTimer = null;
-let totalSeconds = 20 * 60;
+    // Coins စနစ် (သီးသန့်ခွဲထုတ်ထားပြီး LocalStorage ဖြင့် အမြဲသိမ်းမည်)
+    let userCoins = parseInt(localStorage.getItem('userCoins')) || 0;
 
-window.onload = function() {
-    checkSavedUser();
-};
+    function updateCoinsUI() {
+        const coinDisplay = document.getElementById('coinDisplay');
+        if (coinDisplay) {
+            coinDisplay.innerText = userCoins;
+        }
+    }
 
-function switchTab(tabId) {
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
-    
-    document.getElementById(tabId).classList.add('active');
-    
-    if(tabId === 'home-tab') document.querySelectorAll('.nav-tab')[0].classList.add('active');
-    if(tabId === 'quiz-tab') document.querySelectorAll('.nav-tab')[1].classList.add('active');
-    if(tabId === 'leaderboard-tab') document.querySelectorAll('.nav-tab')[2].classList.add('active');
-}
+    function addCoins(amount) {
+        userCoins += amount;
+        localStorage.setItem('userCoins', userCoins);
+        updateCoinsUI();
+    }
 
-function checkSavedUser() {
-    const savedUser = localStorage.getItem("quizUsername");
-    const lastChangeTime = localStorage.getItem("quizNameChangeTime");
-    const now = Date.now();
-    const oneWeek = 7 * 24 * 60 * 60 * 1000;
+    // App စတင်ချိန် Coins UI ပြရန်
+    updateCoinsUI();
 
-    const setupBox = document.getElementById("user-setup-box");
+    // Quiz Logic
+    let currentQuestionIndex = 0;
+    let score = 0;
 
-    if (savedUser) {
-        playerName = savedUser;
-        let timeLeftText = "";
-        let canChange = true;
-
-        if (lastChangeTime) {
-            let elapsed = now - parseInt(lastChangeTime);
-            if (elapsed < oneWeek) {
-                let daysLeft = Math.ceil((oneWeek - elapsed) / (1000 * 60 * 60 * 24));
-                timeLeftText = ` (နာမည်ပြောင်းရန် ${daysLeft} ရက် စောင့်ရန်လို)`;
-                canChange = false;
-            }
+    function loadQuestion(index) {
+        if (typeof questionsBank === 'undefined' || questionsBank.length === 0) {
+            document.getElementById('questionText').innerText = "မေးခွန်းများ ရှာမတွေ့ပါ။ questions.js ဖိုင်ကို စစ်ဆေးပါ။";
+            return;
         }
 
-        setupBox.innerHTML = `
-            <div style="background: #2a2a2a; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #444;">
-                <p style="margin: 0; font-size: 13px; color: #aaa;">အသုံးပြုနေသော နာမည်:</p>
-                <b style="font-size: 18px; color: #4caf50;">${playerName}</b>
-            </div>
-            <button class="start-btn" onclick="switchTab('quiz-tab'); startQuiz();">Quiz စတင်ဆော့မည်</button>
-            <button class="edit-btn" onclick="requestNameChange(${canChange})">နာမည်ပြောင်းရန်${timeLeftText}</button>
-        `;
-    }
-}
-
-function requestNameChange(canChange) {
-    if (!canChange) {
-        alert("⏳ နာမည်ပြောင်းရန်အတွက် ၁ ပတ် (7 Days) ပြည့်ရန် လိုအပ်ပါသေးသည်။");
-        return;
-    }
-
-    const setupBox = document.getElementById("user-setup-box");
-    setupBox.innerHTML = `
-        <div style="text-align: left; margin-bottom: 5px; font-size: 13px; color: #ff9800;">နာမည်အသစ် ထည့်ပါ (၁ ပတ်မှ ၁ ကြိမ်သာ ပြောင်းနိုင်သည်):</div>
-        <input type="text" id="username-input" placeholder="နာမည်အသစ်..." maxlength="15" value="${playerName}">
-        <button class="start-btn" onclick="saveInitialUsername()">နာမည်သိမ်းမည်</button>
-    `;
-}
-
-function saveInitialUsername() {
-    const nameInput = document.getElementById("username-input").value.trim();
-    if (!nameInput) {
-        alert("ကျေးဇူးပြု၍ သင့်နာမည် (Username) ကို အရင်ထည့်ပါ။");
-        return;
-    }
-    playerName = nameInput;
-    localStorage.setItem("quizUsername", playerName);
-    localStorage.setItem("quizNameChangeTime", Date.now().toString());
-    
-    alert("✅ နာမည်ကို အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ!");
-    checkSavedUser();
-    switchTab('quiz-tab');
-    startQuiz();
-}
-
-function startQuiz() {
-    if(!playerName) {
-        alert("ကျေးဇူးပြု၍ ပထမဆုံး 'ပင်မ' Tab တွင် နာမည်အရင်ထည့်ပါ။");
-        switchTab('home-tab');
-        return;
-    }
-    score = 0;
-    money = 0;
-    streak = 0;
-    totalSeconds = 20 * 60;
-    updateHeader();
-    startStudySessionTimer();
-    loadNextQuestion();
-}
-
-function updateHeader() {
-    document.getElementById("score-count").innerText = score;
-    document.getElementById("money-count").innerText = money;
-    document.getElementById("streak-count").innerText = streak;
-    
-    // Home Dashboard Stats update
-    document.getElementById("home-streak").innerText = `${streak} 🔥`;
-    document.getElementById("home-money").innerText = `${money} 🪙`;
-}
-
-function startStudySessionTimer() {
-    if(studyTimer) clearInterval(studyTimer);
-
-    studyTimer = setInterval(() => {
-        totalSeconds--;
-        let mins = Math.floor(totalSeconds / 60);
-        let secs = totalSeconds % 60;
+        const q = questionsBank[index];
+        document.getElementById('question-number').innerText = `Question ${index + 1} / ${questionsBank.length}`;
+        document.getElementById('questionText').innerText = q.question;
         
-        let timerDisplay = document.getElementById("session-timer");
-        if(timerDisplay) {
-            timerDisplay.innerText = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }
+        const optionsContainer = document.getElementById('optionsContainer');
+        optionsContainer.innerHTML = '';
+        
+        document.getElementById('resultDiv').style.display = 'none';
+        document.getElementById('nextBtn').style.display = 'none';
 
-        if (totalSeconds <= 0) {
-            clearInterval(studyTimer);
-            endGame("⏳ မိနစ် ၂၀ ပြည့်သွားပါပြီ!");
-        }
-    }, 1000);
-}
-
-function loadNextQuestion() {
-    if (typeof questionsBank === 'undefined' || questionsBank.length === 0) {
-        document.getElementById("quiz-container").innerHTML = "<p style='color:#f44336; font-weight:bold;'>မေးခွန်းများ ရှာမတွေ့ပါ။ questions.js ဖိုင်ကို စစ်ဆေးပါ။</p>";
-        return;
+        q.options.forEach(option => {
+            const btn = document.createElement('button');
+            btn.className = 'option-btn';
+            btn.innerText = option;
+            btn.onclick = () => selectAnswer(option, q.answer, q.explanation);
+            optionsContainer.appendChild(btn);
+        });
     }
 
-    let mins = Math.floor(totalSeconds / 60);
-    let secs = totalSeconds % 60;
-    let timeFormatted = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    function selectAnswer(selectedOption, correctAnswer, explanation) {
+        const resultDiv = document.getElementById('resultDiv');
+        const nextBtn = document.getElementById('nextBtn');
+        const options = document.querySelectorAll('.option-btn');
 
-    const container = document.getElementById("quiz-container");
-    const randomIndex = Math.floor(Math.random() * questionsBank.length);
-    currentQuiz = questionsBank[randomIndex];
+        // ခလုတ်အားလုံးကို ပိတ်မည် (ထပ်မနှိပ်နိုင်အောင်)
+        options.forEach(btn => btn.disabled = true);
 
-    let optionsHTML = "";
-    currentQuiz.options.forEach(opt => {
-        optionsHTML += `<button onclick="checkAnswer(this, '${opt.replace(/'/g, "\\'")}', '${currentQuiz.answer.replace(/'/g, "\\'")}', '${currentQuiz.explanation.replace(/'/g, "\\'")}')">${opt}</button>`;
-    });
-
-    container.innerHTML = `
-        <div class="study-timer">
-            <span>⏳ ကျန်ရှိချိန်:</span>
-            <span id="session-timer" style="font-family: monospace; font-size: 16px;">${timeFormatted}</span>
-        </div>
-        <div class="question-box">${currentQuiz.question}</div>
-        <div class="options">${optionsHTML}</div>
-        <div id="explanation-box" class="explanation"></div>
-        <button class="finish-btn" onclick="endGame('🛑 လေ့ကျင့်ခန်းကို ပြီးဆုံးခဲ့ပါပြီ!')">လေ့ကျင့်ခန်း ပြီးဆုံးမည် (Finish)</button>
-    `;
-}
-
-function checkAnswer(button, selected, correct, explanation) {
-    const buttons = document.querySelectorAll('.options button');
-    buttons.forEach(btn => btn.disabled = true);
-
-    const expBox = document.getElementById("explanation-box");
-    expBox.style.display = "block";
-    expBox.innerHTML = `<strong>ရှင်းလင်းချက်:</strong> ${explanation}`;
-
-    if (selected.trim() === correct.trim()) {
-        button.style.background = "#1b2e1b";
-        button.style.color = "#a5d6a7";
-        button.style.borderColor = "#4caf50";
-        
-        expBox.style.background = "#1b2e1b";
-        expBox.style.color = "#a5d6a7";
-        expBox.style.borderColor = "#4caf50";
-        
-        streak += 1;
-        score += streak; 
-        money += 50; // မေးခွန်းတစ်ခု မှန်တိုင်း 50 Coins ဝင်မည်
-    } else {
-        button.style.background = "#3c1f1f";
-        button.style.color = "#ef9a9a";
-        button.style.borderColor = "#f44336";
-        
-        expBox.style.background = "#3c1f1f";
-        expBox.style.color = "#ef9a9a";
-        expBox.style.borderColor = "#f44336";
-        
-        streak = 0;
-    }
-
-    updateHeader();
-
-    setTimeout(() => {
-        if(totalSeconds > 0) {
-            loadNextQuestion();
-        }
-    }, 2000);
-}
-
-function endGame(message) {
-    if(studyTimer) clearInterval(studyTimer);
-    
-    const container = document.getElementById("quiz-container");
-    container.innerHTML = `
-        <h3 style="color: #ff9800;">${message}</h3>
-        <p style="font-size: 16px;">အမည်: <b style="color: #ffffff;">${playerName}</b></p>
-        <p style="font-size: 16px;">စုစုပေါင်း ရမှတ်: <b style="color: #4caf50;">${score} မှတ်</b></p>
-        <p style="font-size: 16px;">စုဆောင်းရရှိသော Coins: <b style="color: #ffd700;">🪙 ${money} Coins</b></p>
-        <button class="action-btn" id="save-btn">Cloud သို့ ရမှတ်နှင့် Coins သိမ်းမည် (Save)</button>
-        <button class="start-btn" onclick="startQuiz()" style="margin-top: 10px; background: #2196f3;">🔄 ထပ်မံဖြေဆိုရန် (Play Again)</button>
-    `;
-
-    document.getElementById("save-btn").addEventListener("click", function() {
-        if (typeof window.saveScoreToFirebase === "function") {
-            window.saveScoreToFirebase(playerName, score, money);
+        if (selectedOption === correctAnswer) {
+            resultDiv.innerHTML = `<span style="color: green; font-weight: bold;">✅ မှန်ကန်ပါသည်။</span><br><br><b>ရှင်းပြချက်:</b> ${explanation}`;
+            addCoins(10); // ဖြေမှန်လျှင် 🪙 ၁၀ coins ရမည်
+            score++;
         } else {
-            alert("❌ Firebase ချိတ်ဆက်မှု အဆင်မပြေပါ။ ခဏစောင့်ပြီး ထပ်ကြိုးစားပါ။");
+            resultDiv.innerHTML = `<span style="color: red; font-weight: bold;">❌ မှားယွင်းပါသည်။</span> (အမှန်မှာ: <b>${correctAnswer}</b> ဖြစ်ပါသည်)<br><br><b>ရှင်းပြချက်:</b> ${explanation}`;
         }
-    });
-}
+
+        resultDiv.style.display = 'block';
+        nextBtn.style.display = 'block'; // ရှင်းပြချက်ဖတ်ပြီးမှ Next နှိပ်ရန် ပေါ်လာမည် (Timer လုံးဝမပါပါ)
+    }
+
+    function nextQuestion() {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < questionsBank.length) {
+            loadQuestion(currentQuestionIndex);
+        } else {
+            document.querySelector('.container').innerHTML = `
+                <h2 style="text-align: center;">🎉 Quiz ပြီးဆုံးပါပြီ!</h2>
+                <p style="text-align: center; font-size: 18px;">ရမှတ်: <b>${score} / ${questionsBank.length}</b></p>
+                <p style="text-align: center; font-size: 18px;">စုဆောင်းရရှိသော Coins: <b>🪙 ${userCoins}</b></p>
+                <button class="next-btn" style="display: block; background: #28a745;" onclick="location.reload()">အစမှ ပြန်စမည်</button>
+            `;
+        }
+    }
+
+    // စတင် Run မည်
+    window.onload = () => {
+        loadQuestion(currentQuestionIndex);
+    };
 </script>
 
 </body>
