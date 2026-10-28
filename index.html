@@ -856,8 +856,15 @@ function checkAnswer(button, selected, correct, explanation) {
         streak += 1;
         score += streak; 
         
-        let earnedCoins = isVip ? 100 : 50;
-        if (currentQuizMode === 'speed') earnedCoins *= 1.5;
+        // Strict / Mode အလိုက် Coins တိုးပေးခြင်း (Normal: 50 | Speed: 75 | VIP ဆိုရင် ၂ ဆ)
+        let baseCoins = (currentQuizMode === 'speed') ? 75 : 50;
+        let earnedCoins = isVip ? (baseCoins * 2) : baseCoins;
+        
+        // Streak များလာရင် Bonus Coins အနည်းငယ် ထပ်ပေါင်းပေးမည်
+        if (streak > 3) {
+            earnedCoins += (streak * 5);
+        }
+
         money += Math.floor(earnedCoins); 
         localStorage.setItem('quizCoins', money);
     } else {
