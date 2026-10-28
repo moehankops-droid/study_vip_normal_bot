@@ -10,9 +10,10 @@
         h2 { color: #58cc02; }
         button { background: #58cc02; color: white; border: none; padding: 12px 20px; border-radius: 10px; font-size: 16px; cursor: pointer; margin-top: 15px; width: 100%; }
         button:hover { background: #46a302; }
-        .question-box { font-size: 18px; margin: 20px 0; font-weight: bold; color: #333; }
-        .options button { background: #fff; color: #4b4b4b; border: 2px solid #e5e5e5; margin: 8px 0; width: 100%; }
+        .question-box { font-size: 18px; margin: 15px 0; font-weight: bold; color: #333; }
+        .options button { background: #fff; color: #4b4b4b; border: 2px solid #e5e5e5; margin: 6px 0; width: 100%; }
         .options button:hover { background: #f7f7f7; border-color: #58cc02; }
+        .explanation { margin-top: 15px; padding: 10px; background: #e8f5e9; border-left: 4px solid #58cc02; text-align: left; font-size: 14px; color: #2e7d32; display: none; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -25,14 +26,12 @@
     </div>
 </div>
 
-<!-- သီးသန့်ခွဲထားသော မေးခွန်းဖိုင်ကို ချိတ်ဆက်ခြင်း -->
 <script src="questions.js"></script>
 
 <script>
 function loadNextQuestion() {
-    // questions.js ထဲက questionsBank ကို ယူသုံးမည်
     if (typeof questionsBank === 'undefined' || questionsBank.length === 0) {
-        document.getElementById("quiz-container").innerHTML = "<p style='color:red;'>မေးခွန်းများ ရှာမတွေ့ပါ သို့မဟုတ် questions.js ဖိုင် မမှန်ပါ။</p>";
+        document.getElementById("quiz-container").innerHTML = "<p style='color:red;'>မေးခွန်းများ ရှာမတွေ့ပါ။</p>";
         return;
     }
 
@@ -42,34 +41,42 @@ function loadNextQuestion() {
 
     let optionsHTML = "";
     quizData.options.forEach(opt => {
-        optionsHTML += `<button onclick="checkAnswer(this, '${opt.replace(/'/g, "\\'")}', '${quizData.answer.replace(/'/g, "\\'")}')">${opt}</button>`;
+        optionsHTML += `<button onclick="checkAnswer(this, '${opt.replace(/'/g, "\\'")}', '${quizData.answer.replace(/'/g, "\\'")}', '${quizData.explanation.replace(/'/g, "\\'")}')">${opt}</button>`;
     });
 
     container.innerHTML = `
         <div class="question-box">${quizData.question}</div>
         <div class="options">${optionsHTML}</div>
+        <div id="explanation-box" class="explanation"></div>
     `;
 }
 
-function checkAnswer(button, selected, correct) {
+function checkAnswer(button, selected, correct, explanation) {
     const buttons = document.querySelectorAll('.options button');
     buttons.forEach(btn => btn.disabled = true);
+
+    const expBox = document.getElementById("explanation-box");
+    expBox.style.display = "block";
+    expBox.innerHTML = `<strong>ရှင်းလင်းချက်:</strong> ${explanation}`;
 
     if (selected.trim() === correct.trim()) {
         button.style.background = "#58cc02";
         button.style.color = "white";
-        setTimeout(() => {
-            alert("🎉 မှန်ကန်ပါတယ် သူငယ်ချင်းရေ!");
-            loadNextQuestion();
-        }, 300);
+        expBox.style.background = "#e8f5e9";
+        expBox.style.color = "#2e7d32";
+        expBox.style.borderColor = "#58cc02";
     } else {
         button.style.background = "#ff4b4b";
         button.style.color = "white";
-        setTimeout(() => {
-            alert(`❌ မှားပါတယ်။ အဖြေမှန်ကတော့: ${correct} ပါ။`);
-            loadNextQuestion();
-        }, 300);
+        expBox.style.background = "#ffebee";
+        expBox.style.color = "#c62828";
+        expBox.style.borderColor = "#ff4b4b";
     }
+
+    // နောက်မေးခွန်းကို ၄ စက္ကန့်ကြာမှ အလိုအလျောက်ပြောင်းမည် (ရှင်းလင်းချက်ဖတ်ရန် အချိန်ပေးခြင်း)
+    setTimeout(() => {
+        loadNextQuestion();
+    }, 4000);
 }
 </script>
 
