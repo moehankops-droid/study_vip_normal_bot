@@ -1,585 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Grade 8 English Study Bot - VIP Normal</title>
-  <!-- Telegram Web App JS SDK -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    :root {
-      --bg: #0d0f12;
-      --card: #181b20;
-      --card-inner: #101216;
-      --accent: #00d2ff;
-      --accent-glow: rgba(0, 210, 255, 0.3);
-      --danger: #ff4757;
-      --success: #2ed573;
-      --warning: #ffa502;
-      --text: #ffffff;
-      --text-sub: #a0a5b5;
-    }
-
-    * {
-      box-sizing: border-box;
-      user-select: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      margin: 0;
-      padding: 0;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-
-    /* SPLASH SCREEN */
-    #splash-screen {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: #090a0f;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 9999;
-      transition: opacity 0.5s ease;
-    }
-    .splash-logo {
-      font-size: 60px;
-      margin-bottom: 15px;
-      animation: pulse 1.5s infinite alternate;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); filter: drop-shadow(0 0 5px var(--accent)); }
-      100% { transform: scale(1.1); filter: drop-shadow(0 0 20px var(--accent)); }
-    }
-
-    /* TOP APP BAR */
-    .app-header {
-      background: var(--card);
-      padding: 12px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-    }
-    .app-title {
-      font-weight: 800;
-      font-size: 16px;
-      letter-spacing: 0.5px;
-      background: linear-gradient(45deg, #ffa502, #ff7f00);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .xp-badge {
-      background: rgba(255, 165, 2, 0.1);
-      border: 1px solid var(--warning);
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-      color: var(--warning);
-    }
-
-    /* MAIN CONTENT CONTAINER */
-    .app-body {
-      flex: 1;
-      overflow-y: auto;
-      padding: 15px;
-      padding-bottom: 85px;
-    }
-
-    .tab-content {
-      display: none;
-      animation: fadeIn 0.3s ease-in-out;
-    }
-    .tab-content.active {
-      display: block;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* CARD DESIGN */
-    .card {
-      background: var(--card);
-      border-radius: 16px;
-      padding: 16px;
-      border: 1px solid rgba(255,255,255,0.05);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
-      margin-bottom: 15px;
-    }
-
-    /* PROFILE CARD */
-    .profile-card {
-      background: linear-gradient(135deg, #1f1a10, #141720);
-      border: 1px solid rgba(255, 165, 2, 0.2);
-      border-radius: 14px;
-      padding: 15px;
-      margin-bottom: 15px;
-    }
-    .profile-info {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 8px;
-    }
-    .user-name-text {
-      font-size: 18px;
-      font-weight: bold;
-      color: #fff;
-    }
-    .win-loss-badge {
-      font-size: 13px;
-      background: rgba(255, 255, 255, 0.05);
-      padding: 4px 10px;
-      border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    /* HOME MENU GRID */
-    .home-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    .home-card {
-      background: var(--card-inner);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 12px;
-      padding: 20px 10px;
-      text-align: center;
-      cursor: pointer;
-      transition: 0.2s transform, 0.2s border-color;
-    }
-    .home-card:active {
-      transform: scale(0.96);
-      border-color: var(--warning);
-    }
-    .home-card-icon {
-      font-size: 32px;
-      margin-bottom: 8px;
-    }
-    .home-card-title {
-      font-size: 15px;
-      font-weight: bold;
-      color: #fff;
-    }
-    .home-card-sub {
-      font-size: 11px;
-      color: var(--text-sub);
-      margin-top: 4px;
-    }
-
-    /* LEVEL GRID */
-    .level-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      margin-top: 15px;
-    }
-    .level-btn {
-      background: var(--card-inner);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 10px;
-      padding: 15px 5px;
-      text-align: center;
-      color: #fff;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    /* BUTTONS & INPUTS */
-    input, textarea, select {
-      width: 100%;
-      background: var(--card-inner);
-      border: 1px solid #2a2e39;
-      color: #fff;
-      padding: 12px;
-      border-radius: 10px;
-      font-size: 14px;
-      outline: none;
-      transition: 0.3s;
-    }
-    input:focus, textarea:focus {
-      border-color: var(--warning);
-      box-shadow: 0 0 10px rgba(255,165,2,0.3);
-    }
-
-    .btn {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 10px;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.2s transform;
-    }
-    .btn:active {
-      transform: scale(0.98);
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, #ff4757, #ff6b81);
-      color: white;
-    }
-    .btn-success {
-      background: linear-gradient(135deg, #2ed573, #26af5f);
-      color: white;
-    }
-    .btn-accent {
-      background: linear-gradient(135deg, #ffa502, #ff7f00);
-      color: white;
-    }
-
-    /* BOTTOM NAVIGATION BAR */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0; left: 0; right: 0;
-      height: 65px;
-      background: #121418;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      border-top: 1px solid rgba(255,255,255,0.08);
-      box-shadow: 0 -5px 20px rgba(0,0,0,0.5);
-      z-index: 1000;
-    }
-    .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      color: var(--text-sub);
-      font-size: 11px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-    .nav-icon {
-      font-size: 20px;
-      margin-bottom: 3px;
-      transition: 0.3s;
-    }
-    .nav-item.active {
-      color: var(--warning);
-    }
-    .nav-item.active .nav-icon {
-      transform: translateY(-2px);
-      filter: drop-shadow(0 0 8px var(--warning));
-    }
-
-    .guide-box {
-      background: var(--card-inner);
-      padding: 12px;
-      border-radius: 10px;
-      margin-bottom: 12px;
-      border-left: 4px solid var(--warning);
-    }
-    .guide-title {
-      font-weight: bold;
-      color: var(--warning);
-      margin-bottom: 4px;
-    }
-    .guide-desc {
-      font-size: 13px;
-      color: #ccc;
-      line-height: 1.4;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Tenses Quiz - Duolingo Style</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        h2 { color: #58cc02; }
+        button { background: #58cc02; color: white; border: none; padding: 12px 20px; border-radius: 10px; font-size: 16px; cursor: pointer; margin-top: 15px; width: 100%; }
+        button:hover { background: #46a302; }
+        .question-box { font-size: 18px; margin: 20px 0; font-weight: bold; color: #333; }
+        .options button { background: #fff; color: #4b4b4b; border: 2px solid #e5e5e5; margin: 8px 0; }
+        .options button:hover { background: #f7f7f7; border-color: #58cc02; }
+    </style>
 </head>
 <body>
 
-  <!-- SPLASH SCREEN -->
-  <div id="splash-screen">
-    <div class="splash-logo">👑</div>
-    <h2 style="margin:0; color:#fff; letter-spacing:1px;">Study Bot VIP Normal</h2>
-    <p style="color:var(--text-sub); font-size:13px; margin-top:5px;">Loading VIP Normal Bot...</p>
-  </div>
-
-  <!-- APP HEADER -->
-  <div class="app-header">
-    <div class="app-title">⭐ VIP NORMAL BOT</div>
-    <div class="xp-badge">⭐ <span id="xp">150</span> XP</div>
-  </div>
-
-  <!-- APP BODY -->
-  <div class="app-body">
-    
-    <!-- TAB 1: HOME DASHBOARD -->
-    <div id="home" class="tab-content active">
-      
-      <!-- PROFILE CARD -->
-      <div class="profile-card">
-        <div class="profile-info">
-          <div>
-            <div style="font-size: 11px; color: var(--text-sub);">USER NAME</div>
-            <div class="user-name-text" id="user-name-display">Moe Han</div>
-          </div>
-          <div>
-            <div style="font-size: 11px; color: var(--text-sub); text-align: right;">STATUS</div>
-            <div style="font-size: 15px; font-weight: bold; color: var(--warning);" id="user-tier-display">🔒 Normal Mode</div>
-          </div>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
-          <div class="win-loss-badge">
-            ⚔️ 1vs1 Stats: <span style="color: var(--success);" id="win-count">0W</span> / <span style="color: var(--danger);" id="lose-count">0L</span>
-          </div>
-          <button onclick="editUserName()" style="background: none; border: none; color: var(--warning); font-size: 12px; cursor: pointer; text-decoration: underline;">✏️ Edit Name</button>
-        </div>
-      </div>
-
-      <!-- VIP STORE CARD (500 XP ဖြင့် 1 လစာ ဝယ်ယူရန်) -->
-      <div class="card" style="border: 1px solid var(--warning); background: linear-gradient(135deg, #1f1a10, #181b20);">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-          <div>
-            <h3 style="margin: 0; color: var(--warning);">👑 VIP Student Mode (1 Month)</h3>
-            <p style="font-size: 12px; color: var(--text-sub); margin-top: 4px;">Follow Me Book Guide & Advanced Essay Access</p>
-          </div>
-          <div id="vip-status-badge" style="font-size: 12px; font-weight: bold; background: rgba(255,255,255,0.05); border: 1px solid var(--text-sub); padding: 5px 10px; border-radius: 8px; color: var(--text-sub);">
-            🔒 Locked
-          </div>
-        </div>
-        
-        <button id="buy-vip-btn" class="btn btn-accent" onclick="buyVipMode()" style="margin-top: 12px;">
-          ⭐ 500 XP ဖြင့် 1 လစာ VIP ဝယ်မည်
-        </button>
-        <div id="vip-expiry-text" style="font-size: 11px; color: var(--text-sub); margin-top: 8px; text-align: center;"></div>
-      </div>
-
-      <!-- VIP EXCLUSIVE CONTENT SECTION ("Follow Me" စာအုပ်ပါအကြောင်းအရာများ) -->
-      <div id="vip-content-section" class="card" style="display: none; border: 1px solid var(--success); background: rgba(46,213,115,0.05);">
-        <h3 style="margin-top: 0; color: var(--success);">✨ "Follow Me" (Ph.D - USA) အဆင့်မြင့် VIP အက်ဆေး & သဒ္ဒါလမ်းညွှန်</h3>
-        <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 12px;">VIP သက်တမ်းအတွင်း အပြည့်အစုံ ဖတ်ရှုနိုင်သော အဆင့်မြင့် စာအုပ်ပါ သင်ခန်းစာများ -</p>
-        
-        <div class="guide-box" style="border-left-color: var(--success);">
-          <div class="guide-title" style="color: var(--success);">📖 1. Advanced Essay Templates & Letters</div>
-          <div class="guide-desc">Environment, Science Experiments များနှင့် formal/informal letters များကို Model Paragraph ဖွဲ့စည်းပုံများဖြင့် လေ့လာရန်။</div>
-        </div>
-      </div>
-
-      <!-- MAIN FEATURE CARDS GRID -->
-      <div class="home-grid" style="margin-top: 15px;">
-        <div class="home-card" onclick="openTenseModule()">
-          <div class="home-card-icon">📘</div>
-          <div class="home-card-title">12 Tenses</div>
-          <div class="home-card-sub">ရှင်းပြချက် + 20 Levels</div>
-        </div>
-
-        <div class="home-card" onclick="openVerbModule()">
-          <div class="home-card-icon">🔤</div>
-          <div class="home-card-title">Verb Form</div>
-          <div class="home-card-sub">ရှင်းပြချက် + 30 Levels</div>
-        </div>
-      </div>
-
-      <div class="home-grid" style="margin-top: 12px;">
-        <div class="home-card" onclick="switchTab('essay-guide', document.querySelectorAll('.nav-item')[1])" style="grid-column: span 2;">
-          <div class="home-card-icon">📝</div>
-          <div class="home-card-title">Essay ရေးနည်း Guide</div>
-          <div class="home-card-sub">Grade 8 အက်ဆေး အဆင့်ဆင့် ရေးသားနည်း လမ်းညွှန်</div>
-        </div>
-      </div>
-
+<div class="card">
+    <h2>⏳ English Tenses Quiz</h2>
+    <div id="quiz-container">
+        <p>Tenses လေ့ကျင့်ခန်းများ ဖြေဆိုရန် ခလုတ်ကို နှိပ်ပါ</p>
+        <button onclick="loadAIQuestion()">မေးခွန်းအသစ် တောင်းမည်</button>
     </div>
+</div>
 
-    <!-- TAB 2: ESSAY GUIDE -->
-    <div id="essay-guide" class="tab-content">
-      <div class="card">
-        <h2 style="margin-top:0; color: var(--warning);">📝 Grade 8 Essay ရေးသားနည်း</h2>
-        <p style="color: var(--text-sub); font-size:13px; margin-bottom: 15px;">အက်ဆေးတစ်ပုဒ်ကို စနစ်တကျ မှန်ကန်စွာ ရေးသားနိုင်ရန် အခြေခံ လမ်းညွှန်ချက်များ</p>
-        
-        <div class="guide-box">
-          <div class="guide-title">1. Introduction (နိဒါန်း) ရေးသားခြင်း</div>
-          <div class="guide-desc">ခေါင်းစဉ်နှင့် ပတ်သက်သည့် အထွေထွေ အဓိပ္ပာယ် သို့မဟုတ် အရေးပါပုံကို စတင်ဖော်ပြပါ။</div>
-        </div>
+<script>
+// English Tenses သီးသန့် မေးခွန်းများ စုစည်းမှု
+const tensesQuestions = [
+    { question: "She _____ to school every day.", options: ["go", "goes", "going", "gone"], answer: "goes" },
+    { question: "They _____ football in the playground now.", options: ["play", "plays", "are playing", "played"], answer: "are playing" },
+    { question: "He has _____ his homework already.", options: ["finish", "finishes", "finished", "finishing"], answer: "finished" },
+    { question: "My mother _____ cooking when I arrived home.", options: ["is", "was", "were", "are"], answer: "was" },
+    { question: "She _____ her grandmother next week.", options: ["visit", "visited", "will visit", "visiting"], answer: "will visit" },
+    { question: "Look! The birds _____ in the sky.", options: ["fly", "flies", "are flying", "flew"], answer: "are flying" },
+    { question: "Water _____ at 100 degrees Celsius.", options: ["boil", "boils", "boiled", "boiling"], answer: "boils" },
+    { question: "I _____ English for three years.", options: ["learn", "learned", "have learned", "learning"], answer: "have learned" },
+    { question: "They _____ a new car last month.", options: ["buy", "buys", "bought", "buying"], answer: "bought" },
+    { question: "While I was reading, he _____ television.", options: ["watch", "watched", "was watching", "is watching"], answer: "was watching" }
+];
 
-        <div class="guide-box">
-          <div class="guide-title">2. Body Paragraph (စာကိုယ်) တည်ဆောက်ခြင်း</div>
-          <div class="guide-desc">အဓိက အကြောင်းအရာ 2 ချက် သို့မဟုတ် 3 ချက်ကို အသေးစိတ် ရေးသားပါ။</div>
-        </div>
+function loadAIQuestion() {
+    const container = document.getElementById("quiz-container");
+    const randomIndex = Math.floor(Math.random() * tensesQuestions.length);
+    const quizData = tensesQuestions[randomIndex];
 
-        <div class="guide-box">
-          <div class="guide-title">3. Conclusion (နိဂုံး) ချုပ်ခြင်း</div>
-          <div class="guide-desc">မိမိ၏ သဘောထား၊ အကြံပြုချက် သို့မဟုတ် အနှစ်ချုပ် သတင်းစကားဖြင့် အဆုံးသတ်ပါ။</div>
-        </div>
-
-        <button class="btn btn-primary" onclick="switchTab('challenge', document.querySelectorAll('.nav-item')[2])">
-          ⚔️ 1 vs 1 Essay Challenge တွင် အလေ့ကျင့် ရေးမည်
-        </button>
-      </div>
-    </div>
-
-    <!-- TAB 3: 1 VS 1 ESSAY CHALLENGE -->
-    <div id="challenge" class="tab-content">
-      <div class="card" style="text-align: center;">
-        <h2 style="margin-top:0; color:#fff;">⚔️ 1 vs 1 Essay Challenge</h2>
-        <p style="color: var(--text-sub); font-size:13px; margin-bottom: 15px;">(၇ မိနစ် အချိန်အတွင်း အလွတ် ရေးသားပြိုင်ပွဲ - အနည်းဆုံး စာလုံးရေ ၃၀ လိုအပ်သည်)</p>
-
-        <div id="topic-setup-box">
-          <input type="text" id="opponent-given-topic" placeholder="ပြိုင်ဘက်ပေးသည့် ခေါင်းစဉ် ရိုက်ထည့်ပါ..." style="margin-bottom: 15px;">
-          <button class="btn btn-primary" onclick="startEssayChallenge()">🚀 ပြိုင်ပွဲ စတင်မည် (7 Mins)</button>
-        </div>
-
-        <div id="essay-writing-box" style="display: none;">
-          <h3 style="color: var(--warning); margin-bottom:5px;">ခေါင်းစဉ်: <span id="display-topic"></span></h3>
-          <div style="font-size: 26px; font-weight: 800; color: var(--danger); margin: 15px 0;" id="timer-display">⏱️ 07:00</div>
-          
-          <textarea id="essay-input" rows="8" placeholder="ခေါင်းစဉ်အတိုင်း အလွတ် စတင်ရေးသားပါ (အနည်းဆုံး စာလုံးရေ ၃၀ ကျော်)..."></textarea>
-          
-          <br><br>
-          <button class="btn btn-success" onclick="submitEssay()">✅ စာစီစာကုံး တင်မည် (Submit)</button>
-        </div>
-
-        <div id="essay-result-box" style="display: none; text-align: left; background: var(--card-inner); padding: 15px; border-radius: 10px; margin-top: 15px;">
-          <h3 style="text-align: center; color: var(--success); margin-top:0;" id="match-result-title">🎉 ရလဒ် စစ်ဆေးပြီးစီးမှု</h3>
-          <p id="res-word-count">📝 စာလုံးရေ: 0</p>
-          <p id="res-vocab-count">🌟 Grade 8 Vocab: 0 လုံး</p>
-          <p id="res-xp-earned" style="font-weight: bold; color: var(--warning);">🎉 ရရှိသော XP: +0 XP</p>
-          
-          <!-- TELEGRAM SHARE BUTTON -->
-          <a id="tg-share-btn" href="#" target="_blank" class="btn" style="display: block; background: #229ed9; color: white; text-align: center; text-decoration: none; margin-top: 10px; padding: 12px; border-radius: 10px; font-weight: bold;">
-            📤 Telegram Group သို့ Share မည်
-          </a>
-
-          <button class="btn btn-accent" onclick="resetChallenge()" style="margin-top: 10px;">🔄 အသစ်ပြန်ပြိုင်မည်</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- TAB 4: 12 TENSES MODULE -->
-    <div id="tense-module" class="tab-content">
-      <div class="card">
-        <button onclick="switchTab('home', document.querySelectorAll('.nav-item')[0])" style="background:none; border:none; color:var(--warning); font-size:13px; cursor:pointer; margin-bottom:10px;">⬅️ Home သို့ပြန်သွားရန်</button>
-        <h2 style="margin:0; color:#fff;">📘 12 Tenses လေ့လာရန်</h2>
-
-        <div style="margin-top: 15px;">
-          <div class="guide-box">
-            <div class="guide-title">1. Present Simple Tense</div>
-            <div class="guide-desc"><strong>Formula:</strong> Subject + V1 (s/es)</div>
-          </div>
-        </div>
-
-        <h3 style="color:#fff; margin-top:20px;">🎮 Select Level (1 - 20)</h3>
-        <div class="level-grid" id="tense-level-grid"></div>
-      </div>
-    </div>
-
-    <!-- TAB 5: VERB FORM MODULE -->
-    <div id="verb-module" class="tab-content">
-      <div class="card">
-        <button onclick="switchTab('home', document.querySelectorAll('.nav-item')[0])" style="background:none; border:none; color:var(--warning); font-size:13px; cursor:pointer; margin-bottom:10px;">⬅️ Home သို့ပြန်သွားရန်</button>
-        <h2 style="margin:0; color:#fff;">🔤 Verb Form လေ့လာရန်</h2>
-
-        <div style="margin-top: 15px;">
-          <div class="guide-box">
-            <div class="guide-title">Verb Forms ရှင်းပြချက်</div>
-            <div class="guide-desc">V1, V2, V3 အသုံးပြုပုံများ</div>
-          </div>
-        </div>
-
-        <h3 style="color:#fff; margin-top:20px;">🎮 Select Level (1 - 30)</h3>
-        <div class="level-grid" id="verb-level-grid"></div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- BOTTOM NAVIGATION BAR -->
-  <div class="bottom-nav">
-    <div class="nav-item active" onclick="switchTab('home', this)">
-      <div class="nav-icon">🏠</div>
-      <span>Home</span>
-    </div>
-    <div class="nav-item" onclick="switchTab('essay-guide', this)">
-      <div class="nav-icon">📖</div>
-      <span>Guide</span>
-    </div>
-    <div class="nav-item" onclick="switchTab('challenge', this)">
-      <div class="nav-icon">⚔️</div>
-      <span>Challenge</span>
-    </div>
-  </div>
-
-  <!-- JAVASCRIPT LOGIC -->
-  <script>
-    // Telegram Web App Initialization
-    if (window.Telegram && window.Telegram.WebApp) {
-      window.Telegram.WebApp.ready();
-      window.Telegram.WebApp.expand();
-    }
-
-    // Global State Variables
-    let userXP = parseInt(localStorage.getItem('vip_normal_xp')) || 150;
-    let userName = localStorage.getItem('vip_normal_name') || 'Moe Han';
-    let winCount = parseInt(localStorage.getItem('vip_normal_wins')) || 0;
-    let loseCount = parseInt(localStorage.getItem('vip_normal_loses')) || 0;
-    
-    // VIP Expiry Logic (30 Days)
-    let vipExpiryTime = parseInt(localStorage.getItem('vip_normal_expiry')) || 0;
-    let isVip = Date.now() < vipExpiryTime;
-
-    // Initial UI Binding
-    document.getElementById('xp').innerText = userXP;
-    document.getElementById('user-name-display').innerText = userName;
-    document.getElementById('win-count').innerText = winCount + 'W';
-    document.getElementById('lose-count').innerText = loseCount + 'L';
-
-    // Splash Screen Removal
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        let splash = document.getElementById('splash-screen');
-        if(splash) {
-          splash.style.opacity = '0';
-          setTimeout(() => splash.remove(), 500);
-        }
-      }, 800);
+    let optionsHTML = "";
+    quizData.options.forEach(opt => {
+        optionsHTML += `<button onclick="checkAnswer('${opt}', '${quizData.answer}')">${opt}</button>`;
     });
 
-    // Tab Switcher
-    function switchTab(tabId, el) {
-      document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      
-      let target = document.getElementById(tabId);
-      if(target) target.classList.add('active');
-      if(el) el.classList.add('active');
+    container.innerHTML = `
+        <div class="question-box">${quizData.question}</div>
+        <div class="options">${optionsHTML}</div>
+    `;
+}
+
+function checkAnswer(selected, correct) {
+    if (selected.trim() === correct.trim()) {
+        alert("🎉 မှန်ကန်ပါတယ် သူငယ်ချင်းရေ!");
+    } else {
+        alert(`❌ မှားပါတယ်။ အဖြေမှန်ကတော့: ${correct} ပါ။`);
     }
-
-    function openTenseModule() { switchTab('tense-module', null); }
-    function openVerbModule() { switchTab('verb-module', null); }
-
-    // Edit Name
-    function editUserName() {
-      let newName = prompt("အမည်သစ် ထည့်သွင်းပါ:", userName);
-      if(newName && newName.trim() !== "") {
-        userName = newName.trim();
-        localStorage.setItem('vip_normal_name', userName);
-        document.getElementById('user-name-display').innerText = userName;
-      }
-    }
-
-        function resetChallenge() {
-      document.getElementById('opponent-given-topic').value = '';
-      document.getElementById('essay-input').value = '';
-      document.getElementById('essay-result-box').style.display = 'none';
-      document.getElementById('topic-setup-box').style.display = 'block';
-    }
-
-    // On Load
-    window.addEventListener('DOMContentLoaded', () => {
-      checkVipStatus();
-      buildLevelGrids();
-      updateTelegramShareLink();
-    });
-  </script>
+    loadAIQuestion();
+}
+</script>
 
 </body>
 </html>
