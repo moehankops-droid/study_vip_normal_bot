@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Grammar Quiz & AI Essay Evaluator</title>
+    <title>English Grammar Hub & AI Essay Evaluator</title>
     <style>
         * { box-sizing: border-box; }
         body { 
@@ -57,7 +57,7 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* Modern Home Dashboard UI */
+        /* Home Dashboard UI */
         .home-hero {
             background: linear-gradient(135deg, #2e7d32, #1b5e20);
             padding: 20px;
@@ -284,11 +284,6 @@
             text-align: center;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
             border: 2px solid #fff;
-            animation: glow 1.5s infinite alternate;
-        }
-        @keyframes glow {
-            0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
-            100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.9); }
         }
     </style>
 </head>
@@ -297,27 +292,27 @@
 <div class="container">
     <!-- Tab Navigation Bar -->
     <div class="nav-tabs">
-        <button class="nav-tab active" onclick="switchTab('home-tab')">🏠 ပင်မ</button>
-        <button class="nav-tab" onclick="switchTab('quiz-tab')">📝 Quiz</button>
-        <button class="nav-tab" onclick="switchTab('essay-tab')">✍️ Essay AI</button>
-        <button class="nav-tab" onclick="switchTab('shop-tab')">🛒 Shop</button>
-        <button class="nav-tab" onclick="switchTab('leaderboard-tab')">🏆 Board</button>
+        <button class="nav-tab active" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မ</button>
+        <button class="nav-tab" onclick="switchTab('quiz-tab'); playSound('click');">📝 Quiz</button>
+        <button class="nav-tab" onclick="switchTab('essay-tab'); playSound('click');">✍️ Essay AI</button>
+        <button class="nav-tab" onclick="switchTab('shop-tab'); playSound('click');">🛒 Shop</button>
+        <button class="nav-tab" onclick="switchTab('leaderboard-tab'); playSound('click');">🏆 Board</button>
     </div>
 
     <!-- Home Tab -->
     <div id="home-tab" class="tab-content active">
         <div class="home-hero">
             <h2>English Grammar Hub</h2>
-            <p>မိနစ် ၂၀ စာကျက်ချိန် • ရမှတ်နှင့် 🪙 Coins များ စုဆောင်းစို့</p>
+            <p>လေ့လာသင်ယူမှု တိုးတက်စေရန် • မှတ်နှင့် Coins များ စုဆောင်းစို့</p>
         </div>
 
         <div class="stats-grid">
             <div class="stat-card">
-                <span>⚡ Streak အမြင့်ဆုံး</span>
+                <span>⚡ Streak</span>
                 <b id="home-streak" style="color: #ff9800;">0 🔥</b>
             </div>
             <div class="stat-card">
-                <span>🪙 စုစုပေါင်း Coins</span>
+                <span>🪙 Coins</span>
                 <b id="home-money" style="color: #ffd700;">0 🪙</b>
             </div>
         </div>
@@ -325,7 +320,7 @@
         <div id="user-setup-box">
             <div style="text-align: left; margin-bottom: 5px; font-size: 13px; color: #ff9800;">သင့်နာမည် (Username) ထည့်ပါ:</div>
             <input type="text" id="username-input" placeholder="ဥပမာ - Moe Han" maxlength="15">
-            <button class="start-btn" onclick="saveInitialUsername()">နာမည်သိမ်းမည်</button>
+            <button class="start-btn" onclick="saveInitialUsername(); playSound('click');">နာမည်သိမ်းမည်</button>
         </div>
     </div>
 
@@ -339,13 +334,13 @@
 
         <!-- Quiz Mode Selector -->
         <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-            <button id="mode-normal-btn" class="start-btn" style="margin-top:0; padding:8px; font-size:13px; background:#4caf50;" onclick="setQuizMode('normal')">📝 Normal Quiz</button>
-            <button id="mode-speed-btn" class="start-btn" style="margin-top:0; padding:8px; font-size:13px; background:#333;" onclick="setQuizMode('speed')">⚡ Speed Mode</button>
+            <button id="mode-normal-btn" class="start-btn" style="margin-top:0; padding:8px; font-size:13px; background:#4caf50;" onclick="setQuizMode('normal'); playSound('click');">📝 Normal Quiz</button>
+            <button id="mode-speed-btn" class="start-btn" style="margin-top:0; padding:8px; font-size:13px; background:#333;" onclick="setQuizMode('speed'); playSound('click');">⚡ Speed Mode</button>
         </div>
 
         <div id="quiz-container">
             <p style="color: #aaa; font-size: 14px; margin: 20px 0;">ပထမဆုံး 'ပင်မ' Tab မှတဆင့် Username ထည့်ပြီးမှ Quiz စတင်နိုင်ပါသည်။</p>
-            <button class="start-btn" onclick="startQuiz()">Quiz စတင်မည် (Start)</button>
+            <button class="start-btn" onclick="startQuiz(); playSound('click');">Quiz စတင်မည် (Start)</button>
         </div>
     </div>
 
@@ -355,7 +350,7 @@
         <p style="font-size: 12px; color: #aaa;" id="essay-subtitle-info">အင်္ဂလိပ်လို စာစီစာကွန်း ရေးသားပါ (Normal: ၃ ကြိမ် / VIP: ၅ ကြိမ်)</p>
         
         <div style="text-align: left; margin-top: 10px;">
-            <label style="font-size: 13px; color: #ff9800;">Essay ခေါင်းစဉ် ရွေးပါ (Daily Challenge):</label>
+            <label style="font-size: 13px; color: #ff9800;">Essay ခေါင်းစဉ် ရွေးပါ:</label>
             <select id="essay-topic">
                 <option value="My Favorite Hobby and Why I Like It">1. My Favorite Hobby and Why I Like It</option>
                 <option value="The Importance of Learning English Language">2. The Importance of Learning English Language</option>
@@ -368,46 +363,46 @@
         
         <div style="display: flex; justify-content: space-between; font-size: 12px; color: #888; margin-top: 4px;">
             <span>Word Count: <b id="word-count" style="color: #fff;">0</b> words</span>
-            <span style="color: #ffd700;" id="essay-limit-info">🪙 ကျန်ဆုကြေးအကြိမ်: 3/3</span>
+            <span style="color: #ffd700;" id="essay-limit-info">🪙 ကျန်အကြိမ်: 3/3</span>
         </div>
 
-        <button id="check-essay-btn" class="start-btn" style="background: #9c27b0;" onclick="checkEssayWithAI()">AI ဖြင့် စစ်ဆေးမည် 🤖</button>
+        <button id="check-essay-btn" class="start-btn" style="background: #9c27b0;" onclick="checkEssayWithAI(); playSound('click');">AI ဖြင့် စစ်ဆေးမည် 🤖</button>
 
         <div id="essay-feedback-box" class="essay-feedback"></div>
     </div>
 
     <!-- Shop & Tournament Tab -->
     <div id="shop-tab" class="tab-content">
-        <h3 style="color: #ff9800; margin-top: 0; font-size: 16px;">🏆 Sunday Tournament</h3>
+        <h3 style="color: #ff9800; margin-top: 0; font-size: 16px;">🏆 Weekly Tournament</h3>
         <div class="tour-card" style="background: linear-gradient(135deg, #2e7d32, #1b5e20); border: 1px solid #4caf50;">
             <div class="tour-info">
-                <h4 style="color: #fff;">တနင်္ဂနွေနေ့ ပြိုင်ပွဲကြီး</h4>
+                <h4 style="color: #fff;">အပတ်စဉ် ပြိုင်ပွဲကြီး</h4>
                 <p style="color: #c8e6c9;">ဝင်ကြေး: 🪙 2500 | နိုင်သူဆု: 🪙 10000<br><span id="vip-status-text" style="color: #ffd700; font-weight: bold;">⭐ VIP ဝယ်ထားလျှင် ဝင်ကြေး အခမဲ့!</span></p>
             </div>
-            <button class="buy-btn" style="background: #ffd700;" onclick="joinTournament()">ဝင်မည် 🚀</button>
+            <button class="buy-btn" style="background: #ffd700;" onclick="joinTournament(); playSound('click');">ဝင်မည် 🚀</button>
         </div>
 
-        <h3 style="color: #ff9800; font-size: 16px; margin-top: 20px;">🛒 Item Shop (ပစ္စည်းဆိုင်)</h3>
+        <h3 style="color: #ff9800; font-size: 16px; margin-top: 20px;">🛒 Item Shop</h3>
         <div class="shop-card" style="border: 1px solid #ffd700; background: #2a261c;">
             <div class="shop-info">
                 <h4 style="color: #ffd700;">👑 VIP Pass (1 Month)</h4>
                 <p>• ဝင်ကြေး အခမဲ့<br>• Coins နှစ်ဆ (Double Coins)<br>• Essay ဆုကြေး တစ်နေ့ ၅ ကြိမ်<br>• ရွှေရောင်နာမည် & သရဖူ</p>
             </div>
-            <button class="buy-btn" style="background: #ffd700;" onclick="buyVIP()">🪙 10000</button>
+            <button class="buy-btn" style="background: #ffd700;" onclick="buyVIP(); playSound('click');">🪙 10000</button>
         </div>
         <div class="shop-card">
             <div class="shop-info">
                 <h4>⚡ Streak Shield</h4>
                 <p>Streak မပြတ်အောင် ကာကွယ်မည်</p>
             </div>
-            <button class="buy-btn" onclick="buyItem('Streak Shield', 1000)">🪙 1000</button>
+            <button class="buy-btn" onclick="buyItem('Streak Shield', 1000); playSound('click');">🪙 1000</button>
         </div>
         <div class="shop-card">
             <div class="shop-info">
                 <h4>💡 Answer Hint</h4>
                 <p>မေးခွန်းအဖြေ အရိပ်အမြွက်</p>
             </div>
-            <button class="buy-btn" onclick="buyItem('Answer Hint', 500)">🪙 500</button>
+            <button class="buy-btn" onclick="buyItem('Answer Hint', 500); playSound('click');">🪙 500</button>
         </div>
     </div>
 
@@ -422,7 +417,7 @@
             </div>
         </div>
         
-        <a id="share-tg-btn" href="#" target="_blank" class="tg-btn">📤 Telegram သို့ ရမှတ်မျှဝေရန်</a>
+        <a id="share-tg-btn" href="#" target="_blank" class="tg-btn" onclick="playSound('click')">📤 Telegram သို့ ရမှတ်မျှဝေရန်</a>
     </div>
 </div>
 
@@ -542,6 +537,48 @@
 <script src="questions.js"></script>
 
 <script>
+/* Built-in Web Audio API Sound Generator (No external files needed) */
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+function playSound(type) {
+    if (!audioCtx) return;
+    if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+    }
+    
+    const osc = audioCtx.createOscillator();
+    const gainNode = audioCtx.createGain();
+    osc.connect(gainNode);
+    gainNode.connect(audioCtx.destination);
+
+    let now = audioCtx.currentTime;
+
+    if (type === 'click') {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(400, now);
+        gainNode.gain.setValueAtTime(0.05, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+        osc.start(now);
+        osc.stop(now + 0.08);
+    } else if (type === 'correct') {
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(587.33, now); // D5
+        osc.frequency.setValueAtTime(880, now + 0.1); // A5
+        gainNode.gain.setValueAtTime(0.1, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        osc.start(now);
+        osc.stop(now + 0.3);
+    } else if (type === 'wrong') {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.setValueAtTime(130, now + 0.15);
+        gainNode.gain.setValueAtTime(0.1, now);
+        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+        osc.start(now);
+        osc.stop(now + 0.3);
+    }
+}
+
 let playerName = "";
 let score = 0;
 let money = parseInt(localStorage.getItem('quizCoins')) || 0;
@@ -552,7 +589,7 @@ let studyTimer = null;
 let speedTimer = null;
 let totalSeconds = 20 * 60;
 let speedSeconds = 30;
-let currentQuizMode = 'normal'; // 'normal' or 'speed'
+let currentQuizMode = 'normal';
 
 window.onload = function() {
     checkSavedUser();
@@ -596,7 +633,7 @@ function checkSavedUser() {
             let elapsed = now - parseInt(lastChangeTime);
             if (elapsed < oneWeek) {
                 let daysLeft = Math.ceil((oneWeek - elapsed) / (1000 * 60 * 60 * 24));
-                timeLeftText = ` (နာမည်ပြောင်းရန် ${daysLeft} ရက် စောင့်ရန်လို)`;
+                timeLeftText = ` (နာမည်ပြောင်းရန် ${daysLeft} ရက် စောင့်ရန်)`;
                 canChange = false;
             }
         }
@@ -606,8 +643,8 @@ function checkSavedUser() {
                 <p style="margin: 0; font-size: 13px; color: #aaa;">အသုံးပြုနေသော နာမည်:</p>
                 <b style="font-size: 18px; ${isVip ? 'color: #ffd700;' : 'color: #4caf50;'}">${isVip ? '👑 ' : ''}${playerName}</b>
             </div>
-            <button class="start-btn" onclick="switchTab('quiz-tab'); startQuiz();">Quiz စတင်ဆော့မည်</button>
-            <button class="edit-btn" onclick="requestNameChange(${canChange})">နာမည်ပြောင်းရန်${timeLeftText}</button>
+            <button class="start-btn" onclick="switchTab('quiz-tab'); startQuiz(); playSound('click');">Quiz စတင်ဆော့မည်</button>
+            <button class="edit-btn" onclick="requestNameChange(${canChange}); playSound('click');">နာမည်ပြောင်းရန်${timeLeftText}</button>
         `;
     }
 }
@@ -620,9 +657,9 @@ function requestNameChange(canChange) {
 
     const setupBox = document.getElementById("user-setup-box");
     setupBox.innerHTML = `
-        <div style="text-align: left; margin-bottom: 5px; font-size: 13px; color: #ff9800;">နာမည်အသစ် ထည့်ပါ (၁ ပတ်မှ ၁ ကြိမ်သာ ပြောင်းနိုင်သည်):</div>
+        <div style="text-align: left; margin-bottom: 5px; font-size: 13px; color: #ff9800;">နာမည်အသစ် ထည့်ပါ:</div>
         <input type="text" id="username-input" placeholder="နာမည်အသစ်..." maxlength="15" value="${playerName}">
-        <button class="start-btn" onclick="saveInitialUsername()">နာမည်သိမ်းမည်</button>
+        <button class="start-btn" onclick="saveInitialUsername(); playSound('click');">နာမည်သိမ်းမည်</button>
     `;
 }
 
@@ -687,7 +724,7 @@ function updateHeader() {
 function checkVipStatusUI() {
     const vipText = document.getElementById("vip-status-text");
     if(isVip && vipText) {
-        vipText.innerHTML = "👑 သင်သည် VIP ဖြစ်နေပါပြီ (ဝင်ကြေး အခမဲ့ & Coins ၂ ဆ & Essay ၅ ကြိမ်)";
+        vipText.innerHTML = "👑 သင်သည် VIP ဖြစ်နေပါပြီ (ဝင်ကြေး အခမဲ့ & Coins နှစ်ဆ & Essay ၅ ကြိမ်)";
         vipText.style.color = "#00e676";
     }
 }
@@ -753,8 +790,8 @@ function loadNextQuestion() {
         <div class="question-box">${currentQuiz.question}</div>
         <div class="options">${optionsHTML}</div>
         <div id="explanation-box" class="explanation"></div>
-        <button id="next-btn" class="next-btn" onclick="loadNextQuestion()">နောက်တစ်ပုဒ်သို့ ➡️</button>
-        <button class="finish-btn" onclick="endGame('🛑 လေ့ကျင့်ခန်းကို ပြီးဆုံးခဲ့ပါပြီ!')" style="margin-top: 10px;">လေ့ကျင့်ခန်း ပြီးဆုံးမည် (Finish)</button>
+        <button id="next-btn" class="next-btn" onclick="loadNextQuestion(); playSound('click');">နောက်တစ်ပုဒ်သို့ ➡️</button>
+        <button class="finish-btn" onclick="endGame('🛑 လေ့ကျင့်ခန်းကို ပြီးဆုံးခဲ့ပါပြီ!'); playSound('click');" style="margin-top: 10px;">လေ့ကျင့်ခန်း ပြီးဆုံးမည် (Finish)</button>
     `;
 
     if (currentQuizMode === 'speed') {
@@ -772,7 +809,7 @@ function startSpeedCountdown() {
 
         if (speedSeconds <= 0) {
             clearInterval(speedTimer);
-            // Time out counted as wrong answer
+            playSound('wrong');
             const buttons = document.querySelectorAll('.options button');
             buttons.forEach(btn => btn.disabled = true);
             
@@ -805,6 +842,7 @@ function checkAnswer(button, selected, correct, explanation) {
     const nextBtn = document.getElementById("next-btn");
 
     if (selected.trim() === correct.trim()) {
+        playSound('correct');
         button.style.background = "#1b2e1b";
         button.style.color = "#a5d6a7";
         button.style.borderColor = "#4caf50";
@@ -817,10 +855,11 @@ function checkAnswer(button, selected, correct, explanation) {
         score += streak; 
         
         let earnedCoins = isVip ? 100 : 50;
-        if (currentQuizMode === 'speed') earnedCoins *= 1.5; // Speed mode bonus
+        if (currentQuizMode === 'speed') earnedCoins *= 1.5;
         money += Math.floor(earnedCoins); 
         localStorage.setItem('quizCoins', money);
     } else {
+        playSound('wrong');
         button.style.background = "#3c1f1f";
         button.style.color = "#ef9a9a";
         button.style.borderColor = "#f44336";
@@ -839,7 +878,6 @@ function checkAnswer(button, selected, correct, explanation) {
     }
 }
 
-/* Essay Logic & Anti-Cheat Daily Limits with VIP Extended Limits */
 function updateWordCount() {
     const text = document.getElementById("essay-input").value.trim();
     const words = text ? text.split(/\s+/).length : 0;
@@ -871,7 +909,7 @@ function checkDailyEssayLimitUI() {
     const subInfo = document.getElementById("essay-subtitle-info");
     if(limitInfo) {
         let remaining = Math.max(0, maxLimit - count);
-        limitInfo.innerText = `🪙 ကျန်ဆုကြေးအကြိမ်: ${remaining}/${maxLimit}`;
+        limitInfo.innerText = `🪙 ကျန်အကြိမ်: ${remaining}/${maxLimit}`;
     }
     if(subInfo) {
         subInfo.innerText = isVip ? "👑 VIP Mode: တစ်နေ့လျှင် ၅ ကြိမ်အထိ ဆုကြေး Coins ရမည်" : "အင်္ဂလိပ်လို စာစီစာကွန်း ရေးသားပါ (Normal: ၃ ကြိမ် / VIP: ၅ ကြိမ်)";
@@ -890,14 +928,12 @@ function checkEssayWithAI() {
         return;
     }
 
-    // Anti-Cheat: Check Duplicate Essay Text
     let lastSubmittedEssay = localStorage.getItem('lastSubmittedEssay') || "";
     if (text.toLowerCase() === lastSubmittedEssay.toLowerCase()) {
-        alert("⚠️ ဤ Essay စာသားအတိုင်း ယခင်က တင်ထားပြီးဖြစ်ပါသည်။ စာသားအသစ် (သို့မဟုတ်) ပြင်ဆင်ထားသော စာသားဖြင့်သာ ထပ်မံစစ်ဆေးနိုင်ပါသည်။");
+        alert("⚠️ ဤ Essay စာသားအတိုင်း ယခင်က တင်ထားပြီးဖြစ်ပါသည်။ စာသားအသစ်ဖြင့်သာ ထပ်မံစစ်ဆေးနိုင်ပါသည်။");
         return;
     }
 
-    // Daily Limit Check
     const today = getTodayDateString();
     let lastDate = localStorage.getItem('essayLastDate');
     let count = parseInt(localStorage.getItem('essayDailyCount')) || 0;
@@ -926,6 +962,9 @@ function checkEssayWithAI() {
             count++;
             localStorage.setItem('essayDailyCount', count.toString());
             rewardGiven = true;
+            playSound('correct');
+        } else {
+            playSound('correct');
         }
 
         localStorage.setItem('lastSubmittedEssay', text);
@@ -939,9 +978,9 @@ function checkEssayWithAI() {
             <p><b>⭐ Score:</b> <span style="font-size: 18px; color: ${isPass ? '#00e676' : '#ff5252'}; font-weight: bold;">${mockScore} / 100</span></p>
             <p><b>📝 Word Count:</b> ${wordCount} words</p>
             <hr style="border: 0.5px solid #444; margin: 10px 0;">
-            <p style="color: #a5d6a7;"><b>✅ Strengths & Structure:</b> Essay ၏ အစီအစဉ် ရေးသားပုံ သန့်ရှင်းပြီး ခေါင်းစဉ်နှင့် ကိုက်ညီမှု ရှိပါသည်။</p>
-            <p style="color: #ffb74d;"><b>💡 Suggestions for Improvement:</b> Grammar နှင့် Sentence structures များကို ပိုမို ကြွယ်ဝအောင် ထည့်သွင်းရေးသားပါက ပိုမို အမှတ်ကောင်းနိုင်ပါသည်။</p>
-            ${rewardGiven ? `<p style="color: #ffd700; font-weight: bold; margin-top: 10px;">🎉 ဂုဏ်ယူပါတယ်! ရမှတ် ၇၀ ကျော်၍ ဆုကြေး 🪙 ${isVip ? '1000 (VIP 2x)' : '500'} Coins ရရှိပါသည်။ (ယနေ့ ကျန်ဆုကြေးအကြိမ်: ${remainingLimit}/${maxLimit})</p>` : (isPass ? `<p style="color: #ff9800; font-weight: bold; margin-top: 10px;">ℹ️ ယနေ့အတွက် ဆုကြေး Coins ရယူမှု အကြိမ်ရေပြည့်သွားပါပြီ (${maxLimit}/${maxLimit})။ သို့သော် Feedback ကို ဆက်လက်လေ့လာနိုင်ပါသည်။</p>` : '')}
+            <p style="color: #a5d6a7;"><b>✅ Strengths & Structure:</b> ဖွဲ့စည်းပုံနှင့် ရေးသားချက် အလွန်ကောင်းမွန်ပါသည်။</p>
+            <p style="color: #ffb74d;"><b>💡 Suggestions:</b> Grammar ပိုမိုစုံလင်အောင် ရေးသားပါက ပိုကောင်းပါမည်။</p>
+            ${rewardGiven ? `<p style="color: #ffd700; font-weight: bold; margin-top: 10px;">🎉 ဂုဏ်ယူပါတယ်! ဆုကြေး 🪙 ${isVip ? '1000 (VIP 2x)' : '500'} Coins ရရှိပါသည်။ (ကျန်အကြိမ်: ${remainingLimit}/${maxLimit})</p>` : (isPass ? `<p style="color: #ff9800; font-weight: bold; margin-top: 10px;">ℹ️ ယနေ့အတွက် ဆုကြေး Coins ရယူမှု အကြိမ်ရေပြည့်သွားပါပြီ (${maxLimit}/${maxLimit})။</p>` : '')}
         `;
 
         btn.disabled = false;
@@ -964,9 +1003,11 @@ function buyVIP() {
         checkVipStatusUI();
         checkSavedUser();
         checkDailyEssayLimitUI();
-        alert("🎉 ဂုဏ်ယူပါတယ်! တစ်လစာ VIP Pass ကို အောင်မြင်စွာ ဝယ်ယူပြီးပါပြီ။ 👑 ဝင်ကြေးအခမဲ့၊ Coins နှစ်ဆနှင့် Essay ဆုကြေး တစ်နေ့ ၅ ကြိမ် အကျိုးခံစားခွင့်များ ရရှိပါပြီ!");
+        playSound('correct');
+        alert("🎉 ဂုဏ်ယူပါတယ်! တစ်လစာ VIP Pass ကို အောင်မြင်စွာ ဝယ်ယူပြီးပါပြီ။ 👑");
     } else {
-        alert(`❌ Coins မလုံလောက်ပါ။ တစ်လစာ VIP ဝယ်ရန် 🪙 ${price} လိုအပ်ပါသည်။`);
+        playSound('wrong');
+        alert(`❌ Coins မလုံလောက်ပါ။ (လိုအပ်သော Coins: ${price})`);
     }
 }
 
@@ -975,8 +1016,10 @@ function buyItem(itemName, price) {
         money -= price;
         localStorage.setItem('quizCoins', money);
         updateHeader();
+        playSound('correct');
         alert(`🎉 ${itemName} ကို အောင်မြင်စွာ ဝယ်ယူပြီးပါပြီ!`);
     } else {
+        playSound('wrong');
         alert(`❌ Coins မလုံလောက်ပါ။ (လိုအပ်သော Coins: ${price})`);
     }
 }
@@ -984,7 +1027,7 @@ function buyItem(itemName, price) {
 function joinTournament() {
     const fee = 2500;
     if (isVip) {
-        alert("👑 VIP ဖြစ်သည့်အတွက် Sunday Tournament သို့ ဝင်ကြေး အခမဲ့ဖြင့် အောင်မြင်စွာ စာရင်းပေးသွင်းပြီးပါပြီ!");
+        alert("👑 VIP ဖြစ်သည့်အတွက် Tournament သို့ ဝင်ကြေး အခမဲ့ဖြင့် စာရင်းပေးသွင်းပြီးပါပြီ!");
         return;
     }
     
@@ -992,8 +1035,10 @@ function joinTournament() {
         money -= fee;
         localStorage.setItem('quizCoins', money);
         updateHeader();
-        alert(`🏆 Sunday Tournament သို့ အောင်မြင်စွာ ဝင်ရောက်စာရင်းပေးသွင်းပြီးပါပြီ! (ဝင်ကြေး 🪙 ${fee} ဖြတ်ပြီးပါပြီ)`);
+        playSound('correct');
+        alert(`🏆 Tournament သို့ အောင်မြင်စွာ ဝင်ရောက်စာရင်းပေးသွင်းပြီးပါပြီ!`);
     } else {
+        playSound('wrong');
         alert(`❌ ဝင်ကြေး 🪙 ${fee} မလုံလောက်ပါ။ VIP ဝယ်ယူခြင်းဖြင့် ဝင်ကြေးအခမဲ့ ရယူနိုင်ပါသည်!`);
     }
 }
@@ -1008,8 +1053,8 @@ function endGame(message) {
         <p style="font-size: 16px;">အမည်: <b style="${isVip ? 'color: #ffd700;' : 'color: #ffffff;'}">${isVip ? '👑 ' : ''}${playerName}</b></p>
         <p style="font-size: 16px;">စုစုပေါင်း ရမှတ်: <b style="color: #4caf50;">${score} မှတ်</b></p>
         <p style="font-size: 16px;">စုဆောင်းရရှိသော Coins: <b style="color: #ffd700;">🪙 ${money} Coins</b></p>
-        <button class="action-btn" id="save-btn">Cloud သို့ ရမှတ်နှင့် Coins သိမ်းမည် (Save)</button>
-        <button class="start-btn" onclick="startQuiz()" style="margin-top: 10px; background: #2196f3;">🔄 ထပ်မံဖြေဆိုရန် (Play Again)</button>
+        <button class="action-btn" id="save-btn" onclick="playSound('click')">Cloud သို့ ရမှတ်နှင့် Coins သိမ်းမည် (Save)</button>
+        <button class="start-btn" onclick="startQuiz(); playSound('click');" style="margin-top: 10px; background: #2196f3;">🔄 ထပ်မံဖြေဆိုရန် (Play Again)</button>
     `;
 
     document.getElementById("save-btn").addEventListener("click", function() {
