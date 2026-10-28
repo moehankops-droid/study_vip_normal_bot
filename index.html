@@ -113,7 +113,7 @@
             border: 1px solid #444;
         }
         
-        .start-btn, .action-btn, .finish-btn, .edit-btn, .tg-btn, .next-btn, .shop-btn, .tour-btn { 
+        .start-btn, .action-btn, .finish-btn, .edit-btn, .tg-btn, .next-btn { 
             background: #4caf50; 
             color: white; 
             border: none; 
@@ -149,7 +149,7 @@
             align-items: center;
         }
         .shop-info h4, .tour-info h4 { margin: 0 0 4px 0; color: #fff; font-size: 14px; }
-        .shop-info p, .tour-info p { margin: 0; color: #aaa; font-size: 12px; }
+        .shop-info p, .tour-info p { margin: 0; color: #aaa; font-size: 11px; line-height: 1.3; }
         .buy-btn {
             background: #ff9800;
             color: #121212;
@@ -311,25 +311,26 @@
         <div class="tour-card" style="background: linear-gradient(135deg, #2e7d32, #1b5e20); border: 1px solid #4caf50;">
             <div class="tour-info">
                 <h4 style="color: #fff;">တနင်္ဂနွေနေ့ ပြိုင်ပွဲကြီး</h4>
-                <p style="color: #c8e6c9;">ဝင်ကြေး: 🪙 2500 | နိုင်သူဆု: 🪙 10000</p>
+                <p style="color: #c8e6c9;">ဝင်ကြေး: 🪙 2500 | နိုင်သူဆု: 🪙 10000<br><span id="vip-status-text" style="color: #ffd700; font-weight: bold;">⭐ VIP ဝယ်ထားလျှင် ဝင်ကြေး အခမဲ့!</span></p>
             </div>
             <button class="buy-btn" style="background: #ffd700;" onclick="joinTournament()">ဝင်မည် 🚀</button>
         </div>
 
         <h3 style="color: #ff9800; font-size: 16px; margin-top: 20px;">🛒 Item Shop (ပစ္စည်းဆိုင်)</h3>
+        <!-- VIP Pass 10000 Coins -->
+        <div class="shop-card" style="border: 1px solid #ffd700; background: #2a261c;">
+            <div class="shop-info">
+                <h4 style="color: #ffd700;">👑 VIP Pass (1 Month)</h4>
+                <p>• ဝင်ကြေး အခမဲ့<br>• Coins နှစ်ဆ (Double Coins)<br>• ရွှေရောင်နာမည် & သရဖူ</p>
+            </div>
+            <button class="buy-btn" style="background: #ffd700;" onclick="buyVIP()">🪙 10000</button>
+        </div>
         <div class="shop-card">
             <div class="shop-info">
                 <h4>⚡ Streak Shield</h4>
                 <p>Streak မပြတ်အောင် ကာကွယ်မည်</p>
             </div>
             <button class="buy-btn" onclick="buyItem('Streak Shield', 1000)">🪙 1000</button>
-        </div>
-        <div class="shop-card">
-            <div class="shop-info">
-                <h4>🎟️ Tournament Pass</h4>
-                <p>တနင်္ဂနွေပြိုင်ပွဲ အခမဲ့ဝင်လက်မှတ်</p>
-            </div>
-            <button class="buy-btn" onclick="buyItem('Tournament Pass', 2000)">🪙 2000</button>
         </div>
         <div class="shop-card">
             <div class="shop-info">
@@ -376,6 +377,7 @@
   window.saveScoreToFirebase = function(name, finalScore, finalMoney) {
       const cleanName = name.replace(/[.#$\/\[\]]/g, "_").trim();
       const userScoreRef = ref(db, 'scores/' + cleanName);
+      const isVipUser = localStorage.getItem('isVipUser') === 'true';
 
       get(userScoreRef).then((snapshot) => {
           let existingScore = 0;
@@ -388,6 +390,7 @@
                   name: name,
                   score: finalScore,
                   money: finalMoney,
+                  isVip: isVipUser,
                   timestamp: Date.now()
               }).then(() => {
                   alert(`🎉 ဂုဏ်ယူပါတယ်! (${finalScore} မှတ် နှင့် 🪙 ${finalMoney} Coins) ကို သိမ်းဆည်းပြီးပါပြီ။`);
@@ -428,10 +431,11 @@
           scoresList.sort((a, b) => b.score - a.score);
 
           const topWinner = scoresList[0];
+          let topWinnerVip = topWinner.isVip ? '👑 ' : '';
           winnerContainer.innerHTML = `
               <div class="weekly-banner">
                   <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #333;">🌟 Weekly Champion 🌟</div>
-                  <div style="font-size: 20px; font-weight: bold; margin: 4px 0; color: #000;">👑 ${topWinner.name}</div>
+                  <div style="font-size: 20px; font-weight: bold; margin: 4px 0; color: #000;">${topWinnerVip}${topWinner.name}</div>
                   <div style="font-size: 14px; font-weight: bold; color: #b71c1c;">⭐ ${topWinner.score} မှတ် | 🪙 ${topWinner.money || 0} Coins</div>
               </div>
           `;
@@ -443,14 +447,17 @@
               let itemStyle = isMe ? "background: #2e4a2e; border: 1px solid #4caf50; border-radius: 8px; padding: 6px 10px; margin-bottom: 5px;" : "padding: 6px 10px; border-bottom: 1px solid #333;";
               let rankIcon = index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : `#${index + 1}`;
               let userMoney = item.money || 0;
+              let isVipUser = item.isVip || false;
+
+              let displayName = isVipUser ? `<b style="color: #ffd700;">👑 ${item.name}</b>` : `<b>${item.name}</b>`;
 
               html += `
                   <div class="leaderboard-item" style="${itemStyle} display: flex; justify-content: space-between; align-items: center;">
-                      <span><b>${rankIcon} ${item.name}</b> ${isMe ? ' (ကိုယ့်အမှတ်)' : ''}</span>
+                      <span>${rankIcon} ${displayName} ${isMe ? ' (ကိုယ့်အမှတ်)' : ''}</span>
                       <span><b style="color: #4caf50;">${item.score}pts</b> | <b style="color: #ffd700;">🪙${userMoney}</b></span>
                   </div>
               `;
-              myScoreText += `${rankIcon} ${item.name}: ${item.score} မှတ် (🪙 ${userMoney} Coins)\n`;
+              myScoreText += `${rankIcon} ${isVipUser ? '👑 ' : ''}${item.name}: ${item.score} မှတ် (🪙 ${userMoney} Coins)\n`;
           });
           lbContainer.innerHTML = html;
 
@@ -468,6 +475,7 @@
 let playerName = "";
 let score = 0;
 let money = parseInt(localStorage.getItem('quizCoins')) || 0;
+let isVip = localStorage.getItem('isVipUser') === 'true';
 let streak = 0;
 let currentQuiz = null;
 let studyTimer = null;
@@ -476,6 +484,7 @@ let totalSeconds = 20 * 60;
 window.onload = function() {
     checkSavedUser();
     updateHeader();
+    checkVipStatusUI();
 };
 
 function switchTab(tabId) {
@@ -520,7 +529,7 @@ function checkSavedUser() {
         setupBox.innerHTML = `
             <div style="background: #2a2a2a; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #444;">
                 <p style="margin: 0; font-size: 13px; color: #aaa;">အသုံးပြုနေသော နာမည်:</p>
-                <b style="font-size: 18px; color: #4caf50;">${playerName}</b>
+                <b style="font-size: 18px; ${isVip ? 'color: #ffd700;' : 'color: #4caf50;'}">${isVip ? '👑 ' : ''}${playerName}</b>
             </div>
             <button class="start-btn" onclick="switchTab('quiz-tab'); startQuiz();">Quiz စတင်ဆော့မည်</button>
             <button class="edit-btn" onclick="requestNameChange(${canChange})">နာမည်ပြောင်းရန်${timeLeftText}</button>
@@ -578,6 +587,14 @@ function updateHeader() {
     document.getElementById("streak-count").innerText = streak;
     document.getElementById("home-streak").innerText = `${streak} 🔥`;
     document.getElementById("home-money").innerText = `${money} 🪙`;
+}
+
+function checkVipStatusUI() {
+    const vipText = document.getElementById("vip-status-text");
+    if(isVip && vipText) {
+        vipText.innerHTML = "👑 သင်သည် VIP ဖြစ်နေပါပြီ (ဝင်ကြေး အခမဲ့ & Coins ၂ ဆ)";
+        vipText.style.color = "#00e676";
+    }
 }
 
 function startStudySessionTimer() {
@@ -653,7 +670,9 @@ function checkAnswer(button, selected, correct, explanation) {
         
         streak += 1;
         score += streak; 
-        money += 50; 
+        
+        let earnedCoins = isVip ? 100 : 50;
+        money += earnedCoins; 
         localStorage.setItem('quizCoins', money);
     } else {
         button.style.background = "#3c1f1f";
@@ -674,7 +693,26 @@ function checkAnswer(button, selected, correct, explanation) {
     }
 }
 
-/* Shop Item Purchase Logic */
+function buyVIP() {
+    const price = 10000;
+    if(isVip) {
+        alert("👑 သင်သည် VIP Status ကို ပိုင်ဆိုင်ပြီးသား ဖြစ်ပါသည်။");
+        return;
+    }
+    if (money >= price) {
+        money -= price;
+        isVip = true;
+        localStorage.setItem('quizCoins', money);
+        localStorage.setItem('isVipUser', 'true');
+        updateHeader();
+        checkVipStatusUI();
+        checkSavedUser();
+        alert("🎉 ဂုဏ်ယူပါတယ်! တစ်လစာ VIP Pass ကို အောင်မြင်စွာ ဝယ်ယူပြီးပါပြီ။ 👑 ဝင်ကြေးအခမဲ့နှင့် Coins နှစ်ဆ (Double Coins) ခံစားခွင့်များ ရရှိပါပြီ!");
+    } else {
+        alert(`❌ Coins မလုံလောက်ပါ။ တစ်လစာ VIP ဝယ်ရန် 🪙 ${price} လိုအပ်ပါသည်။`);
+    }
+}
+
 function buyItem(itemName, price) {
     if (money >= price) {
         money -= price;
@@ -686,16 +724,20 @@ function buyItem(itemName, price) {
     }
 }
 
-/* Tournament Join Logic (2500 Fee) */
 function joinTournament() {
     const fee = 2500;
+    if (isVip) {
+        alert("👑 VIP ဖြစ်သည့်အတွက် Sunday Tournament သို့ ဝင်ကြေး အခမဲ့ဖြင့် အောင်မြင်စွာ စာရင်းပေးသွင်းပြီးပါပြီ!");
+        return;
+    }
+    
     if (money >= fee) {
         money -= fee;
         localStorage.setItem('quizCoins', money);
         updateHeader();
         alert(`🏆 Sunday Tournament သို့ အောင်မြင်စွာ ဝင်ရောက်စာရင်းပေးသွင်းပြီးပါပြီ! (ဝင်ကြေး 🪙 ${fee} ဖြတ်ပြီးပါပြီ)`);
     } else {
-        alert(`❌ ဝင်ကြေး 🪙 ${fee} မလုံလောက်ပါ။ Quiz ဆော့ပြီး Coins ထပ်စုဆောင်းပါ။`);
+        alert(`❌ ဝင်ကြေး 🪙 ${fee} မလုံလောက်ပါ။ VIP ဝယ်ယူခြင်းဖြင့် ဝင်ကြေးအခမဲ့ ရယူနိုင်ပါသည်!`);
     }
 }
 
@@ -705,7 +747,7 @@ function endGame(message) {
     const container = document.getElementById("quiz-container");
     container.innerHTML = `
         <h3 style="color: #ff9800;">${message}</h3>
-        <p style="font-size: 16px;">အမည်: <b style="color: #ffffff;">${playerName}</b></p>
+        <p style="font-size: 16px;">အမည်: <b style="${isVip ? 'color: #ffd700;' : 'color: #ffffff;'}">${isVip ? '👑 ' : ''}${playerName}</b></p>
         <p style="font-size: 16px;">စုစုပေါင်း ရမှတ်: <b style="color: #4caf50;">${score} မှတ်</b></p>
         <p style="font-size: 16px;">စုဆောင်းရရှိသော Coins: <b style="color: #ffd700;">🪙 ${money} Coins</b></p>
         <button class="action-btn" id="save-btn">Cloud သို့ ရမှတ်နှင့် Coins သိမ်းမည် (Save)</button>
