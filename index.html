@@ -153,14 +153,13 @@
 <body>
 
 <div class="container">
-    <div class="header">
-        <span class="streak">🔥 Streak: <span id="streak-count">0</span></span>
-        <span class="score">⭐ Score: <span id="score-count">0</span></span>
-    </div>
-    <h2>English Grammar Quiz</h2>
-    <div id="quiz-container">
-        <p style="color: #aaa; font-size: 15px;">မိနစ် ၂၀ စာကျက်ချိန်အတွင်း သူငယ်ချင်းများနှင့် အမှတ်ပြိုင်ဆိုင်မည့် Global Leaderboard စနစ်။</p>
-        <button class="start-btn" onclick="startQuiz()">စတင်မည် (Challenge)</button>
+    <div id="main-view">
+        <h2>English Grammar Quiz</h2>
+        <p style="color: #aaa; font-size: 14px; margin-bottom: 20px;">မိနစ် ၂၀ စာကျက်ချိန် • Streak များလေ မှတ်ပိုရလေ စနစ်</p>
+        
+        <div style="text-align: left; margin-bottom: 5px; font-size: 13px; color: #ff9800;">သင့်နာမည် (Username) ထည့်ပါ:</div>
+        <input type="text" id="username-input" placeholder="ဥပမာ - Moe Han" maxlength="15">
+        <button class="start-btn" onclick="prepareAndStartQuiz()">စတင်မည် (Start)</button>
         
         <div id="leaderboard-section" class="leaderboard-list" style="margin-top: 20px;">
             <strong style="color: #ff9800; font-size: 14px;">🏆 ကမ္ဘာ့ထိပ်ဆုံး ရမှတ်များ (Global Leaderboard)</strong>
@@ -169,12 +168,20 @@
             </div>
         </div>
     </div>
+
+    <div id="quiz-view" style="display: none;">
+        <div class="header">
+            <span class="streak">🔥 Streak: <span id="streak-count">0</span></span>
+            <span class="score">⭐ Score: <span id="score-count">0</span></span>
+        </div>
+        <div id="quiz-container"></div>
+    </div>
 </div>
 
 <!-- Firebase SDKs -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-  import { getDatabase, ref, push, set, onValue, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+  import { getDatabase, ref, set, get, onValue, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyClv4XqqbYFcRowwpV8StLFWwbjaOx-5gQ",
@@ -189,19 +196,35 @@
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  // Global functions assign လုပ်ခြင်း
-  window.saveScoreToFirebase = function(name, score) {
-      const scoresRef = ref(db, 'scores');
-      const newScoreRef = push(scoresRef);
-      set(newScoreRef, {
-          name: name,
-          score: score,
-          timestamp: Date.now()
-      }).then(() => {
-          alert("✅ ရမှတ်များကို Firebase သို့ အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ!");
-          location.reload();
+  // Username တစ်ခုတည်းနဲ့ High Score ကို စစ်ဆေးပြီး သိမ်းမယ့်စနစ်
+  window.saveScoreToFirebase = function(name, finalScore) {
+      const cleanName = name.replace(/[.#$\/\[\]]/g, "_").trim(); // Firebase path အတွက် မသင့်တော်တဲ့ သင်္ကေတများ ဖယ်မည်
+      const userScoreRef = ref(db, 'scores/' + cleanName);
+
+      get(userScoreRef).then((snapshot) => {
+          let existingScore = 0;
+          if (snapshot.exists()) {
+              existingScore = snapshot.val().score || 0;
+          }
+
+          // ယခုရမှတ်က အရင်ရမှတ်ထက် ပိုများမှသာ အသစ်တင်မည် (သို့မဟုတ် ပထမဆုံးအကြိမ်ဆိုရင် တတင်မည်)
+          if (finalScore > existingScore) {
+              set(userScoreRef, {
+                  name: name,
+                  score: finalScore,
+                  timestamp: Date.now()
+              }).then(() => {
+                  alert(`🎉 ဂုဏ်ယူပါတယ်! သင်၏ အမှတ်အသစ် (${finalScore} မှတ်) ကို Global Leaderboard သို့ အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ။`);
+                  location.reload();
+              }).catch((error) => {
+                  alert("❌ သိမ်းဆည်းရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
+              });
+          } else {
+              alert(`ℹ️ သင်၏ ယခင်အမှတ်အမြင့်ဆုံး (${existingScore} မှတ်) ကသာ ပိုများနေပါသဖြင့် အသစ်မသိမ်းပါ။`);
+              location.reload();
+          }
       }).catch((error) => {
-          alert("❌ သိမ်းဆည်းရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
+          console.error(error);
       });
   };
 
@@ -221,7 +244,6 @@
               scoresList.push(childSnapshot.val());
           });
 
-          // အမှတ်အများဆုံးက ထိပ်ဆုံးမှာပေါ်အောင် ဇောက်ထိုးပြန်စီမည်
           scoresList.sort((a, b) => b.score - a.score);
 
           let html = "";
@@ -237,18 +259,33 @@
       });
   };
 
-  // စဖွင့်ချင်း Leaderboard ကို တင်မည်
   window.loadLeaderboardFromFirebase();
 </script>
 
 <script src="questions.js"></script>
 
 <script>
+let playerName = "";
 let score = 0;
 let streak = 0;
 let currentQuiz = null;
 let studyTimer = null;
 let totalSeconds = 20 * 60;
+
+function prepareAndStartQuiz() {
+    const nameInput = document.getElementById("username-input").value.trim();
+    if (!nameInput) {
+        alert("ကျေးဇူးပြု၍ သင့်နာမည် (Username) ကို အရင်ထည့်ပါ။");
+        return;
+    }
+    playerName = nameInput;
+    
+    // Page ပြောင်းမည်
+    document.getElementById("main-view").style.display = "none";
+    document.getElementById("quiz-view").style.display = "block";
+    
+    startQuiz();
+}
 
 function startQuiz() {
     score = 0;
@@ -332,8 +369,9 @@ function checkAnswer(button, selected, correct, explanation) {
         expBox.style.color = "#a5d6a7";
         expBox.style.borderColor = "#4caf50";
         
-        score += 10;
+        // Streak အလိုက် အမှတ်တိုးမည့်စနစ် (မှန်ရင် streak တက်မယ်၊ ဥပမာ streak 2 ဆိုရင် 2 မှတ်၊ 3 ဆိုရင် 3 မှတ် တိုးမယ်)
         streak += 1;
+        score += streak; 
     } else {
         button.style.background = "#3c1f1f";
         button.style.color = "#ef9a9a";
@@ -343,7 +381,7 @@ function checkAnswer(button, selected, correct, explanation) {
         expBox.style.color = "#ef9a9a";
         expBox.style.borderColor = "#f44336";
         
-        streak = 0;
+        streak = 0; // မှားရင် Streak ပြန်ကျမည်
     }
 
     updateHeader();
@@ -361,21 +399,10 @@ function endGame(message) {
     const container = document.getElementById("quiz-container");
     container.innerHTML = `
         <h3 style="color: #ff9800;">${message}</h3>
-        <p style="font-size: 16px;">သင်ရရှိသော ရမှတ်: <b style="color: #4caf50;">${score} မှတ်</b></p>
-        <p style="font-size: 14px; color: #aaa;">Global Leaderboard တွင် နာမည်သွင်းရန် ထည့်ပါ:</p>
-        <input type="text" id="player-name" placeholder="သင့်နာမည် (Name) ထည့်ရန်..." maxlength="15">
-        <button class="action-btn" onclick="handleSaveScore()">ရမှတ်သိမ်းမည် (Save to Cloud)</button>
+        <p style="font-size: 16px;">အမည်: <b style="color: #ffffff;">${playerName}</b></p>
+        <p style="font-size: 16px;">စုစုပေါင်း ရမှတ်: <b style="color: #4caf50;">${score} မှတ်</b></p>
+        <button class="action-btn" onclick="window.saveScoreToFirebase('${playerName}', ${score})">Cloud သို့ ရမှတ်သိမ်းမည် (Save)</button>
     `;
-}
-
-function handleSaveScore() {
-    const nameInput = document.getElementById("player-name").value.trim();
-    if(!nameInput) {
-        alert("ကျေးဇူးပြု၍ နာမည်ထည့်ပါ။");
-        return;
-    }
-    // Firebase Realtime Database သို့ ပို့မည်
-    window.saveScoreToFirebase(nameInput, score);
 }
 </script>
 
