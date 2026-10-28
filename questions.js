@@ -1,4 +1,5 @@
-{ 
+const questionsBank = [
+    { 
         question: "She _____ to school every day.", 
         options: ["go", "goes", "going", "gone"], 
         answer: "goes",
@@ -298,3 +299,4 @@
         answer: "than",
         explanation: "စကားပုံနှိုင်းယှဉ်ချက်တွင် 'better than' ဟု သုံးသည်။" 
     }
+];
