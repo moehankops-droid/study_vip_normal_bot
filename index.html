@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Grammar Quiz - Leaderboard</title>
+    <title>English Grammar Quiz - Global Leaderboard</title>
     <style>
         * { box-sizing: border-box; }
         body { 
@@ -159,17 +159,87 @@
     </div>
     <h2>English Grammar Quiz</h2>
     <div id="quiz-container">
-        <p style="color: #aaa; font-size: 15px;">မိနစ် ၂၀ စာကျက်ချိန်အတွင်း သူငယ်ချင်းများနှင့် အမှတ်ပြိုင်ဆိုင်မည့် စနစ်။</p>
+        <p style="color: #aaa; font-size: 15px;">မိနစ် ၂၀ စာကျက်ချိန်အတွင်း သူငယ်ချင်းများနှင့် အမှတ်ပြိုင်ဆိုင်မည့် Global Leaderboard စနစ်။</p>
         <button class="start-btn" onclick="startQuiz()">စတင်မည် (Challenge)</button>
         
         <div id="leaderboard-section" class="leaderboard-list" style="margin-top: 20px;">
-            <strong style="color: #ff9800; font-size: 14px;">🏆 ထိပ်ဆုံး ရမှတ်များ (Leaderboard)</strong>
+            <strong style="color: #ff9800; font-size: 14px;">🏆 ကမ္ဘာ့ထိပ်ဆုံး ရမှတ်များ (Global Leaderboard)</strong>
             <div id="high-scores" style="margin-top: 8px;">
-                <p style="color: #777; font-size: 13px; text-align: center;">မှတ်တမ်း မရှိသေးပါ။</p>
+                <p style="color: #777; font-size: 13px; text-align: center;">ဒေတာများ ရယူနေပါသည်...</p>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Firebase SDKs -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+  import { getDatabase, ref, push, set, onValue, query, orderByChild, limitToLast } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyClv4XqqbYFcRowwpV8StLFWwbjaOx-5gQ",
+    authDomain: "study-bot-61a39.firebaseapp.com",
+    databaseURL: "https://study-bot-61a39-default-rtdb.firebaseio.com",
+    projectId: "study-bot-61a39",
+    storageBucket: "study-bot-61a39.firebasestorage.app",
+    messagingSenderId: "637683324139",
+    appId: "1:637683324139:web:3c2f4e38ac89e773f69aae"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  // Global functions assign လုပ်ခြင်း
+  window.saveScoreToFirebase = function(name, score) {
+      const scoresRef = ref(db, 'scores');
+      const newScoreRef = push(scoresRef);
+      set(newScoreRef, {
+          name: name,
+          score: score,
+          timestamp: Date.now()
+      }).then(() => {
+          alert("✅ ရမှတ်များကို Firebase သို့ အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ!");
+          location.reload();
+      }).catch((error) => {
+          alert("❌ သိမ်းဆည်းရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
+      });
+  };
+
+  window.loadLeaderboardFromFirebase = function() {
+      const scoresRef = ref(db, 'scores');
+      const topScoresQuery = query(scoresRef, orderByChild('score'), limitToLast(5));
+      
+      onValue(topScoresQuery, (snapshot) => {
+          const lbContainer = document.getElementById("high-scores");
+          if (!snapshot.exists()) {
+              lbContainer.innerHTML = `<p style="color: #777; font-size: 13px; text-align: center;">မှတ်တမ်း မရှိသေးပါ။</p>`;
+              return;
+          }
+
+          let scoresList = [];
+          snapshot.forEach((childSnapshot) => {
+              scoresList.push(childSnapshot.val());
+          });
+
+          // အမှတ်အများဆုံးက ထိပ်ဆုံးမှာပေါ်အောင် ဇောက်ထိုးပြန်စီမည်
+          scoresList.sort((a, b) => b.score - a.score);
+
+          let html = "";
+          scoresList.forEach((item, index) => {
+              html += `
+                  <div class="leaderboard-item">
+                      <span>#${index + 1} ${item.name}</span>
+                      <span style="color: #4caf50; font-weight: bold;">${item.score} မှတ်</span>
+                  </div>
+              `;
+          });
+          lbContainer.innerHTML = html;
+      });
+  };
+
+  // စဖွင့်ချင်း Leaderboard ကို တင်မည်
+  window.loadLeaderboardFromFirebase();
+</script>
 
 <script src="questions.js"></script>
 
@@ -179,10 +249,6 @@ let streak = 0;
 let currentQuiz = null;
 let studyTimer = null;
 let totalSeconds = 20 * 60;
-
-window.onload = function() {
-    displayLeaderboard();
-};
 
 function startQuiz() {
     score = 0;
@@ -296,45 +362,20 @@ function endGame(message) {
     container.innerHTML = `
         <h3 style="color: #ff9800;">${message}</h3>
         <p style="font-size: 16px;">သင်ရရှိသော ရမှတ်: <b style="color: #4caf50;">${score} မှတ်</b></p>
-        <p style="font-size: 14px; color: #aaa;">Leaderboard တွင် မှတ်တမ်းတင်ရန် သင့်နာမည်ကို ထည့်ပါ:</p>
+        <p style="font-size: 14px; color: #aaa;">Global Leaderboard တွင် နာမည်သွင်းရန် ထည့်ပါ:</p>
         <input type="text" id="player-name" placeholder="သင့်နာမည် (Name) ထည့်ရန်..." maxlength="15">
-        <button class="action-btn" onclick="saveScore()">ရမှတ်သိမ်းမည် (Save Score)</button>
+        <button class="action-btn" onclick="handleSaveScore()">ရမှတ်သိမ်းမည် (Save to Cloud)</button>
     `;
 }
 
-function saveScore() {
+function handleSaveScore() {
     const nameInput = document.getElementById("player-name").value.trim();
     if(!nameInput) {
         alert("ကျေးဇူးပြု၍ နာမည်ထည့်ပါ။");
         return;
     }
-
-    let highScores = JSON.parse(localStorage.getItem("quizHighScores")) || [];
-    highScores.push({ name: nameInput, score: score });
-    highScores.sort((a, b) => b.score - a.score);
-    highScores = highScores.slice(0, 5); // ထိပ်ဆုံး ၅ ယောက်ပဲ သိမ်းမည်
-
-    localStorage.setItem("quizHighScores", JSON.stringify(highScores));
-    alert("✅ ရမှတ်များကို အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ!");
-    location.reload();
-}
-
-function displayLeaderboard() {
-    let highScores = JSON.parse(localStorage.getItem("quizHighScores")) || [];
-    const lbContainer = document.getElementById("high-scores");
-    
-    if(highScores.length === 0) return;
-
-    let html = "";
-    highScores.forEach((item, index) => {
-        html += `
-            <div class="leaderboard-item">
-                <span>#${index + 1} ${item.name}</span>
-                <span style="color: #4caf50; font-weight: bold;">${item.score} မှတ်</span>
-            </div>
-        `;
-    });
-    lbContainer.innerHTML = html;
+    // Firebase Realtime Database သို့ ပို့မည်
+    window.saveScoreToFirebase(nameInput, score);
 }
 </script>
 
