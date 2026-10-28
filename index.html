@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Grammar Quiz - Challenge & Leaderboard</title>
+    <title>English Grammar Quiz - Leaderboard</title>
     <style>
         * { box-sizing: border-box; }
         body { 
@@ -55,7 +55,7 @@
         
         h2 { color: #ffffff; margin-top: 0; font-size: 22px; }
         
-        .start-btn, .action-btn { 
+        .start-btn, .action-btn, .finish-btn { 
             background: #4caf50; 
             color: white; 
             border: none; 
@@ -69,6 +69,8 @@
             transition: 0.2s; 
         }
         .start-btn:hover, .action-btn:hover { background: #43a047; }
+        .finish-btn { background: #ff5252; margin-top: 10px; }
+        .finish-btn:hover { background: #e53935; }
 
         .question-box { 
             font-size: 18px; 
@@ -211,7 +213,7 @@ function startStudySessionTimer() {
 
         if (totalSeconds <= 0) {
             clearInterval(studyTimer);
-            endGame("အချိန်ပြည့်သွားပါပြီ!");
+            endGame("⏳ မိနစ် ၂၀ ပြည့်သွားပါပြီ!");
         }
     }, 1000);
 }
@@ -243,6 +245,7 @@ function loadNextQuestion() {
         <div class="question-box">${currentQuiz.question}</div>
         <div class="options">${optionsHTML}</div>
         <div id="explanation-box" class="explanation"></div>
+        <button class="finish-btn" onclick="endGame('🛑 လေ့ကျင့်ခန်းကို ပြီးဆုံးခဲ့ပါပြီ!')">လေ့ကျင့်ခန်း ပြီးဆုံးမည် (Finish)</button>
     `;
 }
 
@@ -295,7 +298,7 @@ function endGame(message) {
         <p style="font-size: 16px;">သင်ရရှိသော ရမှတ်: <b style="color: #4caf50;">${score} မှတ်</b></p>
         <p style="font-size: 14px; color: #aaa;">Leaderboard တွင် မှတ်တမ်းတင်ရန် သင့်နာမည်ကို ထည့်ပါ:</p>
         <input type="text" id="player-name" placeholder="သင့်နာမည် (Name) ထည့်ရန်..." maxlength="15">
-        <button class="action-btn" onclick="saveScore()">ရမှတ်သိမ်းမည်</button>
+        <button class="action-btn" onclick="saveScore()">ရမှတ်သိမ်းမည် (Save Score)</button>
     `;
 }
 
@@ -312,6 +315,7 @@ function saveScore() {
     highScores = highScores.slice(0, 5); // ထိပ်ဆုံး ၅ ယောက်ပဲ သိမ်းမည်
 
     localStorage.setItem("quizHighScores", JSON.stringify(highScores));
+    alert("✅ ရမှတ်များကို အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ!");
     location.reload();
 }
 
