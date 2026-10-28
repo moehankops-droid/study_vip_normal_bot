@@ -3,32 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Tenses & Grammar Quiz</title>
+    <title>English Tenses & Grammar Quiz - Duolingo Style</title>
     <style>
-        body { font-family: sans-serif; background: #f0f2f5; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; height: 100vh; }
-        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
-        h2 { color: #58cc02; }
-        button { background: #58cc02; color: white; border: none; padding: 12px 20px; border-radius: 10px; font-size: 16px; cursor: pointer; margin-top: 15px; width: 100%; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        .card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); width: 100%; max-width: 420px; text-align: center; box-sizing: border-box; }
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-weight: bold; color: #4b4b4b; font-size: 14px; border-bottom: 2px solid #f0f2f5; padding-bottom: 10px; }
+        .streak { color: #ff9600; }
+        .score { color: #58cc02; }
+        h2 { color: #58cc02; margin-top: 0; }
+        button { background: #58cc02; color: white; border: none; padding: 12px 20px; border-radius: 12px; font-size: 16px; cursor: pointer; margin-top: 15px; width: 100%; font-weight: bold; box-shadow: 0 4px 0 #46a302; transition: 0.1s; }
+        button:active { transform: translateY(2px); box-shadow: 0 2px 0 #46a302; }
         button:hover { background: #46a302; }
-        .question-box { font-size: 18px; margin: 15px 0; font-weight: bold; color: #333; }
-        .options button { background: #fff; color: #4b4b4b; border: 2px solid #e5e5e5; margin: 6px 0; width: 100%; }
+        .question-box { font-size: 18px; margin: 15px 0; font-weight: bold; color: #333; text-align: left; }
+        .options { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+        .options button { background: #fff; color: #4b4b4b; border: 2px solid #e5e5e5; border-bottom: 4px solid #e5e5e5; margin: 0; width: 100%; text-align: left; padding: 12px 15px; box-shadow: none; }
         .options button:hover { background: #f7f7f7; border-color: #58cc02; }
-        .explanation { margin-top: 15px; padding: 10px; background: #e8f5e9; border-left: 4px solid #58cc02; text-align: left; font-size: 14px; color: #2e7d32; display: none; border-radius: 5px; }
+        .explanation { margin-top: 15px; padding: 12px; background: #e8f5e9; border-left: 5px solid #58cc02; text-align: left; font-size: 13px; color: #2e7d32; display: none; border-radius: 8px; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>⏳ English Tenses Quiz</h2>
+    <div class="header">
+        <span class="streak">🔥 Streak: <span id="streak-count">0</span></span>
+        <span class="score">⭐ Score: <span id="score-count">0</span></span>
+    </div>
+    <h2>⏳ English Master</h2>
     <div id="quiz-container">
-        <p>မေးခွန်းများ စတင်ဖြေဆိုရန် အောက်ပါခလုတ်ကို နှိပ်ပါ</p>
-        <button onclick="loadNextQuestion()">စတင်မည်</button>
+        <p style="color: #666; font-size: 15px;">Duolingo စတိုင် Grammar နှင့် Tenses များကို လေ့လာဖြေဆိုရန် အဆင်သင့်ဖြစ်ပြီလား?</p>
+        <button onclick="startQuiz()">စတင်ဖြေဆိုမည်</button>
     </div>
 </div>
 
 <script src="questions.js"></script>
 
 <script>
+let score = 0;
+let streak = 0;
+let currentQuiz = null;
+
+function startQuiz() {
+    score = 0;
+    streak = 0;
+    updateHeader();
+    loadNextQuestion();
+}
+
+function updateHeader() {
+    document.getElementById("score-count").innerText = score;
+    document.getElementById("streak-count").innerText = streak;
+}
+
 function loadNextQuestion() {
     if (typeof questionsBank === 'undefined' || questionsBank.length === 0) {
         document.getElementById("quiz-container").innerHTML = "<p style='color:red;'>မေးခွန်းများ ရှာမတွေ့ပါ။</p>";
@@ -37,15 +62,15 @@ function loadNextQuestion() {
 
     const container = document.getElementById("quiz-container");
     const randomIndex = Math.floor(Math.random() * questionsBank.length);
-    const quizData = questionsBank[randomIndex];
+    currentQuiz = questionsBank[randomIndex];
 
     let optionsHTML = "";
-    quizData.options.forEach(opt => {
-        optionsHTML += `<button onclick="checkAnswer(this, '${opt.replace(/'/g, "\\'")}', '${quizData.answer.replace(/'/g, "\\'")}', '${quizData.explanation.replace(/'/g, "\\'")}')">${opt}</button>`;
+    currentQuiz.options.forEach(opt => {
+        optionsHTML += `<button onclick="checkAnswer(this, '${opt.replace(/'/g, "\\'")}', '${currentQuiz.answer.replace(/'/g, "\\'")}', '${currentQuiz.explanation.replace(/'/g, "\\'")}')">${opt}</button>`;
     });
 
     container.innerHTML = `
-        <div class="question-box">${quizData.question}</div>
+        <div class="question-box">${currentQuiz.question}</div>
         <div class="options">${optionsHTML}</div>
         <div id="explanation-box" class="explanation"></div>
     `;
@@ -60,20 +85,29 @@ function checkAnswer(button, selected, correct, explanation) {
     expBox.innerHTML = `<strong>ရှင်းလင်းချက်:</strong> ${explanation}`;
 
     if (selected.trim() === correct.trim()) {
-        button.style.background = "#58cc02";
-        button.style.color = "white";
+        button.style.background = "#d7ffb8";
+        button.style.color = "#276709";
+        button.style.borderColor = "#58cc02";
         expBox.style.background = "#e8f5e9";
         expBox.style.color = "#2e7d32";
         expBox.style.borderColor = "#58cc02";
+        
+        score += 10;
+        streak += 1;
     } else {
-        button.style.background = "#ff4b4b";
-        button.style.color = "white";
+        button.style.background = "#ffdfe0";
+        button.style.color = "#9c1c1c";
+        button.style.borderColor = "#ff4b4b";
         expBox.style.background = "#ffebee";
         expBox.style.color = "#c62828";
         expBox.style.borderColor = "#ff4b4b";
+        
+        streak = 0; // အမှားပါက streak 0 ပြန်ဖြစ်မည်
     }
 
-    // နောက်မေးခွန်းကို ၄ စက္ကန့်ကြာမှ အလိုအလျောက်ပြောင်းမည် (ရှင်းလင်းချက်ဖတ်ရန် အချိန်ပေးခြင်း)
+    updateHeader();
+
+    // ၄ စက္ကန့်ကြာမှ နောက်မေးခွန်းသို့ အလိုအလျောက်ကူးမည်
     setTimeout(() => {
         loadNextQuestion();
     }, 4000);
