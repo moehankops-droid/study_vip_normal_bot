@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Tenses Quiz - Duolingo Style</title>
+    <title>English Tenses & Grammar Quiz</title>
     <style>
         body { font-family: sans-serif; background: #f0f2f5; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; height: 100vh; }
         .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
@@ -11,7 +11,7 @@
         button { background: #58cc02; color: white; border: none; padding: 12px 20px; border-radius: 10px; font-size: 16px; cursor: pointer; margin-top: 15px; width: 100%; }
         button:hover { background: #46a302; }
         .question-box { font-size: 18px; margin: 20px 0; font-weight: bold; color: #333; }
-        .options button { background: #fff; color: #4b4b4b; border: 2px solid #e5e5e5; margin: 8px 0; }
+        .options button { background: #fff; color: #4b4b4b; border: 2px solid #e5e5e5; margin: 8px 0; width: 100%; }
         .options button:hover { background: #f7f7f7; border-color: #58cc02; }
     </style>
 </head>
@@ -20,34 +20,29 @@
 <div class="card">
     <h2>⏳ English Tenses Quiz</h2>
     <div id="quiz-container">
-        <p>Tenses လေ့ကျင့်ခန်းများ ဖြေဆိုရန် ခလုတ်ကို နှိပ်ပါ</p>
-        <button onclick="loadAIQuestion()">မေးခွန်းအသစ် တောင်းမည်</button>
+        <p>မေးခွန်းများ စတင်ဖြေဆိုရန် အောက်ပါခလုတ်ကို နှိပ်ပါ</p>
+        <button onclick="loadNextQuestion()">စတင်မည်</button>
     </div>
 </div>
 
-<script>
-// English Tenses သီးသန့် မေးခွန်းများ စုစည်းမှု
-const tensesQuestions = [
-    { question: "She _____ to school every day.", options: ["go", "goes", "going", "gone"], answer: "goes" },
-    { question: "They _____ football in the playground now.", options: ["play", "plays", "are playing", "played"], answer: "are playing" },
-    { question: "He has _____ his homework already.", options: ["finish", "finishes", "finished", "finishing"], answer: "finished" },
-    { question: "My mother _____ cooking when I arrived home.", options: ["is", "was", "were", "are"], answer: "was" },
-    { question: "She _____ her grandmother next week.", options: ["visit", "visited", "will visit", "visiting"], answer: "will visit" },
-    { question: "Look! The birds _____ in the sky.", options: ["fly", "flies", "are flying", "flew"], answer: "are flying" },
-    { question: "Water _____ at 100 degrees Celsius.", options: ["boil", "boils", "boiled", "boiling"], answer: "boils" },
-    { question: "I _____ English for three years.", options: ["learn", "learned", "have learned", "learning"], answer: "have learned" },
-    { question: "They _____ a new car last month.", options: ["buy", "buys", "bought", "buying"], answer: "bought" },
-    { question: "While I was reading, he _____ television.", options: ["watch", "watched", "was watching", "is watching"], answer: "was watching" }
-];
+<!-- သီးသန့်ခွဲထားသော မေးခွန်းဖိုင်ကို ချိတ်ဆက်ခြင်း -->
+<script src="questions.js"></script>
 
-function loadAIQuestion() {
+<script>
+function loadNextQuestion() {
+    // questions.js ထဲက questionsBank ကို ယူသုံးမည်
+    if (typeof questionsBank === 'undefined' || questionsBank.length === 0) {
+        document.getElementById("quiz-container").innerHTML = "<p style='color:red;'>မေးခွန်းများ ရှာမတွေ့ပါ သို့မဟုတ် questions.js ဖိုင် မမှန်ပါ။</p>";
+        return;
+    }
+
     const container = document.getElementById("quiz-container");
-    const randomIndex = Math.floor(Math.random() * tensesQuestions.length);
-    const quizData = tensesQuestions[randomIndex];
+    const randomIndex = Math.floor(Math.random() * questionsBank.length);
+    const quizData = questionsBank[randomIndex];
 
     let optionsHTML = "";
     quizData.options.forEach(opt => {
-        optionsHTML += `<button onclick="checkAnswer('${opt}', '${quizData.answer}')">${opt}</button>`;
+        optionsHTML += `<button onclick="checkAnswer(this, '${opt.replace(/'/g, "\\'")}', '${quizData.answer.replace(/'/g, "\\'")}')">${opt}</button>`;
     });
 
     container.innerHTML = `
@@ -56,13 +51,25 @@ function loadAIQuestion() {
     `;
 }
 
-function checkAnswer(selected, correct) {
+function checkAnswer(button, selected, correct) {
+    const buttons = document.querySelectorAll('.options button');
+    buttons.forEach(btn => btn.disabled = true);
+
     if (selected.trim() === correct.trim()) {
-        alert("🎉 မှန်ကန်ပါတယ် သူငယ်ချင်းရေ!");
+        button.style.background = "#58cc02";
+        button.style.color = "white";
+        setTimeout(() => {
+            alert("🎉 မှန်ကန်ပါတယ် သူငယ်ချင်းရေ!");
+            loadNextQuestion();
+        }, 300);
     } else {
-        alert(`❌ မှားပါတယ်။ အဖြေမှန်ကတော့: ${correct} ပါ။`);
+        button.style.background = "#ff4b4b";
+        button.style.color = "white";
+        setTimeout(() => {
+            alert(`❌ မှားပါတယ်။ အဖြေမှန်ကတော့: ${correct} ပါ။`);
+            loadNextQuestion();
+        }, 300);
     }
-    loadAIQuestion();
 }
 </script>
 
