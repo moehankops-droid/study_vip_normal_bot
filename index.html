@@ -61,14 +61,16 @@
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            margin-bottom: 15px; 
+            margin-bottom: 10px; 
             font-weight: bold; 
-            font-size: 15px; 
+            font-size: 14px; 
             border-bottom: 1px solid #333; 
-            padding-bottom: 10px; 
+            padding-bottom: 8px; 
         }
         .streak { color: #ff9800; }
         .score { color: #4caf50; }
+        .money { color: #ffd700; }
+
         .study-timer { 
             background: #2a2a2a; 
             color: #00e676; 
@@ -179,7 +181,7 @@
             justify-content: space-between;
             padding: 8px 0;
             border-bottom: 1px solid #333;
-            font-size: 14px;
+            font-size: 13px;
         }
         .leaderboard-item:last-child { border-bottom: none; }
 
@@ -187,7 +189,7 @@
         .weekly-banner {
             background: linear-gradient(135deg, #ffd700, #ff8c00);
             color: #121212;
-            padding: 18px;
+            padding: 15px;
             border-radius: 14px;
             margin-bottom: 15px;
             text-align: center;
@@ -214,7 +216,7 @@
     <!-- Home Tab -->
     <div id="home-tab" class="tab-content active">
         <h2>English Grammar Quiz</h2>
-        <p style="color: #aaa; font-size: 13px; margin-bottom: 20px;">မိနစ် ၂၀ စာကျက်ချိန် • Streak များလေ မှတ်ပိုရလေ</p>
+        <p style="color: #aaa; font-size: 13px; margin-bottom: 20px;">မိနစ် ၂၀ စာကျက်ချိန် • ရမှတ်နဲ့ Coins တွေ ရှာဖွေစို့</p>
         
         <div id="user-setup-box">
             <div style="text-align: left; margin-bottom: 5px; font-size: 13px; color: #ff9800;">သင့်နာမည် (Username) ထည့်ပါ:</div>
@@ -226,8 +228,9 @@
     <!-- Quiz Tab -->
     <div id="quiz-tab" class="tab-content">
         <div class="header">
-            <span class="streak">🔥 Streak: <span id="streak-count">0</span></span>
-            <span class="score">⭐ Score: <span id="score-count">0</span></span>
+            <span class="streak">🔥 <span id="streak-count">0</span></span>
+            <span class="score">⭐ <span id="score-count">0</span></span>
+            <span class="money">🪙 <span id="money-count">0</span></span>
         </div>
         <div id="quiz-container">
             <p style="color: #aaa; font-size: 14px; margin: 30px 0;">ပထမဆုံး 'ပင်မ' Tab မှတဆင့် Username ထည့်ပြီးမှ Quiz စတင်နိုင်ပါသည်။</p>
@@ -240,7 +243,7 @@
         <div id="weekly-winner-container"></div>
         
         <div class="leaderboard-list">
-            <strong style="color: #ff9800; font-size: 14px;">🏆 ကမ္ဘာ့ထိပ်ဆုံး ရမှတ်များ (Leaderboard)</strong>
+            <strong style="color: #ff9800; font-size: 14px;">🏆 ကမ္ဘာ့ထိပ်ဆုံး ရမှတ်များ & Coins</strong>
             <div id="high-scores" style="margin-top: 8px;">
                 <p style="color: #777; font-size: 13px; text-align: center;">ဒေတာများ ရယူနေပါသည်...</p>
             </div>
@@ -269,7 +272,7 @@
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  window.saveScoreToFirebase = function(name, finalScore) {
+  window.saveScoreToFirebase = function(name, finalScore, finalMoney) {
       const cleanName = name.replace(/[.#$\/\[\]]/g, "_").trim();
       const userScoreRef = ref(db, 'scores/' + cleanName);
 
@@ -283,9 +286,10 @@
               set(userScoreRef, {
                   name: name,
                   score: finalScore,
+                  money: finalMoney,
                   timestamp: Date.now()
               }).then(() => {
-                  alert(`🎉 ဂုဏ်ယူပါတယ်! သင်၏ အမှတ် (${finalScore} မှတ်) ကို Leaderboard သို့ သိမ်းဆည်းပြီးပါပြီ။`);
+                  alert(`🎉 ဂုဏ်ယူပါတယ်! (${finalScore} မှတ် နှင့် 🪙 ${finalMoney} Coins) ကို သိမ်းဆည်းပြီးပါပြီ။`);
                   switchTab('leaderboard-tab');
               }).catch((error) => {
                   alert("❌ သိမ်းဆည်းရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
@@ -326,9 +330,9 @@
           const topWinner = scoresList[0];
           winnerContainer.innerHTML = `
               <div class="weekly-banner">
-                  <div style="font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #333;">🌟 ဤအပတ်၏ အထူးချန်ပီယံ (Weekly Champion) 🌟</div>
-                  <div style="font-size: 22px; font-weight: bold; margin: 6px 0; color: #000;">👑 ${topWinner.name}</div>
-                  <div style="font-size: 15px; font-weight: bold; color: #b71c1c;">✨ ရမှတ်: ${topWinner.score} မှတ်ဖြင့် ထိပ်ဆုံးတွင် ရပ်တည်နေပါသည်! ✨</div>
+                  <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #333;">🌟 Weekly Champion 🌟</div>
+                  <div style="font-size: 20px; font-weight: bold; margin: 4px 0; color: #000;">👑 ${topWinner.name}</div>
+                  <div style="font-size: 14px; font-weight: bold; color: #b71c1c;">⭐ ${topWinner.score} မှတ် | 🪙 ${topWinner.money || 0} Coins</div>
               </div>
           `;
 
@@ -338,14 +342,15 @@
               let isMe = (item.name === localStorage.getItem("quizUsername"));
               let itemStyle = isMe ? "background: #2e4a2e; border: 1px solid #4caf50; border-radius: 8px; padding: 6px 10px; margin-bottom: 5px;" : "padding: 6px 10px; border-bottom: 1px solid #333;";
               let rankIcon = index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : `#${index + 1}`;
+              let userMoney = item.money || 0;
 
               html += `
-                  <div class="leaderboard-item" style="${itemStyle} display: flex; justify-content: space-between; align-items: center; font-size: 14px;">
+                  <div class="leaderboard-item" style="${itemStyle} display: flex; justify-content: space-between; align-items: center;">
                       <span><b>${rankIcon} ${item.name}</b> ${isMe ? ' (ကိုယ့်အမှတ်)' : ''}</span>
-                      <span style="color: #4caf50; font-weight: bold;">${item.score} မှတ်</span>
+                      <span><b style="color: #4caf50;">${item.score}pts</b> | <b style="color: #ffd700;">🪙${userMoney}</b></span>
                   </div>
               `;
-              myScoreText += `${rankIcon} ${item.name}: ${item.score} မှတ်\n`;
+              myScoreText += `${rankIcon} ${item.name}: ${item.score} မှတ် (🪙 ${userMoney} Coins)\n`;
           });
           lbContainer.innerHTML = html;
 
@@ -362,6 +367,7 @@
 <script>
 let playerName = "";
 let score = 0;
+let money = 0;
 let streak = 0;
 let currentQuiz = null;
 let studyTimer = null;
@@ -452,6 +458,7 @@ function startQuiz() {
         return;
     }
     score = 0;
+    money = 0;
     streak = 0;
     totalSeconds = 20 * 60;
     updateHeader();
@@ -461,6 +468,7 @@ function startQuiz() {
 
 function updateHeader() {
     document.getElementById("score-count").innerText = score;
+    document.getElementById("money-count").innerText = money;
     document.getElementById("streak-count").innerText = streak;
 }
 
@@ -534,6 +542,7 @@ function checkAnswer(button, selected, correct, explanation) {
         
         streak += 1;
         score += streak; 
+        money += 50; // မေးခွန်းတစ်ခု မှန်တိုင်း 50 Coins ဝင်မည်
     } else {
         button.style.background = "#3c1f1f";
         button.style.color = "#ef9a9a";
@@ -563,13 +572,14 @@ function endGame(message) {
         <h3 style="color: #ff9800;">${message}</h3>
         <p style="font-size: 16px;">အမည်: <b style="color: #ffffff;">${playerName}</b></p>
         <p style="font-size: 16px;">စုစုပေါင်း ရမှတ်: <b style="color: #4caf50;">${score} မှတ်</b></p>
-        <button class="action-btn" id="save-btn">Cloud သို့ ရမှတ်သိမ်းမည် (Save)</button>
+        <p style="font-size: 16px;">စုဆောင်းရရှိသော Coins: <b style="color: #ffd700;">🪙 ${money} Coins</b></p>
+        <button class="action-btn" id="save-btn">Cloud သို့ ရမှတ်နှင့် Coins သိမ်းမည် (Save)</button>
         <button class="start-btn" onclick="startQuiz()" style="margin-top: 10px; background: #2196f3;">🔄 ထပ်မံဖြေဆိုရန် (Play Again)</button>
     `;
 
     document.getElementById("save-btn").addEventListener("click", function() {
         if (typeof window.saveScoreToFirebase === "function") {
-            window.saveScoreToFirebase(playerName, score);
+            window.saveScoreToFirebase(playerName, score, money);
         } else {
             alert("❌ Firebase ချိတ်ဆက်မှု အဆင်မပြေပါ။ ခဏစောင့်ပြီး ထပ်ကြိုးစားပါ။");
         }
