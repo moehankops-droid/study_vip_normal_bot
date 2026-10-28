@@ -57,6 +57,34 @@
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
+        /* Modern Home Dashboard UI */
+        .home-hero {
+            background: linear-gradient(135deg, #2e7d32, #1b5e20);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 15px;
+            border: 1px solid #4caf50;
+            text-align: center;
+        }
+        .home-hero h2 { margin: 0 0 8px 0; color: #fff; font-size: 22px; }
+        .home-hero p { margin: 0; color: #c8e6c9; font-size: 13px; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .stat-card {
+            background: #252525;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            text-align: center;
+        }
+        .stat-card span { font-size: 12px; color: #aaa; display: block; }
+        .stat-card b { font-size: 16px; color: #fff; margin-top: 4px; display: block; }
+
         .header { 
             display: flex; 
             justify-content: space-between; 
@@ -85,9 +113,7 @@
             border: 1px solid #444;
         }
         
-        h2 { color: #ffffff; margin-top: 0; font-size: 20px; }
-        
-        .start-btn, .action-btn, .finish-btn, .edit-btn, .tg-btn { 
+        .start-btn, .action-btn, .finish-btn, .edit-btn, .tg-btn, .next-btn { 
             background: #4caf50; 
             color: white; 
             border: none; 
@@ -100,13 +126,15 @@
             font-weight: bold; 
             transition: 0.2s; 
         }
-        .start-btn:hover, .action-btn:hover { background: #43a047; }
+        .start-btn:hover, .action-btn:hover, .next-btn:hover { background: #43a047; }
         .finish-btn { background: #ff5252; margin-top: 10px; }
         .finish-btn:hover { background: #e53935; }
         .edit-btn { background: #ff9800; font-size: 14px; padding: 8px; margin-top: 5px; }
         .edit-btn:hover { background: #f57c00; }
         .tg-btn { background: #0088cc; margin-top: 10px; text-decoration: none; display: block; text-align: center; line-height: normal; }
         .tg-btn:hover { background: #0077b5; }
+        .next-btn { background: #2196f3; display: none; }
+        .next-btn:hover { background: #1976d2; }
 
         .question-box { 
             font-size: 17px; 
@@ -213,10 +241,23 @@
         <button class="nav-tab" onclick="switchTab('leaderboard-tab')">🏆 Leaderboard</button>
     </div>
 
-    <!-- Home Tab -->
+    <!-- Home Tab (Modern Dashboard Design) -->
     <div id="home-tab" class="tab-content active">
-        <h2>English Grammar Quiz</h2>
-        <p style="color: #aaa; font-size: 13px; margin-bottom: 20px;">မိနစ် ၂၀ စာကျက်ချိန် • ရမှတ်နဲ့ Coins တွေ ရှာဖွေစို့</p>
+        <div class="home-hero">
+            <h2>English Grammar Hub</h2>
+            <p>မိနစ် ၂၀ စာကျက်ချိန် • ရမှတ်နှင့် 🪙 Coins များ စုဆောင်းစို့</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span>⚡ Streak အမြင့်ဆုံး</span>
+                <b id="home-streak" style="color: #ff9800;">0 🔥</b>
+            </div>
+            <div class="stat-card">
+                <span>🪙 စုစုပေါင်း Coins</span>
+                <b id="home-money" style="color: #ffd700;">0 🪙</b>
+            </div>
+        </div>
         
         <div id="user-setup-box">
             <div style="text-align: left; margin-bottom: 5px; font-size: 13px; color: #ff9800;">သင့်နာမည် (Username) ထည့်ပါ:</div>
@@ -367,7 +408,8 @@
 <script>
 let playerName = "";
 let score = 0;
-let money = 0;
+// LocalStorage မှ Coins ကို အမြဲဦးစားပေးဖတ်မည် (မပျောက်စေရန်)
+let money = parseInt(localStorage.getItem('quizCoins')) || 0;
 let streak = 0;
 let currentQuiz = null;
 let studyTimer = null;
@@ -375,6 +417,7 @@ let totalSeconds = 20 * 60;
 
 window.onload = function() {
     checkSavedUser();
+    updateHeader();
 };
 
 function switchTab(tabId) {
@@ -385,7 +428,12 @@ function switchTab(tabId) {
     
     if(tabId === 'home-tab') document.querySelectorAll('.nav-tab')[0].classList.add('active');
     if(tabId === 'quiz-tab') document.querySelectorAll('.nav-tab')[1].classList.add('active');
-    if(tabId === 'leaderboard-tab') document.querySelectorAll('.nav-tab')[2].classList.add('active');
+    if(tabId === 'leaderboard-tab') {
+        document.querySelectorAll('.nav-tab')[2].classList.add('active');
+        if (typeof window.loadLeaderboardFromFirebase === 'function') {
+            window.loadLeaderboardFromFirebase();
+        }
+    }
 }
 
 function checkSavedUser() {
@@ -458,7 +506,6 @@ function startQuiz() {
         return;
     }
     score = 0;
-    money = 0;
     streak = 0;
     totalSeconds = 20 * 60;
     updateHeader();
@@ -470,6 +517,10 @@ function updateHeader() {
     document.getElementById("score-count").innerText = score;
     document.getElementById("money-count").innerText = money;
     document.getElementById("streak-count").innerText = streak;
+    
+    // Home Dashboard Stats update
+    document.getElementById("home-streak").innerText = `${streak} 🔥`;
+    document.getElementById("home-money").innerText = `${money} 🪙`;
 }
 
 function startStudySessionTimer() {
@@ -494,7 +545,7 @@ function startStudySessionTimer() {
 
 function loadNextQuestion() {
     if (typeof questionsBank === 'undefined' || questionsBank.length === 0) {
-        document.getElementById("quiz-container").innerHTML = "<p style='color:#f44336; font-weight:bold;'>မေးခွန်းများ ရှာမတွေ့ပါ။</p>";
+        document.getElementById("quiz-container").innerHTML = "<p style='color:#f44336; font-weight:bold;'>မေးခွန်းများ ရှာမတွေ့ပါ။ questions.js ဖိုင်ကို စစ်ဆေးပါ။</p>";
         return;
     }
 
@@ -519,17 +570,20 @@ function loadNextQuestion() {
         <div class="question-box">${currentQuiz.question}</div>
         <div class="options">${optionsHTML}</div>
         <div id="explanation-box" class="explanation"></div>
-        <button class="finish-btn" onclick="endGame('🛑 လေ့ကျင့်ခန်းကို ပြီးဆုံးခဲ့ပါပြီ!')">လေ့ကျင့်ခန်း ပြီးဆုံးမည် (Finish)</button>
+        <button id="next-btn" class="next-btn" onclick="loadNextQuestion()">နောက်တစ်ပုဒ်သို့ ➡️</button>
+        <button class="finish-btn" onclick="endGame('🛑 လေ့ကျင့်ခန်းကို ပြီးဆုံးခဲ့ပါပြီ!')" style="margin-top: 10px;">လေ့ကျင့်ခန်း ပြီးဆုံးမည် (Finish)</button>
     `;
 }
 
 function checkAnswer(button, selected, correct, explanation) {
     const buttons = document.querySelectorAll('.options button');
-    buttons.forEach(btn => btn.disabled = true);
+    buttons.forEach(btn => btn.disabled = true); // ခလုတ်များကို ပိတ်မည်
 
     const expBox = document.getElementById("explanation-box");
     expBox.style.display = "block";
     expBox.innerHTML = `<strong>ရှင်းလင်းချက်:</strong> ${explanation}`;
+
+    const nextBtn = document.getElementById("next-btn");
 
     if (selected.trim() === correct.trim()) {
         button.style.background = "#1b2e1b";
@@ -542,7 +596,10 @@ function checkAnswer(button, selected, correct, explanation) {
         
         streak += 1;
         score += streak; 
-        money += 50; // မေးခွန်းတစ်ခု မှန်တိုင်း 50 Coins ဝင်မည်
+        money += 50; // မှန်တိုင်း 50 Coins ဝင်မည်
+        
+        // Coins များကို LocalStorage တွင် ချက်ချင်းသိမ်းမည် (မပျောက်စေရန်)
+        localStorage.setItem('quizCoins', money);
     } else {
         button.style.background = "#3c1f1f";
         button.style.color = "#ef9a9a";
@@ -557,11 +614,11 @@ function checkAnswer(button, selected, correct, explanation) {
 
     updateHeader();
 
-    setTimeout(() => {
-        if(totalSeconds > 0) {
-            loadNextQuestion();
-        }
-    }, 2000);
+    // အလိုအလျောက် ကျော်သွားခြင်း (setTimeout) ကို လုံးဝဖြုတ်လိုက်ပြီး 
+    // Next ခလုတ်ကိုသာ ပေါ်လာစေရန် လုပ်ဆောင်ထားပါသည် (Manual Control)
+    if (nextBtn) {
+        nextBtn.style.display = "block";
+    }
 }
 
 function endGame(message) {
