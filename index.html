@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Grammar Quiz - 20 Mins Study Session</title>
+    <title>English Grammar Quiz - Challenge & Leaderboard</title>
     <style>
         * { box-sizing: border-box; }
         body { 
@@ -43,7 +43,7 @@
             background: #2a2a2a; 
             color: #00e676; 
             font-weight: bold; 
-            font-size: 16px; 
+            font-size: 15px; 
             padding: 8px 12px;
             border-radius: 10px;
             margin-bottom: 15px;
@@ -55,7 +55,7 @@
         
         h2 { color: #ffffff; margin-top: 0; font-size: 22px; }
         
-        .start-btn { 
+        .start-btn, .action-btn { 
             background: #4caf50; 
             color: white; 
             border: none; 
@@ -63,12 +63,12 @@
             border-radius: 12px; 
             font-size: 16px; 
             cursor: pointer; 
-            margin-top: 20px; 
+            margin-top: 15px; 
             width: 100%; 
             font-weight: bold; 
             transition: 0.2s; 
         }
-        .start-btn:hover { background: #43a047; }
+        .start-btn:hover, .action-btn:hover { background: #43a047; }
 
         .question-box { 
             font-size: 18px; 
@@ -117,6 +117,35 @@
             border-radius: 10px; 
             line-height: 1.4;
         }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            text-align: center;
+        }
+
+        .leaderboard-list {
+            text-align: left;
+            background: #252525;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 1px solid #333;
+        }
+        .leaderboard-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            border-bottom: 1px solid #333;
+            font-size: 14px;
+        }
+        .leaderboard-item:last-child { border-bottom: none; }
     </style>
 </head>
 <body>
@@ -128,8 +157,15 @@
     </div>
     <h2>English Grammar Quiz</h2>
     <div id="quiz-container">
-        <p style="color: #aaa; font-size: 15px;">မိနစ် ၂၀ တိတိ ဆက်တိုက် စာကျက်လေ့ကျင့်မည့် စနစ်။</p>
-        <button class="start-btn" onclick="startQuiz()">စတင်မည် (မိနစ် ၂၀)</button>
+        <p style="color: #aaa; font-size: 15px;">မိနစ် ၂၀ စာကျက်ချိန်အတွင်း သူငယ်ချင်းများနှင့် အမှတ်ပြိုင်ဆိုင်မည့် စနစ်။</p>
+        <button class="start-btn" onclick="startQuiz()">စတင်မည် (Challenge)</button>
+        
+        <div id="leaderboard-section" class="leaderboard-list" style="margin-top: 20px;">
+            <strong style="color: #ff9800; font-size: 14px;">🏆 ထိပ်ဆုံး ရမှတ်များ (Leaderboard)</strong>
+            <div id="high-scores" style="margin-top: 8px;">
+                <p style="color: #777; font-size: 13px; text-align: center;">မှတ်တမ်း မရှိသေးပါ။</p>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -140,7 +176,11 @@ let score = 0;
 let streak = 0;
 let currentQuiz = null;
 let studyTimer = null;
-let totalSeconds = 20 * 60; // မိနစ် ၂၀ (စက္ကန့် ၁၂၀၀)
+let totalSeconds = 20 * 60;
+
+window.onload = function() {
+    displayLeaderboard();
+};
 
 function startQuiz() {
     score = 0;
@@ -171,8 +211,7 @@ function startStudySessionTimer() {
 
         if (totalSeconds <= 0) {
             clearInterval(studyTimer);
-            alert("🎉 မိနစ် ၂၀ စာကျက်ချိန် ပြီးဆုံးသွားပါပြီ!");
-            location.reload();
+            endGame("အချိန်ပြည့်သွားပါပြီ!");
         }
     }, 1000);
 }
@@ -198,8 +237,8 @@ function loadNextQuestion() {
 
     container.innerHTML = `
         <div class="study-timer">
-            <span>⏳ ကျန်ရှိချိန် (Study Time):</span>
-            <span id="session-timer" style="font-family: monospace; font-size: 18px;">${timeFormatted}</span>
+            <span>⏳ ကျန်ရှိချိန်:</span>
+            <span id="session-timer" style="font-family: monospace; font-size: 16px;">${timeFormatted}</span>
         </div>
         <div class="question-box">${currentQuiz.question}</div>
         <div class="options">${optionsHTML}</div>
@@ -244,7 +283,54 @@ function checkAnswer(button, selected, correct, explanation) {
         if(totalSeconds > 0) {
             loadNextQuestion();
         }
-    }, 2500);
+    }, 2000);
+}
+
+function endGame(message) {
+    if(studyTimer) clearInterval(studyTimer);
+    
+    const container = document.getElementById("quiz-container");
+    container.innerHTML = `
+        <h3 style="color: #ff9800;">${message}</h3>
+        <p style="font-size: 16px;">သင်ရရှိသော ရမှတ်: <b style="color: #4caf50;">${score} မှတ်</b></p>
+        <p style="font-size: 14px; color: #aaa;">Leaderboard တွင် မှတ်တမ်းတင်ရန် သင့်နာမည်ကို ထည့်ပါ:</p>
+        <input type="text" id="player-name" placeholder="သင့်နာမည် (Name) ထည့်ရန်..." maxlength="15">
+        <button class="action-btn" onclick="saveScore()">ရမှတ်သိမ်းမည်</button>
+    `;
+}
+
+function saveScore() {
+    const nameInput = document.getElementById("player-name").value.trim();
+    if(!nameInput) {
+        alert("ကျေးဇူးပြု၍ နာမည်ထည့်ပါ။");
+        return;
+    }
+
+    let highScores = JSON.parse(localStorage.getItem("quizHighScores")) || [];
+    highScores.push({ name: nameInput, score: score });
+    highScores.sort((a, b) => b.score - a.score);
+    highScores = highScores.slice(0, 5); // ထိပ်ဆုံး ၅ ယောက်ပဲ သိမ်းမည်
+
+    localStorage.setItem("quizHighScores", JSON.stringify(highScores));
+    location.reload();
+}
+
+function displayLeaderboard() {
+    let highScores = JSON.parse(localStorage.getItem("quizHighScores")) || [];
+    const lbContainer = document.getElementById("high-scores");
+    
+    if(highScores.length === 0) return;
+
+    let html = "";
+    highScores.forEach((item, index) => {
+        html += `
+            <div class="leaderboard-item">
+                <span>#${index + 1} ${item.name}</span>
+                <span style="color: #4caf50; font-weight: bold;">${item.score} မှတ်</span>
+            </div>
+        `;
+    });
+    lbContainer.innerHTML = html;
 }
 </script>
 
