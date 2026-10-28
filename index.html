@@ -45,7 +45,7 @@
             font-size: 11px;
             font-weight: bold;
             cursor: pointer;
-            padding: 6px 6px;
+            padding: 6px 4px;
             border-radius: 8px;
             transition: 0.2s;
         }
@@ -165,7 +165,7 @@
         /* Essay Style */
         textarea {
             width: 100%;
-            height: 140px;
+            height: 130px;
             background: #2a2a2a;
             color: #fff;
             border: 1px solid #444;
@@ -173,7 +173,7 @@
             padding: 12px;
             font-size: 14px;
             resize: vertical;
-            margin-top: 10px;
+            margin-top: 8px;
             font-family: inherit;
         }
         select {
@@ -336,8 +336,15 @@
             <span class="score">⭐ <span id="score-count">0</span></span>
             <span class="money">🪙 <span id="money-count">0</span></span>
         </div>
+
+        <!-- Quiz Mode Selector -->
+        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+            <button id="mode-normal-btn" class="start-btn" style="margin-top:0; padding:8px; font-size:13px; background:#4caf50;" onclick="setQuizMode('normal')">📝 Normal Quiz</button>
+            <button id="mode-speed-btn" class="start-btn" style="margin-top:0; padding:8px; font-size:13px; background:#333;" onclick="setQuizMode('speed')">⚡ Speed Mode</button>
+        </div>
+
         <div id="quiz-container">
-            <p style="color: #aaa; font-size: 14px; margin: 30px 0;">ပထမဆုံး 'ပင်မ' Tab မှတဆင့် Username ထည့်ပြီးမှ Quiz စတင်နိုင်ပါသည်။</p>
+            <p style="color: #aaa; font-size: 14px; margin: 20px 0;">ပထမဆုံး 'ပင်မ' Tab မှတဆင့် Username ထည့်ပြီးမှ Quiz စတင်နိုင်ပါသည်။</p>
             <button class="start-btn" onclick="startQuiz()">Quiz စတင်မည် (Start)</button>
         </div>
     </div>
@@ -345,10 +352,10 @@
     <!-- Essay AI Evaluator Tab -->
     <div id="essay-tab" class="tab-content">
         <h3 style="color: #4caf50; margin-top: 0;">✍️ AI Essay Evaluator</h3>
-        <p style="font-size: 12px; color: #aaa;">အင်္ဂလိပ်လို စာစီစာကွန်း ရေးသားပါ (တစ်နေ့လျှင် ၃ ကြိမ် ဆုကြေး Coins ရမည်)</p>
+        <p style="font-size: 12px; color: #aaa;" id="essay-subtitle-info">အင်္ဂလိပ်လို စာစီစာကွန်း ရေးသားပါ (Normal: ၃ ကြိမ် / VIP: ၅ ကြိမ်)</p>
         
         <div style="text-align: left; margin-top: 10px;">
-            <label style="font-size: 13px; color: #ff9800;">Essay ခေါင်းစဉ် ရွေးပါ:</label>
+            <label style="font-size: 13px; color: #ff9800;">Essay ခေါင်းစဉ် ရွေးပါ (Daily Challenge):</label>
             <select id="essay-topic">
                 <option value="My Favorite Hobby and Why I Like It">1. My Favorite Hobby and Why I Like It</option>
                 <option value="The Importance of Learning English Language">2. The Importance of Learning English Language</option>
@@ -384,7 +391,7 @@
         <div class="shop-card" style="border: 1px solid #ffd700; background: #2a261c;">
             <div class="shop-info">
                 <h4 style="color: #ffd700;">👑 VIP Pass (1 Month)</h4>
-                <p>• ဝင်ကြေး အခမဲ့<br>• Coins နှစ်ဆ (Double Coins)<br>• ရွှေရောင်နာမည် & သရဖူ</p>
+                <p>• ဝင်ကြေး အခမဲ့<br>• Coins နှစ်ဆ (Double Coins)<br>• Essay ဆုကြေး တစ်နေ့ ၅ ကြိမ်<br>• ရွှေရောင်နာမည် & သရဖူ</p>
             </div>
             <button class="buy-btn" style="background: #ffd700;" onclick="buyVIP()">🪙 10000</button>
         </div>
@@ -542,7 +549,10 @@ let isVip = localStorage.getItem('isVipUser') === 'true';
 let streak = 0;
 let currentQuiz = null;
 let studyTimer = null;
+let speedTimer = null;
 let totalSeconds = 20 * 60;
+let speedSeconds = 30;
+let currentQuizMode = 'normal'; // 'normal' or 'speed'
 
 window.onload = function() {
     checkSavedUser();
@@ -632,6 +642,21 @@ function saveInitialUsername() {
     startQuiz();
 }
 
+function setQuizMode(mode) {
+    currentQuizMode = mode;
+    const normalBtn = document.getElementById("mode-normal-btn");
+    const speedBtn = document.getElementById("mode-speed-btn");
+
+    if (mode === 'normal') {
+        normalBtn.style.background = "#4caf50";
+        speedBtn.style.background = "#333";
+    } else {
+        normalBtn.style.background = "#333";
+        speedBtn.style.background = "#ff9800";
+    }
+    startQuiz();
+}
+
 function startQuiz() {
     if(!playerName) {
         alert("ကျေးဇူးပြု၍ ပထမဆုံး 'ပင်မ' Tab တွင် နာမည်အရင်ထည့်ပါ။");
@@ -641,8 +666,13 @@ function startQuiz() {
     score = 0;
     streak = 0;
     totalSeconds = 20 * 60;
+    if(studyTimer) clearInterval(studyTimer);
+    if(speedTimer) clearInterval(speedTimer);
+
     updateHeader();
-    startStudySessionTimer();
+    if(currentQuizMode === 'normal') {
+        startStudySessionTimer();
+    }
     loadNextQuestion();
 }
 
@@ -657,14 +687,12 @@ function updateHeader() {
 function checkVipStatusUI() {
     const vipText = document.getElementById("vip-status-text");
     if(isVip && vipText) {
-        vipText.innerHTML = "👑 သင်သည် VIP ဖြစ်နေပါပြီ (ဝင်ကြေး အခမဲ့ & Coins ၂ ဆ)";
+        vipText.innerHTML = "👑 သင်သည် VIP ဖြစ်နေပါပြီ (ဝင်ကြေး အခမဲ့ & Coins ၂ ဆ & Essay ၅ ကြိမ်)";
         vipText.style.color = "#00e676";
     }
 }
 
 function startStudySessionTimer() {
-    if(studyTimer) clearInterval(studyTimer);
-
     studyTimer = setInterval(() => {
         totalSeconds--;
         let mins = Math.floor(totalSeconds / 60);
@@ -688,9 +716,7 @@ function loadNextQuestion() {
         return;
     }
 
-    let mins = Math.floor(totalSeconds / 60);
-    let secs = totalSeconds % 60;
-    let timeFormatted = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+    if(speedTimer) clearInterval(speedTimer);
 
     const container = document.getElementById("quiz-container");
     const randomIndex = Math.floor(Math.random() * questionsBank.length);
@@ -701,20 +727,74 @@ function loadNextQuestion() {
         optionsHTML += `<button onclick="checkAnswer(this, '${opt.replace(/'/g, "\\'")}', '${currentQuiz.answer.replace(/'/g, "\\'")}', '${currentQuiz.explanation.replace(/'/g, "\\'")}')">${opt}</button>`;
     });
 
+    let timerHeaderHTML = "";
+    if (currentQuizMode === 'normal') {
+        let mins = Math.floor(totalSeconds / 60);
+        let secs = totalSeconds % 60;
+        let timeFormatted = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        timerHeaderHTML = `
+            <div class="study-timer">
+                <span>⏳ ကျန်ရှိချိန်:</span>
+                <span id="session-timer" style="font-family: monospace; font-size: 16px;">${timeFormatted}</span>
+            </div>
+        `;
+    } else {
+        speedSeconds = 30;
+        timerHeaderHTML = `
+            <div class="study-timer" style="background: #3c1f1f; border-color: #f44336; color: #ff5252;">
+                <span>⚡ Speed Mode (စက္ကန့် ၃၀):</span>
+                <span id="speed-timer" style="font-family: monospace; font-size: 16px;">30s</span>
+            </div>
+        `;
+    }
+
     container.innerHTML = `
-        <div class="study-timer">
-            <span>⏳ ကျန်ရှိချိန်:</span>
-            <span id="session-timer" style="font-family: monospace; font-size: 16px;">${timeFormatted}</span>
-        </div>
+        ${timerHeaderHTML}
         <div class="question-box">${currentQuiz.question}</div>
         <div class="options">${optionsHTML}</div>
         <div id="explanation-box" class="explanation"></div>
         <button id="next-btn" class="next-btn" onclick="loadNextQuestion()">နောက်တစ်ပုဒ်သို့ ➡️</button>
         <button class="finish-btn" onclick="endGame('🛑 လေ့ကျင့်ခန်းကို ပြီးဆုံးခဲ့ပါပြီ!')" style="margin-top: 10px;">လေ့ကျင့်ခန်း ပြီးဆုံးမည် (Finish)</button>
     `;
+
+    if (currentQuizMode === 'speed') {
+        startSpeedCountdown();
+    }
+}
+
+function startSpeedCountdown() {
+    speedTimer = setInterval(() => {
+        speedSeconds--;
+        const speedDisplay = document.getElementById("speed-timer");
+        if(speedDisplay) {
+            speedDisplay.innerText = `${speedSeconds}s`;
+        }
+
+        if (speedSeconds <= 0) {
+            clearInterval(speedTimer);
+            // Time out counted as wrong answer
+            const buttons = document.querySelectorAll('.options button');
+            buttons.forEach(btn => btn.disabled = true);
+            
+            const expBox = document.getElementById("explanation-box");
+            expBox.style.display = "block";
+            expBox.style.background = "#3c1f1f";
+            expBox.style.color = "#ef9a9a";
+            expBox.style.borderColor = "#f44336";
+            expBox.innerHTML = `<strong>⏰ အချိန်ကုန်သွားပါပြီ!</strong> အဖြေမှန်မှာ: ${currentQuiz.answer}`;
+            
+            streak = 0;
+            updateHeader();
+            
+            const nextBtn = document.getElementById("next-btn");
+            if(nextBtn) nextBtn.style.display = "block";
+        }
+    }, 1000);
 }
 
 function checkAnswer(button, selected, correct, explanation) {
+    if(speedTimer) clearInterval(speedTimer);
+
     const buttons = document.querySelectorAll('.options button');
     buttons.forEach(btn => btn.disabled = true);
 
@@ -737,7 +817,8 @@ function checkAnswer(button, selected, correct, explanation) {
         score += streak; 
         
         let earnedCoins = isVip ? 100 : 50;
-        money += earnedCoins; 
+        if (currentQuizMode === 'speed') earnedCoins *= 1.5; // Speed mode bonus
+        money += Math.floor(earnedCoins); 
         localStorage.setItem('quizCoins', money);
     } else {
         button.style.background = "#3c1f1f";
@@ -758,7 +839,7 @@ function checkAnswer(button, selected, correct, explanation) {
     }
 }
 
-/* Essay Logic & Anti-Cheat Daily Limits */
+/* Essay Logic & Anti-Cheat Daily Limits with VIP Extended Limits */
 function updateWordCount() {
     const text = document.getElementById("essay-input").value.trim();
     const words = text ? text.split(/\s+/).length : 0;
@@ -770,10 +851,15 @@ function getTodayDateString() {
     return `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`;
 }
 
+function getMaxDailyEssayLimit() {
+    return isVip ? 5 : 3;
+}
+
 function checkDailyEssayLimitUI() {
     const today = getTodayDateString();
     let lastDate = localStorage.getItem('essayLastDate');
     let count = parseInt(localStorage.getItem('essayDailyCount')) || 0;
+    let maxLimit = getMaxDailyEssayLimit();
 
     if (lastDate !== today) {
         localStorage.setItem('essayLastDate', today);
@@ -782,9 +868,13 @@ function checkDailyEssayLimitUI() {
     }
 
     const limitInfo = document.getElementById("essay-limit-info");
+    const subInfo = document.getElementById("essay-subtitle-info");
     if(limitInfo) {
-        let remaining = Math.max(0, 3 - count);
-        limitInfo.innerText = `🪙 ကျန်ဆုကြေးအကြိမ်: ${remaining}/3`;
+        let remaining = Math.max(0, maxLimit - count);
+        limitInfo.innerText = `🪙 ကျန်ဆုကြေးအကြိမ်: ${remaining}/${maxLimit}`;
+    }
+    if(subInfo) {
+        subInfo.innerText = isVip ? "👑 VIP Mode: တစ်နေ့လျှင် ၅ ကြိမ်အထိ ဆုကြေး Coins ရမည်" : "အင်္ဂလိပ်လို စာစီစာကွန်း ရေးသားပါ (Normal: ၃ ကြိမ် / VIP: ၅ ကြိမ်)";
     }
 }
 
@@ -793,6 +883,7 @@ function checkEssayWithAI() {
     const text = document.getElementById("essay-input").value.trim();
     const btn = document.getElementById("check-essay-btn");
     const feedbackBox = document.getElementById("essay-feedback-box");
+    let maxLimit = getMaxDailyEssayLimit();
 
     if (!text || text.split(/\s+/).length < 15) {
         alert("ကျေးဇူးပြု၍ Essay ကို အနည်းဆုံး စာလုံး ၁၅ လုံးထက်မနည်း ရေးသားပါ!");
@@ -826,7 +917,7 @@ function checkEssayWithAI() {
         let isPass = mockScore >= 70;
         let rewardGiven = false;
 
-        if (isPass && count < 3) {
+        if (isPass && count < maxLimit) {
             let reward = isVip ? 1000 : 500;
             money += reward;
             localStorage.setItem('quizCoins', money);
@@ -837,11 +928,10 @@ function checkEssayWithAI() {
             rewardGiven = true;
         }
 
-        // Save submitted essay to prevent immediate duplicates
         localStorage.setItem('lastSubmittedEssay', text);
         checkDailyEssayLimitUI();
 
-        let remainingLimit = Math.max(0, 3 - count);
+        let remainingLimit = Math.max(0, maxLimit - count);
 
         feedbackBox.innerHTML = `
             <h4 style="margin: 0 0 10px 0; color: #4caf50;">📊 AI Essay Evaluation Results</h4>
@@ -851,7 +941,7 @@ function checkEssayWithAI() {
             <hr style="border: 0.5px solid #444; margin: 10px 0;">
             <p style="color: #a5d6a7;"><b>✅ Strengths & Structure:</b> Essay ၏ အစီအစဉ် ရေးသားပုံ သန့်ရှင်းပြီး ခေါင်းစဉ်နှင့် ကိုက်ညီမှု ရှိပါသည်။</p>
             <p style="color: #ffb74d;"><b>💡 Suggestions for Improvement:</b> Grammar နှင့် Sentence structures များကို ပိုမို ကြွယ်ဝအောင် ထည့်သွင်းရေးသားပါက ပိုမို အမှတ်ကောင်းနိုင်ပါသည်။</p>
-            ${rewardGiven ? `<p style="color: #ffd700; font-weight: bold; margin-top: 10px;">🎉 ဂုဏ်ယူပါတယ်! ရမှတ် ၇၀ ကျော်၍ ဆုကြေး 🪙 ${isVip ? '1000 (VIP 2x)' : '500'} Coins ရရှိပါသည်။ (ယနေ့ ကျန်ဆုကြေးအကြိမ်: ${remainingLimit}/3)</p>` : (isPass ? `<p style="color: #ff9800; font-weight: bold; margin-top: 10px;">ℹ️ ယနေ့အတွက် ဆုကြေး Coins ရယူမှု အကြိမ်ရေပြည့်သွားပါပြီ (၃/၃)။ သို့သော် Feedback ကို ဆက်လက်လေ့လာနိုင်ပါသည်။</p>` : '')}
+            ${rewardGiven ? `<p style="color: #ffd700; font-weight: bold; margin-top: 10px;">🎉 ဂုဏ်ယူပါတယ်! ရမှတ် ၇၀ ကျော်၍ ဆုကြေး 🪙 ${isVip ? '1000 (VIP 2x)' : '500'} Coins ရရှိပါသည်။ (ယနေ့ ကျန်ဆုကြေးအကြိမ်: ${remainingLimit}/${maxLimit})</p>` : (isPass ? `<p style="color: #ff9800; font-weight: bold; margin-top: 10px;">ℹ️ ယနေ့အတွက် ဆုကြေး Coins ရယူမှု အကြိမ်ရေပြည့်သွားပါပြီ (${maxLimit}/${maxLimit})။ သို့သော် Feedback ကို ဆက်လက်လေ့လာနိုင်ပါသည်။</p>` : '')}
         `;
 
         btn.disabled = false;
@@ -873,7 +963,8 @@ function buyVIP() {
         updateHeader();
         checkVipStatusUI();
         checkSavedUser();
-        alert("🎉 ဂုဏ်ယူပါတယ်! တစ်လစာ VIP Pass ကို အောင်မြင်စွာ ဝယ်ယူပြီးပါပြီ။ 👑 ဝင်ကြေးအခမဲ့နှင့် Coins နှစ်ဆ (Double Coins) ခံစားခွင့်များ ရရှိပါပြီ!");
+        checkDailyEssayLimitUI();
+        alert("🎉 ဂုဏ်ယူပါတယ်! တစ်လစာ VIP Pass ကို အောင်မြင်စွာ ဝယ်ယူပြီးပါပြီ။ 👑 ဝင်ကြေးအခမဲ့၊ Coins နှစ်ဆနှင့် Essay ဆုကြေး တစ်နေ့ ၅ ကြိမ် အကျိုးခံစားခွင့်များ ရရှိပါပြီ!");
     } else {
         alert(`❌ Coins မလုံလောက်ပါ။ တစ်လစာ VIP ဝယ်ရန် 🪙 ${price} လိုအပ်ပါသည်။`);
     }
@@ -909,6 +1000,7 @@ function joinTournament() {
 
 function endGame(message) {
     if(studyTimer) clearInterval(studyTimer);
+    if(speedTimer) clearInterval(speedTimer);
     
     const container = document.getElementById("quiz-container");
     container.innerHTML = `
