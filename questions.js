@@ -132,75 +132,411 @@ const questionsBank = [
         explanation: "'happy' ၏ ဆန့်ကျင်ဘက် အဓိပ္ပာယ်မှာ 'sad' ဖြစ်သည်။" 
     },
     { 
-        question: "He said that he _____ tired.", 
-        options: ["is", "was", "will be", "has been"], 
-        answer: "was",
-        explanation: "Reporting verb မှာ Past (said) ဖြစ်သဖြင့် အထဲက Tense လည်း Past (was) ဖြစ်ရပါမည်။" 
+        question: "A person who writes books is called a _____.", 
+        options: ["teacher", "doctor", "writer", "driver"], 
+        answer: "writer",
+        explanation: "စာအုပ်ရေးသူကို 'writer' (စာရေးဆရာ) ဟု ခေါ်သည်။" 
     },
     { 
-        question: "Unless you work hard, you _____ pass.", 
-        options: ["will", "won't", "can", "would"], 
-        answer: "won't",
-        explanation: "Unless သည် အငြင်းအနက်ဆောင်သဖြင့် ဒုတိယဝါကျတွင် 'won't' သုံးရပါသည်။" 
+        question: "The opposite of 'cold' is _____.", 
+        options: ["cool", "warm", "hot", "freezing"], 
+        answer: "hot",
+        explanation: "'cold' (အေးသော) ၏ ဆန့်ကျင်ဘက်မှာ 'hot' (ပူသော) ဖြစ်သည်။" 
     },
     { 
-        question: "I wish I _____ a millionaire.", 
-        options: ["am", "was", "were", "be"], 
-        answer: "were",
-        explanation: "မဖြစ်နိုင်သော ဆန္ဒကိုဖော်ပြသည့် Subjunctive mood တွင် 'were' ကိုသာ အမြဲသုံးသည်။" 
+        question: "We use a pen for _____.", 
+        options: ["eating", "writing", "sleeping", "running"], 
+        answer: "writing",
+        explanation: "ဖောင်တိန်ကို စာရေးရန်အတွက် အသုံးပြုသည်။" 
     },
     { 
-        question: "Hardly had I arrived at the station _____ the train left.", 
-        options: ["when", "than", "then", "before"], 
-        answer: "when",
-        explanation: "Hardly ... များနှင့် တွဲဖက်သုံးသော conjunction မှာ 'when' ဖြစ်သည်။" 
+        question: "She _____ her breakfast before she went to school.", 
+        options: ["eat", "ate", "had eaten", "has eaten"], 
+        answer: "had eaten",
+        explanation: "အတိတ်တွင် ပထမဆုံးပြီးဆုံးခဲ့သောလုပ်ရပ်ဖြစ်၍ Past Perfect Tense သုံးရသည်။" 
     },
     { 
-        question: "No sooner had I reached home _____ it started to rain.", 
-        options: ["when", "than", "then", "before"], 
-        answer: "than",
-        explanation: "No sooner နှင့် တွဲဖက်သုံးသည်မှာ 'than' ဖြစ်ပါသည်။" 
+        question: "If it rains, we _____ at home.", 
+        options: ["stay", "stayed", "will stay", "would stay"], 
+        answer: "will stay",
+        explanation: "First Conditional ဖြစ်၍ main clause တွင် 'will + V1' ဖြစ်သည်။" 
     },
     { 
-        question: "Despite _____ hard, he failed the exam.", 
-        options: ["study", "studying", "studied", "studies"], 
-        answer: "studying",
-        explanation: "Despite ပြီးနောက် Gerund (verb-ing) ကို အသုံးပြုရပါသည်။" 
+        question: "He is the _____ boy in our class.", 
+        options: ["tall", "taller", "tallest", "more tall"], 
+        answer: "tallest",
+        explanation: "အမြင့်ဆုံးဖြစ်ကြောင်း ညွှန်းဆိုသော Superlative ဖြစ်သည်။" 
     },
     { 
-        question: "In spite _____ the rain, we went out.", 
-        options: ["of", "in", "on", "at"], 
-        answer: "of",
-        explanation: "In spite နှင့် တွဲသုံးသော preposition မှာ 'of' ဖြစ်သည် (Despite နှင့် အတူတူပင်)။" 
-    },
-    { 
-        question: "She prefers coffee _____ tea.", 
-        options: ["than", "to", "over", "from"], 
+        question: "This book belongs _____ me.", 
+        options: ["to", "for", "with", "at"], 
         answer: "to",
-        explanation: "Prefer ဖြင့် နှိုင်းယှဉ်ပြလျှင် 'than' မဟုတ်ဘဲ 'to' ကို သုံးရသည်။" 
+        explanation: "'belong' နောက်တွင် 'to' ဖြင့် တွဲသုံးရသည်။" 
+    },
+    { 
+        question: "I have known him _____ five years.", 
+        options: ["since", "for", "from", "during"], 
+        answer: "for",
+        explanation: "အချိန်ကာလ ကြာမြင့်ချိန်ကို ဖော်ပြရာတွင် 'for' ကို သုံးသည်။" 
+    },
+    { 
+        question: "She has lived here _____ 2020.", 
+        options: ["since", "for", "from", "in"], 
+        answer: "since",
+        explanation: "စတင်သည့်အချိန်အတိအကျကို ဖော်ပြရန် 'since' ကို သုံးသည်။" 
+    },
+    { 
+        question: "He speaks English very _____.", 
+        options: ["good", "better", "well", "best"], 
+        answer: "well",
+        explanation: "Verb ကိုထူးပြုသောကြောင့် Adverb ဖြစ်သည့် 'well' ကို သုံးရသည်။" 
+    },
+    { 
+        question: "Mount Everest is the _____ mountain in the world.", 
+        options: ["high", "higher", "highest", "most high"], 
+        answer: "highest",
+        explanation: "အမြင့်ဆုံးတောင်ဖြစ်၍ Superlative 'highest' ဖြစ်သည်။" 
+    },
+    { 
+        question: "Neither John nor his brothers _____ present yesterday.", 
+        options: ["was", "were", "is", "are"], 
+        answer: "were",
+        explanation: "နီးစပ်ရာ subject ဖြစ်သော 'brothers' (plural) နှင့် လိုက်လျောညီထွေရှိရမည်။" 
+    },
+    { 
+        question: "Bread and butter _____ my favorite breakfast.", 
+        options: ["is", "are", "were", "be"], 
+        answer: "is",
+        explanation: "အစားအစာတစ်ခုတည်းအဖြစ် ယူဆသော Singular Idea ဖြစ်၍ 'is' ဖြစ်သည်။" 
+    },
+    { 
+        question: "Open the door, _____?", 
+        options: ["do you", "will you", "don't you", "aren't you"], 
+        answer: "will you",
+        explanation: "Imperative sentence ၏ Question Tag မှာ 'will you' ဖြစ်သည်။" 
+    },
+    { 
+        question: "Let's go for a walk, _____?", 
+        options: ["shall we", "will you", "don't we", "let us"], 
+        answer: "shall we",
+        explanation: "'Let's' ပါသောဝါကျ၏ Question Tag မှာ 'shall we' ဖြစ်သည်။" 
+    },
+    { 
+        question: "She is afraid _____ spiders.", 
+        options: ["of", "from", "with", "at"], 
+        answer: "of",
+        explanation: "'afraid' နောက်တွင် 'of' ဖြင့် တွဲသုံးရသည်။" 
     },
     { 
         question: "He congratulated me _____ my success.", 
+        options: ["for", "on", "at", "in"], 
+        answer: "on",
+        explanation: "ဂုဏ်ပြုသည်ကို ဖော်ပြရာတွင် 'congratulate on' ဟု သုံးသည်။" 
+    },
+    { 
+        question: "By this time tomorrow, we _____ our exam.", 
+        options: ["finish", "will finish", "will have finished", "finished"], 
+        answer: "will have finished",
+        explanation: "အနာဂတ်အချိန်တစ်ခုမတိုင်မီ ပြီးစီးမည့်လုပ်ရပ်ဖြစ်၍ Future Perfect ဖြစ်သည်။" 
+    },
+    { 
+        question: "Physics _____ my favorite subject.", 
+        options: ["is", "are", "were", "have"], 
+        answer: "is",
+        explanation: "ဘာသာရပ်အမည်ဖြစ်၍ ပုံစံအဆစ်ပါသော်လည်း Singular အဖြစ် 'is' သုံးသည်။" 
+    },
+    { 
+        question: "The news _____ true.", 
+        options: ["is", "are", "were", "have been"], 
+        answer: "is",
+        explanation: "'news' သည် uncountable noun ဖြစ်ပြီး Singular ယူသည်။" 
+    },
+    { 
+        question: "She sings _____ than her sister.", 
+        options: ["sweet", "sweeter", "sweetly", "more sweetly"], 
+        answer: "more sweetly",
+        explanation: "Adverb ၏ Comparative form ဖြစ်၍ 'more sweetly' ဖြစ်သည်။" 
+    },
+    { 
+        question: "He runs as _____ as a deer.", 
+        options: ["fast", "faster", "fastest", "more fast"], 
+        answer: "fast",
+        explanation: "'as... as' ကြားတွင် Positive degree ဖြစ်သည့် 'fast' ကို သုံးရသည်။" 
+    },
+    { 
+        question: "One of the boys _____ absent today.", 
+        options: ["is", "are", "were", "have"], 
+        answer: "is",
+        explanation: "'One of' ပြီးနောက် plural noun လာသော်လည်း verb သည် 'One' ကိုမူတည်၍ Singular ယူသည်။" 
+    },
+    { 
+        question: "Each of the students _____ a book.", 
+        options: ["has", "have", "are having", "were"], 
+        answer: "has",
+        explanation: "'Each' သည် Singular အဖြစ် ခံယူသောကြောင့် 'has' ကို သုံးရသည်။" 
+    },
+    { 
+        question: "The jury _____ divided in their opinions.", 
+        options: ["was", "were", "is", "has"], 
+        answer: "were",
+        explanation: "အဖွဲ့ဝင်ချင်း သဘောကွဲလွဲနေသဖြင့် Plural verb 'were' ကို သုံးရသည်။" 
+    },
+    { 
+        question: "Ten miles _____ a long distance to walk.", 
+        options: ["is", "are", "were", "have"], 
+        answer: "is",
+        explanation: "အကွာအဝေးပမာဏတစ်ခုလုံးကို စုစုပေါင်း Singular အဖြစ် သတ်မှတ်သည်။" 
+    },
+    { 
+        question: "He is senior _____ me in service.", 
+        options: ["than", "to", "from", "with"], 
+        answer: "to",
+        explanation: "Latin comparative များနှင့်အတူ 'than' အစား 'to' ကို သုံးရသည်။" 
+    },
+    { 
+        question: "Prevention is better _____ cure.", 
+        options: ["then", "than", "to", "as"], 
+        answer: "than",
+        explanation: "စကားပုံနှိုင်းယှဉ်ချက်တွင် 'better than' ဟု သုံးသည်။" 
+    },
+    { 
+        question: "She insisted _____ paying for the meal.", 
         options: ["on", "in", "at", "for"], 
         answer: "on",
-        explanation: "Congratulate နှင့် တွဲဖက်သုံးသော Preposition မှာ 'on' ဖြစ်ပါသည်။" 
+        explanation: "'insist' နောက်တွင် Preposition 'on' ကို သုံးရပါသည်။" 
     },
     { 
-        question: "She is capable _____ doing this job.", 
-        options: ["of", "in", "at", "with"], 
+        question: "I am looking forward to _____ you soon.", 
+        options: ["see", "seeing", "seen", "saw"], 
+        answer: "seeing",
+        explanation: "'look forward to' နောက်တွင် Gerund (verb-ing) လိုက်ရပါသည်။" 
+    },
+    { 
+        question: "The house was built _____ 1995.", 
+        options: ["in", "on", "at", "by"], 
+        answer: "in",
+        explanation: "ခုနှစ်များ၏ ရှေ့တွင် Preposition 'in' ကို သုံးရပါသည်။" 
+    },
+    { 
+        question: "Neither of the two answers _____ correct.", 
+        options: ["is", "are", "were", "be"], 
+        answer: "is",
+        explanation: "'Neither of' ပြီးလျှင် Singular verb (is) ကို သုံးရပါသည်။" 
+    },
+    { 
+        question: "He was accused _____ stealing the money.", 
+        options: ["of", "for", "with", "by"], 
         answer: "of",
-        explanation: "Capable နှင့် တွဲသုံးသော Preposition မှာ 'of' ဖြစ်သည်။" 
+        explanation: "'accuse' ပြီးနောက် Preposition 'of' ကို သုံးရပါသည်။" 
     },
     { 
-        question: "He prevented me _____ going there.", 
-        options: ["from", "of", "to", "at"], 
-        answer: "from",
-        explanation: "Prevent နှင့် တွဲဖက်သုံးသော Preposition မှာ 'from' ဖြစ်သည်။" 
+        question: "You had better _____ a doctor at once.", 
+        options: ["see", "seeing", "saw", "seen"], 
+        answer: "see",
+        explanation: "'had better' နောက်တွင် Bare Infinitive (V1 - see) ကို သုံးရပါသည်။" 
     },
     { 
-        question: "Thank you _____ your help.", 
-        options: ["for", "with", "to", "of"], 
-        answer: "for",
-        explanation: "ကျေးဇူးတင်မှုကို ဖော်ပြရာတွင် Thank you 'for' ဟု သုံးရပါသည်။" 
+        question: "He speaks as if he _____ everything.", 
+        options: ["knows", "knew", "has known", "knowing"], 
+        answer: "knew",
+        explanation: "မဖြစ်နိုင်သော အခြေအနေကို ဖော်ပြသည့် 'as if' နောက်တွင် Past tense (knew) သုံးရပါသည်။" 
+    },
+    { 
+        question: "She succeeded _____ passing the examination.", 
+        options: ["in", "on", "at", "with"], 
+        answer: "in",
+        explanation: "'succeed' ပြီးနောက် Preposition 'in' ကို သုံးရပါသည်။" 
+    },
+    { 
+        question: "I would rather stay at home than _____ out tonight.", 
+        options: ["go", "going", "went", "gone"], 
+        answer: "go",
+        explanation: "'would rather ... than' ပုံစံတွင် မူရင်း Verb (go) ကို သုံးရပါသည်။" 
+    },
+    { 
+        question: "He is addicted _____ playing online games.", 
+        options: ["to", "with", "in", "for"], 
+        answer: "to",
+        explanation: "'addicted' ပြီးနောက် Preposition 'to' ကို သုံးရပါသည်။" 
+    },
+    { 
+        question: "Hardly had I arrived home _____ it started to rain.", 
+        options: ["when", "than", "before", "after"], 
+        answer: "when",
+        explanation: "'Hardly... when' တွဲဖက်သုံးသော Correlative conjunction ဖြစ်ပါသည်။" 
+    },
+    { 
+        question: "No sooner had we reached the station _____ the train departed.", 
+        options: ["when", "than", "before", "then"], 
+        answer: "than",
+        explanation: "'No sooner... than' တွဲဖက်သုံးရပါသည်။" 
+    },
+    { 
+        question: "She is too weak _____ walk.", 
+        options: ["to", "for", "that", "so"], 
+        answer: "to",
+        explanation: "'too... to' ပုံစံအရ Adjective ပြီးနောက် 'to + V1' လိုက်ရပါသည်။" 
+    },
+    { 
+        question: "He is so smart _____ he can solve any problem.", 
+        options: ["that", "to", "as", "than"], 
+        answer: "that",
+        explanation: "'so... that' (အလွန်... ဖြစ်ေသာကြောင့်) ဆိုသည့် Result clause ဖြစ်သည်။" 
+    },
+    { 
+        question: "Despite _____ hard, he didn't pass the exam.", 
+        options: ["study", "studying", "studied", "studies"], 
+        answer: "studying",
+        explanation: "'Despite' ပြီးနောက် Gerund (studying) ကို သုံးရပါသည်။" 
+    },
+    { 
+        question: "In spite _____ his illness, he went to work.", 
+        options: ["of", "in", "on", "at"], 
+        answer: "of",
+        explanation: "'In spite of' သည် despite ကဲ့သို့ပင် အသေသုံး Preposition ဖြစ်သည်။" 
+    },
+    { 
+        question: "He asked me where I _____.", 
+        options: ["live", "lived", "am living", "living"], 
+        answer: "lived",
+        explanation: "Indirect Speech တွင် ရှေ့က Verb (asked) က Past ဖြစ်၍ နောက်က Tense လည်း Past (lived) ဖြစ်ရမည်။" 
+    },
+    { 
+        question: "She told me that she _____ a new car.", 
+        options: ["buy", "bought", "has bought", "is buying"], 
+        answer: "bought",
+        explanation: "Reporting verb က Past (told) ဖြစ်သောကြောင့် Past Tense (bought) သုံးရသည်။" 
+    },
+    { 
+        question: "The teacher advised us _____ hard.", 
+        options: ["study", "to study", "studying", "studied"], 
+        answer: "to study",
+        explanation: "'advise someone to do something' ပုံစံအရ Infinitive ('to study') ကို သုံးရသည်။" 
+    },
+    { 
+        question: "My father made me _____ my room.", 
+        options: ["clean", "to clean", "cleaning", "cleaned"], 
+        answer: "clean",
+        explanation: "'make' causative verb နောက်တွင် Bare Infinitive (clean) သုံးရသည်။" 
+    },
+    { 
+        question: "If I _____ money, I would buy a new phone.", 
+        options: ["have", "had", "has", "having"], 
+        answer: "had",
+        explanation: "Second Conditional ပုံစံ (If + V2, Subject + would + V1) ဖြစ်ပါသည်။" 
+    },
+    { 
+        question: "Unless you hurry, you _____ miss the train.", 
+        options: ["will", "won't", "can", "would"], 
+        answer: "will",
+        explanation: "'Unless' ပါသောဝါကျ၏ အဓိပ္ပာယ်မှာ မလုပ်ရင်ဖြစ်မည်ဆိုသည့် အနာဂတ်အခြေအနေဖြစ်၍ 'will' သုံးသည်။" 
+    },
+    { 
+        question: "She speaks English as if she _____ a native speaker.", 
+        options: ["is", "were", "be", "was"], 
+        answer: "were",
+        explanation: "'as if' ဖြင့် မဖြစ်နိုင်သော အခြေအနေကို ညွှန်ပြရာတွင် 'were' ကိုသာ အမြဲသုံးသည်။" 
+    },
+    { 
+        question: "I wish I _____ how to swim.", 
+        options: ["know", "knew", "known", "knowing"], 
+        answer: "knew",
+        explanation: "မဖြစ်နိုင်သော ဆန္ဒကိုဖော်ပြသည့် 'I wish' ပြီးနောက် Past tense (knew) သုံးရသည်။" 
+    },
+    { 
+        question: "The boy _____ won the prize is my cousin.", 
+        options: ["who", "which", "whom", "whose"], 
+        answer: "who",
+        explanation: "လူပုဂ္ဂိုလ် (Subject) ကို ကိုယ်စားပြုသော Relative Pronoun မှာ 'who' ဖြစ်သည်။" 
+    },
+    { 
+        question: "This is the village _____ I was born.", 
+        options: ["which", "where", "who", "when"], 
+        answer: "where",
+        explanation: "နေရာဌာန (Place) ကို ကိုယ်စားပြုသော Relative Pronoun မှာ 'where' ဖြစ်သည်။" 
+    },
+    { 
+        question: "He is the person _____ opinion I respect most.", 
+        options: ["who", "whom", "whose", "which"], 
+        answer: "whose",
+        explanation: "ပိုင်ဆိုင်မှုကိုပြသော Relative Pronoun မှာ 'whose' ဖြစ်သည်။" 
+    },
+    { 
+        question: "The book _____ you lent me was very interesting.", 
+        options: ["who", "whom", "which", "where"], 
+        answer: "which",
+        explanation: "ပစ္စည်းအရာဝတ္ထုကို ကိုယ်စားပြုသော Relative Pronoun မှာ 'which' ဖြစ်သည်။" 
+    },
+    { 
+        question: "She is used _____ early in the morning.", 
+        options: ["to get up", "to getting up", "get up", "getting up"], 
+        answer: "to getting up",
+        explanation: "'be used to' ပြီးနောက် Gerund (getting up) ကို အသုံးပြုရပါသည်။" 
+    },
+    { 
+        question: "He used to _____ cigarettes, but he stopped now.", 
+        options: ["smoke", "smoking", "smoked", "be smoking"], 
+        answer: "smoke",
+        explanation: "အတိတ်က လုပ်လေ့ရှိခဲ့မှုကိုပြသည့် 'used to' ပြီးနောက် Verb မူရင်း (smoke) လိုက်ရသည်။" 
+    },
+    { 
+        question: "Neither of the boys _____ completed the task.", 
+        options: ["has", "have", "are", "were"], 
+        answer: "has",
+        explanation: "'Neither of' ပြီးနောက် Singular verb (has) ကို အသုံးပြုရပါသည်။" 
+    },
+    { 
+        question: "All the money _____ been spent.", 
+        options: ["has", "have", "are", "were"], 
+        answer: "has",
+        explanation: "'Money' သည် Uncountable noun ဖြစ်၍ Singular verb (has) ကို သုံးရသည်။" 
+    },
+    { 
+        question: "Measles _____ a dangerous disease for children.", 
+        options: ["is", "are", "were", "have"], 
+        answer: "is",
+        explanation: "ရောဂါအမည်များ ('Measles') သည် ပုံစံအဆစ်ပါသော်လည်း Singular (is) ဖြစ်သည်။" 
+    },
+    { 
+        question: "A number of students _____ absent today.", 
+        options: ["is", "are", "was", "has"], 
+        answer: "are",
+        explanation: "'A number of' ပြီးနောက် Plural verb ('are') ကို သုံးရပါသည်။" 
+    },
+    { 
+        question: "The number of students in our class _____ forty.", 
+        options: ["is", "are", "were", "have"], 
+        answer: "is",
+        explanation: "'The number of' ၏ Subject မှာ 'The number' ဖြစ်၍ Singular verb ('is') သုံးရသည်။" 
+    },
+    { 
+        question: "Scarcely had we stepped outside _____ it began to rain.", 
+        options: ["when", "than", "before", "after"], 
+        answer: "when",
+        explanation: "'Scarcely... when' တွဲဖက်သုံးသော Correlative conjunction ဖြစ်သည်။" 
+    },
+    { 
+        question: "Seldom _____ I seen such a beautiful sunset.", 
+        options: ["have", "has", "do", "did"], 
+        answer: "have",
+        explanation: "ဝါကျရှေ့ဆုံးတွင် Negative adverb ('Seldom') ပါလာပါက Inversion ဖြစ်၍ 'have I seen' ဖြစ်ရမည်။" 
+    },
+    { 
+        question: "Not only he but also his friends _____ coming.", 
+        options: ["is", "are", "was", "has"], 
+        answer: "are",
+        explanation: "'Not only... but also' တွင် verb သည် နီးစပ်ရာ Subject ('friends' - Plural) နှင့် လိုက်ဖက်ရမည်။" 
+    },
+    { 
+        question: "The captain along with his crew members _____ drowned.", 
+        options: ["was", "were", "is", "are"], 
+        answer: "was",
+        explanation: "'along with' ဖြင့် ဆက်ထားပါက ရှေ့ဆုံး Subject ('captain' - Singular) ကိုသာ မူတည်ရသည်။" 
+    },
+    { 
+        question: "Each boy and each girl _____ given a prize.", 
+        options: ["was", "were", "are", "have"], 
+        answer: "was",
+        explanation: "'Each' ဖြင့် သီးသန့်စီ ချိတ်ဆက်ထားသောကြောင့် Singular verb ('was') သုံးရသည်။" 
     }
 ];
