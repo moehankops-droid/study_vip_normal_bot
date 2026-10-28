@@ -85,7 +85,7 @@
         
         h2 { color: #ffffff; margin-top: 0; font-size: 20px; }
         
-        .start-btn, .action-btn, .finish-btn, .edit-btn { 
+        .start-btn, .action-btn, .finish-btn, .edit-btn, .tg-btn { 
             background: #4caf50; 
             color: white; 
             border: none; 
@@ -103,6 +103,8 @@
         .finish-btn:hover { background: #e53935; }
         .edit-btn { background: #ff9800; font-size: 14px; padding: 8px; margin-top: 5px; }
         .edit-btn:hover { background: #f57c00; }
+        .tg-btn { background: #0088cc; margin-top: 10px; text-decoration: none; display: block; text-align: center; line-height: normal; }
+        .tg-btn:hover { background: #0077b5; }
 
         .question-box { 
             font-size: 17px; 
@@ -236,6 +238,9 @@
                 <p style="color: #777; font-size: 13px; text-align: center;">ဒေတာများ ရယူနေပါသည်...</p>
             </div>
         </div>
+        
+        <!-- Telegram Share Button -->
+        <a id="share-tg-btn" href="#" target="_blank" class="tg-btn">📤 Telegram သို့ ရမှတ်မျှဝေရန်</a>
     </div>
 </div>
 
@@ -292,10 +297,12 @@
       onValue(topScoresQuery, (snapshot) => {
           const lbContainer = document.getElementById("high-scores");
           const winnerContainer = document.getElementById("weekly-winner-container");
+          const shareBtn = document.getElementById("share-tg-btn");
 
           if (!snapshot.exists()) {
               lbContainer.innerHTML = `<p style="color: #777; font-size: 13px; text-align: center;">မှတ်တမ်း မရှိသေးပါ။</p>`;
               winnerContainer.innerHTML = '';
+              shareBtn.href = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent("🔥 English Grammar Quiz မှာ ငါ့ရဲ့ အမှတ်တွေကို လာကြည့်ကြပါဦး!")}`;
               return;
           }
 
@@ -316,6 +323,7 @@
           `;
 
           let html = "";
+          let myScoreText = "English Grammar Quiz Leaderboard:\n";
           scoresList.forEach((item, index) => {
               let isMe = (item.name === localStorage.getItem("quizUsername"));
               let itemStyle = isMe ? "background: #2e4a2e; border: 1px solid #4caf50; border-radius: 8px; padding: 6px 10px; margin-bottom: 5px;" : "padding: 6px 10px; border-bottom: 1px solid #333;";
@@ -327,8 +335,13 @@
                       <span style="color: #4caf50; font-weight: bold;">${item.score} မှတ်</span>
                   </div>
               `;
+              myScoreText += `${rankIcon} ${item.name}: ${item.score} မှတ်\n`;
           });
           lbContainer.innerHTML = html;
+
+          // Telegram share link သို့ စာသားများ အလိုအလျောက် ထည့်ပေးခြင်း
+          let shareText = encodeURIComponent(`🏆 **English Grammar Quiz Weekly Leaderboard** 🏆\n\n${myScoreText}\n🔗 ဆော့ကစားရန်: ${window.location.href}`);
+          shareBtn.href = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${shareText}`;
       });
   };
 
@@ -501,7 +514,7 @@ function checkAnswer(button, selected, correct, explanation) {
     expBox.style.display = "block";
     expBox.innerHTML = `<strong>ရှင်းလင်းချက်:</strong> ${explanation}`;
 
-    if (selected.trim() === correct.trim()) {
+    .trim() === correct.trim()) {
         button.style.background = "#1b2e1b";
         button.style.color = "#a5d6a7";
         button.style.borderColor = "#4caf50";
