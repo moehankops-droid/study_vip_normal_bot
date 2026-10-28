@@ -251,7 +251,7 @@
     projectId: "study-bot-61a39",
     storageBucket: "study-bot-61a39.firebasestorage.app",
     messagingSenderId: "637683324139",
-    appId: "1:637683324139:web:3c2f4e38ac89e773f69aae"
+    appId: "1:637683324139:web:db8c8af2ebeaa555f69aae"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -317,9 +317,13 @@
 
           let html = "";
           scoresList.forEach((item, index) => {
+              let isMe = (item.name === localStorage.getItem("quizUsername"));
+              let itemStyle = isMe ? "background: #2e4a2e; border: 1px solid #4caf50; border-radius: 8px; padding: 6px 10px; margin-bottom: 5px;" : "padding: 6px 10px; border-bottom: 1px solid #333;";
+              let rankIcon = index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : `#${index + 1}`;
+
               html += `
-                  <div class="leaderboard-item">
-                      <span>#${index + 1} ${item.name}</span>
+                  <div class="leaderboard-item" style="${itemStyle} display: flex; justify-content: space-between; align-items: center; font-size: 14px;">
+                      <span><b>${rankIcon} ${item.name}</b> ${isMe ? ' (ကိုယ့်အမှတ်)' : ''}</span>
                       <span style="color: #4caf50; font-weight: bold;">${item.score} မှတ်</span>
                   </div>
               `;
@@ -538,6 +542,7 @@ function endGame(message) {
         <p style="font-size: 16px;">အမည်: <b style="color: #ffffff;">${playerName}</b></p>
         <p style="font-size: 16px;">စုစုပေါင်း ရမှတ်: <b style="color: #4caf50;">${score} မှတ်</b></p>
         <button class="action-btn" id="save-btn">Cloud သို့ ရမှတ်သိမ်းမည် (Save)</button>
+        <button class="start-btn" onclick="startQuiz()" style="margin-top: 10px; background: #2196f3;">🔄 ထပ်မံဖြေဆိုရန် (Play Again)</button>
     `;
 
     document.getElementById("save-btn").addEventListener("click", function() {
