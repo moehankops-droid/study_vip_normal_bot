@@ -19,7 +19,7 @@
         }
         .container { 
             background: #1e1e1e; 
-            padding: 25px; 
+            padding: 20px; 
             border-radius: 20px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
             width: 100%; 
@@ -27,6 +27,36 @@
             text-align: center; 
             border: 1px solid #333;
         }
+        
+        /* Navigation Tabs */
+        .nav-tabs {
+            display: flex;
+            justify-content: space-around;
+            background: #252525;
+            padding: 8px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #333;
+        }
+        .nav-tab {
+            background: none;
+            border: none;
+            color: #aaa;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: 0.2s;
+        }
+        .nav-tab.active {
+            background: #4caf50;
+            color: white;
+        }
+
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
         .header { 
             display: flex; 
             justify-content: space-between; 
@@ -53,9 +83,9 @@
             border: 1px solid #444;
         }
         
-        h2 { color: #ffffff; margin-top: 0; font-size: 22px; }
+        h2 { color: #ffffff; margin-top: 0; font-size: 20px; }
         
-        .start-btn, .action-btn, .finish-btn { 
+        .start-btn, .action-btn, .finish-btn, .edit-btn { 
             background: #4caf50; 
             color: white; 
             border: none; 
@@ -71,9 +101,11 @@
         .start-btn:hover, .action-btn:hover { background: #43a047; }
         .finish-btn { background: #ff5252; margin-top: 10px; }
         .finish-btn:hover { background: #e53935; }
+        .edit-btn { background: #ff9800; font-size: 14px; padding: 8px; margin-top: 5px; }
+        .edit-btn:hover { background: #f57c00; }
 
         .question-box { 
-            font-size: 18px; 
+            font-size: 17px; 
             margin: 15px 0 20px 0; 
             font-weight: bold; 
             color: #ffffff; 
@@ -135,46 +167,75 @@
         .leaderboard-list {
             text-align: left;
             background: #252525;
-            padding: 10px 15px;
+            padding: 12px 15px;
             border-radius: 10px;
-            margin-top: 15px;
+            margin-top: 10px;
             border: 1px solid #333;
         }
         .leaderboard-item {
             display: flex;
             justify-content: space-between;
-            padding: 6px 0;
+            padding: 8px 0;
             border-bottom: 1px solid #333;
             font-size: 14px;
         }
         .leaderboard-item:last-child { border-bottom: none; }
+
+        .weekly-banner {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255,152,0,0.3);
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div id="main-view">
+    <!-- Tab Navigation Bar -->
+    <div class="nav-tabs">
+        <button class="nav-tab active" onclick="switchTab('home-tab')">🏠 ပင်မ</button>
+        <button class="nav-tab" onclick="switchTab('quiz-tab')">📝 Quiz</button>
+        <button class="nav-tab" onclick="switchTab('leaderboard-tab')">🏆 Leaderboard</button>
+    </div>
+
+    <!-- Home Tab -->
+    <div id="home-tab" class="tab-content active">
         <h2>English Grammar Quiz</h2>
-        <p style="color: #aaa; font-size: 14px; margin-bottom: 20px;">မိနစ် ၂၀ စာကျက်ချိန် • Streak များလေ မှတ်ပိုရလေ စနစ်</p>
+        <p style="color: #aaa; font-size: 13px; margin-bottom: 20px;">မိနစ် ၂၀ စာကျက်ချိန် • Streak များလေ မှတ်ပိုရလေ</p>
         
-        <div style="text-align: left; margin-bottom: 5px; font-size: 13px; color: #ff9800;">သင့်နာမည် (Username) ထည့်ပါ:</div>
-        <input type="text" id="username-input" placeholder="ဥပမာ - Moe Han" maxlength="15">
-        <button class="start-btn" onclick="prepareAndStartQuiz()">စတင်မည် (Start)</button>
-        
-        <div id="leaderboard-section" class="leaderboard-list" style="margin-top: 20px;">
-            <strong style="color: #ff9800; font-size: 14px;">🏆 ကမ္ဘာ့ထိပ်ဆုံး ရမှတ်များ (Global Leaderboard)</strong>
-            <div id="high-scores" style="margin-top: 8px;">
-                <p style="color: #777; font-size: 13px; text-align: center;">ဒေတာများ ရယူနေပါသည်...</p>
-            </div>
+        <div id="user-setup-box">
+            <div id="input-label" style="text-align: left; margin-bottom: 5px; font-size: 13px; color: #ff9800;">သင့်နာမည် (Username) ထည့်ပါ:</div>
+            <input type="text" id="username-input" placeholder="ဥပမာ - Moe Han" maxlength="15">
+            <button class="start-btn" onclick="saveInitialUsername()">နာမည်သိမ်းမည်</button>
         </div>
     </div>
 
-    <div id="quiz-view" style="display: none;">
+    <!-- Quiz Tab -->
+    <div id="quiz-tab" class="tab-content">
         <div class="header">
             <span class="streak">🔥 Streak: <span id="streak-count">0</span></span>
             <span class="score">⭐ Score: <span id="score-count">0</span></span>
         </div>
-        <div id="quiz-container"></div>
+        <div id="quiz-container">
+            <p style="color: #aaa; font-size: 14px; margin: 30px 0;">ပထမဆုံး 'ပင်မ' Tab မှတဆင့် Username ထည့်ပြီးမှ Quiz စတင်နိုင်ပါသည်။</p>
+            <button class="start-btn" onclick="startQuiz()">Quiz စတင်မည် (Start)</button>
+        </div>
+    </div>
+
+    <!-- Leaderboard Tab -->
+    <div id="leaderboard-tab" class="tab-content">
+        <div id="weekly-winner-container"></div>
+        
+        <div class="leaderboard-list">
+            <strong style="color: #ff9800; font-size: 14px;">🏆 ကမ္ဘာ့ထိပ်ဆုံး ရမှတ်များ (Leaderboard)</strong>
+            <div id="high-scores" style="margin-top: 8px;">
+                <p style="color: #777; font-size: 13px; text-align: center;">ဒေတာများ ရယူနေပါသည်...</p>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -196,9 +257,8 @@
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
 
-  // Username တစ်ခုတည်းနဲ့ High Score ကို စစ်ဆေးပြီး သိမ်းမယ့်စနစ်
   window.saveScoreToFirebase = function(name, finalScore) {
-      const cleanName = name.replace(/[.#$\/\[\]]/g, "_").trim(); // Firebase path အတွက် မသင့်တော်တဲ့ သင်္ကေတများ ဖယ်မည်
+      const cleanName = name.replace(/[.#$\/\[\]]/g, "_").trim();
       const userScoreRef = ref(db, 'scores/' + cleanName);
 
       get(userScoreRef).then((snapshot) => {
@@ -207,35 +267,35 @@
               existingScore = snapshot.val().score || 0;
           }
 
-          // ယခုရမှတ်က အရင်ရမှတ်ထက် ပိုများမှသာ အသစ်တင်မည် (သို့မဟုတ် ပထမဆုံးအကြိမ်ဆိုရင် တတင်မည်)
-          if (finalScore > existingScore) {
+          if (finalScore >= existingScore) {
               set(userScoreRef, {
                   name: name,
                   score: finalScore,
                   timestamp: Date.now()
               }).then(() => {
-                  alert(`🎉 ဂုဏ်ယူပါတယ်! သင်၏ အမှတ်အသစ် (${finalScore} မှတ်) ကို Global Leaderboard သို့ အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ။`);
-                  location.reload();
+                  alert(`🎉 ဂုဏ်ယူပါတယ်! သင်၏ အမှတ် (${finalScore} မှတ်ဂျာ) ကို Leaderboard သို့ သိမ်းဆည်းပြီးပါပြီ။`);
+                  switchTab('leaderboard-tab');
               }).catch((error) => {
                   alert("❌ သိမ်းဆည်းရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
               });
           } else {
-              alert(`ℹ️ သင်၏ ယခင်အမှတ်အမြင့်ဆုံး (${existingScore} မှတ်) ကသာ ပိုများနေပါသဖြင့် အသစ်မသိမ်းပါ။`);
-              location.reload();
+              alert(`ℹ️ သင်၏ ယခင်အမှတ်အမြင့်ဆုံး (${existingScore} မှတ်) ကသာ ပိုများနေပါသသည်။`);
+              switchTab('leaderboard-tab');
           }
-      }).catch((error) => {
-          console.error(error);
       });
   };
 
   window.loadLeaderboardFromFirebase = function() {
       const scoresRef = ref(db, 'scores');
-      const topScoresQuery = query(scoresRef, orderByChild('score'), limitToLast(5));
+      const topScoresQuery = query(scoresRef, orderByChild('score'), limitToLast(10));
       
       onValue(topScoresQuery, (snapshot) => {
           const lbContainer = document.getElementById("high-scores");
+          const winnerContainer = document.getElementById("weekly-winner-container");
+
           if (!snapshot.exists()) {
-              lbContainer.innerHTML = `<p style="color: #777; font-size: 13px; text-align: center;">မှတ်တမ်း မရှိသေးပါ။</p>`;
+              lbContainer.innerHTML = `<p style="color: #777; font-size: 13px; text-align: center;">မှတ်တမ်း မရှိသေးပါ။</p>';
+              winnerContainer.innerHTML = '';
               return;
           }
 
@@ -245,6 +305,16 @@
           });
 
           scoresList.sort((a, b) => b.score - a.score);
+
+          // Weekly Winner (ထိပ်ဆုံး နံပါတ် ၁ ကို အလိုအလျောက် ကြေညာပေးမည်)
+          const topWinner = scoresList[0];
+          winnerContainer.innerHTML = `
+              <div class="weekly-banner">
+                  <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">🌟 Weekly Champion 🌟</div>
+                  <div style="font-size: 18px; font-weight: bold; margin: 5px 0;">👑 ${topWinner.name}</div>
+                  <div style="font-size: 14px; opacity: 0.9;">ရမှတ်: ${topWinner.score} မှတ်</div>
+              </div>
+          `;
 
           let html = "";
           scoresList.forEach((item, index) => {
@@ -272,22 +342,91 @@ let currentQuiz = null;
 let studyTimer = null;
 let totalSeconds = 20 * 60;
 
-function prepareAndStartQuiz() {
+window.onload = function() {
+    checkSavedUser();
+};
+
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
+    
+    document.getElementById(tabId).classList.add('active');
+    
+    // Tab Button active ဖြစ်စေရန်
+    if(tabId === 'home-tab') document.querySelectorAll('.nav-tab')[0].classList.add('active');
+    if(tabId === 'quiz-tab') document.querySelectorAll('.nav-tab')[1].classList.add('active');
+    if(tabId === 'leaderboard-tab') document.querySelectorAll('.nav-tab')[2].classList.add('active');
+}
+
+function checkSavedUser() {
+    const savedUser = localStorage.getItem("quizUsername");
+    const lastChangeTime = localStorage.getItem("quizNameChangeTime");
+    const now = Date.now();
+    const oneWeek = 7 * 24 * 60 * 60 * 1000;
+
+    const setupBox = document.getElementById("user-setup-box");
+
+    if (savedUser) {
+        playerName = savedUser;
+        let timeLeftText = "";
+        let canChange = true;
+
+        if (lastChangeTime) {
+            let elapsed = now - parseInt(lastChangeTime);
+            if (elapsed < oneWeek) {
+                let daysLeft = Math.ceil((oneWeek - elapsed) / (1000 * 60 * 60 * 24));
+                timeLeftText = ` (နာမည်ပြောင်းရန် ${daysLeft} ရက် စောင့်ရန်လို)`;
+                canChange = false;
+            }
+        }
+
+        setupBox.innerHTML = `
+            <div style="background: #2a2a2a; padding: 12px; border-radius: 10px; margin-bottom: 10px; border: 1px solid #444;">
+                <p style="margin: 0; font-size: 13px; color: #aaa;">အသုံးပြုနေသော နာမည်:</p>
+                <b style="font-size: 18px; color: #4caf50;">${playerName}</b>
+            </div>
+            <button class="start-btn" onclick="switchTab('quiz-tab'); startQuiz();">Quiz စတင်ဆော့မည်</button>
+            <button class="edit-btn" onclick="requestNameChange(${canChange})">နာမည်ပြောင်းရန်${timeLeftText}</button>
+        `;
+    }
+}
+
+function requestNameChange(canChange) {
+    if (!canChange) {
+        alert("⏳ နာမည်ပြောင်းရန်အတွက် ၁ ပတ် (7 Days) ပြည့်ရန် လိုအပ်ပါသေးသည်။");
+        return;
+    }
+
+    const setupBox = document.getElementById("user-setup-box");
+    setupBox.innerHTML = `
+        <div style="text-align: left; margin-bottom: 5px; font-size: 13px; color: #ff9800;">နာမည်အသစ် ထည့်ပါ (၁ ပတ်မှ ၁ ကြိမ်သာ ပြောင်းနိုင်သည်):</div>
+        <input type="text" id="username-input" placeholder="နာမည်အသစ်..." maxlength="15" value="${playerName}">
+        <button class="start-btn" onclick="saveInitialUsername()">နာမည်သိမ်းမည်</button>
+    `;
+}
+
+function saveInitialUsername() {
     const nameInput = document.getElementById("username-input").value.trim();
     if (!nameInput) {
         alert("ကျေးဇူးပြု၍ သင့်နာမည် (Username) ကို အရင်ထည့်ပါ။");
         return;
     }
     playerName = nameInput;
+    localStorage.setItem("quizUsername", playerName);
+    localStorage.setItem("quizNameChangeTime", Date.now().toString());
     
-    // Page ပြောင်းမည်
-    document.getElementById("main-view").style.display = "none";
-    document.getElementById("quiz-view").style.display = "block";
-    
+    alert("✅ နာမည်ကို အောင်မြင်စွာ သိမ်းဆည်းပြီးပါပြီ!");
+    checkSavedUser();
+    switchTab('quiz-tab');
     startQuiz();
 }
 
 function startQuiz() {
+    if(!playerName) {
+        alert("ကျေးဇူးပြု၍ ပထမဆုံး 'ပင်မ' Tab တွင် နာမည်အရင်ထည့်ပါ။");
+        switchTab('home-tab');
+        return;
+    }
     score = 0;
     streak = 0;
     totalSeconds = 20 * 60;
@@ -369,7 +508,6 @@ function checkAnswer(button, selected, correct, explanation) {
         expBox.style.color = "#a5d6a7";
         expBox.style.borderColor = "#4caf50";
         
-        // Streak အလိုက် အမှတ်တိုးမည့်စနစ် (မှန်ရင် streak တက်မယ်၊ ဥပမာ streak 2 ဆိုရင် 2 မှတ်၊ 3 ဆိုရင် 3 မှတ် တိုးမယ်)
         streak += 1;
         score += streak; 
     } else {
@@ -381,7 +519,7 @@ function checkAnswer(button, selected, correct, explanation) {
         expBox.style.color = "#ef9a9a";
         expBox.style.borderColor = "#f44336";
         
-        streak = 0; // မှားရင် Streak ပြန်ကျမည်
+        streak = 0;
     }
 
     updateHeader();
