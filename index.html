@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Master - Duolingo Style Quiz</title>
+    <title>English Grammar Quiz</title>
     <style>
         * { box-sizing: border-box; }
         body { 
-            font-family: 'Nunito', 'Segoe UI', Tahoma, sans-serif; 
-            background: #f7f7f7; 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: #121212; 
+            color: #e0e0e0; 
             margin: 0; 
             padding: 0; 
             display: flex; 
@@ -17,55 +18,52 @@
             min-height: 100vh; 
         }
         .container { 
-            background: white; 
+            background: #1e1e1e; 
             padding: 30px 25px; 
-            border-radius: 24px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08); 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
             width: 100%; 
             max-width: 450px; 
             text-align: center; 
-            border: 2px solid #e5e5e5;
+            border: 1px solid #333;
         }
         .header { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
             margin-bottom: 25px; 
-            font-weight: 800; 
-            font-size: 16px; 
-            border-bottom: 2px solid #f0f2f5; 
+            font-weight: bold; 
+            font-size: 15px; 
+            border-bottom: 1px solid #333; 
             padding-bottom: 12px; 
         }
-        .streak { color: #ff9600; display: flex; align-items: center; gap: 5px; }
-        .score { color: #58cc02; display: flex; align-items: center; gap: 5px; }
+        .streak { color: #ff9800; }
+        .score { color: #4caf50; }
         
-        h2 { color: #3c3c3c; margin-top: 0; font-size: 24px; font-weight: 900; }
+        h2 { color: #ffffff; margin-top: 0; font-size: 22px; }
         
         .start-btn { 
-            background: #58cc02; 
+            background: #4caf50; 
             color: white; 
             border: none; 
-            padding: 15px 20px; 
-            border-radius: 16px; 
-            font-size: 18px; 
+            padding: 14px 20px; 
+            border-radius: 12px; 
+            font-size: 16px; 
             cursor: pointer; 
             margin-top: 20px; 
             width: 100%; 
-            font-weight: 800; 
-            box-shadow: 0 5px 0 #46a302; 
-            transition: 0.1s; 
-            text-transform: uppercase;
+            font-weight: bold; 
+            transition: 0.2s; 
         }
-        .start-btn:active { transform: translateY(4px); box-shadow: 0 1px 0 #46a302; }
-        .start-btn:hover { background: #61e002; }
+        .start-btn:hover { background: #43a047; }
 
         .question-box { 
-            font-size: 20px; 
+            font-size: 18px; 
             margin: 20px 0 25px 0; 
-            font-weight: 800; 
-            color: #3c3c3c; 
+            font-weight: bold; 
+            color: #ffffff; 
             text-align: left; 
-            line-height: 1.4;
+            line-height: 1.5;
         }
         
         .options { 
@@ -76,40 +74,35 @@
         }
         
         .options button { 
-            background: #ffffff; 
-            color: #4b4b4b; 
-            border: 2px solid #e5e5e5; 
-            border-bottom: 4px solid #e5e5e5; 
-            border-radius: 16px; 
+            background: #2a2a2a; 
+            color: #e0e0e0; 
+            border: 1px solid #444; 
+            border-radius: 12px; 
             width: 100%; 
             text-align: left; 
-            padding: 15px 18px; 
-            font-size: 16px; 
-            font-weight: 700; 
+            padding: 14px 16px; 
+            font-size: 15px; 
+            font-weight: 600; 
             cursor: pointer; 
-            transition: 0.1s ease;
+            transition: 0.2s ease;
         }
         .options button:hover { 
-            background: #f7f7f7; 
-            border-color: #84d8ff; 
-            color: #1cb0f6; 
-        }
-        .options button:active { 
-            transform: translateY(2px); 
-            border-bottom-width: 2px; 
+            background: #333333; 
+            border-color: #4caf50; 
+            color: #ffffff; 
         }
 
         .explanation { 
             margin-top: 20px; 
             padding: 15px; 
-            background: #d7ffb8; 
-            border: 2px solid #58cc02; 
+            background: #1b2e1b; 
+            border: 1px solid #2e7d32; 
             text-align: left; 
-            font-size: 14px; 
-            color: #276709; 
+            font-size: 13px; 
+            color: #a5d6a7; 
             display: none; 
-            border-radius: 14px; 
-            font-weight: 700;
+            border-radius: 10px; 
+            line-height: 1.4;
         }
     </style>
 </head>
@@ -117,12 +110,12 @@
 
 <div class="container">
     <div class="header">
-        <span class="streak">🔥 <span id="streak-count">0</span></span>
-        <span class="score">⭐ <span id="score-count">0</span></span>
+        <span class="streak">🔥 Streak: <span id="streak-count">0</span></span>
+        <span class="score">⭐ Score: <span id="score-count">0</span></span>
     </div>
-    <h2>English Quiz</h2>
+    <h2>English Grammar Quiz</h2>
     <div id="quiz-container">
-        <p style="color: #777; font-size: 16px; font-weight: 600;">Duolingo စတိုင် အလန်းစား ဒီဇိုင်းအသစ်ဖြင့် အင်္ဂလိပ်စာ လေ့လာကြပါစို့။</p>
+        <p style="color: #aaa; font-size: 15px;">လေ့ကျင့်ခန်းများ စတင်ဖြေဆိုရန် အောက်ပါခလုတ်ကို နှိပ်ပါ။</p>
         <button class="start-btn" onclick="startQuiz()">စတင်မည်</button>
     </div>
 </div>
@@ -148,7 +141,7 @@ function updateHeader() {
 
 function loadNextQuestion() {
     if (typeof questionsBank === 'undefined' || questionsBank.length === 0) {
-        document.getElementById("quiz-container").innerHTML = "<p style='color:red; font-weight:bold;'>မေးခွန်းများ ရှာမတွေ့ပါ။</p>";
+        document.getElementById("quiz-container").innerHTML = "<p style='color:#f44336; font-weight:bold;'>မေးခွန်းများ ရှာမတွေ့ပါ။</p>";
         return;
     }
 
@@ -177,26 +170,24 @@ function checkAnswer(button, selected, correct, explanation) {
     expBox.innerHTML = `<strong>ရှင်းလင်းချက်:</strong> ${explanation}`;
 
     if (selected.trim() === correct.trim()) {
-        button.style.background = "#d7ffb8";
-        button.style.color = "#276709";
-        button.style.borderColor = "#58cc02";
-        button.style.borderBottomColor = "#46a302";
+        button.style.background = "#1b2e1b";
+        button.style.color = "#a5d6a7";
+        button.style.borderColor = "#4caf50";
         
-        expBox.style.background = "#d7ffb8";
-        expBox.style.color = "#276709";
-        expBox.style.borderColor = "#58cc02";
+        expBox.style.background = "#1b2e1b";
+        expBox.style.color = "#a5d6a7";
+        expBox.style.borderColor = "#4caf50";
         
         score += 10;
         streak += 1;
     } else {
-        button.style.background = "#ffdfe0";
-        button.style.color = "#ea2b2b";
-        button.style.borderColor = "#ff4b4b";
-        button.style.borderBottomColor = "#ea2b2b";
+        button.style.background = "#3c1f1f";
+        button.style.color = "#ef9a9a";
+        button.style.borderColor = "#f44336";
         
-        expBox.style.background = "#ffdfe0";
-        expBox.style.color = "#ea2b2b";
-        expBox.style.borderColor = "#ff4b4b";
+        expBox.style.background = "#3c1f1f";
+        expBox.style.color = "#ef9a9a";
+        expBox.style.borderColor = "#f44336";
         
         streak = 0;
     }
