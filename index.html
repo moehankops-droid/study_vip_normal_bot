@@ -183,14 +183,21 @@
         }
         .leaderboard-item:last-child { border-bottom: none; }
 
+        /* Special Weekly Champion Glowing Banner */
         .weekly-banner {
-            background: linear-gradient(135deg, #ff9800, #f57c00);
-            color: white;
-            padding: 15px;
-            border-radius: 12px;
+            background: linear-gradient(135deg, #ffd700, #ff8c00);
+            color: #121212;
+            padding: 18px;
+            border-radius: 14px;
             margin-bottom: 15px;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(255,152,0,0.3);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            border: 2px solid #fff;
+            animation: glow 1.5s infinite alternate;
+        }
+        @keyframes glow {
+            0% { box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+            100% { box-shadow: 0 0 25px rgba(255, 215, 0, 0.9); }
         }
     </style>
 </head>
@@ -299,10 +306,12 @@
           const winnerContainer = document.getElementById("weekly-winner-container");
           const shareBtn = document.getElementById("share-tg-btn");
 
+          let cleanUrl = "https://moehankopsdroid.github.io/study_vip_normal_bot/";
+
           if (!snapshot.exists()) {
               lbContainer.innerHTML = `<p style="color: #777; font-size: 13px; text-align: center;">မှတ်တမ်း မရှိသေးပါ။</p>`;
               winnerContainer.innerHTML = '';
-              shareBtn.href = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent("🔥 English Grammar Quiz မှာ ငါ့ရဲ့ အမှတ်တွေကို လာကြည့်ကြပါဦး!")}`;
+              shareBtn.href = `https://t.me/share/url?url=${encodeURIComponent(cleanUrl)}&text=${encodeURIComponent("🔥 English Grammar Quiz မှာ အမှတ်လာဆော့ကြပါဦး!")}`;
               return;
           }
 
@@ -313,12 +322,13 @@
 
           scoresList.sort((a, b) => b.score - a.score);
 
+          // Special Weekly Champion Banner
           const topWinner = scoresList[0];
           winnerContainer.innerHTML = `
               <div class="weekly-banner">
-                  <div style="font-size: 12px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">🌟 Weekly Champion 🌟</div>
-                  <div style="font-size: 18px; font-weight: bold; margin: 5px 0;">👑 ${topWinner.name}</div>
-                  <div style="font-size: 14px; opacity: 0.9;">ရမှတ်: ${topWinner.score} မှတ်</div>
+                  <div style="font-size: 13px; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; color: #333;">🌟 ဤအပတ်၏ အထူးချန်ပီယံ (Weekly Champion) 🌟</div>
+                  <div style="font-size: 22px; font-weight: bold; margin: 6px 0; color: #000;">👑 ${topWinner.name}</div>
+                  <div style="font-size: 15px; font-weight: bold; color: #b71c1c;">✨ ရမှတ်: ${topWinner.score} မှတ်ဖြင့် ထိပ်ဆုံးတွင် ရပ်တည်နေပါသည်! ✨</div>
               </div>
           `;
 
@@ -339,8 +349,8 @@
           });
           lbContainer.innerHTML = html;
 
-          let shareText = encodeURIComponent(`🏆 **English Grammar Quiz Weekly Leaderboard** 🏆\n\n${myScoreText}\n🔗 ဆော့ကစားရန်: ${window.location.href}`);
-          shareBtn.href = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${shareText}`;
+          let shareText = encodeURIComponent(`🏆 **English Grammar Quiz Weekly Leaderboard** 🏆\n\n${myScoreText}\n🔗 ဆော့ကစားရန်: ${cleanUrl}`);
+          shareBtn.href = `https://t.me/share/url?url=${encodeURIComponent(cleanUrl)}&text=${shareText}`;
       });
   };
 
