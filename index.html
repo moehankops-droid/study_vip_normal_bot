@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Grammar Quiz</title>
+    <title>English Grammar Quiz - 20 Mins Study Session</title>
     <style>
         * { box-sizing: border-box; }
         body { 
@@ -19,7 +19,7 @@
         }
         .container { 
             background: #1e1e1e; 
-            padding: 30px 25px; 
+            padding: 25px; 
             border-radius: 20px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
             width: 100%; 
@@ -31,14 +31,27 @@
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
-            margin-bottom: 25px; 
+            margin-bottom: 15px; 
             font-weight: bold; 
             font-size: 15px; 
             border-bottom: 1px solid #333; 
-            padding-bottom: 12px; 
+            padding-bottom: 10px; 
         }
         .streak { color: #ff9800; }
         .score { color: #4caf50; }
+        .study-timer { 
+            background: #2a2a2a; 
+            color: #00e676; 
+            font-weight: bold; 
+            font-size: 16px; 
+            padding: 8px 12px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #444;
+        }
         
         h2 { color: #ffffff; margin-top: 0; font-size: 22px; }
         
@@ -59,7 +72,7 @@
 
         .question-box { 
             font-size: 18px; 
-            margin: 20px 0 25px 0; 
+            margin: 15px 0 20px 0; 
             font-weight: bold; 
             color: #ffffff; 
             text-align: left; 
@@ -93,8 +106,8 @@
         }
 
         .explanation { 
-            margin-top: 20px; 
-            padding: 15px; 
+            margin-top: 15px; 
+            padding: 12px; 
             background: #1b2e1b; 
             border: 1px solid #2e7d32; 
             text-align: left; 
@@ -115,8 +128,8 @@
     </div>
     <h2>English Grammar Quiz</h2>
     <div id="quiz-container">
-        <p style="color: #aaa; font-size: 15px;">လေ့ကျင့်ခန်းများ စတင်ဖြေဆိုရန် အောက်ပါခလုတ်ကို နှိပ်ပါ။</p>
-        <button class="start-btn" onclick="startQuiz()">စတင်မည်</button>
+        <p style="color: #aaa; font-size: 15px;">မိနစ် ၂၀ တိတိ ဆက်တိုက် စာကျက်လေ့ကျင့်မည့် စနစ်။</p>
+        <button class="start-btn" onclick="startQuiz()">စတင်မည် (မိနစ် ၂၀)</button>
     </div>
 </div>
 
@@ -126,11 +139,15 @@
 let score = 0;
 let streak = 0;
 let currentQuiz = null;
+let studyTimer = null;
+let totalSeconds = 20 * 60; // မိနစ် ၂၀ (စက္ကန့် ၁၂၀၀)
 
 function startQuiz() {
     score = 0;
     streak = 0;
+    totalSeconds = 20 * 60;
     updateHeader();
+    startStudySessionTimer();
     loadNextQuestion();
 }
 
@@ -139,11 +156,36 @@ function updateHeader() {
     document.getElementById("streak-count").innerText = streak;
 }
 
+function startStudySessionTimer() {
+    if(studyTimer) clearInterval(studyTimer);
+
+    studyTimer = setInterval(() => {
+        totalSeconds--;
+        let mins = Math.floor(totalSeconds / 60);
+        let secs = totalSeconds % 60;
+        
+        let timerDisplay = document.getElementById("session-timer");
+        if(timerDisplay) {
+            timerDisplay.innerText = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        if (totalSeconds <= 0) {
+            clearInterval(studyTimer);
+            alert("🎉 မိနစ် ၂၀ စာကျက်ချိန် ပြီးဆုံးသွားပါပြီ!");
+            location.reload();
+        }
+    }, 1000);
+}
+
 function loadNextQuestion() {
     if (typeof questionsBank === 'undefined' || questionsBank.length === 0) {
         document.getElementById("quiz-container").innerHTML = "<p style='color:#f44336; font-weight:bold;'>မေးခွန်းများ ရှာမတွေ့ပါ။</p>";
         return;
     }
+
+    let mins = Math.floor(totalSeconds / 60);
+    let secs = totalSeconds % 60;
+    let timeFormatted = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
 
     const container = document.getElementById("quiz-container");
     const randomIndex = Math.floor(Math.random() * questionsBank.length);
@@ -155,6 +197,10 @@ function loadNextQuestion() {
     });
 
     container.innerHTML = `
+        <div class="study-timer">
+            <span>⏳ ကျန်ရှိချိန် (Study Time):</span>
+            <span id="session-timer" style="font-family: monospace; font-size: 18px;">${timeFormatted}</span>
+        </div>
         <div class="question-box">${currentQuiz.question}</div>
         <div class="options">${optionsHTML}</div>
         <div id="explanation-box" class="explanation"></div>
@@ -195,8 +241,10 @@ function checkAnswer(button, selected, correct, explanation) {
     updateHeader();
 
     setTimeout(() => {
-        loadNextQuestion();
-    }, 3500);
+        if(totalSeconds > 0) {
+            loadNextQuestion();
+        }
+    }, 2500);
 }
 </script>
 
