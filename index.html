@@ -208,7 +208,7 @@
         <p style="color: #aaa; font-size: 13px; margin-bottom: 20px;">မိနစ် ၂၀ စာကျက်ချိန် • Streak များလေ မှတ်ပိုရလေ</p>
         
         <div id="user-setup-box">
-            <div id="input-label" style="text-align: left; margin-bottom: 5px; font-size: 13px; color: #ff9800;">သင့်နာမည် (Username) ထည့်ပါ:</div>
+            <div style="text-align: left; margin-bottom: 5px; font-size: 13px; color: #ff9800;">သင့်နာမည် (Username) ထည့်ပါ:</div>
             <input type="text" id="username-input" placeholder="ဥပမာ - Moe Han" maxlength="15">
             <button class="start-btn" onclick="saveInitialUsername()">နာမည်သိမ်းမည်</button>
         </div>
@@ -273,7 +273,7 @@
                   score: finalScore,
                   timestamp: Date.now()
               }).then(() => {
-                  alert(`🎉 ဂုဏ်ယူပါတယ်! သင်၏ အမှတ် (${finalScore} မှတ်ဂျာ) ကို Leaderboard သို့ သိမ်းဆည်းပြီးပါပြီ။`);
+                  alert(`🎉 ဂုဏ်ယူပါတယ်! သင်၏ အမှတ် (${finalScore} မှတ်) ကို Leaderboard သို့ သိမ်းဆည်းပြီးပါပြီ။`);
                   switchTab('leaderboard-tab');
               }).catch((error) => {
                   alert("❌ သိမ်းဆည်းရာတွင် အမှားအယွင်းရှိပါသည်: " + error.message);
@@ -294,7 +294,7 @@
           const winnerContainer = document.getElementById("weekly-winner-container");
 
           if (!snapshot.exists()) {
-              lbContainer.innerHTML = `<p style="color: #777; font-size: 13px; text-align: center;">မှတ်တမ်း မရှိသေးပါ။</p>';
+              lbContainer.innerHTML = `<p style="color: #777; font-size: 13px; text-align: center;">မှတ်တမ်း မရှိသေးပါ။</p>`;
               winnerContainer.innerHTML = '';
               return;
           }
@@ -306,7 +306,6 @@
 
           scoresList.sort((a, b) => b.score - a.score);
 
-          // Weekly Winner (ထိပ်ဆုံး နံပါတ် ၁ ကို အလိုအလျောက် ကြေညာပေးမည်)
           const topWinner = scoresList[0];
           winnerContainer.innerHTML = `
               <div class="weekly-banner">
@@ -352,7 +351,6 @@ function switchTab(tabId) {
     
     document.getElementById(tabId).classList.add('active');
     
-    // Tab Button active ဖြစ်စေရန်
     if(tabId === 'home-tab') document.querySelectorAll('.nav-tab')[0].classList.add('active');
     if(tabId === 'quiz-tab') document.querySelectorAll('.nav-tab')[1].classList.add('active');
     if(tabId === 'leaderboard-tab') document.querySelectorAll('.nav-tab')[2].classList.add('active');
@@ -539,8 +537,16 @@ function endGame(message) {
         <h3 style="color: #ff9800;">${message}</h3>
         <p style="font-size: 16px;">အမည်: <b style="color: #ffffff;">${playerName}</b></p>
         <p style="font-size: 16px;">စုစုပေါင်း ရမှတ်: <b style="color: #4caf50;">${score} မှတ်</b></p>
-        <button class="action-btn" onclick="window.saveScoreToFirebase('${playerName}', ${score})">Cloud သို့ ရမှတ်သိမ်းမည် (Save)</button>
+        <button class="action-btn" id="save-btn">Cloud သို့ ရမှတ်သိမ်းမည် (Save)</button>
     `;
+
+    document.getElementById("save-btn").addEventListener("click", function() {
+        if (typeof window.saveScoreToFirebase === "function") {
+            window.saveScoreToFirebase(playerName, score);
+        } else {
+            alert("❌ Firebase ချိတ်ဆက်မှု အဆင်မပြေပါ။ ခဏစောင့်ပြီး ထပ်ကြိုးစားပါ။");
+        }
+    });
 }
 </script>
 
