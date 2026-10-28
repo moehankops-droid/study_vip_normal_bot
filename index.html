@@ -339,7 +339,6 @@
           });
           lbContainer.innerHTML = html;
 
-          // Telegram share link သို့ စာသားများ အလိုအလျောက် ထည့်ပေးခြင်း
           let shareText = encodeURIComponent(`🏆 **English Grammar Quiz Weekly Leaderboard** 🏆\n\n${myScoreText}\n🔗 ဆော့ကစားရန်: ${window.location.href}`);
           shareBtn.href = `https://t.me/share/url?url=${encodeURIComponent(window.location.href)}&text=${shareText}`;
       });
@@ -514,7 +513,7 @@ function checkAnswer(button, selected, correct, explanation) {
     expBox.style.display = "block";
     expBox.innerHTML = `<strong>ရှင်းလင်းချက်:</strong> ${explanation}`;
 
-    .trim() === correct.trim()) {
+    if (selected.trim() === correct.trim()) {
         button.style.background = "#1b2e1b";
         button.style.color = "#a5d6a7";
         button.style.borderColor = "#4caf50";
