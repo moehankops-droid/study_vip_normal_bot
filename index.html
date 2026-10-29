@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Study Bot VLP Pro Max - Tournament</title>
+    <title>Study Bot VLP Pro Max - Custom Tasks</title>
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
@@ -47,10 +47,10 @@
             background: none;
             border: none;
             color: #8b949e;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 600;
             cursor: pointer;
-            padding: 4px;
+            padding: 4px 2px;
             border-radius: 6px;
             transition: 0.2s;
             display: flex;
@@ -59,7 +59,7 @@
             gap: 2px;
             flex: 1;
         }
-        .nav-tab span.icon { font-size: 14px; }
+        .nav-tab span.icon { font-size: 13px; }
         .nav-tab.active { color: #58a6ff; background: #162235; }
 
         .tab-content { display: none; }
@@ -340,7 +340,7 @@
             font-weight: bold;
         }
 
-        .forest-card, .obsidian-card {
+        .forest-card, .obsidian-card, .test-card {
             background: #161b22;
             border: 1px solid #30363d;
             border-radius: 6px;
@@ -421,15 +421,31 @@
         </div>
     </div>
 
-    <!-- Tournament Arena Tab (Sunday 45 mins limit with Quiz + Optional Essay) -->
+    <!-- Custom Tasks / Test Mode Tab (New Habit & Task Checklist) -->
+    <div id="test-tab" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <h3 style="color: #58a6ff; margin: 0; font-size: 11px;">📋 Custom Tasks / Test Mode</h3>
+            <button class="buy-btn" style="padding: 2px 6px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မသို့</button>
+        </div>
+        <p style="font-size: 8px; color: #8b949e; margin-bottom: 6px;">ကိုယ့်ဘာသာ လုပ်ချင်သည့် လေ့ကျင့်ခန်း သို့မဟုတ် လုပ်စရာများကို ထည့်ပြီး အမှန်ခြစ်ဖြင့် မှတ်သားရန် (အမှတ်မပေးပါ)</p>
+        
+        <div class="test-card">
+            <input type="text" id="custom-task-input" placeholder="လုပ်စရာ အသစ်ထည့်ရန် (ဥပမာ- ပေါ့ပါးသော လေ့ကျင့်ခန်း)..." maxlength="40">
+            <button class="start-btn" style="background: #1f6feb; padding: 5px; font-size: 9px;" onclick="addCustomTask(); playSound('click');">➕ Task ထည့်မည်</button>
+        </div>
+
+        <div style="text-align: left; max-height: 170px; overflow-y: auto;" id="custom-tasks-container">
+            <!-- Dynamic Custom Tasks List -->
+        </div>
+    </div>
+
+    <!-- Tournament Arena Tab -->
     <div id="tournament-tab" class="tab-content">
         <div class="study-timer" style="background: #2b1515; border-color: #8957e5; color: #a371f7;">
             <span>🏆 Tournament Time:</span>
             <span id="tour-timer" style="font-family: monospace;">45:00</span>
         </div>
-        <div id="tour-main-container">
-            <!-- Dynamic Tournament Content -->
-        </div>
+        <div id="tour-main-container"></div>
     </div>
 
     <!-- Forest Mode Tab -->
@@ -529,13 +545,16 @@
     </div>
 </div>
 
-<!-- Bottom Navigation Bar -->
+<!-- Bottom Navigation Bar (6 Tabs) -->
 <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchTab('home-tab'); playSound('click');">
         <span class="icon">🏠</span>ပင်မ
     </button>
     <button class="nav-tab" onclick="switchTab('quiz-tab'); playSound('click');">
         <span class="icon">📝</span>Quiz
+    </button>
+    <button class="nav-tab" onclick="switchTab('test-tab'); loadCustomTasks(); playSound('click');">
+        <span class="icon">📋</span>Tasks
     </button>
     <button class="nav-tab" onclick="switchTab('forest-tab'); playSound('click');">
         <span class="icon">🌳</span>Forest
@@ -697,7 +716,7 @@ let isForestRunning = false;
 
 /* Tournament Variables */
 let tourTimer = null;
-let tourSeconds = 45 * 60; /* 45 minutes */
+let tourSeconds = 45 * 60;
 let tourScore = 0;
 let tourStreak = 0;
 let tourActive = false;
@@ -708,6 +727,7 @@ window.onload = function() {
     checkVipStatusUI();
     checkDailyEssayLimitUI();
     loadNotes();
+    loadCustomTasks();
 };
 
 function switchTab(tabId) {
@@ -718,30 +738,76 @@ function switchTab(tabId) {
     const tabs = document.querySelectorAll('.nav-tab');
     if(tabId === 'home-tab') tabs[0].classList.add('active');
     if(tabId === 'quiz-tab') tabs[1].classList.add('active');
-    if(tabId === 'forest-tab') tabs[2].classList.add('active');
-    if(tabId === 'essay-tab') tabs[3].classList.add('active');
+    if(tabId === 'test-tab') { tabs[2].classList.add('active'); loadCustomTasks(); }
+    if(tabId === 'forest-tab') tabs[3].classList.add('active');
+    if(tabId === 'essay-tab') tabs[4].classList.add('active');
     if(tabId === 'leaderboard-tab') {
-        tabs[4].classList.add('active');
+        tabs[5].classList.add('active');
         if (typeof window.loadLeaderboardFromFirebase === 'function') { window.loadLeaderboardFromFirebase(); }
     }
 }
 
-/* Tournament Start Logic with Sunday 7-10 PM Check, Fee Deduction & 45 mins limit */
+/* Custom Tasks / Test Mode Functions (No points, pure habit checklist) */
+function addCustomTask() {
+    const input = document.getElementById("custom-task-input");
+    const taskText = input.value.trim();
+    if (!taskText) { alert("ကျေးဇူးပြု၍ လုပ်စရာစာသား ထည့်ပါ။"); return; }
+    
+    let tasks = JSON.parse(localStorage.getItem("customTasksList")) || [];
+    tasks.push({ text: taskText, completed: false });
+    localStorage.setItem("customTasksList", JSON.stringify(tasks));
+    input.value = "";
+    loadCustomTasks();
+    playSound('correct');
+}
+
+function toggleCustomTask(index) {
+    let tasks = JSON.parse(localStorage.getItem("customTasksList")) || [];
+    if (tasks[index]) {
+        tasks[index].completed = !tasks[index].completed;
+        localStorage.setItem("customTasksList", JSON.stringify(tasks));
+        loadCustomTasks();
+        playSound('click');
+    }
+}
+
+function deleteCustomTask(index) {
+    let tasks = JSON.parse(localStorage.getItem("customTasksList")) || [];
+    tasks.splice(index, 1);
+    localStorage.setItem("customTasksList", JSON.stringify(tasks));
+    loadCustomTasks();
+    playSound('wrong');
+}
+
+function loadCustomTasks() {
+    const container = document.getElementById("custom-tasks-container");
+    let tasks = JSON.parse(localStorage.getItem("customTasksList")) || [];
+    
+    if (tasks.length === 0) {
+        container.innerHTML = `<p style="color: #8b949e; font-size: 8px; text-align: center; margin-top: 5px;">လုပ်စရာ Task များ မရှိသေးပါ။ အထက်တွင် အသစ်ထည့်ပါ။</p>`;
+        return;
+    }
+
+    let html = "";
+    tasks.forEach((task, index) => {
+        let style = task.completed ? "background: #0d3819; border-color: #2ea043; text-decoration: line-through; color: #8b949e;" : "background: #161b22; border-color: #30363d; color: #fff;";
+        html += `
+            <div style="${style} border: 1px solid; border-radius: 5px; padding: 5px 7px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; font-size: 9px;">
+                <label style="display: flex; align-items: center; gap: 6px; cursor: pointer; flex: 1;">
+                    <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleCustomTask(${index})" style="cursor: pointer;">
+                    <span>${task.text}</span>
+                </label>
+                <button onclick="deleteCustomTask(${index})" style="background: none; border: none; color: #f85149; cursor: pointer; font-size: 10px;">🗑️</button>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+}
+
+/* Tournament Start Logic */
 function startTournamentSession() {
     if(!playerName) { alert("ပထမဆုံး 'ပင်မ' Tab တွင် နာမည်အရင်ထည့်ပါ။"); switchTab('home-tab'); return; }
     
-    // --- Sunday ည ၇ နာရီ မှ ၁၀ နာရီ အချိန်စစ်ဆေးခြင်း ---
-    const now = new Date();
-    const currentDay = now.getDay(); // 0 = Sunday, 1 = Monday, ... 6 = Saturday
-    const currentHour = now.getHours();
-
-    /*
-    if (currentDay !== 0 || currentHour < 19 || currentHour >= 22) {
-        alert("⏳ Sunday Night Tournament သည် Sunday ည ၇ နာရီမှ ၁၀ နာရီအတွင်းသာ ဝင်ရောက်ယှဉ်ပြိုင်နိုင်ပါသည်။");
-        return;
-    }
-    */
-
     const fee = 2500;
     isVip = localStorage.getItem('isVipUser') === 'true';
     money = parseInt(localStorage.getItem('quizCoins')) || 0;
@@ -1218,7 +1284,7 @@ function endGame(message) {
         <h3 style="color: #f0883e; margin: 4px 0;">${message}</h3>
         <p style="font-size: 11px; margin: 2px 0;">အမည်: <b style="${isVip ? 'color: #d29922;' : 'color: #fff;'}">${isVip ? '👑 ' : ''}${playerName}</b></p>
         <p style="font-size: 11px; margin: 2px 0;">ရမှတ်: <b style="color: #3fb950;">${score} မှတ်</b></p>
-        <p style="font-size: 11px; margin: 2px 0;">Coins: <b style="color: #d29000; color: #d29922;">🪙 ${money}</b></p>
+        <p style="font-size: 11px; margin: 2px 0;">Coins: <b style="color: #d29922;">🪙 ${money}</b></p>
         <button class="action-btn" id="save-btn" onclick="playSound('click')">Cloud သို့ သိမ်းမည် (Save)</button>
         <button class="start-btn" onclick="startQuiz(); playSound('click');" style="margin-top: 4px; background: #1f6feb;">🔄 ထပ်ဆော့မည်</button>
     `;
