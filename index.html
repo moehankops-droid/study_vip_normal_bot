@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Study Bot VLP Pro Max</title>
+    <title>Study Bot VLP Pro Max - Tournament</title>
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
@@ -29,7 +29,7 @@
             height: fit-content;
         }
         
-        /* Bottom Navigation Bar (5 Clean Essential Tabs) */
+        /* Bottom Navigation Bar */
         .nav-tabs {
             position: fixed;
             bottom: 0;
@@ -60,10 +60,7 @@
             flex: 1;
         }
         .nav-tab span.icon { font-size: 14px; }
-        .nav-tab.active {
-            color: #58a6ff;
-            background: #162235;
-        }
+        .nav-tab.active { color: #58a6ff; background: #162235; }
 
         .tab-content { display: none; }
         .tab-content.active { display: block; }
@@ -80,7 +77,6 @@
         .home-hero h2 { margin: 0 0 2px 0; color: #fff; font-size: 13px; font-weight: 800; }
         .home-hero p { margin: 0; color: #d3f9d8; font-size: 8px; }
 
-        /* Cyber Glow Animation */
         @keyframes cyberGlow {
             0% { border-color: #58a6ff; box-shadow: 0 0 8px rgba(88, 166, 255, 0.4), inset 0 0 4px rgba(88, 166, 255, 0.2); }
             50% { border-color: #ff7b72; box-shadow: 0 0 18px rgba(255, 123, 114, 0.7), inset 0 0 8px rgba(255, 123, 114, 0.4); }
@@ -160,7 +156,6 @@
         .tg-btn { background: #1f6feb; margin-top: 4px; text-decoration: none; display: block; text-align: center; line-height: normal; }
         .next-btn { background: #1f6feb; display: none; }
 
-        /* Quick Action Buttons on Home */
         .quick-actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -180,10 +175,10 @@
         }
         .quick-btn:hover { background: #21262d; border-color: #58a6ff; }
 
-        /* Dedicated Tournament Card on Home */
+        /* Tournament Card */
         .dedicated-tour-card {
-            background: linear-gradient(135deg, #1a7f37, #0d3819);
-            border: 1.5px solid #2ea043;
+            background: linear-gradient(135deg, #8957e5, #4f239c);
+            border: 1.5px solid #a371f7;
             border-radius: 8px;
             padding: 8px 10px;
             margin-bottom: 5px;
@@ -193,7 +188,7 @@
             align-items: center;
         }
         .tour-info h4 { margin: 0 0 2px 0; color: #fff; font-size: 11px; }
-        .tour-info p { margin: 0; color: #d3f9d8; font-size: 8px; line-height: 1.2; }
+        .tour-info p { margin: 0; color: #f3e8ff; font-size: 8px; line-height: 1.2; }
         .tour-join-btn {
             background: #d29922;
             color: #111;
@@ -205,7 +200,6 @@
             font-size: 9px;
         }
 
-        /* Shop Cards */
         .shop-card {
             background: #161b22;
             border: 1px solid #30363d;
@@ -363,7 +357,7 @@
     <div id="home-tab" class="tab-content active">
         <div class="home-hero">
             <h2>Study Bot VLP Pro Max</h2>
-            <p>အင်္ဂလိပ်စာ၊ အပင်စိုက်ရန်နှင့် မှတ်စုများ စုဆောင်းရန်</p>
+            <p>အင်္ဂလိပ်စာ၊ အပင်စိုက်ရန်နှင့် Tournament ဝင်ရန်</p>
         </div>
 
         <div class="deku-cyber-box">
@@ -376,13 +370,13 @@
             </p>
         </div>
 
-        <!-- 🏆 Dedicated Weekly Tournament Section (သပ်သပ်ခွဲထုတ်ထားသော ပြိုင်ပွဲကတ်) -->
+        <!-- Sunday Tournament Card -->
         <div class="dedicated-tour-card">
             <div class="tour-info">
-                <h4>🏆 အပတ်စဉ် သီးသန့်ပြိုင်ပွဲကြီး</h4>
-                <p>ဝင်ကြေး: 🪙 2500 | ဆုကြေး: 🪙 10000<br><span id="vip-status-text" style="color: #ffe6a7;">⭐ VIP ဆိုလျှင် ဝင်ကြေး အခမဲ့!</span></p>
+                <h4>🏆 Sunday Night Tournament</h4>
+                <p>⏰ အချိန်: Sunday ည 7 - 10 နာရီ<br>⏱️ ဖြေဆိုချိန်: ၄၅ မိနစ် (Essay ပါဝင်သည်)<br>🎁 ဆုကြေး: 🪙 10,000 Coins</p>
             </div>
-            <button class="tour-join-btn" onclick="joinTournament(); playSound('click');">ဝင်မည် 🚀</button>
+            <button class="tour-join-btn" onclick="startTournamentSession(); playSound('click');">ဝင်မည် 🚀</button>
         </div>
 
         <div class="stats-grid">
@@ -396,7 +390,6 @@
             </div>
         </div>
 
-        <!-- Quick Access Buttons for Notes & Shop -->
         <div class="quick-actions">
             <button class="quick-btn" onclick="switchTab('obsidian-tab'); loadNotes(); playSound('click');">🧠 Notes & Ideas</button>
             <button class="quick-btn" onclick="switchTab('shop-tab'); playSound('click');">🛒 Item Shop</button>
@@ -428,10 +421,21 @@
         </div>
     </div>
 
-    <!-- Forest Mode Tab (🌳 Focus & Tree Growing) -->
+    <!-- Tournament Arena Tab (Sunday 45 mins limit with Quiz + Optional Essay) -->
+    <div id="tournament-tab" class="tab-content">
+        <div class="study-timer" style="background: #2b1515; border-color: #8957e5; color: #a371f7;">
+            <span>🏆 Tournament Time:</span>
+            <span id="tour-timer" style="font-family: monospace;">45:00</span>
+        </div>
+        <div id="tour-main-container">
+            <!-- Dynamic Tournament Content -->
+        </div>
+    </div>
+
+    <!-- Forest Mode Tab -->
     <div id="forest-tab" class="tab-content">
         <h3 style="color: #3fb950; margin-top: 0; font-size: 12px;">🌳 Forest Focus & Tree Growing</h3>
-        <p style="font-size: 8px; color: #8b949e; margin-bottom: 6px;">ဖုန်းကိုခဏချထားပြီး အာရုံစိုက်ပါ၊ အပင်လေး ကြီးထွားလာပါလိမ့်မည်[cite: 1, 2]!</p>
+        <p style="font-size: 8px; color: #8b949e; margin-bottom: 6px;">ဖုန်းကိုခဏချထားပြီး အာရုံစိုက်ပါ၊ အပင်လေး ကြီးထွားလာပါလိမ့်မည်[cite: 1]!</p>
         
         <div class="forest-card" style="text-align: center;">
             <div id="tree-display" style="font-size: 35px; margin: 5px 0;">🌱</div>
@@ -449,7 +453,7 @@
             <h3 style="color: #d29922; margin: 0; font-size: 11px;">🧠 Obsidian Notes</h3>
             <button class="buy-btn" style="padding: 2px 6px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မသို့</button>
         </div>
-        <p style="font-size: 8px; color: #8b949e; margin-bottom: 4px;">ကိုယ့်ရဲ့ Idea များ၊ Grammar မှတ်စုများကို သိမ်းရန်[cite: 2]။</p>
+        <p style="font-size: 8px; color: #8b949e; margin-bottom: 4px;">ကိုယ့်ရဲ့ Idea များ၊ Grammar မှတ်စုများကို သိမ်းရန်။</p>
         
         <div class="obsidian-card">
             <input type="text" id="note-title" placeholder="မှတ်စုခေါင်းစဉ် (Title)..." maxlength="30">
@@ -691,6 +695,13 @@ let forestTimer = null;
 let forestSeconds = 25 * 60;
 let isForestRunning = false;
 
+/* Tournament Variables */
+let tourTimer = null;
+let tourSeconds = 45 * 60; /* 45 minutes */
+let tourScore = 0;
+let tourStreak = 0;
+let tourActive = false;
+
 window.onload = function() {
     checkSavedUser();
     updateHeader();
@@ -715,11 +726,132 @@ function switchTab(tabId) {
     }
 }
 
+/* Tournament Start Logic with 45 mins limit and Essay option */
+function startTournamentSession() {
+    if(!playerName) { alert("ပထမဆုံး 'ပင်မ' Tab တွင် နာမည်အရင်ထည့်ပါ။"); switchTab('home-tab'); return; }
+    
+    tourScore = 0;
+    tourStreak = 0;
+    tourSeconds = 45 * 60;
+    tourActive = true;
+
+    switchTab('tournament-tab');
+    if(tourTimer) clearInterval(tourTimer);
+
+    tourTimer = setInterval(() => {
+        tourSeconds--;
+        let mins = Math.floor(tourSeconds / 60);
+        let secs = tourSeconds % 60;
+        const tDisplay = document.getElementById("tour-timer");
+        if(tDisplay) { tDisplay.innerText = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`; }
+
+        if (tourSeconds <= 0) {
+            clearInterval(tourTimer);
+            endTournamentSession("⏰ Tournament အချိန် (၄၅ မိနစ်) ကုန်ဆုံးသွားပါပြီ!");
+        }
+    }, 1000);
+
+    loadTournamentInterface();
+}
+
+function loadTournamentInterface() {
+    const container = document.getElementById("tour-main-container");
+    const randomIndex = Math.floor(Math.random() * questionsBank.length);
+    currentQuiz = questionsBank[randomIndex];
+
+    let optionsHTML = "";
+    currentQuiz.options.forEach(opt => {
+        optionsHTML += `<button onclick="checkTourAnswer(this, '${opt.replace(/'/g, "\\'")}', '${currentQuiz.answer.replace(/'/g, "\\'")}')">${opt}</button>`;
+    });
+
+    container.innerHTML = `
+        <div style="background: #161b22; padding: 6px; border-radius: 6px; border: 1px solid #30363d; margin-bottom: 5px;">
+            <p style="margin: 0; font-size: 9px; color: #a371f7;">⭐ Tournament Score: <b>${tourScore} pts</b> | Streak: <b style="color: #f0883e;">${tourStreak} 🔥</b></p>
+        </div>
+        <div class="question-box">${currentQuiz.question}</div>
+        <div class="options">${optionsHTML}</div>
+        <div id="tour-explanation" class="explanation"></div>
+        <button id="tour-next-btn" class="next-btn" onclick="loadTournamentInterface(); playSound('click');">နောက်မေးခွန်းသို့ ➡️</button>
+        
+        <hr style="border: 0.5px solid #30363d; margin: 8px 0;">
+        <div style="text-align: left; background: #161b22; padding: 6px; border-radius: 6px; border: 1px solid #8957e5;">
+            <h4 style="margin: 0 0 2px 0; color: #a371f7; font-size: 10px;">✍️ Tournament Essay (Optional - 100 Marks)</h4>
+            <p style="font-size: 8px; color: #8b949e; margin-bottom: 3px;">မဖြေချင် ကျော်သွားလို့ရသည် (ဖြေလျှင် 100 မှတ်ရမည်)</p>
+            <select id="tour-essay-topic">
+                <option value="My Favorite Hobby and Why I Like It">My Favorite Hobby and Why I Like It</option>
+                <option value="The Importance of Learning English Language">The Importance of Learning English Language</option>
+            </select>
+            <textarea id="tour-essay-input" placeholder="ဒီနေရာတွင် Essay ရေးရန်..." style="height: 45px;"></textarea>
+            <button class="start-btn" style="background: #8957e5; padding: 5px; font-size: 9px;" onclick="submitTourEssay(); playSound('click');">Essay တင်မည် (100 pts) 🤖</button>
+        </div>
+        
+        <button class="finish-btn" onclick="endTournamentSession('🛑 Tournament ကို အဆုံးသတ်လိုက်ပါပြီ!'); playSound('click');" style="margin-top: 6px;">ပြိုင်ပွဲပြီးဆုံးမည် (Submit)</button>
+    `;
+}
+
+function checkTourAnswer(button, selected, correct) {
+    document.querySelectorAll('.options button').forEach(btn => btn.disabled = true);
+    const expBox = document.getElementById("tour-explanation");
+    expBox.style.display = "block";
+
+    if (selected.trim() === correct.trim()) {
+        playSound('correct');
+        button.style.background = "#0d3819"; button.style.color = "#d3f9d8"; button.style.borderColor = "#2ea043";
+        expBox.style.background = "#0d3819"; expBox.style.color = "#d3f9d8"; expBox.style.borderColor = "#2ea043";
+        expBox.innerHTML = "<strong>✅ မှန်ကန်ပါသည်!</strong>";
+        tourStreak += 1;
+        tourScore += (1 + tourStreak); // Streak များရင် အမှတ်ပိုရမည်
+    } else {
+        playSound('wrong');
+        button.style.background = "#2b1515"; button.style.color = "#f85149"; button.style.borderColor = "#da3633";
+        expBox.style.background = "#2b1515"; expBox.style.color = "#f85149"; expBox.style.borderColor = "#da3633";
+        expBox.innerHTML = `<strong>❌ မှားယွင်းပါသည်။</strong> အမှန်မှာ: ${correct}`;
+        tourStreak = 0;
+    }
+    document.getElementById("tour-next-btn").style.display = "block";
+}
+
+function submitTourEssay() {
+    const text = document.getElementById("tour-essay-input").value.trim();
+    if (!text || text.split(/\s+/).length < 10) {
+        alert("ကျေးဇူးပြု၍ Essay ကို အနည်းဆုံး စာလုံး ၁၀ လုံးထက်မနည်း ရေးပါ။");
+        return;
+    }
+    tourScore += 100; // Essay အတွက် 100 မှတ်တိတိ ပေးမည်
+    playSound('correct');
+    alert("🎉 Essay အောင်မြင်စွာ တင်သွင်းပြီးပါပြီ! (အမှတ် +100 ထည့်သွင်းပြီး)");
+    document.getElementById("tour-essay-input").value = "";
+}
+
+function endTournamentSession(message) {
+    if(tourTimer) clearInterval(tourTimer);
+    tourActive = false;
+    
+    // Total score merge to main score for saving
+    score = tourScore;
+    money += Math.floor(tourScore * 10); // အမှတ်အပေါ်မူတည်ပြီး Coins ပေးမည်
+
+    const container = document.getElementById("tour-main-container");
+    container.innerHTML = `
+        <h3 style="color: #a371f7; margin: 6px 0;">${message}</h3>
+        <p style="font-size: 11px; margin: 2px 0;">အမည်: <b style="color: #fff;">${playerName}</b></p>
+        <p style="font-size: 12px; margin: 3px 0;">စုစုပေါင်းရမှတ်: <b style="color: #3fb950; font-size: 14px;">${tourScore} pts</b></p>
+        <button class="action-btn" id="tour-save-btn" onclick="playSound('click')">Cloud သို့ ရမှတ်သိမ်းမည် (Save)</button>
+    `;
+
+    document.getElementById("tour-save-btn").addEventListener("click", function() {
+        if (typeof window.saveScoreToFirebase === "function") {
+            window.saveScoreToFirebase(playerName, score, money);
+        } else {
+            alert("❌ Firebase ချိတ်ဆက်မှု အဆင်မပြေပါ။");
+        }
+    });
+}
+
 function startForestSession() {
     if (isForestRunning) return;
     isForestRunning = true;
     forestSeconds = 25 * 60;
-    
     document.getElementById("forest-start-btn").style.display = "none";
     document.getElementById("forest-cancel-btn").style.display = "block";
     document.getElementById("tree-display").innerText = "🌿";
@@ -730,23 +862,10 @@ function startForestSession() {
         let mins = Math.floor(forestSeconds / 60);
         let secs = forestSeconds % 60;
         document.getElementById("forest-timer-display").innerText = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
-
-        if (forestSeconds === 15 * 60) {
-            document.getElementById("tree-display").innerText = "🌲";
-            document.getElementById("tree-status-text").innerText = "ပင်စည်ကြီးထွားနေသည် (Sapling)";
-        } else if (forestSeconds === 5 * 60) {
-            document.getElementById("tree-display").innerText = "🌳";
-            document.getElementById("tree-status-text").innerText = "အပင်ကြီးဖြစ်လာသည် (Mature Tree)";
-        }
-
         if (forestSeconds <= 0) {
-            clearInterval(forestTimer);
-            isForestRunning = false;
-            money += 300;
-            localStorage.setItem('quizCoins', money);
-            updateHeader();
-            playSound('correct');
-            alert("🎉 ဂုဏ်ယူပါတယ်! အာရုံစိုက်မှု အောင်မြင်ပြီး 🪙 300 Coins ရရှိပါပြီ[cite: 1, 2]!");
+            clearInterval(forestTimer); isForestRunning = false;
+            money += 300; localStorage.setItem('quizCoins', money); updateHeader(); playSound('correct');
+            alert("🎉 ဂုဏ်ယူပါတယ်! အာရုံစိုက်မှု အောင်မြင်ပြီး 🪙 300 Coins ရရှိပါပြီ[cite: 1]!");
             resetForestUI();
         }
     }, 1000);
@@ -754,12 +873,10 @@ function startForestSession() {
 
 function cancelForestSession() {
     if (!isForestRunning) return;
-    clearInterval(forestTimer);
-    isForestRunning = false;
-    playSound('wrong');
+    clearInterval(forestTimer); isForestRunning = false; playSound('wrong');
     document.getElementById("tree-display").innerText = "🥀";
     document.getElementById("tree-status-text").innerText = "အပင်ညှိုးသွားပါပြီ (Withered)";
-    alert("❌ ဖုန်းထွက်သုံးမိသဖြင့် အပင်လေး ညှိုးသွားပါပြီ[cite: 1, 2]!");
+    alert("❌ ဖုန်းထွက်သုံးမိသဖြင့် အပင်လေး ညှိုးသွားပါပြီ[cite: 1]!");
     setTimeout(() => { resetForestUI(); }, 2000);
 }
 
@@ -774,34 +891,24 @@ function resetForestUI() {
 function saveObsidianNote() {
     const title = document.getElementById("note-title").value.trim();
     const content = document.getElementById("note-content").value.trim();
-    if (!title || !content) {
-        alert("ကျေးဇူးပြု၍ ခေါင်းစဉ်နှင့် မှတ်စုအကြောင်းအရာကို ဖြည့်ပါ။");
-        return;
-    }
+    if (!title || !content) { alert("ကျေးဇူးပြု၍ ခေါင်းစဉ်နှင့် မှတ်စုအကြောင်းအရာကို ဖြည့်ပါ။"); return; }
     let notes = JSON.parse(localStorage.getItem("obsidianNotes")) || [];
     notes.unshift({ title, content, date: new Date().toLocaleDateString() });
     localStorage.setItem("obsidianNotes", JSON.stringify(notes));
-    document.getElementById("note-title").value = "";
-    document.getElementById("note-content").value = "";
-    loadNotes();
-    playSound('correct');
-    alert("✅ မှတ်စု သိမ်းဆည်းပြီးပါပြီ[cite: 2]!");
+    document.getElementById("note-title").value = ""; document.getElementById("note-content").value = "";
+    loadNotes(); playSound('correct'); alert("✅ မှတ်စု သိမ်းဆည်းပြီးပါပြီ!");
 }
 
 function loadNotes() {
     const container = document.getElementById("notes-container");
     let notes = JSON.parse(localStorage.getItem("obsidianNotes")) || [];
-    if (notes.length === 0) {
-        container.innerHTML = `<p style="color: #8b949e; font-size: 8px; text-align: center;">မှတ်စု မရှိသေးပါ။</p>`;
-        return;
-    }
+    if (notes.length === 0) { container.innerHTML = `<p style="color: #8b949e; font-size: 8px; text-align: center;">မှတ်စု မရှိသေးပါ။</p>`; return; }
     let html = "";
     notes.forEach((note) => {
         html += `
             <div style="background: #161b22; border: 1px solid #30363d; border-radius: 5px; padding: 5px; margin-bottom: 4px;">
                 <div style="display: flex; justify-content: space-between; font-size: 9px; color: #58a6ff; font-weight: bold;">
-                    <span>📌 ${note.title}</span>
-                    <span style="font-size: 7px; color: #8b949e;">${note.date}</span>
+                    <span>📌 ${note.title}</span><span style="font-size: 7px; color: #8b949e;">${note.date}</span>
                 </div>
                 <p style="font-size: 8px; color: #c9d1d9; margin: 2px 0 0 0; line-height: 1.1;">${note.content}</p>
             </div>
@@ -819,14 +926,12 @@ function checkSavedUser() {
 
     if (savedUser) {
         playerName = savedUser;
-        let timeLeftText = "";
-        let canChange = true;
+        let timeLeftText = ""; let canChange = true;
         if (lastChangeTime) {
             let elapsed = now - parseInt(lastChangeTime);
             if (elapsed < oneWeek) {
                 let daysLeft = Math.ceil((oneWeek - elapsed) / (1000 * 60 * 60 * 24));
-                timeLeftText = ` (${daysLeft}ရက် စောင့်ရန်)`;
-                canChange = false;
+                timeLeftText = ` (${daysLeft}ရက် စောင့်ရန်)`; canChange = false;
             }
         }
         setupBox.innerHTML = `
@@ -950,8 +1055,7 @@ function startSpeedCountdown() {
         const speedDisplay = document.getElementById("speed-timer");
         if(speedDisplay) { speedDisplay.innerText = `${speedSeconds}s`; }
         if (speedSeconds <= 0) {
-            clearInterval(speedTimer);
-            playSound('wrong');
+            clearInterval(speedTimer); playSound('wrong');
             document.querySelectorAll('.options button').forEach(btn => btn.disabled = true);
             const expBox = document.getElementById("explanation-box");
             expBox.style.display = "block"; expBox.style.background = "#2b1515"; expBox.style.color = "#f85149"; expBox.style.borderColor = "#da3633";
@@ -979,8 +1083,7 @@ function checkAnswer(button, selected, correct, explanation) {
         let baseCoins = (currentQuizMode === 'speed') ? 75 : 50;
         let earnedCoins = isVip ? (baseCoins * 2) : baseCoins;
         if (streak > 3) { earnedCoins += (streak * 5); }
-        money += Math.floor(earnedCoins); 
-        localStorage.setItem('quizCoins', money);
+        money += Math.floor(earnedCoins); localStorage.setItem('quizCoins', money);
     } else {
         playSound('wrong');
         button.style.background = "#2b1515"; button.style.color = "#f85149"; button.style.borderColor = "#da3633";
@@ -1036,14 +1139,12 @@ function checkEssayWithAI() {
     setTimeout(() => {
         const wordCount = text.split(/\s+/).length;
         let mockScore = Math.min(100, Math.max(50, Math.floor(wordCount * 1.2) + Math.floor(Math.random() * 20)));
-        let isPass = mockScore >= 70;
-        let rewardGiven = false;
+        let isPass = mockScore >= 70; let rewardGiven = false;
 
         if (isPass && count < maxLimit) {
             let reward = isVip ? 1000 : 500;
             money += reward; localStorage.setItem('quizCoins', money);
-            updateHeader(); count++;
-            localStorage.setItem('essayDailyCount', count.toString());
+            updateHeader(); count++; localStorage.setItem('essayDailyCount', count.toString());
             rewardGiven = true; playSound('correct');
         } else { playSound('correct'); }
 
@@ -1077,19 +1178,6 @@ function buyItem(itemName, price) {
         money -= price; localStorage.setItem('quizCoins', money);
         updateHeader(); playSound('correct'); alert(`🎉 ${itemName} ကို ဝယ်ယူပြီးပါပြီ!`);
     } else { playSound('wrong'); alert(`❌ Coins မလုံလောက်ပါ။`); }
-}
-
-function joinTournament() {
-    const fee = 2500;
-    isVip = localStorage.getItem('isVipUser') === 'true';
-    let isAlreadyJoined = localStorage.getItem('joinedTournament') === 'true';
-    money = parseInt(localStorage.getItem('quizCoins')) || 0;
-
-    if (isVip || isAlreadyJoined) { alert("👑 သင်သည် VIP ဖြစ်ပြီးသားဖြစ်သည် (သို့မဟုတ်) Tournament ဝင်ပြီးသားဖြစ်ပါသည်။"); return; }
-    if (money >= fee) {
-        money -= fee; localStorage.setItem('quizCoins', money); localStorage.setItem('joinedTournament', 'true');
-        updateHeader(); playSound('correct'); alert(`🏆 Tournament သို့ စာရင်းပေးသွင်းပြီးပါပြီ!`);
-    } else { playSound('wrong'); alert(`❌ ဝင်ကြေး 🪙 ${fee} မလုံလောက်ပါ။`); }
 }
 
 function endGame(message) {
