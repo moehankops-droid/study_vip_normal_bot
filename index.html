@@ -12,7 +12,7 @@
             color: #e6edf3; 
             margin: 0; 
             padding: 6px; 
-            padding-bottom: 70px; 
+            padding-bottom: 65px; 
             display: flex; 
             justify-content: center; 
             min-height: 100vh; 
@@ -29,7 +29,7 @@
             height: fit-content;
         }
         
-        /* Bottom Navigation Bar (6 Tabs) */
+        /* Bottom Navigation Bar (5 Clean Tabs) */
         .nav-tabs {
             position: fixed;
             bottom: 0;
@@ -38,7 +38,7 @@
             background: #0d121c;
             display: flex;
             justify-content: space-around;
-            padding: 4px 1px;
+            padding: 5px 2px;
             border-top: 1px solid #1f304a;
             box-shadow: 0 -4px 15px rgba(0,0,0,0.7);
             z-index: 1000;
@@ -47,19 +47,19 @@
             background: none;
             border: none;
             color: #8b949e;
-            font-size: 8px;
+            font-size: 9px;
             font-weight: 600;
             cursor: pointer;
-            padding: 3px 1px;
+            padding: 4px;
             border-radius: 6px;
             transition: 0.2s;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 1px;
+            gap: 2px;
             flex: 1;
         }
-        .nav-tab span.icon { font-size: 13px; }
+        .nav-tab span.icon { font-size: 14px; }
         .nav-tab.active {
             color: #58a6ff;
             background: #162235;
@@ -159,6 +159,26 @@
         .edit-btn { background: #9e6a03; font-size: 9px; padding: 4px; margin-top: 2px; }
         .tg-btn { background: #1f6feb; margin-top: 4px; text-decoration: none; display: block; text-align: center; line-height: normal; }
         .next-btn { background: #1f6feb; display: none; }
+
+        /* Quick Action Buttons on Home */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+        .quick-btn {
+            background: #161b22;
+            border: 1px solid #30363d;
+            color: #58a6ff;
+            padding: 6px;
+            border-radius: 6px;
+            font-size: 9px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+        }
+        .quick-btn:hover { background: #21262d; border-color: #58a6ff; }
 
         /* Shop & Cards */
         .shop-card, .tour-card {
@@ -341,6 +361,12 @@
                 <b id="home-money" style="color: #d29922;">0 🪙</b>
             </div>
         </div>
+
+        <!-- Quick Access Buttons for Shop & Notes -->
+        <div class="quick-actions">
+            <button class="quick-btn" onclick="switchTab('obsidian-tab'); loadNotes(); playSound('click');">🧠 Notes & Ideas</button>
+            <button class="quick-btn" onclick="switchTab('shop-tab'); playSound('click');">🛒 Shop & Tour</button>
+        </div>
         
         <div id="user-setup-box">
             <div style="text-align: left; margin-bottom: 2px; font-size: 8px; color: #f0883e;">သင့်နာမည် (Username) ထည့်ပါ:</div>
@@ -383,18 +409,21 @@
         </div>
     </div>
 
-    <!-- Obsidian Notes Tab (📝 Idea & Notes) -->
+    <!-- Obsidian Notes Tab (Hidden via Menu, accessible from Home) -->
     <div id="obsidian-tab" class="tab-content">
-        <h3 style="color: #d29922; margin-top: 0; font-size: 12px;">🧠 Obsidian Second Brain Notes</h3>
-        <p style="font-size: 8px; color: #8b949e; margin-bottom: 4px;">ကိုယ့်ရဲ့ Idea များ၊ Grammar မှတ်စုများကို Local သိမ်းဆည်းရန်[cite: 2]။</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <h3 style="color: #d29922; margin: 0; font-size: 11px;">🧠 Obsidian Notes</h3>
+            <button class="buy-btn" style="padding: 2px 6px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မသို့</button>
+        </div>
+        <p style="font-size: 8px; color: #8b949e; margin-bottom: 4px;">ကိုယ့်ရဲ့ Idea များ၊ Grammar မှတ်စုများကို သိမ်းရန်[cite: 2]။</p>
         
         <div class="obsidian-card">
             <input type="text" id="note-title" placeholder="မှတ်စုခေါင်းစဉ် (Title)..." maxlength="30">
-            <textarea id="note-content" placeholder="ဒီနေရာတွင် အချက်အလက်များ၊ Idea များကို ရေးမှတ်ပါ..." style="height: 55px;"></textarea>
-            <button class="start-btn" style="background: #1f6feb; padding: 5px; font-size: 10px;" onclick="saveObsidianNote(); playSound('click');">💾 မှတ်စုသိမ်းမည် (Save)</button>
+            <textarea id="note-content" placeholder="ဒီနေရာတွင် အချက်အလက်များ ရေးမှတ်ပါ..." style="height: 50px;"></textarea>
+            <button class="start-btn" style="background: #1f6feb; padding: 4px; font-size: 9px;" onclick="saveObsidianNote(); playSound('click');">💾 မှတ်စုသိမ်းမည် (Save)</button>
         </div>
 
-        <div style="text-align: left; max-height: 140px; overflow-y: auto;" id="notes-container"></div>
+        <div style="text-align: left; max-height: 130px; overflow-y: auto;" id="notes-container"></div>
     </div>
 
     <!-- Essay AI Tab -->
@@ -424,9 +453,13 @@
         <div id="essay-feedback-box" class="essay-feedback"></div>
     </div>
 
-    <!-- Shop & Tournament Tab -->
+    <!-- Shop Tab (Hidden via Menu, accessible from Home) -->
     <div id="shop-tab" class="tab-content">
-        <h3 style="color: #f0883e; margin-top: 0; font-size: 11px;">🏆 Weekly Tournament</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <h3 style="color: #f0883e; margin: 0; font-size: 11px;">🛒 Shop & Tournament</h3>
+            <button class="buy-btn" style="padding: 2px 6px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မသို့</button>
+        </div>
+
         <div class="tour-card" style="background: linear-gradient(135deg, #1a7f37, #0d3819); border: 1px solid #2ea043;">
             <div class="tour-info">
                 <h4 style="color: #fff;">အပတ်စဉ် ပြိုင်ပွဲကြီး</h4>
@@ -435,8 +468,7 @@
             <button class="buy-btn" style="background: #d29922;" onclick="joinTournament(); playSound('click');">ဝင်မည် 🚀</button>
         </div>
 
-        <h3 style="color: #f0883e; font-size: 11px; margin-top: 6px;">🛒 Item Shop</h3>
-        <div class="shop-card" style="border: 1px solid #d29922; background: #1f1a10;">
+        <div class="shop-card" style="border: 1px solid #d29922; background: #1f1a10; margin-top: 4px;">
             <div class="shop-info">
                 <h4 style="color: #d29922;">👑 VIP Pass (1 Month)</h4>
                 <p>• ဝင်ကြေး အခမဲ့ | Coins ၂ ဆ<br>• Essay ဆုကြေး တစ်နေ့ ၅ ကြိမ်</p>
@@ -467,7 +499,7 @@
     </div>
 </div>
 
-<!-- Bottom Navigation Bar (7 Tabs Total with Shop included) -->
+<!-- Bottom Navigation Bar (Clean 5 Essential Tabs) -->
 <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchTab('home-tab'); playSound('click');">
         <span class="icon">🏠</span>ပင်မ
@@ -478,14 +510,8 @@
     <button class="nav-tab" onclick="switchTab('forest-tab'); playSound('click');">
         <span class="icon">🌳</span>Forest
     </button>
-    <button class="nav-tab" onclick="switchTab('obsidian-tab'); loadNotes(); playSound('click');">
-        <span class="icon">🧠</span>Notes
-    </button>
     <button class="nav-tab" onclick="switchTab('essay-tab'); playSound('click');">
         <span class="icon">✍️</span>Essay
-    </button>
-    <button class="nav-tab" onclick="switchTab('shop-tab'); playSound('click');">
-        <span class="icon">🛒</span>Shop
     </button>
     <button class="nav-tab" onclick="switchTab('leaderboard-tab'); playSound('click');">
         <span class="icon">🏆</span>Board
@@ -656,11 +682,9 @@ function switchTab(tabId) {
     if(tabId === 'home-tab') tabs[0].classList.add('active');
     if(tabId === 'quiz-tab') tabs[1].classList.add('active');
     if(tabId === 'forest-tab') tabs[2].classList.add('active');
-    if(tabId === 'obsidian-tab') tabs[3].classList.add('active');
-    if(tabId === 'essay-tab') tabs[4].classList.add('active');
-    if(tabId === 'shop-tab') tabs[5].classList.add('active');
+    if(tabId === 'essay-tab') tabs[3].classList.add('active');
     if(tabId === 'leaderboard-tab') {
-        tabs[6].classList.add('active');
+        tabs[4].classList.add('active');
         if (typeof window.loadLeaderboardFromFirebase === 'function') { window.loadLeaderboardFromFirebase(); }
     }
 }
