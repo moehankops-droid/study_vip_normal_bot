@@ -236,6 +236,8 @@
             resize: vertical;
             margin-top: 3px;
             font-family: inherit;
+            user-select: text;
+            -webkit-user-select: text;
         }
         select {
             width: 100%;
@@ -303,14 +305,17 @@
 
         input[type="text"] {
             width: 100%;
-            padding: 5px;
+            padding: 6px;
             margin: 3px 0;
             background: #161b22;
-            border: 1px solid #30363d;
+            border: 1.5px solid #58a6ff;
             border-radius: 6px;
             color: white;
             font-size: 11px;
-            text-align: center;
+            text-align: left;
+            user-select: text;
+            -webkit-user-select: text;
+            pointer-events: auto;
         }
 
         .leaderboard-list {
@@ -397,7 +402,7 @@
         
         <div id="user-setup-box">
             <div style="text-align: left; margin-bottom: 2px; font-size: 8px; color: #f0883e;">သင့်နာမည် (Username) ထည့်ပါ:</div>
-            <input type="text" id="username-input" placeholder="ဥပမာ - Moe Han" maxlength="15">
+            <input type="text" id="username-input" placeholder="ဥပမာ - Moe Han" maxlength="15" autocomplete="off">
             <button class="start-btn" onclick="saveInitialUsername(); playSound('click');">နာမည်သိမ်းမည်</button>
         </div>
     </div>
@@ -421,7 +426,7 @@
         </div>
     </div>
 
-    <!-- Custom Tasks / Test Mode Tab (New Habit & Task Checklist) -->
+    <!-- Custom Tasks / Test Mode Tab -->
     <div id="test-tab" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
             <h3 style="color: #58a6ff; margin: 0; font-size: 11px;">📋 Custom Tasks / Test Mode</h3>
@@ -430,8 +435,8 @@
         <p style="font-size: 8px; color: #8b949e; margin-bottom: 6px;">ကိုယ့်ဘာသာ လုပ်ချင်သည့် လေ့ကျင့်ခန်း သို့မဟုတ် လုပ်စရာများကို ထည့်ပြီး အမှန်ခြစ်ဖြင့် မှတ်သားရန် (အမှတ်မပေးပါ)</p>
         
         <div class="test-card">
-            <input type="text" id="custom-task-input" placeholder="လုပ်စရာ အသစ်ထည့်ရန် (ဥပမာ- ပေါ့ပါးသော လေ့ကျင့်ခန်း)..." maxlength="40">
-            <button class="start-btn" style="background: #1f6feb; padding: 5px; font-size: 9px;" onclick="addCustomTask(); playSound('click');">➕ Task ထည့်မည်</button>
+            <input type="text" id="custom-task-input" placeholder="လုပ်စရာ အသစ်ထည့်ရန် (ဥပမာ- လေ့ကျင့်ခန်း)..." maxlength="40" autocomplete="off" onclick="this.focus();">
+            <button class="start-btn" style="background: #1f6feb; padding: 5px; font-size: 9px; margin-top: 5px;" onclick="addCustomTask(); playSound('click');">➕ Task ထည့်မည်</button>
         </div>
 
         <div style="text-align: left; max-height: 170px; overflow-y: auto;" id="custom-tasks-container">
@@ -472,8 +477,8 @@
         <p style="font-size: 8px; color: #8b949e; margin-bottom: 4px;">ကိုယ့်ရဲ့ Idea များ၊ Grammar မှတ်စုများကို သိမ်းရန်။</p>
         
         <div class="obsidian-card">
-            <input type="text" id="note-title" placeholder="မှတ်စုခေါင်းစဉ် (Title)..." maxlength="30">
-            <textarea id="note-content" placeholder="ဒီနေရာတွင် အချက်အလက်များ ရေးမှတ်ပါ..." style="height: 50px;"></textarea>
+            <input type="text" id="note-title" placeholder="မှတ်စုခေါင်းစဉ် (Title)..." maxlength="30" autocomplete="off" onclick="this.focus();">
+            <textarea id="note-content" placeholder="ဒီနေရာတွင် အချက်အလက်များ ရေးမှတ်ပါ..." style="height: 50px;" onclick="this.focus();"></textarea>
             <button class="start-btn" style="background: #1f6feb; padding: 4px; font-size: 9px;" onclick="saveObsidianNote(); playSound('click');">💾 မှတ်စုသိမ်းမည် (Save)</button>
         </div>
 
@@ -495,7 +500,7 @@
             </select>
         </div>
 
-        <textarea id="essay-input" placeholder="ဒီနေရာတွင် သင့် Essay ကို ရေးသားပါ..." oninput="updateWordCount()"></textarea>
+        <textarea id="essay-input" placeholder="ဒီနေရာတွင် သင့် Essay ကို ရေးသားပါ..." oninput="updateWordCount()" onclick="this.focus();"></textarea>
         
         <div style="display: flex; justify-content: space-between; font-size: 8px; color: #8b949e; margin-top: 2px;">
             <span>Words: <b id="word-count" style="color: #fff;">0</b></span>
@@ -747,7 +752,7 @@ function switchTab(tabId) {
     }
 }
 
-/* Custom Tasks / Test Mode Functions (No points, pure habit checklist) */
+/* Custom Tasks / Test Mode Functions */
 function addCustomTask() {
     const input = document.getElementById("custom-task-input");
     const taskText = input.value.trim();
@@ -878,7 +883,7 @@ function loadTournamentInterface() {
                 <option value="My Favorite Hobby and Why I Like It">My Favorite Hobby and Why I Like It</option>
                 <option value="The Importance of Learning English Language">The Importance of Learning English Language</option>
             </select>
-            <textarea id="tour-essay-input" placeholder="ဒီနေရာတွင် Essay ရေးရန်..." style="height: 45px;"></textarea>
+            <textarea id="tour-essay-input" placeholder="ဒီနေရာတွင် Essay ရေးရန်..." style="height: 45px;" onclick="this.focus();"></textarea>
             <button class="start-btn" style="background: #8957e5; padding: 5px; font-size: 9px;" onclick="submitTourEssay(); playSound('click');">Essay တင်မည် (100 pts) 🤖</button>
         </div>
         
@@ -1046,7 +1051,7 @@ function requestNameChange(canChange) {
     const setupBox = document.getElementById("user-setup-box");
     setupBox.innerHTML = `
         <div style="text-align: left; margin-bottom: 2px; font-size: 8px; color: #f0883e;">နာမည်အသစ် ထည့်ပါ:</div>
-        <input type="text" id="username-input" placeholder="နာမည်အသစ်..." maxlength="15" value="${playerName}">
+        <input type="text" id="username-input" placeholder="နာမည်အသစ်..." maxlength="15" value="${playerName}" autocomplete="off">
         <button class="start-btn" onclick="saveInitialUsername(); playSound('click');">နာမည်သိမ်းမည်</button>
     `;
 }
