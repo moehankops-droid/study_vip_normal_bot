@@ -374,7 +374,7 @@
         <div class="dedicated-tour-card">
             <div class="tour-info">
                 <h4>🏆 Sunday Night Tournament</h4>
-                <p>⏰ အချိန်: Sunday ည 7 - 10 နာရီ<br>💰 ဝင်ကြေး: 🪙 2500 (VIP အခမဲ့)<br>⏱️ ဖြေဆိုချိန်: ၄၅ မိနစ် (Essay ပါဝင်သည်)<br>🎁 ဆုကြေး: 🪙 10,000 Coins</p>
+                <p>⏰ အချိန်: Sunday ည 7 - 10 နာရီ<br>🪙 ဝင်ကြေး: 🪙 2500 (VIP အခမဲ့)<br>⏱️ ဖြေဆိုချိန်: ၄၅ မိနစ် (Essay ပါဝင်သည်)<br>🎁 ဆုကြေး: 🪙 10,000 Coins</p>
             </div>
             <button class="tour-join-btn" onclick="startTournamentSession(); playSound('click');">ဝင်မည် 🚀</button>
         </div>
@@ -435,7 +435,7 @@
     <!-- Forest Mode Tab -->
     <div id="forest-tab" class="tab-content">
         <h3 style="color: #3fb950; margin-top: 0; font-size: 12px;">🌳 Forest Focus & Tree Growing</h3>
-        <p style="font-size: 8px; color: #8b949e; margin-bottom: 6px;">ဖုန်းကိုခဏချထားပြီး အာရုံစိုက်ပါ၊ အပင်လေး ကြီးထွားလာပါလိမ့်မည်[cite: 1]!</p>
+        <p style="font-size: 8px; color: #8b949e; margin-bottom: 6px;">ဖုန်းကိုခဏချထားပြီး အာရုံစိုက်ပါ၊ အပင်လေး ကြီးထွားလာပါလိမ့်မည်!</p>
         
         <div class="forest-card" style="text-align: center;">
             <div id="tree-display" style="font-size: 35px; margin: 5px 0;">🌱</div>
@@ -735,8 +735,6 @@ function startTournamentSession() {
     const currentDay = now.getDay(); // 0 = Sunday, 1 = Monday, ... 6 = Saturday
     const currentHour = now.getHours();
 
-    // အကယ်၍ အခု အချိန်မရွေး စမ်းသပ်ချင်ရင် အောက်ပါ if အစအဆုံးကို 'ောင်' (comment) လုပ်ထားနိုင်ပါတယ်။
-    // တကယ့် Sunday ကျရင်တော့ ဖွင့်ထားရပါမယ်:
     /*
     if (currentDay !== 0 || currentHour < 19 || currentHour >= 22) {
         alert("⏳ Sunday Night Tournament သည် Sunday ည ၇ နာရီမှ ၁၀ နာရီအတွင်းသာ ဝင်ရောက်ယှဉ်ပြိုင်နိုင်ပါသည်။");
@@ -897,7 +895,7 @@ function startForestSession() {
         if (forestSeconds <= 0) {
             clearInterval(forestTimer); isForestRunning = false;
             money += 300; localStorage.setItem('quizCoins', money); updateHeader(); playSound('correct');
-            alert("🎉 ဂုဏ်ယူပါတယ်! အာရုံစိုက်မှု အောင်မြင်ပြီး 🪙 300 Coins ရရှိပါပြီ[cite: 1]!");
+            alert("🎉 ဂုဏ်ယူပါတယ်! အာရုံစိုက်မှု အောင်မြင်ပြီး 🪙 300 Coins ရရှိပါပြီ!");
             resetForestUI();
         }
     }, 1000);
@@ -908,7 +906,7 @@ function cancelForestSession() {
     clearInterval(forestTimer); isForestRunning = false; playSound('wrong');
     document.getElementById("tree-display").innerText = "🥀";
     document.getElementById("tree-status-text").innerText = "အပင်ညှိုးသွားပါပြီ (Withered)";
-    alert("❌ ဖုန်းထွက်သုံးမိသဖြင့် အပင်လေး ညှိုးသွားပါပြီ[cite: 1]!");
+    alert("❌ ဖုန်းထွက်သုံးမိသဖြင့် အပင်လေး ညှိုးသွားပါပြီ!");
     setTimeout(() => { resetForestUI(); }, 2000);
 }
 
