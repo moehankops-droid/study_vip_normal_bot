@@ -295,14 +295,14 @@
 <body>
 
 <div class="container">
-        <!-- Home Tab -->
+    <!-- Home Tab -->
     <div id="home-tab" class="tab-content active">
         <div class="home-hero">
             <h2>Study Bot VLP Normal</h2>
             <p>အင်္ဂလိပ်စာ လေ့လာရန်နှင့် ရမှတ်/Coins များ စုဆောင်းစို့</p>
         </div>
 
-                        <!-- 🎵 Happier Background Music Player -->
+        <!-- 🎵 Happier Background Music Player -->
         <div style="background: #21262d; border: 1px solid #30363d; border-radius: 6px; padding: 6px 10px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
             <div style="display: flex; align-items: center; gap: 6px; text-align: left;">
                 <span style="font-size: 14px;">🎵</span>
@@ -316,12 +316,7 @@
         </div>
         <!-- End of Music Player -->
 
-
-
         <div class="stats-grid">
-            <div class="stat-card">
-...
-                div class="stats-grid">
             <div class="stat-card">
                 <span>⚡ Streak</span>
                 <b id="home-streak" style="color: #f0883e;">0 🔥</b>
@@ -875,11 +870,9 @@ function checkAnswer(button, selected, correct, explanation) {
         streak += 1;
         score += streak; 
         
-        // Strict / Mode အလိုက် Coins တိုးပေးခြင်း (Normal: 50 | Speed: 75 | VIP ဆိုရင် ၂ ဆ)
         let baseCoins = (currentQuizMode === 'speed') ? 75 : 50;
         let earnedCoins = isVip ? (baseCoins * 2) : baseCoins;
         
-        // Streak များလာရင် Bonus Coins အနည်းငယ် ထပ်ပေါင်းပေးမည်
         if (streak > 3) {
             earnedCoins += (streak * 5);
         }
@@ -1043,23 +1036,19 @@ function buyItem(itemName, price) {
 
 function joinTournament() {
     const fee = 2500;
-    
-    // VIP status နဲ့ Tournament ဝင်ထားပြီးသားလားဆိုတာကို အရင်စစ်မည်
     isVip = localStorage.getItem('isVipUser') === 'true';
     let isAlreadyJoined = localStorage.getItem('joinedTournament') === 'true';
     money = parseInt(localStorage.getItem('quizCoins')) || 0;
 
-    // အကယ်၍ VIP ဖြစ်နေပြီ (သို့) အရင်ကတည်းက ဝင်ပြီးသားဆိုရင်
     if (isVip || isAlreadyJoined) {
         alert("👑 သင်သည် VIP ဖြစ်ပြီးသားဖြစ်သည် (သို့မဟုတ်) အရင်ကတည်းက Tournament သို့ စာရင်းပေးသွင်းပြီးဖြစ်ပါသည်။ ဝင်ကြေး အခမဲ့ဖြင့် ပါဝင်ပြီးပါပြီ!");
         return;
     }
     
-    // မဝင်ရသေးရင် ဝင်ကြေး 2500 ဖြတ်ပြီး ဝင်ခွင့်ပေးမည်
     if (money >= fee) {
         money -= fee;
         localStorage.setItem('quizCoins', money);
-        localStorage.setItem('joinedTournament', 'true'); // ဝင်ပြီးကြောင်း အမြဲမှတ်ထားမည်
+        localStorage.setItem('joinedTournament', 'true');
         updateHeader();
         playSound('correct');
         alert(`🏆 Tournament သို့ အောင်မြင်စွာ ဝင်ရောက်စာရင်းပေးသွင်းပြီးပါပြီ!`);
@@ -1068,7 +1057,6 @@ function joinTournament() {
         alert(`❌ ဝင်ကြေး 🪙 ${fee} မလုံလောက်ပါ။ Coins ထပ်စုပါ သို့မဟုတ် VIP ဝယ်ယူပါ။`);
     }
 }
-
 
 function endGame(message) {
     if(studyTimer) clearInterval(studyTimer);
@@ -1084,35 +1072,34 @@ function endGame(message) {
         <button class="start-btn" onclick="startQuiz(); playSound('click');" style="margin-top: 5px; background: #1f6feb;">🔄 ထပ်ဆော့မည်</button>
     `;
 
-            document.getElementById("save-btn").addEventListener("click", function() {
-            if (typeof window.saveScoreToFirebase === "function") {
-                window.saveScoreToFirebase(playerName, score, money);
-            } else {
-                alert("❌ Firebase ချိတ်ဆက်မှု အဆင်မပြေပါ။");
-            }
-        });
-    }
-
-    // 🎵 Marshmello Happier BGM Player Toggle Function
-    function toggleBGM() {
-        const audio = document.getElementById('bgm-audio');
-        const btn = document.getElementById('bgm-toggle-btn');
-        
-        if (audio.paused) {
-            audio.play().then(() => {
-                btn.innerText = "Pause ⏸️";
-                btn.style.background = "#da3633";
-            }).catch(e => {
-                alert("အသံဖွင့်ရန် မျက်နှာပြင်ကို တစ်ချက်နှိပ်ပါ (Browser Policy)");
-            });
+    document.getElementById("save-btn").addEventListener("click", function() {
+        if (typeof window.saveScoreToFirebase === "function") {
+            window.saveScoreToFirebase(playerName, score, money);
         } else {
-            audio.pause();
-            btn.innerText = "Play 🎶";
-            btn.style.background = "#238636";
+            alert("❌ Firebase ချိတ်ဆက်မှု အဆင်မပြေပါ။");
         }
-    }
-</script>
+    });
+}
 
+// 🎵 Marshmello Happier BGM Player Toggle Function
+function toggleBGM() {
+    const audio = document.getElementById('bgm-audio');
+    const btn = document.getElementById('bgm-toggle-btn');
+    
+    if (audio.paused) {
+        audio.play().then(() => {
+            btn.innerText = "Pause ⏸️";
+            btn.style.background = "#da3633";
+        }).catch(e => {
+            alert("အသံဖွင့်ရန် မျက်နှာပြင်ကို တစ်ချက်နှိပ်ပါ (Browser Policy)");
+        });
+    } else {
+        audio.pause();
+        btn.innerText = "Play 🎶";
+        btn.style.background = "#238636";
+    }
+}
+</script>
 
 </body>
 </html>
