@@ -374,7 +374,7 @@
         <div class="dedicated-tour-card">
             <div class="tour-info">
                 <h4>🏆 Sunday Night Tournament</h4>
-                <p>⏰ အချိန်: Sunday ည 7 - 10 နာရီ<br>⏱️ ဖြေဆိုချိန်: ၄၅ မိနစ် (Essay ပါဝင်သည်)<br>🎁 ဆုကြေး: 🪙 10,000 Coins</p>
+                <p>⏰ အချိန်: Sunday ည 7 - 10 နာရီ<br>💰 ဝင်ကြေး: 🪙 2500 (VIP အခမဲ့)<br>⏱️ ဖြေဆိုချိန်: ၄၅ မိနစ် (Essay ပါဝင်သည်)<br>🎁 ဆုကြေး: 🪙 10,000 Coins</p>
             </div>
             <button class="tour-join-btn" onclick="startTournamentSession(); playSound('click');">ဝင်မည် 🚀</button>
         </div>
@@ -726,10 +726,43 @@ function switchTab(tabId) {
     }
 }
 
-/* Tournament Start Logic with 45 mins limit and Essay option */
+/* Tournament Start Logic with Sunday 7-10 PM Check, Fee Deduction & 45 mins limit */
 function startTournamentSession() {
     if(!playerName) { alert("ပထမဆုံး 'ပင်မ' Tab တွင် နာမည်အရင်ထည့်ပါ။"); switchTab('home-tab'); return; }
     
+    // --- Sunday ည ၇ နာရီ မှ ၁၀ နာရီ အချိန်စစ်ဆေးခြင်း ---
+    const now = new Date();
+    const currentDay = now.getDay(); // 0 = Sunday, 1 = Monday, ... 6 = Saturday
+    const currentHour = now.getHours();
+
+    // အကယ်၍ အခု အချိန်မရွေး စမ်းသပ်ချင်ရင် အောက်ပါ if အစအဆုံးကို 'ောင်' (comment) လုပ်ထားနိုင်ပါတယ်။
+    // တကယ့် Sunday ကျရင်တော့ ဖွင့်ထားရပါမယ်:
+    /*
+    if (currentDay !== 0 || currentHour < 19 || currentHour >= 22) {
+        alert("⏳ Sunday Night Tournament သည် Sunday ည ၇ နာရီမှ ၁၀ နာရီအတွင်းသာ ဝင်ရောက်ယှဉ်ပြိုင်နိုင်ပါသည်။");
+        return;
+    }
+    */
+
+    const fee = 2500;
+    isVip = localStorage.getItem('isVipUser') === 'true';
+    money = parseInt(localStorage.getItem('quizCoins')) || 0;
+
+    if (!isVip && money < fee) {
+        playSound('wrong');
+        alert(`❌ ဝင်ကြေး 🪙 ${fee} မလုံလောက်ပါ။ (ယခုလက်ကျန်: 🪙 ${money})`);
+        return;
+    }
+
+    if (!isVip) {
+        money -= fee;
+        localStorage.setItem('quizCoins', money);
+        updateHeader();
+        alert(`🎟️ ဝင်ကြေး 🪙 ${fee} ပေးသွင်းပြီး ပြိုင်ပွဲသို့ ဝင်ရောက်ပါပြီ!`);
+    } else {
+        alert("👑 VIP ဖြစ်သည့်အတွက် ဝင်ကြေး အခမဲ့ ဝင်ခွင့်ရပါပြီ!");
+    }
+
     tourScore = 0;
     tourStreak = 0;
     tourSeconds = 45 * 60;
@@ -800,7 +833,7 @@ function checkTourAnswer(button, selected, correct) {
         expBox.style.background = "#0d3819"; expBox.style.color = "#d3f9d8"; expBox.style.borderColor = "#2ea043";
         expBox.innerHTML = "<strong>✅ မှန်ကန်ပါသည်!</strong>";
         tourStreak += 1;
-        tourScore += (1 + tourStreak); // Streak များရင် အမှတ်ပိုရမည်
+        tourScore += (1 + tourStreak);
     } else {
         playSound('wrong');
         button.style.background = "#2b1515"; button.style.color = "#f85149"; button.style.borderColor = "#da3633";
@@ -817,7 +850,7 @@ function submitTourEssay() {
         alert("ကျေးဇူးပြု၍ Essay ကို အနည်းဆုံး စာလုံး ၁၀ လုံးထက်မနည်း ရေးပါ။");
         return;
     }
-    tourScore += 100; // Essay အတွက် 100 မှတ်တိတိ ပေးမည်
+    tourScore += 100;
     playSound('correct');
     alert("🎉 Essay အောင်မြင်စွာ တင်သွင်းပြီးပါပြီ! (အမှတ် +100 ထည့်သွင်းပြီး)");
     document.getElementById("tour-essay-input").value = "";
@@ -827,9 +860,8 @@ function endTournamentSession(message) {
     if(tourTimer) clearInterval(tourTimer);
     tourActive = false;
     
-    // Total score merge to main score for saving
     score = tourScore;
-    money += Math.floor(tourScore * 10); // အမှတ်အပေါ်မူတည်ပြီး Coins ပေးမည်
+    money += Math.floor(tourScore * 10);
 
     const container = document.getElementById("tour-main-container");
     container.innerHTML = `
