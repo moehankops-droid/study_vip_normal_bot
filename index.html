@@ -29,7 +29,7 @@
             height: fit-content;
         }
         
-        /* Bottom Navigation Bar (5 Clean Tabs) */
+        /* Bottom Navigation Bar (5 Clean Essential Tabs) */
         .nav-tabs {
             position: fixed;
             bottom: 0;
@@ -180,25 +180,50 @@
         }
         .quick-btn:hover { background: #21262d; border-color: #58a6ff; }
 
-        /* Shop & Cards */
-        .shop-card, .tour-card {
+        /* Dedicated Tournament Card on Home */
+        .dedicated-tour-card {
+            background: linear-gradient(135deg, #1a7f37, #0d3819);
+            border: 1.5px solid #2ea043;
+            border-radius: 8px;
+            padding: 8px 10px;
+            margin-bottom: 5px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .tour-info h4 { margin: 0 0 2px 0; color: #fff; font-size: 11px; }
+        .tour-info p { margin: 0; color: #d3f9d8; font-size: 8px; line-height: 1.2; }
+        .tour-join-btn {
+            background: #d29922;
+            color: #111;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 9px;
+        }
+
+        /* Shop Cards */
+        .shop-card {
             background: #161b22;
             border: 1px solid #30363d;
             border-radius: 6px;
-            padding: 5px 7px;
+            padding: 6px 8px;
             margin-bottom: 4px;
             text-align: left;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        .shop-info h4, .tour-info h4 { margin: 0 0 1px 0; color: #fff; font-size: 10px; }
-        .shop-info p, .tour-info p { margin: 0; color: #8b949e; font-size: 8px; line-height: 1.1; }
+        .shop-info h4 { margin: 0 0 1px 0; color: #fff; font-size: 10px; }
+        .shop-info p { margin: 0; color: #8b949e; font-size: 8px; line-height: 1.1; }
         .buy-btn {
             background: #d29922;
             color: #111;
             border: none;
-            padding: 3px 7px;
+            padding: 4px 8px;
             border-radius: 4px;
             font-weight: bold;
             cursor: pointer;
@@ -351,6 +376,15 @@
             </p>
         </div>
 
+        <!-- 🏆 Dedicated Weekly Tournament Section (သပ်သပ်ခွဲထုတ်ထားသော ပြိုင်ပွဲကတ်) -->
+        <div class="dedicated-tour-card">
+            <div class="tour-info">
+                <h4>🏆 အပတ်စဉ် သီးသန့်ပြိုင်ပွဲကြီး</h4>
+                <p>ဝင်ကြေး: 🪙 2500 | ဆုကြေး: 🪙 10000<br><span id="vip-status-text" style="color: #ffe6a7;">⭐ VIP ဆိုလျှင် ဝင်ကြေး အခမဲ့!</span></p>
+            </div>
+            <button class="tour-join-btn" onclick="joinTournament(); playSound('click');">ဝင်မည် 🚀</button>
+        </div>
+
         <div class="stats-grid">
             <div class="stat-card">
                 <span>⚡ Streak</span>
@@ -362,10 +396,10 @@
             </div>
         </div>
 
-        <!-- Quick Access Buttons for Shop & Notes -->
+        <!-- Quick Access Buttons for Notes & Shop -->
         <div class="quick-actions">
             <button class="quick-btn" onclick="switchTab('obsidian-tab'); loadNotes(); playSound('click');">🧠 Notes & Ideas</button>
-            <button class="quick-btn" onclick="switchTab('shop-tab'); playSound('click');">🛒 Shop & Tour</button>
+            <button class="quick-btn" onclick="switchTab('shop-tab'); playSound('click');">🛒 Item Shop</button>
         </div>
         
         <div id="user-setup-box">
@@ -409,7 +443,7 @@
         </div>
     </div>
 
-    <!-- Obsidian Notes Tab (Hidden via Menu, accessible from Home) -->
+    <!-- Obsidian Notes Tab -->
     <div id="obsidian-tab" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
             <h3 style="color: #d29922; margin: 0; font-size: 11px;">🧠 Obsidian Notes</h3>
@@ -453,29 +487,21 @@
         <div id="essay-feedback-box" class="essay-feedback"></div>
     </div>
 
-    <!-- Shop Tab (Hidden via Menu, accessible from Home) -->
+    <!-- Shop Tab -->
     <div id="shop-tab" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-            <h3 style="color: #f0883e; margin: 0; font-size: 11px;">🛒 Shop & Tournament</h3>
+            <h3 style="color: #f0883e; margin: 0; font-size: 11px;">🛒 Item Shop</h3>
             <button class="buy-btn" style="padding: 2px 6px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မသို့</button>
         </div>
 
-        <div class="tour-card" style="background: linear-gradient(135deg, #1a7f37, #0d3819); border: 1px solid #2ea043;">
-            <div class="tour-info">
-                <h4 style="color: #fff;">အပတ်စဉ် ပြိုင်ပွဲကြီး</h4>
-                <p style="color: #d3f9d8;">ဝင်ကြေး: 🪙 2500 | ဆု: 🪙 10000<br><span id="vip-status-text" style="color: #d29922;">⭐ VIP ဝယ်ထားလျှင် ဝင်ကြေး အခမဲ့!</span></p>
-            </div>
-            <button class="buy-btn" style="background: #d29922;" onclick="joinTournament(); playSound('click');">ဝင်မည် 🚀</button>
-        </div>
-
-        <div class="shop-card" style="border: 1px solid #d29922; background: #1f1a10; margin-top: 4px;">
+        <div class="shop-card" style="border: 1px solid #d29922; background: #1f1a10;">
             <div class="shop-info">
                 <h4 style="color: #d29922;">👑 VIP Pass (1 Month)</h4>
                 <p>• ဝင်ကြေး အခမဲ့ | Coins ၂ ဆ<br>• Essay ဆုကြေး တစ်နေ့ ၅ ကြိမ်</p>
             </div>
             <button class="buy-btn" style="background: #d29922;" onclick="buyVIP(); playSound('click');">🪙 10000</button>
         </div>
-        <div class="shop-card">
+        <div class="shop-card" style="margin-top: 4px;">
             <div class="shop-info">
                 <h4>⚡ Streak Shield</h4>
                 <p>Streak မပြတ်အောင် ကာကွယ်မည်</p>
@@ -499,7 +525,7 @@
     </div>
 </div>
 
-<!-- Bottom Navigation Bar (Clean 5 Essential Tabs) -->
+<!-- Bottom Navigation Bar -->
 <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchTab('home-tab'); playSound('click');">
         <span class="icon">🏠</span>ပင်မ
@@ -866,7 +892,7 @@ function updateHeader() {
 function checkVipStatusUI() {
     const vipText = document.getElementById("vip-status-text");
     if(isVip && vipText) {
-        vipText.innerHTML = "👑 သင်သည် VIP ဖြစ်နေပါပြီ (ဝင်ကြေး အခမဲ့ & Coins ၂ ဆ)";
+        vipText.innerHTML = "👑 သင်သည် VIP ဖြစ်နေပါပြီ (ဝင်ကြေး အခမဲ့)";
         vipText.style.color = "#3fb950";
     }
 }
