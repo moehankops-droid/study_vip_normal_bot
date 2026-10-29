@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Study Bot VLP Normal</title>
+    <title>Study Bot VLP Pro Max</title>
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
@@ -12,7 +12,7 @@
             color: #e6edf3; 
             margin: 0; 
             padding: 6px; 
-            padding-bottom: 65px; 
+            padding-bottom: 70px; 
             display: flex; 
             justify-content: center; 
             min-height: 100vh; 
@@ -29,7 +29,7 @@
             height: fit-content;
         }
         
-        /* Bottom Navigation Bar */
+        /* Bottom Navigation Bar (6 Tabs) */
         .nav-tabs {
             position: fixed;
             bottom: 0;
@@ -38,7 +38,7 @@
             background: #0d121c;
             display: flex;
             justify-content: space-around;
-            padding: 4px 2px;
+            padding: 4px 1px;
             border-top: 1px solid #1f304a;
             box-shadow: 0 -4px 15px rgba(0,0,0,0.7);
             z-index: 1000;
@@ -47,10 +47,10 @@
             background: none;
             border: none;
             color: #8b949e;
-            font-size: 10px;
+            font-size: 8px;
             font-weight: 600;
             cursor: pointer;
-            padding: 4px 2px;
+            padding: 3px 1px;
             border-radius: 6px;
             transition: 0.2s;
             display: flex;
@@ -59,7 +59,7 @@
             gap: 1px;
             flex: 1;
         }
-        .nav-tab span.icon { font-size: 14px; }
+        .nav-tab span.icon { font-size: 13px; }
         .nav-tab.active {
             color: #58a6ff;
             background: #162235;
@@ -71,16 +71,16 @@
         /* Dashboard Hero */
         .home-hero {
             background: linear-gradient(135deg, #1a7f37, #0d3819);
-            padding: 10px;
+            padding: 8px;
             border-radius: 6px;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             border: 1px solid #2ea043;
             text-align: center;
         }
-        .home-hero h2 { margin: 0 0 2px 0; color: #fff; font-size: 14px; font-weight: 800; letter-spacing: 0.5px; }
-        .home-hero p { margin: 0; color: #d3f9d8; font-size: 9px; }
+        .home-hero h2 { margin: 0 0 2px 0; color: #fff; font-size: 13px; font-weight: 800; }
+        .home-hero p { margin: 0; color: #d3f9d8; font-size: 8px; }
 
-        /* 🔥 Thok-Ram-Maik Cyber Glow Animation */
+        /* Cyber Glow Animation */
         @keyframes cyberGlow {
             0% { border-color: #58a6ff; box-shadow: 0 0 8px rgba(88, 166, 255, 0.4), inset 0 0 4px rgba(88, 166, 255, 0.2); }
             50% { border-color: #ff7b72; box-shadow: 0 0 18px rgba(255, 123, 114, 0.7), inset 0 0 8px rgba(255, 123, 114, 0.4); }
@@ -91,31 +91,27 @@
             background: linear-gradient(135deg, #1b263b, #0d1b2a);
             border: 1.5px solid #58a6ff;
             border-radius: 8px;
-            padding: 8px 10px;
-            margin-bottom: 6px;
+            padding: 7px 9px;
+            margin-bottom: 5px;
             text-align: left;
             animation: cyberGlow 2.5s infinite ease-in-out;
-            transition: 0.3s;
-        }
-        .deku-cyber-box:hover {
-            transform: scale(1.01);
         }
 
         .stats-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 5px;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
         }
         .stat-card {
             background: #161b22;
-            padding: 5px;
+            padding: 4px;
             border-radius: 6px;
             border: 1px solid #30363d;
             text-align: center;
         }
         .stat-card span { font-size: 8px; color: #8b949e; display: block; }
-        .stat-card b { font-size: 12px; color: #fff; margin-top: 1px; display: block; }
+        .stat-card b { font-size: 11px; color: #fff; margin-top: 1px; display: block; }
 
         .header { 
             display: flex; 
@@ -138,7 +134,7 @@
             font-size: 11px; 
             padding: 4px 8px;
             border-radius: 6px;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -151,16 +147,16 @@
             border: none; 
             padding: 7px 10px; 
             border-radius: 6px; 
-            font-size: 12px; 
+            font-size: 11px; 
             cursor: pointer; 
-            margin-top: 6px; 
+            margin-top: 5px; 
             width: 100%; 
             font-weight: bold; 
             transition: 0.2s; 
         }
         .start-btn:hover, .action-btn:hover, .next-btn:hover { background: #2ea043; }
         .finish-btn { background: #da3633; margin-top: 4px; }
-        .edit-btn { background: #9e6a03; font-size: 10px; padding: 4px; margin-top: 2px; }
+        .edit-btn { background: #9e6a03; font-size: 9px; padding: 4px; margin-top: 2px; }
         .tg-btn { background: #1f6feb; margin-top: 4px; text-decoration: none; display: block; text-align: center; line-height: normal; }
         .next-btn { background: #1f6feb; display: none; }
 
@@ -189,10 +185,9 @@
             font-size: 9px;
         }
 
-        /* Essay Style */
         textarea {
             width: 100%;
-            height: 70px;
+            height: 65px;
             background: #161b22;
             color: #fff;
             border: 1px solid #30363d;
@@ -218,7 +213,7 @@
             border: 1px solid #238636;
             border-radius: 6px;
             padding: 6px;
-            margin-top: 6px;
+            margin-top: 5px;
             text-align: left;
             font-size: 9px;
             line-height: 1.2;
@@ -226,8 +221,8 @@
         }
 
         .question-box { 
-            font-size: 12px; 
-            margin: 6px 0; 
+            font-size: 11px; 
+            margin: 5px 0; 
             font-weight: bold; 
             color: #fff; 
             text-align: left; 
@@ -238,7 +233,7 @@
             display: flex; 
             flex-direction: column; 
             gap: 4px; 
-            margin-top: 5px; 
+            margin-top: 4px; 
         }
         
         .options button { 
@@ -248,20 +243,15 @@
             border-radius: 6px; 
             width: 100%; 
             text-align: left; 
-            padding: 7px 9px; 
+            padding: 6px 8px; 
             font-size: 11px; 
             font-weight: 500; 
             cursor: pointer; 
-            transition: 0.15s;
         }
-        .options button:hover { 
-            background: #30363d; 
-            border-color: #58a6ff; 
-            color: #fff; 
-        }
+        .options button:hover { background: #30363d; border-color: #58a6ff; color: #fff; }
 
         .explanation { 
-            margin-top: 6px; 
+            margin-top: 5px; 
             padding: 5px; 
             background: #0d3819; 
             border: 1px solid #2ea043; 
@@ -270,7 +260,6 @@
             color: #d3f9d8; 
             display: none; 
             border-radius: 6px; 
-            line-height: 1.1;
         }
 
         input[type="text"] {
@@ -281,7 +270,7 @@
             border: 1px solid #30363d;
             border-radius: 6px;
             color: white;
-            font-size: 12px;
+            font-size: 11px;
             text-align: center;
         }
 
@@ -305,11 +294,20 @@
         .weekly-banner {
             background: linear-gradient(135deg, #d29922, #b57c0a);
             color: #fff;
-            padding: 6px;
+            padding: 5px;
             border-radius: 6px;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             text-align: center;
             font-weight: bold;
+        }
+
+        .forest-card, .obsidian-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 8px;
+            margin-bottom: 6px;
+            text-align: left;
         }
     </style>
 </head>
@@ -319,17 +317,16 @@
     <!-- Home Tab -->
     <div id="home-tab" class="tab-content active">
         <div class="home-hero">
-            <h2>Study Bot VLP Normal</h2>
-            <p>အင်္ဂလိပ်စာ လေ့လာရန်နှင့် ရမှတ်/Coins များ စုဆောင်းစို့</p>
+            <h2>Study Bot VLP Pro Max</h2>
+            <p>အင်္ဂလိပ်စာ၊ အပင်စိုက်ရန်နှင့် မှတ်စုများ စုဆောင်းရန်</p>
         </div>
 
-        <!-- 🔥 Deku's Plus Ultra Cyber-Glow Animated Box -->
         <div class="deku-cyber-box">
-            <div style="display: flex; align-items: center; gap: 6px; margin-bottom: 2px;">
-                <span style="font-size: 13px;">⚡</span>
-                <span style="font-size: 10px; font-weight: bold; color: #58a6ff; letter-spacing: 0.5px;">DEKU'S PLUS ULTRA MINDSET</span>
+            <div style="display: flex; align-items: center; gap: 5px; margin-bottom: 2px;">
+                <span style="font-size: 12px;">⚡</span>
+                <span style="font-size: 9px; font-weight: bold; color: #58a6ff;">DEKU'S PLUS ULTRA MINDSET</span>
             </div>
-            <p style="font-size: 9px; color: #d2f3ff; margin: 0; line-height: 1.3;">
+            <p style="font-size: 8px; color: #d2f3ff; margin: 0; line-height: 1.2;">
                 "ငါ့မှာ Quirk မရှိပေမဲ့၊ ဘယ်တော့မှ လက်မလျှော့ဘဲ ရှေ့ဆက်သွားမယ်။ Plus Ultra!"
             </p>
         </div>
@@ -346,7 +343,7 @@
         </div>
         
         <div id="user-setup-box">
-            <div style="text-align: left; margin-bottom: 2px; font-size: 9px; color: #f0883e;">သင့်နာမည် (Username) ထည့်ပါ:</div>
+            <div style="text-align: left; margin-bottom: 2px; font-size: 8px; color: #f0883e;">သင့်နာမည် (Username) ထည့်ပါ:</div>
             <input type="text" id="username-input" placeholder="ဥပမာ - Moe Han" maxlength="15">
             <button class="start-btn" onclick="saveInitialUsername(); playSound('click');">နာမည်သိမ်းမည်</button>
         </div>
@@ -360,25 +357,53 @@
             <span class="money">🪙 <span id="money-count">0</span></span>
         </div>
 
-        <!-- Quiz Mode Selector -->
         <div style="display: flex; gap: 4px; margin-bottom: 5px;">
             <button id="mode-normal-btn" class="start-btn" style="margin-top:0; padding:4px; font-size:9px; background:#238636;" onclick="setQuizMode('normal'); playSound('click');">📝 Normal Quiz</button>
             <button id="mode-speed-btn" class="start-btn" style="margin-top:0; padding:4px; font-size:9px; background:#161b22;" onclick="setQuizMode('speed'); playSound('click');">⚡ Speed Mode</button>
         </div>
 
         <div id="quiz-container">
-            <p style="color: #8b949e; font-size: 10px; margin: 8px 0;">ပထမဆုံး 'ပင်မ' Tab မှတဆင့် Username ထည့်ပြီးမှ Quiz စတင်နိုင်ပါသည်။</p>
+            <p style="color: #8b949e; font-size: 9px; margin: 6px 0;">ပထမဆုံး 'ပင်မ' Tab မှတဆင့် Username ထည့်ပြီးမှ Quiz စတင်နိုင်ပါသည်။</p>
             <button class="start-btn" onclick="startQuiz(); playSound('click');">Quiz စတင်မည် (Start)</button>
         </div>
     </div>
 
+    <!-- Forest Mode Tab (🌳 Focus & Tree Growing) -->
+    <div id="forest-tab" class="tab-content">
+        <h3 style="color: #3fb950; margin-top: 0; font-size: 12px;">🌳 Forest Focus & Tree Growing</h3>
+        <p style="font-size: 8px; color: #8b949e; margin-bottom: 6px;">ဖုန်းကိုခဏချထားပြီး အာရုံစိုက်ပါ၊ အပင်လေး ကြီးထွားလာပါလိမ့်မည်[cite: 1, 2]!</p>
+        
+        <div class="forest-card" style="text-align: center;">
+            <div id="tree-display" style="font-size: 35px; margin: 5px 0;">🌱</div>
+            <h4 id="tree-status-text" style="color: #58a6ff; font-size: 10px; margin: 2px 0;">အပင်ပေါက်စလေး (Seedling)</h4>
+            <div id="forest-timer-display" style="font-size: 18px; font-family: monospace; color: #3fb950; margin: 6px 0;">25:00</div>
+            
+            <button id="forest-start-btn" class="start-btn" style="background: #238636;" onclick="startForestSession(); playSound('click');">🌱 အပင်စိုက်မည် (Focus စတင်ရန်)</button>
+            <button id="forest-cancel-btn" class="finish-btn" style="display: none;" onclick="cancelForestSession(); playSound('click');">❌ ဖျက်သိမ်းမည် (အပင်ညှိုးမည်)</button>
+        </div>
+    </div>
+
+    <!-- Obsidian Notes Tab (📝 Idea & Notes) -->
+    <div id="obsidian-tab" class="tab-content">
+        <h3 style="color: #d29922; margin-top: 0; font-size: 12px;">🧠 Obsidian Second Brain Notes</h3>
+        <p style="font-size: 8px; color: #8b949e; margin-bottom: 4px;">ကိုယ့်ရဲ့ Idea များ၊ Grammar မှတ်စုများကို Local သိမ်းဆည်းရန်[cite: 2]။</p>
+        
+        <div class="obsidian-card">
+            <input type="text" id="note-title" placeholder="မှတ်စုခေါင်းစဉ် (Title)..." maxlength="30">
+            <textarea id="note-content" placeholder="ဒီနေရာတွင် အချက်အလက်များ၊ Idea များကို ရေးမှတ်ပါ..." style="height: 55px;"></textarea>
+            <button class="start-btn" style="background: #1f6feb; padding: 5px; font-size: 10px;" onclick="saveObsidianNote(); playSound('click');">💾 မှတ်စုသိမ်းမည် (Save)</button>
+        </div>
+
+        <div style="text-align: left; max-height: 140px; overflow-y: auto;" id="notes-container"></div>
+    </div>
+
     <!-- Essay AI Tab -->
     <div id="essay-tab" class="tab-content">
-        <h3 style="color: #3fb950; margin-top: 0; font-size: 13px;">✍️ AI Essay Evaluator</h3>
+        <h3 style="color: #3fb950; margin-top: 0; font-size: 12px;">✍️ AI Essay Evaluator</h3>
         <p style="font-size: 8px; color: #8b949e;" id="essay-subtitle-info">အင်္ဂလိပ်လို စာစီစာကွန်း ရေးသားပါ (Normal: ၃ / VIP: ၅)</p>
         
-        <div style="text-align: left; margin-top: 4px;">
-            <label style="font-size: 9px; color: #f0883e;">Essay ခေါင်းစဉ်:</label>
+        <div style="text-align: left; margin-top: 3px;">
+            <label style="font-size: 8px; color: #f0883e;">Essay ခေါင်းစဉ်:</label>
             <select id="essay-topic">
                 <option value="My Favorite Hobby and Why I Like It">1. My Favorite Hobby and Why I Like It</option>
                 <option value="The Importance of Learning English Language">2. The Importance of Learning English Language</option>
@@ -394,14 +419,14 @@
             <span style="color: #d29922;" id="essay-limit-info">🪙 ကျန်အကြိမ်: 3/3</span>
         </div>
 
-        <button id="check-essay-btn" class="start-btn" style="background: #8957e5;" onclick="checkEssayWithAI(); playSound('click');">AI ဖြင့် စစ်ဆေးမည် 🤖</button>
+        <button id="check-essay-btn" class="start-btn" style="background: #8957e5; padding: 6px;" onclick="checkEssayWithAI(); playSound('click');">AI ဖြင့် စစ်ဆေးမည် 🤖</button>
 
         <div id="essay-feedback-box" class="essay-feedback"></div>
     </div>
 
-    <!-- Shop Tab -->
+    <!-- Shop & Tournament Tab -->
     <div id="shop-tab" class="tab-content">
-        <h3 style="color: #f0883e; margin-top: 0; font-size: 12px;">🏆 Weekly Tournament</h3>
+        <h3 style="color: #f0883e; margin-top: 0; font-size: 11px;">🏆 Weekly Tournament</h3>
         <div class="tour-card" style="background: linear-gradient(135deg, #1a7f37, #0d3819); border: 1px solid #2ea043;">
             <div class="tour-info">
                 <h4 style="color: #fff;">အပတ်စဉ် ပြိုင်ပွဲကြီး</h4>
@@ -410,11 +435,11 @@
             <button class="buy-btn" style="background: #d29922;" onclick="joinTournament(); playSound('click');">ဝင်မည် 🚀</button>
         </div>
 
-        <h3 style="color: #f0883e; font-size: 12px; margin-top: 8px;">🛒 Item Shop</h3>
+        <h3 style="color: #f0883e; font-size: 11px; margin-top: 6px;">🛒 Item Shop</h3>
         <div class="shop-card" style="border: 1px solid #d29922; background: #1f1a10;">
             <div class="shop-info">
                 <h4 style="color: #d29922;">👑 VIP Pass (1 Month)</h4>
-                <p>• ဝင်ကြေး အခမဲ့ | Coins ၂ ဆ<br>• Essay ဆုကြေး တစ်နေ့ ၅ ကြိမ်<br>• ရွှေရောင်နာမည် & သရဖူ</p>
+                <p>• ဝင်ကြေး အခမဲ့ | Coins ၂ ဆ<br>• Essay ဆုကြေး တစ်နေ့ ၅ ကြိမ်</p>
             </div>
             <button class="buy-btn" style="background: #d29922;" onclick="buyVIP(); playSound('click');">🪙 10000</button>
         </div>
@@ -425,13 +450,6 @@
             </div>
             <button class="buy-btn" onclick="buyItem('Streak Shield', 1000); playSound('click');">🪙 1000</button>
         </div>
-        <div class="shop-card">
-            <div class="shop-info">
-                <h4>💡 Answer Hint</h4>
-                <p>အဖြေ အရိပ်အမြွက်</p>
-            </div>
-            <button class="buy-btn" onclick="buyItem('Answer Hint', 500); playSound('click');">🪙 500</button>
-        </div>
     </div>
 
     <!-- Leaderboard Tab -->
@@ -439,9 +457,9 @@
         <div id="weekly-winner-container"></div>
         
         <div class="leaderboard-list">
-            <strong style="color: #f0883e; font-size: 10px;">🏆 ထိပ်ဆုံး ရမှတ်များ & Coins</strong>
-            <div id="high-scores" style="margin-top: 3px;">
-                <p style="color: #8b949e; font-size: 9px; text-align: center;">ဒေတာများ ရယူနေပါသည်...</p>
+            <strong style="color: #f0883e; font-size: 9px;">🏆 ထိပ်ဆုံး ရမှတ်များ & Coins</strong>
+            <div id="high-scores" style="margin-top: 2px;">
+                <p style="color: #8b949e; font-size: 8px; text-align: center;">ဒေတာများ ရယူနေပါသည်...</p>
             </div>
         </div>
         
@@ -449,13 +467,19 @@
     </div>
 </div>
 
-<!-- Bottom Navigation Bar -->
+<!-- Bottom Navigation Bar (7 Tabs Total with Shop included) -->
 <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchTab('home-tab'); playSound('click');">
         <span class="icon">🏠</span>ပင်မ
     </button>
     <button class="nav-tab" onclick="switchTab('quiz-tab'); playSound('click');">
         <span class="icon">📝</span>Quiz
+    </button>
+    <button class="nav-tab" onclick="switchTab('forest-tab'); playSound('click');">
+        <span class="icon">🌳</span>Forest
+    </button>
+    <button class="nav-tab" onclick="switchTab('obsidian-tab'); loadNotes(); playSound('click');">
+        <span class="icon">🧠</span>Notes
     </button>
     <button class="nav-tab" onclick="switchTab('essay-tab'); playSound('click');">
         <span class="icon">✍️</span>Essay
@@ -493,9 +517,7 @@
 
       get(userScoreRef).then((snapshot) => {
           let existingScore = 0;
-          if (snapshot.exists()) {
-              existingScore = snapshot.val().score || 0;
-          }
+          if (snapshot.exists()) { existingScore = snapshot.val().score || 0; }
 
           if (finalScore >= existingScore) {
               set(userScoreRef, {
@@ -507,9 +529,7 @@
               }).then(() => {
                   alert(`🎉 ဂုဏ်ယူပါတယ်! (${finalScore} မှတ် နှင့် 🪙 ${finalMoney} Coins) ကို သိမ်းဆည်းပြီးပါပြီ။`);
                   switchTab('leaderboard-tab');
-              }).catch((error) => {
-                  alert("❌ အမှားအယွင်းရှိပါသည်: " + error.message);
-              });
+              }).catch((error) => { alert("❌ အမှားအယွင်းရှိပါသည်: " + error.message); });
           } else {
               alert(`ℹ️ သင်၏ ယခင်အမှတ်အမြင့်ဆုံး (${existingScore} မှတ်) ကသာ ပိုများနေပါသေးသည်။`);
               switchTab('leaderboard-tab');
@@ -525,30 +545,26 @@
           const lbContainer = document.getElementById("high-scores");
           const winnerContainer = document.getElementById("weekly-winner-container");
           const shareBtn = document.getElementById("share-tg-btn");
-
           let cleanUrl = "https://moehankopsdroid.github.io/study_vip_normal_bot/";
 
           if (!snapshot.exists()) {
-              lbContainer.innerHTML = `<p style="color: #8b949e; font-size: 9px; text-align: center;">မှတ်တမ်း မရှိသေးပါ။</p>`;
+              lbContainer.innerHTML = `<p style="color: #8b949e; font-size: 8px; text-align: center;">မှတ်တမ်း မရှိသေးပါ။</p>`;
               winnerContainer.innerHTML = '';
               shareBtn.href = `https://t.me/share/url?url=${encodeURIComponent(cleanUrl)}&text=${encodeURIComponent("🔥 Study Bot Quiz မှာ အမှတ်လာဆော့ကြပါဦး!")}`;
               return;
           }
 
           let scoresList = [];
-          snapshot.forEach((childSnapshot) => {
-              scoresList.push(childSnapshot.val());
-          });
-
+          snapshot.forEach((childSnapshot) => { scoresList.push(childSnapshot.val()); });
           scoresList.sort((a, b) => b.score - a.score);
 
           const topWinner = scoresList[0];
           let topWinnerVip = topWinner.isVip ? '👑 ' : '';
           winnerContainer.innerHTML = `
               <div class="weekly-banner">
-                  <div style="font-size: 8px; text-transform: uppercase; color: #ffe6a7;">🌟 Weekly Champion 🌟</div>
-                  <div style="font-size: 13px; margin: 2px 0; color: #fff;">${topWinnerVip}${topWinner.name}</div>
-                  <div style="font-size: 10px; color: #fef08a;">⭐ ${topWinner.score} pts | 🪙 ${topWinner.money || 0} Coins</div>
+                  <div style="font-size: 7px; text-transform: uppercase; color: #ffe6a7;">🌟 Weekly Champion 🌟</div>
+                  <div style="font-size: 12px; margin: 1px 0; color: #fff;">${topWinnerVip}${topWinner.name}</div>
+                  <div style="font-size: 9px; color: #fef08a;">⭐ ${topWinner.score} pts | 🪙 ${topWinner.money || 0} Coins</div>
               </div>
           `;
 
@@ -556,11 +572,10 @@
           let myScoreText = "Study Bot Leaderboard:\n";
           scoresList.forEach((item, index) => {
               let isMe = (item.name === localStorage.getItem("quizUsername"));
-              let itemStyle = isMe ? "background: #0d3819; border: 1px solid #2ea043; border-radius: 5px; padding: 3px 5px; margin-bottom: 2px;" : "padding: 3px 5px; border-bottom: 1px solid #161b22;";
+              let itemStyle = isMe ? "background: #0d3819; border: 1px solid #2ea043; border-radius: 4px; padding: 2px 4px; margin-bottom: 2px;" : "padding: 2px 4px; border-bottom: 1px solid #161b22;";
               let rankIcon = index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : `#${index + 1}`;
               let userMoney = item.money || 0;
               let isVipUser = item.isVip || false;
-
               let displayName = isVipUser ? `<b style="color: #d29922;">👑 ${item.name}</b>` : `<b>${item.name}</b>`;
 
               html += `
@@ -572,9 +587,7 @@
               myScoreText += `${rankIcon} ${isVipUser ? '👑 ' : ''}${item.name}: ${item.score} မှတ် (🪙 ${userMoney} Coins)\n`;
           });
           lbContainer.innerHTML = html;
-
-          let shareText = encodeURIComponent(`🏆 **Study Bot Leaderboard** 🏆\n\n${myScoreText}\n🔗 ဆော့ကစားရန်: ${cleanUrl}`);
-          shareBtn.href = `https://t.me/share/url?url=${encodeURIComponent(cleanUrl)}&text=${shareText}`;
+          shareBtn.href = `https://t.me/share/url?url=${encodeURIComponent(cleanUrl)}&text=${encodeURIComponent(`🏆 **Study Bot Leaderboard** 🏆\n\n${myScoreText}`)}`;
       });
   };
 
@@ -584,13 +597,11 @@
 <script src="questions.js"></script>
 
 <script>
-/* Built-in Web Audio API Sound Generator */
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
 function playSound(type) {
     if (!audioCtx) return;
     if (audioCtx.state === 'suspended') { audioCtx.resume(); }
-    
     const osc = audioCtx.createOscillator();
     const gainNode = audioCtx.createGain();
     osc.connect(gainNode);
@@ -598,23 +609,16 @@ function playSound(type) {
     let now = audioCtx.currentTime;
 
     if (type === 'click') {
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(400, now);
-        gainNode.gain.setValueAtTime(0.03, now);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+        osc.type = 'sine'; osc.frequency.setValueAtTime(400, now);
+        gainNode.gain.setValueAtTime(0.03, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
         osc.start(now); osc.stop(now + 0.05);
     } else if (type === 'correct') {
-        osc.type = 'triangle';
-        osc.frequency.setValueAtTime(587.33, now);
-        osc.frequency.setValueAtTime(880, now + 0.08);
-        gainNode.gain.setValueAtTime(0.08, now);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.type = 'triangle'; osc.frequency.setValueAtTime(587.33, now); osc.frequency.setValueAtTime(880, now + 0.08);
+        gainNode.gain.setValueAtTime(0.08, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
         osc.start(now); osc.stop(now + 0.25);
     } else if (type === 'wrong') {
-        osc.type = 'sawtooth';
-        osc.frequency.setValueAtTime(180, now);
-        gainNode.gain.setValueAtTime(0.08, now);
-        gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
+        osc.type = 'sawtooth'; osc.frequency.setValueAtTime(180, now);
+        gainNode.gain.setValueAtTime(0.08, now); gainNode.gain.exponentialRampToValueAtTime(0.001, now + 0.25);
         osc.start(now); osc.stop(now + 0.25);
     }
 }
@@ -631,30 +635,129 @@ let totalSeconds = 20 * 60;
 let speedSeconds = 30;
 let currentQuizMode = 'normal';
 
+let forestTimer = null;
+let forestSeconds = 25 * 60;
+let isForestRunning = false;
+
 window.onload = function() {
     checkSavedUser();
     updateHeader();
     checkVipStatusUI();
     checkDailyEssayLimitUI();
+    loadNotes();
 };
 
 function switchTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
     document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
-    
     document.getElementById(tabId).classList.add('active');
     
     const tabs = document.querySelectorAll('.nav-tab');
     if(tabId === 'home-tab') tabs[0].classList.add('active');
     if(tabId === 'quiz-tab') tabs[1].classList.add('active');
-    if(tabId === 'essay-tab') tabs[2].classList.add('active');
-    if(tabId === 'shop-tab') tabs[3].classList.add('active');
+    if(tabId === 'forest-tab') tabs[2].classList.add('active');
+    if(tabId === 'obsidian-tab') tabs[3].classList.add('active');
+    if(tabId === 'essay-tab') tabs[4].classList.add('active');
+    if(tabId === 'shop-tab') tabs[5].classList.add('active');
     if(tabId === 'leaderboard-tab') {
-        tabs[4].classList.add('active');
-        if (typeof window.loadLeaderboardFromFirebase === 'function') {
-            window.loadLeaderboardFromFirebase();
-        }
+        tabs[6].classList.add('active');
+        if (typeof window.loadLeaderboardFromFirebase === 'function') { window.loadLeaderboardFromFirebase(); }
     }
+}
+
+function startForestSession() {
+    if (isForestRunning) return;
+    isForestRunning = true;
+    forestSeconds = 25 * 60;
+    
+    document.getElementById("forest-start-btn").style.display = "none";
+    document.getElementById("forest-cancel-btn").style.display = "block";
+    document.getElementById("tree-display").innerText = "🌿";
+    document.getElementById("tree-status-text").innerText = "အပင်ပေါက်လာပါပြီ (Growing...)";
+
+    forestTimer = setInterval(() => {
+        forestSeconds--;
+        let mins = Math.floor(forestSeconds / 60);
+        let secs = forestSeconds % 60;
+        document.getElementById("forest-timer-display").innerText = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
+
+        if (forestSeconds === 15 * 60) {
+            document.getElementById("tree-display").innerText = "🌲";
+            document.getElementById("tree-status-text").innerText = "ပင်စည်ကြီးထွားနေသည် (Sapling)";
+        } else if (forestSeconds === 5 * 60) {
+            document.getElementById("tree-display").innerText = "🌳";
+            document.getElementById("tree-status-text").innerText = "အပင်ကြီးဖြစ်လာသည် (Mature Tree)";
+        }
+
+        if (forestSeconds <= 0) {
+            clearInterval(forestTimer);
+            isForestRunning = false;
+            money += 300;
+            localStorage.setItem('quizCoins', money);
+            updateHeader();
+            playSound('correct');
+            alert("🎉 ဂုဏ်ယူပါတယ်! အာရုံစိုက်မှု အောင်မြင်ပြီး 🪙 300 Coins ရရှိပါပြီ[cite: 1, 2]!");
+            resetForestUI();
+        }
+    }, 1000);
+}
+
+function cancelForestSession() {
+    if (!isForestRunning) return;
+    clearInterval(forestTimer);
+    isForestRunning = false;
+    playSound('wrong');
+    document.getElementById("tree-display").innerText = "🥀";
+    document.getElementById("tree-status-text").innerText = "အပင်ညှိုးသွားပါပြီ (Withered)";
+    alert("❌ ဖုန်းထွက်သုံးမိသဖြင့် အပင်လေး ညှိုးသွားပါပြီ[cite: 1, 2]!");
+    setTimeout(() => { resetForestUI(); }, 2000);
+}
+
+function resetForestUI() {
+    document.getElementById("forest-start-btn").style.display = "block";
+    document.getElementById("forest-cancel-btn").style.display = "none";
+    document.getElementById("tree-display").innerText = "🌱";
+    document.getElementById("tree-status-text").innerText = "အပင်ပေါက်စလေး (Seedling)";
+    document.getElementById("forest-timer-display").innerText = "25:00";
+}
+
+function saveObsidianNote() {
+    const title = document.getElementById("note-title").value.trim();
+    const content = document.getElementById("note-content").value.trim();
+    if (!title || !content) {
+        alert("ကျေးဇူးပြု၍ ခေါင်းစဉ်နှင့် မှတ်စုအကြောင်းအရာကို ဖြည့်ပါ။");
+        return;
+    }
+    let notes = JSON.parse(localStorage.getItem("obsidianNotes")) || [];
+    notes.unshift({ title, content, date: new Date().toLocaleDateString() });
+    localStorage.setItem("obsidianNotes", JSON.stringify(notes));
+    document.getElementById("note-title").value = "";
+    document.getElementById("note-content").value = "";
+    loadNotes();
+    playSound('correct');
+    alert("✅ မှတ်စု သိမ်းဆည်းပြီးပါပြီ[cite: 2]!");
+}
+
+function loadNotes() {
+    const container = document.getElementById("notes-container");
+    let notes = JSON.parse(localStorage.getItem("obsidianNotes")) || [];
+    if (notes.length === 0) {
+        container.innerHTML = `<p style="color: #8b949e; font-size: 8px; text-align: center;">မှတ်စု မရှိသေးပါ။</p>`;
+        return;
+    }
+    let html = "";
+    notes.forEach((note) => {
+        html += `
+            <div style="background: #161b22; border: 1px solid #30363d; border-radius: 5px; padding: 5px; margin-bottom: 4px;">
+                <div style="display: flex; justify-content: space-between; font-size: 9px; color: #58a6ff; font-weight: bold;">
+                    <span>📌 ${note.title}</span>
+                    <span style="font-size: 7px; color: #8b949e;">${note.date}</span>
+                </div>
+                <p style="font-size: 8px; color: #c9d1d9; margin: 2px 0 0 0; line-height: 1.1;">${note.content}</p>
+            </div>
+        `;
+    });
+    container.innerHTML = html;
 }
 
 function checkSavedUser() {
@@ -668,7 +771,6 @@ function checkSavedUser() {
         playerName = savedUser;
         let timeLeftText = "";
         let canChange = true;
-
         if (lastChangeTime) {
             let elapsed = now - parseInt(lastChangeTime);
             if (elapsed < oneWeek) {
@@ -677,11 +779,10 @@ function checkSavedUser() {
                 canChange = false;
             }
         }
-
         setupBox.innerHTML = `
-            <div style="background: #161b22; padding: 5px; border-radius: 5px; margin-bottom: 4px; border: 1px solid #30363d;">
+            <div style="background: #161b22; padding: 4px; border-radius: 5px; margin-bottom: 4px; border: 1px solid #30363d;">
                 <p style="margin: 0; font-size: 8px; color: #8b949e;">အသုံးပြုနေသော နာမည်:</p>
-                <b style="font-size: 13px; ${isVip ? 'color: #d29922;' : 'color: #3fb950;'}">${isVip ? '👑 ' : ''}${playerName}</b>
+                <b style="font-size: 12px; ${isVip ? 'color: #d29922;' : 'color: #3fb950;'}">${isVip ? '👑 ' : ''}${playerName}</b>
             </div>
             <button class="start-btn" onclick="switchTab('quiz-tab'); startQuiz(); playSound('click');">Quiz စတင်ဆော့မည်</button>
             <button class="edit-btn" onclick="requestNameChange(${canChange}); playSound('click');">နာမည်ပြောင်းရန်${timeLeftText}</button>
@@ -690,13 +791,10 @@ function checkSavedUser() {
 }
 
 function requestNameChange(canChange) {
-    if (!canChange) {
-        alert("⏳ နာမည်ပြောင်းရန်အတွက် ၁ ပတ်ပြည့်ရန် လိုအပ်ပါသေးသည်။");
-        return;
-    }
+    if (!canChange) { alert("⏳ နာမည်ပြောင်းရန်အတွက် ၁ ပတ်ပြည့်ရန် လိုအပ်ပါသေးသည်။"); return; }
     const setupBox = document.getElementById("user-setup-box");
     setupBox.innerHTML = `
-        <div style="text-align: left; margin-bottom: 2px; font-size: 9px; color: #f0883e;">နာမည်အသစ် ထည့်ပါ:</div>
+        <div style="text-align: left; margin-bottom: 2px; font-size: 8px; color: #f0883e;">နာမည်အသစ် ထည့်ပါ:</div>
         <input type="text" id="username-input" placeholder="နာမည်အသစ်..." maxlength="15" value="${playerName}">
         <button class="start-btn" onclick="saveInitialUsername(); playSound('click');">နာမည်သိမ်းမည်</button>
     `;
@@ -704,14 +802,10 @@ function requestNameChange(canChange) {
 
 function saveInitialUsername() {
     const nameInput = document.getElementById("username-input").value.trim();
-    if (!nameInput) {
-        alert("ကျေးဇူးပြု၍ သင့်နာမည်ကို အရင်ထည့်ပါ။");
-        return;
-    }
+    if (!nameInput) { alert("ကျေးဇူးပြု၍ သင့်နာမည်ကို အရင်ထည့်ပါ။"); return; }
     playerName = nameInput;
     localStorage.setItem("quizUsername", playerName);
     localStorage.setItem("quizNameChangeTime", Date.now().toString());
-    
     alert("✅ နာမည်ကို သိမ်းဆည်းပြီးပါပြီ!");
     checkSavedUser();
     switchTab('quiz-tab');
@@ -722,33 +816,18 @@ function setQuizMode(mode) {
     currentQuizMode = mode;
     const normalBtn = document.getElementById("mode-normal-btn");
     const speedBtn = document.getElementById("mode-speed-btn");
-
-    if (mode === 'normal') {
-        normalBtn.style.background = "#238636";
-        speedBtn.style.background = "#161b22";
-    } else {
-        normalBtn.style.background = "#161b22";
-        speedBtn.style.background = "#f0883e";
-    }
+    if (mode === 'normal') { normalBtn.style.background = "#238636"; speedBtn.style.background = "#161b22"; }
+    else { normalBtn.style.background = "#161b22"; speedBtn.style.background = "#f0883e"; }
     startQuiz();
 }
 
 function startQuiz() {
-    if(!playerName) {
-        alert("ပထမဆုံး 'ပင်မ' Tab တွင် နာမည်အရင်ထည့်ပါ။");
-        switchTab('home-tab');
-        return;
-    }
-    score = 0;
-    streak = 0;
-    totalSeconds = 20 * 60;
+    if(!playerName) { alert("ပထမဆုံး 'ပင်မ' Tab တွင် နာမည်အရင်ထည့်ပါ။"); switchTab('home-tab'); return; }
+    score = 0; streak = 0; totalSeconds = 20 * 60;
     if(studyTimer) clearInterval(studyTimer);
     if(speedTimer) clearInterval(speedTimer);
-
     updateHeader();
-    if(currentQuizMode === 'normal') {
-        startStudySessionTimer();
-    }
+    if(currentQuizMode === 'normal') { startStudySessionTimer(); }
     loadNextQuestion();
 }
 
@@ -774,13 +853,8 @@ function startStudySessionTimer() {
         let mins = Math.floor(totalSeconds / 60);
         let secs = totalSeconds % 60;
         let timerDisplay = document.getElementById("session-timer");
-        if(timerDisplay) {
-            timerDisplay.innerText = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        }
-        if (totalSeconds <= 0) {
-            clearInterval(studyTimer);
-            endGame("⏳ မိနစ် ၂၀ ပြည့်သွားပါပြီ!");
-        }
+        if(timerDisplay) { timerDisplay.innerText = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`; }
+        if (totalSeconds <= 0) { clearInterval(studyTimer); endGame("⏳ မိနစ် ၂၀ ပြည့်သွားပါပြီ!"); }
     }, 1000);
 }
 
@@ -790,7 +864,6 @@ function loadNextQuestion() {
         return;
     }
     if(speedTimer) clearInterval(speedTimer);
-
     const container = document.getElementById("quiz-container");
     const randomIndex = Math.floor(Math.random() * questionsBank.length);
     currentQuiz = questionsBank[randomIndex];
@@ -804,21 +877,10 @@ function loadNextQuestion() {
     if (currentQuizMode === 'normal') {
         let mins = Math.floor(totalSeconds / 60);
         let secs = totalSeconds % 60;
-        let timeFormatted = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        timerHeaderHTML = `
-            <div class="study-timer">
-                <span>⏳ ကျန်ရှိချိန်:</span>
-                <span id="session-timer" style="font-family: monospace;">${timeFormatted}</span>
-            </div>
-        `;
+        timerHeaderHTML = `<div class="study-timer"><span>⏳ ကျန်ရှိချိန်:</span><span id="session-timer" style="font-family: monospace;">${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}</span></div>`;
     } else {
         speedSeconds = 30;
-        timerHeaderHTML = `
-            <div class="study-timer" style="background: #2b1515; border-color: #da3633; color: #f85149;">
-                <span>⚡ Speed Mode (30s):</span>
-                <span id="speed-timer" style="font-family: monospace;">30s</span>
-            </div>
-        `;
+        timerHeaderHTML = `<div class="study-timer" style="background: #2b1515; border-color: #da3633; color: #f85149;"><span>⚡ Speed Mode (30s):</span><span id="speed-timer" style="font-family: monospace;">30s</span></div>`;
     }
 
     container.innerHTML = `
@@ -829,10 +891,7 @@ function loadNextQuestion() {
         <button id="next-btn" class="next-btn" onclick="loadNextQuestion(); playSound('click');">နောက်တစ်ပုဒ်သို့ ➡️</button>
         <button class="finish-btn" onclick="endGame('🛑 ပြီးဆုံးခဲ့ပါပြီ!'); playSound('click');" style="margin-top: 4px;">လေ့ကျင့်ခန်း ပြီးဆုံးမည် (Finish)</button>
     `;
-
-    if (currentQuizMode === 'speed') {
-        startSpeedCountdown();
-    }
+    if (currentQuizMode === 'speed') { startSpeedCountdown(); }
 }
 
 function startSpeedCountdown() {
@@ -840,23 +899,14 @@ function startSpeedCountdown() {
         speedSeconds--;
         const speedDisplay = document.getElementById("speed-timer");
         if(speedDisplay) { speedDisplay.innerText = `${speedSeconds}s`; }
-
         if (speedSeconds <= 0) {
             clearInterval(speedTimer);
             playSound('wrong');
-            const buttons = document.querySelectorAll('.options button');
-            buttons.forEach(btn => btn.disabled = true);
-            
+            document.querySelectorAll('.options button').forEach(btn => btn.disabled = true);
             const expBox = document.getElementById("explanation-box");
-            expBox.style.display = "block";
-            expBox.style.background = "#2b1515";
-            expBox.style.color = "#f85149";
-            expBox.style.borderColor = "#da3633";
+            expBox.style.display = "block"; expBox.style.background = "#2b1515"; expBox.style.color = "#f85149"; expBox.style.borderColor = "#da3633";
             expBox.innerHTML = `<strong>⏰ အချိန်ကုန်သွားပါပြီ!</strong> အဖြေမှန်မှာ: ${currentQuiz.answer}`;
-            
-            streak = 0;
-            updateHeader();
-            
+            streak = 0; updateHeader();
             const nextBtn = document.getElementById("next-btn");
             if(nextBtn) nextBtn.style.display = "block";
         }
@@ -865,51 +915,28 @@ function startSpeedCountdown() {
 
 function checkAnswer(button, selected, correct, explanation) {
     if(speedTimer) clearInterval(speedTimer);
-
-    const buttons = document.querySelectorAll('.options button');
-    buttons.forEach(btn => btn.disabled = true);
-
+    document.querySelectorAll('.options button').forEach(btn => btn.disabled = true);
     const expBox = document.getElementById("explanation-box");
     expBox.style.display = "block";
     expBox.innerHTML = `<strong>ရှင်းလင်းချက်:</strong> ${explanation}`;
-
     const nextBtn = document.getElementById("next-btn");
 
     if (selected.trim() === correct.trim()) {
         playSound('correct');
-        button.style.background = "#0d3819";
-        button.style.color = "#d3f9d8";
-        button.style.borderColor = "#2ea043";
-        
-        expBox.style.background = "#0d3819";
-        expBox.style.color = "#d3f9d8";
-        expBox.style.borderColor = "#2ea043";
-        
-        streak += 1;
-        score += streak; 
-        
+        button.style.background = "#0d3819"; button.style.color = "#d3f9d8"; button.style.borderColor = "#2ea043";
+        expBox.style.background = "#0d3819"; expBox.style.color = "#d3f9d8"; expBox.style.borderColor = "#2ea043";
+        streak += 1; score += streak; 
         let baseCoins = (currentQuizMode === 'speed') ? 75 : 50;
         let earnedCoins = isVip ? (baseCoins * 2) : baseCoins;
-        
-        if (streak > 3) {
-            earnedCoins += (streak * 5);
-        }
-
+        if (streak > 3) { earnedCoins += (streak * 5); }
         money += Math.floor(earnedCoins); 
         localStorage.setItem('quizCoins', money);
     } else {
         playSound('wrong');
-        button.style.background = "#2b1515";
-        button.style.color = "#f85149";
-        button.style.borderColor = "#da3633";
-        
-        expBox.style.background = "#2b1515";
-        expBox.style.color = "#f85149";
-        expBox.style.borderColor = "#da3633";
-        
+        button.style.background = "#2b1515"; button.style.color = "#f85149"; button.style.borderColor = "#da3633";
+        expBox.style.background = "#2b1515"; expBox.style.color = "#f85149"; expBox.style.borderColor = "#da3633";
         streak = 0;
     }
-
     updateHeader();
     if (nextBtn) { nextBtn.style.display = "block"; }
 }
@@ -932,22 +959,11 @@ function checkDailyEssayLimitUI() {
     let lastDate = localStorage.getItem('essayLastDate');
     let count = parseInt(localStorage.getItem('essayDailyCount')) || 0;
     let maxLimit = getMaxDailyEssayLimit();
-
-    if (lastDate !== today) {
-        localStorage.setItem('essayLastDate', today);
-        localStorage.setItem('essayDailyCount', '0');
-        count = 0;
-    }
-
+    if (lastDate !== today) { localStorage.setItem('essayLastDate', today); localStorage.setItem('essayDailyCount', '0'); count = 0; }
     const limitInfo = document.getElementById("essay-limit-info");
     const subInfo = document.getElementById("essay-subtitle-info");
-    if(limitInfo) {
-        let remaining = Math.max(0, maxLimit - count);
-        limitInfo.innerText = `🪙 ကျန်အကြိမ်: ${remaining}/${maxLimit}`;
-    }
-    if(subInfo) {
-        subInfo.innerText = isVip ? "👑 VIP Mode: ၅ ကြိမ်အထိ ဆုကြေးရမည်" : "အင်္ဂလိပ်လို စာစီစာကွန်း ရေးသားပါ (Normal: ၃ / VIP: ၅)";
-    }
+    if(limitInfo) { limitInfo.innerText = `🪙 ကျန်အကြိမ်: ${Math.max(0, maxLimit - count)}/${maxLimit}`; }
+    if(subInfo) { subInfo.innerText = isVip ? "👑 VIP Mode: ၅ ကြိမ်အထိ ဆုကြေးရမည်" : "အင်္ဂလိပ်လို စာစီစာကွန်း ရေးသားပါ (Normal: ၃ / VIP: ၅)"; }
 }
 
 function checkEssayWithAI() {
@@ -957,27 +973,13 @@ function checkEssayWithAI() {
     const feedbackBox = document.getElementById("essay-feedback-box");
     let maxLimit = getMaxDailyEssayLimit();
 
-    if (!text || text.split(/\s+/).length < 15) {
-        alert("ကျေးဇူးပြု၍ Essay ကို အနည်းဆုံး စာလုံး ၁၅ လုံးထက်မနည်း ရေးပါ။");
-        return;
-    }
-
-    let lastSubmittedEssay = localStorage.getItem('lastSubmittedEssay') || "";
-    if (text.toLowerCase() === lastSubmittedEssay.toLowerCase()) {
-        alert("⚠️ ဤ Essay အတိုင်း ယခင်က တင်ထားပြီးဖြစ်သည်။ စာသားအသစ်ဖြင့်သာ စစ်ဆေးပါ။");
-        return;
-    }
-
+    if (!text || text.split(/\s+/).length < 15) { alert("ကျေးဇူးပြု၍ Essay ကို အနည်းဆုံး စာလုံး ၁၅ လုံးထက်မနည်း ရေးပါ။"); return; }
     const today = getTodayDateString();
     let lastDate = localStorage.getItem('essayLastDate');
     let count = parseInt(localStorage.getItem('essayDailyCount')) || 0;
-    if (lastDate !== today) {
-        count = 0;
-        localStorage.setItem('essayLastDate', today);
-    }
+    if (lastDate !== today) { count = 0; localStorage.setItem('essayLastDate', today); }
 
-    btn.disabled = true;
-    btn.innerText = "AI စစ်ဆေးနေပါသည်... ⏳";
+    btn.disabled = true; btn.innerText = "AI စစ်ဆေးနေပါသည်... ⏳";
     feedbackBox.style.display = "block";
     feedbackBox.innerHTML = "<p style='color: #d29922;'>🤖 AI မှ သင့် Essay ကို စစ်ဆေးနေပါသည်။ ခဏစောင့်ပါ...</p>";
 
@@ -989,33 +991,23 @@ function checkEssayWithAI() {
 
         if (isPass && count < maxLimit) {
             let reward = isVip ? 1000 : 500;
-            money += reward;
-            localStorage.setItem('quizCoins', money);
-            updateHeader();
-            count++;
+            money += reward; localStorage.setItem('quizCoins', money);
+            updateHeader(); count++;
             localStorage.setItem('essayDailyCount', count.toString());
-            rewardGiven = true;
-            playSound('correct');
-        } else {
-            playSound('correct');
-        }
+            rewardGiven = true; playSound('correct');
+        } else { playSound('correct'); }
 
-        localStorage.setItem('lastSubmittedEssay', text);
         checkDailyEssayLimitUI();
-        let remainingLimit = Math.max(0, maxLimit - count);
-
         feedbackBox.innerHTML = `
-            <h4 style="margin: 0 0 4px 0; color: #3fb950;">📊 AI Essay Evaluation Results</h4>
+            <h4 style="margin: 0 0 3px 0; color: #3fb950;">📊 AI Essay Evaluation Results</h4>
             <p style="margin: 2px 0;"><b>📌 Topic:</b> ${topic}</p>
-            <p style="margin: 2px 0;"><b>⭐ Score:</b> <span style="font-size: 13px; color: ${isPass ? '#3fb950' : '#f85149'}; font-weight: bold;">${mockScore} / 100</span></p>
+            <p style="margin: 2px 0;"><b>⭐ Score:</b> <span style="font-size: 12px; color: ${isPass ? '#3fb950' : '#f85149'}; font-weight: bold;">${mockScore} / 100</span></p>
             <p style="margin: 2px 0;"><b>📝 Word Count:</b> ${wordCount} words</p>
-            <hr style="border: 0.5px solid #30363d; margin: 4px 0;">
+            <hr style="border: 0.5px solid #30363d; margin: 3px 0;">
             <p style="color: #d3f9d8; margin: 2px 0;"><b>✅ Strengths:</b> ဖွဲ့စည်းပုံနှင့် ရေးသားချက် ကောင်းမွန်ပါသည်။</p>
-            ${rewardGiven ? `<p style="color: #d29922; font-weight: bold; margin-top: 3px;">🎉 ဆုကြေး 🪙 ${isVip ? '1000' : '500'} Coins ရရှိပါသည်။ (ကျန်အကြိမ်: ${remainingLimit}/${maxLimit})</p>` : (isPass ? `<p style="color: #f0883e; font-weight: bold; margin-top: 3px;">ℹ️ ယနေ့ ဆုကြေးအကြိမ် ပြည့်သွားပါပြီ (${maxLimit}/${maxLimit})။</p>` : '')}
+            ${rewardGiven ? `<p style="color: #d29922; font-weight: bold; margin-top: 2px;">🎉 ဆုကြေး 🪙 ${isVip ? '1000' : '500'} Coins ရရှိပါသည်။</p>` : ''}
         `;
-
-        btn.disabled = false;
-        btn.innerText = "AI ဖြင့် စစ်ဆေးမည် 🤖";
+        btn.disabled = false; btn.innerText = "AI ဖြင့် စစ်ဆေးမည် 🤖";
     }, 2000);
 }
 
@@ -1023,33 +1015,18 @@ function buyVIP() {
     const price = 10000;
     if(isVip) { alert("👑 သင်သည် VIP ဖြစ်ပြီးသား ဖြစ်ပါသည်။"); return; }
     if (money >= price) {
-        money -= price;
-        isVip = true;
-        localStorage.setItem('quizCoins', money);
-        localStorage.setItem('isVipUser', 'true');
-        updateHeader();
-        checkVipStatusUI();
-        checkSavedUser();
-        checkDailyEssayLimitUI();
-        playSound('correct');
-        alert("🎉 ဂုဏ်ယူပါတယ်! VIP Pass ကို ဝယ်ယူပြီးပါပြီ။ 👑");
-    } else {
-        playSound('wrong');
-        alert(`❌ Coins မလုံလောက်ပါ။ (လိုအပ်သော Coins: ${price})`);
-    }
+        money -= price; isVip = true;
+        localStorage.setItem('quizCoins', money); localStorage.setItem('isVipUser', 'true');
+        updateHeader(); checkVipStatusUI(); checkSavedUser(); checkDailyEssayLimitUI();
+        playSound('correct'); alert("👑 VIP Pass ကို အောင်မြင်စွာ ဝယ်ယူပြီးပါပြီ!");
+    } else { playSound('wrong'); alert(`❌ Coins မလုံလောက်ပါ။`); }
 }
 
 function buyItem(itemName, price) {
     if (money >= price) {
-        money -= price;
-        localStorage.setItem('quizCoins', money);
-        updateHeader();
-        playSound('correct');
-        alert(`🎉 ${itemName} ကို ဝယ်ယူပြီးပါပြီ!`);
-    } else {
-        playSound('wrong');
-        alert(`❌ Coins မလုံလောက်ပါ။ (${price} လိုအပ်သည်)`);
-    }
+        money -= price; localStorage.setItem('quizCoins', money);
+        updateHeader(); playSound('correct'); alert(`🎉 ${itemName} ကို ဝယ်ယူပြီးပါပြီ!`);
+    } else { playSound('wrong'); alert(`❌ Coins မလုံလောက်ပါ။`); }
 }
 
 function joinTournament() {
@@ -1058,44 +1035,28 @@ function joinTournament() {
     let isAlreadyJoined = localStorage.getItem('joinedTournament') === 'true';
     money = parseInt(localStorage.getItem('quizCoins')) || 0;
 
-    if (isVip || isAlreadyJoined) {
-        alert("👑 သင်သည် VIP ဖြစ်ပြီးသားဖြစ်သည် (သို့မဟုတ်) အရင်ကတည်းက Tournament သို့ စာရင်းပေးသွင်းပြီးဖြစ်ပါသည်။ ဝင်ကြေး အခမဲ့ဖြင့် ပါဝင်ပြီးပါပြီ!");
-        return;
-    }
-    
+    if (isVip || isAlreadyJoined) { alert("👑 သင်သည် VIP ဖြစ်ပြီးသားဖြစ်သည် (သို့မဟုတ်) Tournament ဝင်ပြီးသားဖြစ်ပါသည်။"); return; }
     if (money >= fee) {
-        money -= fee;
-        localStorage.setItem('quizCoins', money);
-        localStorage.setItem('joinedTournament', 'true');
-        updateHeader();
-        playSound('correct');
-        alert(`🏆 Tournament သို့ အောင်မြင်စွာ ဝင်ရောက်စာရင်းပေးသွင်းပြီးပါပြီ!`);
-    } else {
-        playSound('wrong');
-        alert(`❌ ဝင်ကြေး 🪙 ${fee} မလုံလောက်ပါ။ Coins ထပ်စုပါ သို့မဟုတ် VIP ဝယ်ယူပါ။`);
-    }
+        money -= fee; localStorage.setItem('quizCoins', money); localStorage.setItem('joinedTournament', 'true');
+        updateHeader(); playSound('correct'); alert(`🏆 Tournament သို့ စာရင်းပေးသွင်းပြီးပါပြီ!`);
+    } else { playSound('wrong'); alert(`❌ ဝင်ကြေး 🪙 ${fee} မလုံလောက်ပါ။`); }
 }
 
 function endGame(message) {
     if(studyTimer) clearInterval(studyTimer);
     if(speedTimer) clearInterval(speedTimer);
-    
     const container = document.getElementById("quiz-container");
     container.innerHTML = `
-        <h3 style="color: #f0883e; margin: 5px 0;">${message}</h3>
-        <p style="font-size: 12px; margin: 3px 0;">အမည်: <b style="${isVip ? 'color: #d29922;' : 'color: #fff;'}">${isVip ? '👑 ' : ''}${playerName}</b></p>
-        <p style="font-size: 12px; margin: 3px 0;">ရမှတ်: <b style="color: #3fb950;">${score} မှတ်</b></p>
-        <p style="font-size: 12px; margin: 3px 0;">Coins: <b style="color: #d29922;">🪙 ${money}</b></p>
+        <h3 style="color: #f0883e; margin: 4px 0;">${message}</h3>
+        <p style="font-size: 11px; margin: 2px 0;">အမည်: <b style="${isVip ? 'color: #d29922;' : 'color: #fff;'}">${isVip ? '👑 ' : ''}${playerName}</b></p>
+        <p style="font-size: 11px; margin: 2px 0;">ရမှတ်: <b style="color: #3fb950;">${score} မှတ်</b></p>
+        <p style="font-size: 11px; margin: 2px 0;">Coins: <b style="color: #d29922;">🪙 ${money}</b></p>
         <button class="action-btn" id="save-btn" onclick="playSound('click')">Cloud သို့ သိမ်းမည် (Save)</button>
         <button class="start-btn" onclick="startQuiz(); playSound('click');" style="margin-top: 4px; background: #1f6feb;">🔄 ထပ်ဆော့မည်</button>
     `;
-
     document.getElementById("save-btn").addEventListener("click", function() {
-        if (typeof window.saveScoreToFirebase === "function") {
-            window.saveScoreToFirebase(playerName, score, money);
-        } else {
-            alert("❌ Firebase ချိတ်ဆက်မှု အဆင်မပြေပါ။");
-        }
+        if (typeof window.saveScoreToFirebase === "function") { window.saveScoreToFirebase(playerName, score, money); }
+        else { alert("❌ Firebase ချိတ်ဆက်မှု အဆင်မပြေပါ။"); }
     });
 }
 </script>
