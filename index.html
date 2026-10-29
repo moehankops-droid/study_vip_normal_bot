@@ -295,14 +295,32 @@
 <body>
 
 <div class="container">
-    <!-- Home Tab -->
+        <!-- Home Tab -->
     <div id="home-tab" class="tab-content active">
         <div class="home-hero">
             <h2>Study Bot VLP Normal</h2>
             <p>အင်္ဂလိပ်စာ လေ့လာရန်နှင့် ရမှတ်/Coins များ စုဆောင်းစို့</p>
         </div>
 
+                <!-- 🎵 Happier Background Music Player -->
+        <div style="background: #21262d; border: 1px solid #30363d; border-radius: 6px; padding: 6px 10px; margin-bottom: 8px; display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; align-items: center; gap: 6px; text-align: left;">
+                <span style="font-size: 14px;">🎵</span>
+                <div>
+                    <div style="font-size: 10px; font-weight: bold; color: #fff;">Happier - Marshmello</div>
+                    <div style="font-size: 8px; color: #8b949e;">Study BGM</div>
+                </div>
+            </div>
+            <audio id="bgm-audio" loop src="https://cdnsongs.com/music/data/English/2018/Happier/128/Happier_1.mp3" preload="auto"></audio>
+            <button id="bgm-toggle-btn" onclick="toggleBGM()" style="background: #238636; color: #fff; border: none; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; cursor: pointer;">Play 🎶</button>
+        </div>
+        <!-- End of Music Player -->
+
+
         <div class="stats-grid">
+            <div class="stat-card">
+...
+                div class="stats-grid">
             <div class="stat-card">
                 <span>⚡ Streak</span>
                 <b id="home-streak" style="color: #f0883e;">0 🔥</b>
@@ -1065,15 +1083,35 @@ function endGame(message) {
         <button class="start-btn" onclick="startQuiz(); playSound('click');" style="margin-top: 5px; background: #1f6feb;">🔄 ထပ်ဆော့မည်</button>
     `;
 
-    document.getElementById("save-btn").addEventListener("click", function() {
-        if (typeof window.saveScoreToFirebase === "function") {
-            window.saveScoreToFirebase(playerName, score, money);
+            document.getElementById("save-btn").addEventListener("click", function() {
+            if (typeof window.saveScoreToFirebase === "function") {
+                window.saveScoreToFirebase(playerName, score, money);
+            } else {
+                alert("❌ Firebase ချိတ်ဆက်မှု အဆင်မပြေပါ။");
+            }
+        });
+    }
+
+    // 🎵 Marshmello Happier BGM Player Toggle Function
+    function toggleBGM() {
+        const audio = document.getElementById('bgm-audio');
+        const btn = document.getElementById('bgm-toggle-btn');
+        
+        if (audio.paused) {
+            audio.play().then(() => {
+                btn.innerText = "Pause ⏸️";
+                btn.style.background = "#da3633";
+            }).catch(e => {
+                alert("အသံဖွင့်ရန် မျက်နှာပြင်ကို တစ်ချက်နှိပ်ပါ (Browser Policy)");
+            });
         } else {
-            alert("❌ Firebase ချိတ်ဆက်မှု အဆင်မပြေပါ။");
+            audio.pause();
+            btn.innerText = "Play 🎶";
+            btn.style.background = "#238636";
         }
-    });
-}
+    }
 </script>
+
 
 </body>
 </html>
