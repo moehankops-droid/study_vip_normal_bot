@@ -29,7 +29,6 @@
             height: fit-content;
         }
         
-        /* Bottom Navigation Bar */
         .nav-tabs {
             position: fixed;
             bottom: 0;
@@ -280,7 +279,6 @@
         }
         .leaderboard-item:last-child { border-bottom: none; }
 
-        /* မျက်စိမနာစေရန် စာသားအရွယ်အစား ကြီးထားသော Note & Grammar Cards */
         .forest-card, .obsidian-card, .test-card, .grammar-card {
             background: #161b22;
             border: 1px solid #30363d;
@@ -352,31 +350,29 @@
         </div>
     </div>
 
-    <!-- Grammar Writing Hub Tab (မှတ်စုအပြည့်အစုံ မျက်စိသက်သာစေရန် စာသားကြီးထားသည်) -->
+    <!-- Grammar Writing Hub Tab (Ex များမပါဘဲ လိုရင်းမှတ်စုများသာ) -->
     <div id="grammar-tab" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <h3 style="color: #58a6ff; margin: 0; font-size: 13px;">📖 Unit 7 Grammar Writing Hub</h3>
             <button style="padding: 3px 8px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:10px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မသို့</button>
         </div>
-        <p style="font-size: 10.5px; color: #8b949e; margin-bottom: 8px;">စာအုပ်မှတ်စုအပြည့်အစုံကို ကြည့်ပြီး ကိုယ်ပိုင်စာကြောင်း ရေးသားပါ</p>
+        <p style="font-size: 10.5px; color: #8b949e; margin-bottom: 8px;">ယူနစ် ၇ မှတ်စုစည်းမျဉ်းများ[cite: 1, 2, 5, 6]</p>
 
-        <!-- Grammar Notes Reference (စာအုပ်မှတ်စု အပြည့်အစုံ) -->
         <div class="grammar-card">
             <h4 style="margin: 0 0 3px 0; color: #3fb950; font-size: 11px;">📌 (1) Future Simple = will + V0[cite: 1, 5]</h4>
             <p style="font-size: 10px; color: #c9d1d9; margin: 0 0 6px 0; line-height: 1.4;">
-                • **Note 1:** လက်တလော ဆုံးဖြတ်ထားသော ဆုံးဖြတ်ချက်များ[cite: 1, 5] (Ex: I will play mobile game after a class.)[cite: 1, 5]<br>
-                • **Note 2:** သဘောတူညီရန်[cite: 5] (Ex: I will come to the birthday party.)[cite: 5]<br>
-                • **No. 3:** ကမ်းလှမ်းရန်[cite: 5] (Ex: I will help you.)[cite: 5]<br>
-                • **No. 4:** ကတိပေးရန်[cite: 5] (Ex: I won't tell your secret.)[cite: 5]
+                • **Note 1:** လက်တလော ဆုံးဖြတ်ထားသော ဆုံးဖြတ်ချက်များ[cite: 1, 5]<br>
+                • **Note 2:** သဘောတူညီရန်[cite: 5]<br>
+                • **No. 3:** ကမ်းလှမ်းရန်[cite: 5]<br>
+                • **No. 4:** ကတိပေးရန်[cite: 5]
             </p>
             <h4 style="margin: 6px 0 3px 0; color: #58a6ff; font-size: 11px;">📌 (2) Be going to + V0 (100% သေချာမှု)[cite: 2, 6]</h4>
             <p style="font-size: 10px; color: #c9d1d9; margin: 0; line-height: 1.4;">
-                • **No. 1:** ကြိုတင်စီစဉ်ထားပြီး နောင်တွင်လုပ်ရန်ရှိသော အစီအစဉ်များ[cite: 2, 6] (Ex: I am going to buy a new bike tomorrow.)[cite: 2, 6]<br>
-                • **No. 2:** ယခုဖြစ်နေသော အခြေအနေကိုကြည့်၍ ခန့်မှန်းခြင်း[cite: 2, 6] (Ex: It is going to rain. / The car is going to turn right.)[cite: 2, 6]
+                • **No. 1:** ကြိုတင်စီစဉ်ထားပြီး နောင်တွင်လုပ်ရန်ရှိသော အစီအစဉ်များ[cite: 2, 6]<br>
+                • **No. 2:** ယခုဖြစ်နေသော အခြေအနေကိုကြည့်၍ ခန့်မှန်းခြင်း[cite: 2, 6]
             </p>
         </div>
 
-        <!-- AI Writing Practice Section -->
         <div class="grammar-card" style="border: 1.5px solid #8957e5; background: #161b22;">
             <h4 style="margin: 0 0 3px 0; color: #a371f7; font-size: 12px;">🤖 AI Grammar Writing & Checker</h4>
             <p id="grammar-prompt-text" style="font-size: 11px; color: #f0883e; margin: 5px 0; font-weight: bold; line-height: 1.3;"></p>
@@ -638,37 +634,37 @@ let forestTimer = null;
 let forestSeconds = 25 * 60;
 let isForestRunning = false;
 
-/* Unit 7 Grammar Writing Prompts & Rules with AI Explanations from Notebook */
+/* Grammar Prompts */
 const grammarPrompts = [
     {
         task: "✍️ 1. Future Simple (will + V0) သုံး၍ 'လက်တလော ဆုံးဖြတ်ချက်' စာကြောင်းတစ်ကြောင်း ရေးပါ[cite: 1, 5]。",
         ruleKeyword: "will",
         hint: "ဥပမာ: I will play mobile game after a class.[cite: 1, 5]",
-        explanation: "Future Simple ကို သုံးရာတွင် 'will' နှင့်အတူ မူလကြိယာ (V0) ကို တွဲသုံးရပါမည်။ (ဥပမာ- I will play...)[cite: 1, 5]"
+        explanation: "Future Simple ကို သုံးရာတွင် 'will' နှင့်အတူ မူလကြိယာ (V0) ကို တွဲသုံးရပါမည်[cite: 1, 5]。"
     },
     {
         task: "✍️ 2. Future Simple (will + V0) သုံး၍ 'သဘောတူညီရန်' စာကြောင်းတစ်ကြောင်း ရေးပါ[cite: 5]。",
         ruleKeyword: "will",
         hint: "ဥပမာ: I will come to the birthday party.[cite: 5]",
-        explanation: "သဘောတူညီချက်ပြရန်အတွက် 'will' ကို အသုံးပြုရပါမည်။[cite: 5]"
+        explanation: "သဘောတူညီချက်ပြရန်အတွက် 'will' ကို အသုံးပြုရပါမည်[cite: 5]。"
     },
     {
         task: "✍️ 3. Future Simple (will + V0) သုံး၍ 'ကမ်းလှမ်းရန် သို့မဟုတ် ကတိပေးရန်' စာကြောင်းတစ်ကြောင်း ရေးပါ[cite: 5]。",
         ruleKeyword: "will",
         hint: "ဥပမာ: I will help you. / I won't tell your secret.[cite: 5]",
-        explanation: "ကမ်းလှမ်းရန် သို့မဟုတ် ကတိပေးရန်အတွက် 'will' သို့မဟုတ် 'won't' ကို သုံးရပါမည်။[cite: 5]"
+        explanation: "ကမ်းလှမ်းရန် သို့မဟုတ် ကတိပေးရန်အတွက် 'will' သို့မဟုတ် 'won't' ကို သုံးရပါမည်[cite: 5]。"
     },
     {
         task: "✍️ 4. Be going to သုံး၍ 'ကြိုတင်စီစဉ်ထားသော အစီအစဉ်' စာကြောင်းတစ်ကြောင်း ရေးပါ[cite: 2, 6]。",
         ruleKeyword: "going to",
         hint: "ဥပမာ: I am going to buy a new bike tomorrow.[cite: 2, 6]",
-        explanation: "ကြိုတင်စီစဉ်ထားပြီးသော အစီအစဉ်များအတွက် 'am/is/are going to + V0' ပုံစံကို သုံးရပါမည်။[cite: 2, 6]"
+        explanation: "ကြိုတင်စီစဉ်ထားပြီးသော အစီအစဉ်များအတွက် 'am/is/are going to + V0' ပုံစံကို သုံးရပါမည်[cite: 2, 6]。"
     },
     {
         task: "✍️ 5. Be going to သုံး၍ 'အခြေအနေကိုကြည့်၍ ခန့်မှန်းခြင်း' စာကြောင်းတစ်ကြောင်း ရေးပါ[cite: 2, 6]。",
         ruleKeyword: "going to",
         hint: "ဥပမာ: It is going to rain. / The car is going to turn right.[cite: 2, 6]",
-        explanation: "မျက်စိရှေ့တွင် ဖြစ်ပျက်နေသော အခြေအနေကိုအခြေခံ၍ ခန့်မှန်းရာတွင် 'is/are going to' ကို သုံးရပါမည်။[cite: 2, 6]"
+        explanation: "မျက်စိရှေ့တွင် ဖြစ်ပျက်နေသော အခြေအနေကိုအခြေခံ၍ ခန့်မှန်းရာတွင် 'is/are going to' ကို သုံးရပါမည်[cite: 2, 6]。"
     }
 ];
 
@@ -697,7 +693,7 @@ function checkUserGrammarSentence() {
     const feedbackBox = document.getElementById("grammar-feedback");
     const p = grammarPrompts[currentPromptIdx];
 
-    if (!text || text.split(/\s+/).length < 3) {
+    if (!text || text.split(/\s+/).length < 2) {
         alert("ကျေးဇူးပြု၍ ပြည့်စုံသော စာကြောင်းတစ်ကြောင်း ရေးပါ။");
         return;
     }
@@ -709,7 +705,7 @@ function checkUserGrammarSentence() {
     let hasKeyword = false;
 
     if (p.ruleKeyword === "will") {
-        hasKeyword = (lowerText.includes("will") || lowerText.includes("won't")) && !lowerText.includes("wil");
+        hasKeyword = (lowerText.includes("will") || lowerText.includes("won't") || lowerText.includes("i'll")) && !lowerText.includes("wil");
     } else if (p.ruleKeyword === "going to") {
         hasKeyword = (lowerText.includes("going to") || lowerText.includes("gong to")) && !lowerText.includes("goind");
     }
@@ -730,14 +726,14 @@ function checkUserGrammarSentence() {
             feedbackBox.style.background = "#2b1515";
             feedbackBox.style.borderColor = "#da3633";
             feedbackBox.style.color = "#f85149";
-            feedbackBox.innerHTML = `<strong>❌ ကြိုးစားမှု ၃ ကြိမ် ပြည့်သွားပါပြီ။</strong><br>📖 <strong>အမှားပြင်ဆင်ချက် & ရှင်းလင်းချက်:</strong> စာလုံးပေါင်း (Spelling) မှားယွင်းခြင်း သို့မဟုတ် သဒ္ဒါစည်းမျဉ်း (${p.ruleKeyword}) မပါဝင်ပါ။ <br>• မှန်ကန်သော ပုံစံမှာ: <em>${p.hint}</em><br>ကျေးဇူးပြု၍ စာကြောင်းအသစ် ပြောင်းရေးပါ။`;
+            feedbackBox.innerHTML = `<strong>❌ ကြိုးစားမှု ၃ ကြိမ် ပြည့်သွားပါပြီ။</strong><br>📖 <strong>အမှားပြင်ဆင်ချက် & ရှင်းလင်းချက်:</strong> သဒ္ဒါစည်းမျဉ်း (${p.ruleKeyword}) မပါဝင်ပါ။ <br>• မှန်ကန်သော ပုံစံမှာ: <em>${p.hint}</em><br>ကျေးဇူးပြု၍ စာကြောင်းအသစ် ပြောင်းရေးပါ။`;
             document.getElementById("next-grammar-prompt-btn").style.display = "block";
         } else {
             playSound('wrong');
             feedbackBox.style.background = "#2b1515";
             feedbackBox.style.borderColor = "#da3633";
             feedbackBox.style.color = "#f85149";
-            feedbackBox.innerHTML = `<strong>❌ မမှန်သေးပါ။ (စစ်ဆေးချက် အကြံပြုချက်)</strong><br>• <strong>ဘာကြောင့် မှားသလဲ:</strong> စာလုံးပေါင်း အမှားပါဝင်နေခြင်း (ဥပမာ- goind အစား going) သို့မဟုတ် သဒ္ဒါစည်းမျဉ်း (${p.ruleKeyword}) မပြည့်စုံခြင်း ဖြစ်နိုင်ပါသည်။<br>📖 <strong>စည်းမျဉ်း:</strong> ${p.explanation}<br>(ကျန်ရှိသေးသော အကြိမ်: ${3 - currentTryCount})`;
+            feedbackBox.innerHTML = `<strong>❌ မမှန်သေးပါ။ (စစ်ဆေးချက် အကြံပြုချက်)</strong><br>• <strong>ဘာကြောင့် မှားသလဲ:</strong> လိုအပ်သော သဒ္ဒါစည်းမျဉ်း (${p.ruleKeyword}) မပြည့်စုံခြင်း ဖြစ်ပါသည်။<br>📖 <strong>စည်းမျဉ်း:</strong> ${p.explanation}<br>(ကျန်ရှိသေးသော အကြိမ်: ${3 - currentTryCount})`;
             updateGrammarTriesUI();
         }
     }
