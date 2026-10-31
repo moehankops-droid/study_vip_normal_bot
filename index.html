@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Study Bot VLP - Clean Mode</title>
+    <title>Study Bot VLP - Clean Mode with Grammar Hub</title>
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { 
@@ -47,10 +47,10 @@
             background: none;
             border: none;
             color: #8b949e;
-            font-size: 8px;
+            font-size: 7px;
             font-weight: 600;
             cursor: pointer;
-            padding: 4px 2px;
+            padding: 4px 1px;
             border-radius: 6px;
             transition: 0.2s;
             display: flex;
@@ -59,7 +59,7 @@
             gap: 2px;
             flex: 1;
         }
-        .nav-tab span.icon { font-size: 13px; }
+        .nav-tab span.icon { font-size: 12px; }
         .nav-tab.active { color: #58a6ff; background: #162235; }
 
         .tab-content { display: none; }
@@ -281,7 +281,7 @@
         }
         .leaderboard-item:last-child { border-bottom: none; }
 
-        .forest-card, .obsidian-card, .test-card {
+        .forest-card, .obsidian-card, .test-card, .grammar-card {
             background: #161b22;
             border: 1px solid #30363d;
             border-radius: 6px;
@@ -352,7 +352,39 @@
         </div>
     </div>
 
-    <!-- Custom Tasks / Test Mode Tab -->
+    <!-- Grammar Hub Tab (သီးသန့်အခန်း) -->
+    <div id="grammar-tab" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+            <h3 style="color: #58a6ff; margin: 0; font-size: 11px;">📖 Unit 7 Grammar Hub</h3>
+            <button style="padding: 2px 6px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မသို့</button>
+        </div>
+        <p style="font-size: 8px; color: #8b949e; margin-bottom: 6px;">Future Simple နှင့် Be going to မှတ်စုများနှင့် လေ့ကျင့်ခန်းများ</p>
+
+        <!-- Grammar Notes Viewer -->
+        <div class="grammar-card">
+            <h4 style="margin: 0 0 3px 0; color: #3fb950; font-size: 10px;">📌 1. Future Simple (will + V0)[cite: 1]</h4>
+            <p style="font-size: 8px; color: #c9d1d9; margin: 0 0 4px 0; line-height: 1.2;">
+                • လက်တလော ဆုံးဖြတ်ချက်[cite: 1] (Ex: I will play mobile game after a class.)<br>
+                • သဘောတူညီချက်/ကမ်းလှမ်းချက်/ကတိ (Ex: I will help you.)
+            </p>
+            <h4 style="margin: 4px 0 3px 0; color: #58a6ff; font-size: 10px;">📌 2. Be going to + V0 (100%)[cite: 2]</h4>
+            <p style="font-size: 8px; color: #c9d1d9; margin: 0; line-height: 1.2;">
+                • ကြိုတင်စီစဉ်ထားသော အစီအစဉ်[cite: 2] (Ex: I am going to buy a new bike tomorrow.)<br>
+                • အခြေအနေကိုကြည့်၍ ခန့်မှန်းခြင်း[cite: 2] (Ex: It is going to rain.)
+            </p>
+        </div>
+
+        <!-- AI Grammar Practice Section -->
+        <div class="grammar-card" style="border: 1.5px solid #8957e5; background: #161b22;">
+            <h4 style="margin: 0 0 3px 0; color: #a371f7; font-size: 10px;">🤖 AI Grammar Practice & Quiz</h4>
+            <div id="grammar-quiz-container">
+                <p style="font-size: 8px; color: #8b949e; margin-bottom: 5px;">Unit 7 မှတ်စုများအပေါ် အခြေခံ၍ AI မှ မေးခွန်းထုတ်ပေးပါမည်[cite: 1, 2]။</p>
+                <button class="start-btn" style="background: #8957e5; padding: 6px; font-size: 9px;" onclick="startGrammarQuiz(); playSound('click');">🎯 လေ့ကျင့်ခန်း စတင်မည်</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Tasks Tab -->
     <div id="test-tab" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
             <h3 style="color: #58a6ff; margin: 0; font-size: 11px;">📋 Custom Tasks</h3>
@@ -389,7 +421,7 @@
             <h3 style="color: #d29922; margin: 0; font-size: 11px;">🧠 Obsidian Notes</h3>
             <button style="padding: 2px 6px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မသို့</button>
         </div>
-        <p style="font-size: 8px; color: #8b949e; margin-bottom: 4px;">ကိုယ့်ရဲ့ Idea များ၊ Grammar မှတ်စုများကို သိမ်းရန်။</p>
+        <p style="font-size: 8px; color: #8b949e; margin-bottom: 4px;">ကိုယ့်ရဲ့ Idea များ၊ အခြားမှတ်စုများကို သိမ်းရန်။</p>
         
         <div class="obsidian-card">
             <input type="text" id="note-title" placeholder="မှတ်စုခေါင်းစဉ်..." maxlength="30" autocomplete="off">
@@ -440,13 +472,16 @@
     </div>
 </div>
 
-<!-- Bottom Navigation Bar -->
+<!-- Bottom Navigation Bar (7 Tabs) -->
 <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchTab('home-tab'); playSound('click');">
         <span class="icon">🏠</span>ပင်မ
     </button>
     <button class="nav-tab" onclick="switchTab('quiz-tab'); playSound('click');">
         <span class="icon">📝</span>Quiz
+    </button>
+    <button class="nav-tab" onclick="switchTab('grammar-tab'); playSound('click');">
+        <span class="icon">📖</span>Grammar
     </button>
     <button class="nav-tab" onclick="switchTab('test-tab'); loadCustomTasks(); playSound('click');">
         <span class="icon">📋</span>Tasks
@@ -592,26 +627,92 @@ let forestTimer = null;
 let forestSeconds = 25 * 60;
 let isForestRunning = false;
 
+/* Unit 7 Grammar Practice Questions Bank */
+const grammarQuestions = [
+    {
+        question: "I ___ play mobile game after a class. (လက်တလော ဆုံးဖြတ်ချက်)[cite: 1]",
+        options: ["will", "am going to", "is going to"],
+        answer: "will",
+        explanation: "လက်တလော ဆုံးဖြတ်ထားသော ဆုံးဖြတ်ချက်ဖြစ်၍ Future Simple (will + V0) ကို သုံးရပါမည်[cite: 1]။"
+    },
+    {
+        question: "I ___ buy a new bike tomorrow. (ကြိုတင်စီစဉ်ထားပြီးသော အစီအစဉ်)[cite: 2]",
+        options: ["will", "am going to", "shall"],
+        answer: "am going to",
+        explanation: "ကြိုတင်စီစဉ်ထားပြီးသော အစီအစဉ် (100% သေချာမှု) အတွက် be going to + V0 ကို သုံးရပါမည်[cite: 2]။"
+    },
+    {
+        question: "Look at the dark clouds! It ___ rain. (အခြေအနေကိုကြည့်၍ ခန့်မှန်းခြင်း)[cite: 2]",
+        options: ["will", "is going to", "shall"],
+        answer: "is going to",
+        explanation: "ယခုဖြစ်နေသော အခြေအနေ (တိမ်မည်းများ) ကိုကြည့်၍ ဖြစ်ပေါ်လာမည့် အခြေအနေအတွက် is going to ကို သုံးသည်[cite: 2]။"
+    },
+    {
+        question: "Don't worry, I ___ help you with your homework. (ကမ်းလှမ်းရန်)[cite: 1]",
+        options: ["will", "am going to", "is going to"],
+        answer: "will",
+        explanation: "အခြားသူကို ကမ်းလှမ်းရန် သို့မဟုတ် ကတိပေးရန်အတွက် will ကို သုံးရပါမည်[cite: 1]။"
+    }
+];
+
+let currentGrammarIndex = 0;
+
+function startGrammarQuiz() {
+    currentGrammarIndex = 0;
+    loadGrammarQuestion();
+}
+
+function loadGrammarQuestion() {
+    const container = document.getElementById("grammar-quiz-container");
+    if (currentGrammarIndex >= grammarQuestions.length) {
+        container.innerHTML = `
+            <p style="color: #3fb950; font-size: 10px; font-weight: bold; text-align: center; margin: 6px 0;">🎉 Unit 7 Grammar လေ့ကျင့်ခန်းများ အားလုံး ပြီးဆုံးပါပြီ!</p>
+            <button class="start-btn" style="background: #8957e5; padding: 6px; font-size: 9px;" onclick="startGrammarQuiz(); playSound('click');">🔄 ပြန်လည်ဖြေဆိုမည်</button>
+        `;
+        return;
+    }
+
+    let q = grammarQuestions[currentGrammarIndex];
+    let optionsHTML = "";
+    q.options.forEach(opt => {
+        optionsHTML += `<button onclick="checkGrammarAnswer(this, '${opt}', '${q.answer}', '${q.explanation.replace(/'/g, "\\'")}')">${opt}</button>`;
+    });
+
+    container.innerHTML = `
+        <div style="font-size: 8px; color: #8b949e; margin-bottom: 2px;">မေးခွန်း (${currentGrammarIndex + 1}/${grammarQuestions.length})</div>
+        <div class="question-box" style="font-size: 10px;">${q.question}</div>
+        <div class="options">${optionsHTML}</div>
+        <div id="grammar-exp" class="explanation"></div>
+        <button id="grammar-next-btn" class="next-btn" onclick="currentGrammarIndex++; loadGrammarQuestion(); playSound('click');" style="margin-top: 5px;">နောက်တစ်ပုဒ်သို့ ➡️</button>
+    `;
+}
+
+function checkGrammarAnswer(button, selected, correct, explanation) {
+    document.querySelectorAll('#grammar-quiz-container .options button').forEach(btn => btn.disabled = true);
+    const expBox = document.getElementById("grammar-exp");
+    expBox.style.display = "block";
+
+    if (selected.trim() === correct.trim()) {
+        playSound('correct');
+        button.style.background = "#0d3819"; button.style.color = "#d3f9d8"; button.style.borderColor = "#2ea043";
+        expBox.style.background = "#0d3819"; expBox.style.color = "#d3f9d8"; expBox.style.borderColor = "#2ea043";
+        expBox.innerHTML = `<strong>✅ မှန်ကန်ပါသည်!</strong><br>${explanation}`;
+        money += 20; localStorage.setItem('quizCoins', money); updateHeader();
+    } else {
+        playSound('wrong');
+        button.style.background = "#2b1515"; button.style.color = "#f85149"; button.style.borderColor = "#da3633";
+        expBox.style.background = "#2b1515"; expBox.style.color = "#f85149"; expBox.style.borderColor = "#da3633";
+        expBox.innerHTML = `<strong>❌ မှားယွင်းပါသည်။</strong> အမှန်မှာ: ${correct}<br>${explanation}`;
+    }
+    document.getElementById("grammar-next-btn").style.display = "block";
+}
+
 window.onload = function() {
     checkSavedUser();
     updateHeader();
     loadNotes();
     loadCustomTasks();
-    preloadDefaultNotes();
 };
-
-/* Unit 7 Grammar Notes များကို ပထမအကြိမ်တွင် Default ထည့်ပေးရန် */
-function preloadDefaultNotes() {
-    let notes = JSON.parse(localStorage.getItem("obsidianNotes")) || [];
-    if (notes.length === 0) {
-        notes.push({
-            title: "Unit 7 - Future Simple & Be going to",
-            content: "1. Future Simple (will + V0):\n• လက်တလော ဆုံးဖြတ်ချက် (Ex: I will play mobile game after a class.)\n• သဘောတူညီချက်/ကမ်းလှမ်းချက်/ကတိ (Ex: I will help you.)\n\n2. Be going to + V0 (100%):\n• ကြိုတင်စီစဉ်ထားသော အစီအစဉ် (Ex: I am going to buy a new bike tomorrow.)\n• အခြေအနေကိုကြည့်၍ ခန့်မှန်းခြင်း (Ex: It is going to rain.)",
-            date: new Date().toLocaleDateString()
-        });
-        localStorage.setItem("obsidianNotes", JSON.stringify(notes));
-    }
-}
 
 function switchTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -621,11 +722,12 @@ function switchTab(tabId) {
     const tabs = document.querySelectorAll('.nav-tab');
     if(tabId === 'home-tab') tabs[0].classList.add('active');
     if(tabId === 'quiz-tab') tabs[1].classList.add('active');
-    if(tabId === 'test-tab') { tabs[2].classList.add('active'); loadCustomTasks(); }
-    if(tabId === 'forest-tab') tabs[3].classList.add('active');
-    if(tabId === 'essay-tab') tabs[4].classList.add('active');
+    if(tabId === 'grammar-tab') tabs[2].classList.add('active');
+    if(tabId === 'test-tab') { tabs[3].classList.add('active'); loadCustomTasks(); }
+    if(tabId === 'forest-tab') tabs[4].classList.add('active');
+    if(tabId === 'essay-tab') tabs[5].classList.add('active');
     if(tabId === 'leaderboard-tab') {
-        tabs[5].classList.add('active');
+        tabs[6].classList.add('active');
         if (typeof window.loadLeaderboardFromFirebase === 'function') { window.loadLeaderboardFromFirebase(); }
     }
 }
@@ -748,7 +850,7 @@ function loadNotes() {
                 <div style="display: flex; justify-content: space-between; font-size: 9px; color: #58a6ff; font-weight: bold;">
                     <span>📌 ${note.title}</span><span style="font-size: 7px; color: #8b949e;">${note.date}</span>
                 </div>
-                <p style="font-size: 8px; color: #c9d1d9; margin: 2px 0 0 0; line-height: 1.1; white-space: pre-line;">${note.content}</p>
+                <p style="font-size: 8px; color: #c9d1d9; margin: 2px 0 0 0; line-height: 1.1;">${note.content}</p>
             </div>
         `;
     });
