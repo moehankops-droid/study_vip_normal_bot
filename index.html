@@ -356,7 +356,7 @@
     <div id="test-tab" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
             <h3 style="color: #58a6ff; margin: 0; font-size: 11px;">📋 Custom Tasks</h3>
-            <button class="buy-btn" style="padding: 2px 6px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မသို့</button>
+            <button style="padding: 2px 6px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မသို့</button>
         </div>
         <p style="font-size: 8px; color: #8b949e; margin-bottom: 6px;">လုပ်စရာများကို ထည့်ပြီး အမှန်ခြစ်ဖြင့် မှတ်သားရန်</p>
         
@@ -597,7 +597,21 @@ window.onload = function() {
     updateHeader();
     loadNotes();
     loadCustomTasks();
+    preloadDefaultNotes();
 };
+
+/* Unit 7 Grammar Notes များကို ပထမအကြိမ်တွင် Default ထည့်ပေးရန် */
+function preloadDefaultNotes() {
+    let notes = JSON.parse(localStorage.getItem("obsidianNotes")) || [];
+    if (notes.length === 0) {
+        notes.push({
+            title: "Unit 7 - Future Simple & Be going to",
+            content: "1. Future Simple (will + V0):\n• လက်တလော ဆုံးဖြတ်ချက် (Ex: I will play mobile game after a class.)\n• သဘောတူညီချက်/ကမ်းလှမ်းချက်/ကတိ (Ex: I will help you.)\n\n2. Be going to + V0 (100%):\n• ကြိုတင်စီစဉ်ထားသော အစီအစဉ် (Ex: I am going to buy a new bike tomorrow.)\n• အခြေအနေကိုကြည့်၍ ခန့်မှန်းခြင်း (Ex: It is going to rain.)",
+            date: new Date().toLocaleDateString()
+        });
+        localStorage.setItem("obsidianNotes", JSON.stringify(notes));
+    }
+}
 
 function switchTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
@@ -734,7 +748,7 @@ function loadNotes() {
                 <div style="display: flex; justify-content: space-between; font-size: 9px; color: #58a6ff; font-weight: bold;">
                     <span>📌 ${note.title}</span><span style="font-size: 7px; color: #8b949e;">${note.date}</span>
                 </div>
-                <p style="font-size: 8px; color: #c9d1d9; margin: 2px 0 0 0; line-height: 1.1;">${note.content}</p>
+                <p style="font-size: 8px; color: #c9d1d9; margin: 2px 0 0 0; line-height: 1.1; white-space: pre-line;">${note.content}</p>
             </div>
         `;
     });
