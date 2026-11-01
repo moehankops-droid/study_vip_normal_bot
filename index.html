@@ -369,19 +369,19 @@
         </div>
     </div>
 
-    <!-- Grammar Hub Tab (AI စာကြောင်းထုတ်ပေးပြီး ကိုယ်တိုင်ရွေးချယ်ရမည့် Interactive Challenge Mode) -->
+    <!-- Grammar Hub Tab -->
     <div id="grammar-tab" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <h3 style="color: #58a6ff; margin: 0; font-size: 13px;">📖 Unit 7 Grammar Identification Hub</h3>
             <button style="padding: 3px 8px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:10px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မသို့</button>
         </div>
-        <p style="font-size: 10.5px; color: #8b949e; margin-bottom: 8px;">AI စာကြောင်းကို ကြည့်ပြီး သဒ္ဒါအမျိုးအစား မှန်အောင် ရွေးချယ်ပါ[cite: 1, 2, 5]</p>
+        <p style="font-size: 10.5px; color: #8b949e; margin-bottom: 8px;">AI စာကြောင်းအသစ်များကို ကြည့်ပြီး အမျိုးအစား မှန်အောင် ရွေးပါ[cite: 1, 2, 5]</p>
 
-        <!-- Grammar Notebook Rules Reference -->
+        <!-- Grammar Notebook Rules Reference (Ex များမပါ) -->
         <div class="grammar-card">
-            <h4 style="margin: 0 0 3px 0; color: #3fb950; font-size: 11px;">📌 (1) Future Simple = will + V0</h4>
+            <h4 style="margin: 0 0 3px 0; color: #3fb950; font-size: 11px;">📌 (1) Future Simple = will + V0[cite: 1, 5]</h4>
             <p style="font-size: 10px; color: #c9d1d9; margin: 0 0 6px 0; line-height: 1.4;">
-                • **Note 1:** လက်တလော ဆုံးဖြတ်ထားသော ဆုံးဖြတ်ချက်များ<br>
+                • **Note 1:** လက်တလော ဆုံးဖြတ်ထားသော ဆုံးဖြတ်ချက်များ[cite: 1, 5]<br>
                 • **Note 2:** သဘောတူညီရန်[cite: 5]<br>
                 • **No. 3:** ကမ်းလှမ်းရန်[cite: 5]<br>
                 • **No. 4:** ကတိပေးရန်[cite: 5]
@@ -405,7 +405,7 @@
             
             <div id="grammar-options-container"></div>
 
-            <button id="next-grammar-prompt-btn" class="start-btn" style="background: #1f6feb; padding: 7px; font-size: 11px; margin-top: 6px; display: none;" onclick="loadNewGrammarPrompt(); playSound('click');">➡️ နောက်စာကြောင်းတစ်ခု ပြောင်းမည်</button>
+            <button id="next-grammar-prompt-btn" class="start-btn" style="background: #1f6feb; padding: 7px; font-size: 11px; margin-top: 6px; display: none;" onclick="loadNewGrammarPrompt(); playSound('click');">➡️ နောက်စာကြောင်းအသစ် ပြောင်းမည်</button>
 
             <div id="grammar-feedback" class="essay-feedback" style="margin-top: 6px; font-size: 10.5px;"></div>
         </div>
@@ -654,7 +654,7 @@ let forestTimer = null;
 let forestSeconds = 25 * 60;
 let isForestRunning = false;
 
-/* AI Sentence Identification Challenges Bank */
+/* AI Sentence Identification Challenges Bank (စာကြောင်းအသစ်များ အမြဲထွက်ရန်) */
 const grammarSentencesBank = [
     {
         sentence: "I will play mobile game after a class.",
@@ -665,7 +665,7 @@ const grammarSentencesBank = [
             "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)",
             "Be going to: No 2 (ခန့်မှန်းခြင်း)"
         ],
-        explanation: "အတန်းပြီးရင် ဂိမ်းဆော့မယ်ဆိုတာ လက်တလော စဉ်းစားဆုံးဖြတ်လိုက်တာဖြစ်လို့ Future Simple Note 1 ဖြစ်ပါတယ်။"
+        explanation: "အတန်းပြီးရင် ဂိမ်းဆော့မယ်ဆိုတာ လက်တလော စဉ်းစားဆုံးဖြတ်လိုက်တာဖြစ်လို့ Future Simple Note 1 ဖြစ်ပါတယ်။[cite: 1, 5]"
     },
     {
         sentence: "I will come to the birthday party.",
@@ -676,7 +676,7 @@ const grammarSentencesBank = [
             "Future Simple: No 3 (ကမ်းလှမ်းရန်)",
             "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)"
         ],
-        explanation: "မွေးနေ့ပွဲ လာခဲ့မယ်လို့ သဘောတူညီတာဖြစ်လို့ Future Simple Note 2 ဖြစ်ပါတယ်။"
+        explanation: "မွေးနေ့ပွဲ လာခဲ့မယ်လို့ သဘောတူညီတာဖြစ်လို့ Future Simple Note 2 ဖြစ်ပါတယ်။[cite: 5]"
     },
     {
         sentence: "I will help you.",
@@ -687,7 +687,7 @@ const grammarSentencesBank = [
             "Future Simple: No 3 (ကမ်းလှမ်းရန်)",
             "Future Simple: No 4 (ကတိပေးရန်)"
         ],
-        explanation: "ငါ ကူညီပေးပါမယ်လို့ ကမ်းလှမ်းတာဖြစ်လို့ Future Simple No 3 ဖြစ်ပါတယ်။"
+        explanation: "ငါ ကူညီပေးပါမယ်လို့ ကမ်းလှမ်းတာဖြစ်လို့ Future Simple No 3 ဖြစ်ပါတယ်။[cite: 5]"
     },
     {
         sentence: "I won't tell your secret.",
@@ -698,7 +698,7 @@ const grammarSentencesBank = [
             "Future Simple: No 4 (ကတိပေးရန်)",
             "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)"
         ],
-        explanation: "လျှို့ဝက်ချက်ကို မပြောပါဘူးလို့ ကတိပေးတာဖြစ်လို့ Future Simple No 4 ဖြစ်ပါတယ်။"
+        explanation: "လျှို့ဝက်ချက်ကို မပြောပါဘူးလို့ ကတိပေးတာဖြစ်လို့ Future Simple No 4 ဖြစ်ပါတယ်။[cite: 5]"
     },
     {
         sentence: "I am going to buy a new bike tomorrow.",
@@ -709,7 +709,7 @@ const grammarSentencesBank = [
             "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)",
             "Be going to: No 2 (ခန့်မှန်းခြင်း)"
         ],
-        explanation: "မနက်ဖြန် စက်ဘီးအသစ်ဝယ်ဖို့ ကြိုတင်စီစဉ်ထားတာဖြစ်လို့ Be going to No 1 ဖြစ်ပါတယ်။"
+        explanation: "မနက်ဖြန် စက်ဘီးအသစ်ဝယ်ဖို့ ကြိုတင်စီစဉ်ထားတာဖြစ်လို့ Be going to No 1 ဖြစ်ပါတယ်။[cite: 2]"
     },
     {
         sentence: "It is going to rain.",
@@ -720,7 +720,7 @@ const grammarSentencesBank = [
             "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)",
             "Be going to: No 2 (ခန့်မှန်းခြင်း)"
         ],
-        explanation: "တိမ်မည်းတွေကြည့်ပြီး မိုးရွာတော့မယ်လို့ ခန့်မှန်းတာဖြစ်လို့ Be going to No 2 ဖြစ်ပါတယ်။"
+        explanation: "တိမ်မည်းတွေကြည့်ပြီး မိုးရွာတော့မယ်လို့ ခန့်မှန်းတာဖြစ်လို့ Be going to No 2 ဖြစ်ပါတယ်။[cite: 2]"
     },
     {
         sentence: "The car is going to turn right.",
@@ -731,14 +731,20 @@ const grammarSentencesBank = [
             "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)",
             "Be going to: No 2 (ခန့်မှန်းခြင်း)"
         ],
-        explanation: "ကားက ညာဘက်ကွေ့တော့မယ်လို့ မျက်စိရှေ့အခြေအနေကို ကြည့်ပြီး ခန့်မှန်းတာဖြစ်လို့ Be going to No 2 ဖြစ်ပါတယ်။"
+        explanation: "ကားက ညာဘက်ကွေ့တော့မယ်လို့ မျက်စိရှေ့အခြေအနေကို ကြည့်ပြီး ခန့်မှန်းတာဖြစ်လို့ Be going to No 2 ဖြစ်ပါတယ်။[cite: 2]"
     }
 ];
 
 let currentGrammarItem = null;
+let lastGrammarIdx = -1;
 
 function loadCurrentGrammarPrompt() {
-    const randomIdx = Math.floor(Math.random() * grammarSentencesBank.length);
+    let randomIdx;
+    do {
+        randomIdx = Math.floor(Math.random() * grammarSentencesBank.length);
+    } while (randomIdx === lastGrammarIdx && grammarSentencesBank.length > 1);
+    
+    lastGrammarIdx = randomIdx;
     currentGrammarItem = grammarSentencesBank[randomIdx];
     
     document.getElementById("ai-generated-sentence").innerText = `"${currentGrammarItem.sentence}"`;
@@ -748,7 +754,10 @@ function loadCurrentGrammarPrompt() {
     const optionsContainer = document.getElementById("grammar-options-container");
     let optionsHTML = "";
     
-    currentGrammarItem.options.forEach((opt) => {
+    // အဖြေရွေးစရာများကို Random ရောပေးခြင်း
+    let shuffledOptions = [...currentGrammarItem.options].sort(() => Math.random() - 0.5);
+
+    shuffledOptions.forEach((opt) => {
         optionsHTML += `<button class="grammar-option-btn" onclick="checkGrammarOption(this, '${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
     });
     
