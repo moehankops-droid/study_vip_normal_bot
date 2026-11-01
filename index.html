@@ -287,6 +287,25 @@
             margin-bottom: 8px;
             text-align: left;
         }
+
+        .grammar-option-btn {
+            background: #161b22;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 8px;
+            border-radius: 6px;
+            font-size: 11px;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+            margin-bottom: 4px;
+            transition: 0.2s;
+        }
+        .grammar-option-btn:hover {
+            background: #21262d;
+            border-color: #58a6ff;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -350,42 +369,43 @@
         </div>
     </div>
 
-    <!-- Grammar Writing Hub Tab (Ex များမပါဘဲ လိုရင်းမှတ်စုများသာ) -->
+    <!-- Grammar Hub Tab (AI စာကြောင်းထုတ်ပေးပြီး ကိုယ်တိုင်ရွေးချယ်ရမည့် Interactive Challenge Mode) -->
     <div id="grammar-tab" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <h3 style="color: #58a6ff; margin: 0; font-size: 13px;">📖 Unit 7 Grammar Writing Hub</h3>
+            <h3 style="color: #58a6ff; margin: 0; font-size: 13px;">📖 Unit 7 Grammar Identification Hub</h3>
             <button style="padding: 3px 8px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:10px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မသို့</button>
         </div>
-        <p style="font-size: 10.5px; color: #8b949e; margin-bottom: 8px;">ယူနစ် ၇ မှတ်စုစည်းမျဉ်းများ[cite: 1, 2, 5, 6]</p>
+        <p style="font-size: 10.5px; color: #8b949e; margin-bottom: 8px;">AI စာကြောင်းကို ကြည့်ပြီး သဒ္ဒါအမျိုးအစား မှန်အောင် ရွေးချယ်ပါ[cite: 1, 2, 5]</p>
 
+        <!-- Grammar Notebook Rules Reference -->
         <div class="grammar-card">
-            <h4 style="margin: 0 0 3px 0; color: #3fb950; font-size: 11px;">📌 (1) Future Simple = will + V0[cite: 1, 5]</h4>
+            <h4 style="margin: 0 0 3px 0; color: #3fb950; font-size: 11px;">📌 (1) Future Simple = will + V0</h4>
             <p style="font-size: 10px; color: #c9d1d9; margin: 0 0 6px 0; line-height: 1.4;">
-                • **Note 1:** လက်တလော ဆုံးဖြတ်ထားသော ဆုံးဖြတ်ချက်များ[cite: 1, 5]<br>
+                • **Note 1:** လက်တလော ဆုံးဖြတ်ထားသော ဆုံးဖြတ်ချက်များ<br>
                 • **Note 2:** သဘောတူညီရန်[cite: 5]<br>
                 • **No. 3:** ကမ်းလှမ်းရန်[cite: 5]<br>
                 • **No. 4:** ကတိပေးရန်[cite: 5]
             </p>
-            <h4 style="margin: 6px 0 3px 0; color: #58a6ff; font-size: 11px;">📌 (2) Be going to + V0 (100% သေချာမှု)[cite: 2, 6]</h4>
+            <h4 style="margin: 6px 0 3px 0; color: #58a6ff; font-size: 11px;">📌 (2) Be going to + V0 (100% သေချာမှု)[cite: 2]</h4>
             <p style="font-size: 10px; color: #c9d1d9; margin: 0; line-height: 1.4;">
-                • **No. 1:** ကြိုတင်စီစဉ်ထားပြီး နောင်တွင်လုပ်ရန်ရှိသော အစီအစဉ်များ[cite: 2, 6]<br>
-                • **No. 2:** ယခုဖြစ်နေသော အခြေအနေကိုကြည့်၍ ခန့်မှန်းခြင်း[cite: 2, 6]
+                • **No. 1:** ကြိုတင်စီစဉ်ထားပြီး နောင်တွင်လုပ်ရန်ရှိသော အစီအစဉ်များ[cite: 2]<br>
+                • **No. 2:** ယခုဖြစ်နေသော အခြေအနေကိုကြည့်၍ ခန့်မှန်းခြင်း[cite: 2]
             </p>
         </div>
 
+        <!-- AI Interactive Identification Game Box -->
         <div class="grammar-card" style="border: 1.5px solid #8957e5; background: #161b22;">
-            <h4 style="margin: 0 0 3px 0; color: #a371f7; font-size: 12px;">🤖 AI Grammar Writing & Checker</h4>
-            <p id="grammar-prompt-text" style="font-size: 11px; color: #f0883e; margin: 5px 0; font-weight: bold; line-height: 1.3;"></p>
-            
-            <textarea id="grammar-user-input" placeholder="ဒီနေရာတွင် အင်္ဂလိပ်လို စာကြောင်း ရေးပါ..." style="height: 60px; margin-top: 4px; font-size: 12px;" autocomplete="off"></textarea>
-            
-            <div style="display: flex; justify-content: space-between; font-size: 10px; color: #8b949e; margin-top: 4px;">
-                <span id="grammar-tries-info" style="color: #f85149; font-weight: bold;">ကျန်ရှိသော အကြိမ်: 3/3</span>
-                <span style="color: #d29922; font-weight: bold;">🪙 မှန်လျှင် +50 Coins</span>
+            <h4 style="margin: 0 0 3px 0; color: #a371f7; font-size: 12px;">🤖 AI Sentence Challenge</h4>
+            <div style="background: #0d121c; padding: 8px; border-radius: 6px; border: 1px solid #1f304a; margin: 6px 0;">
+                <span style="font-size: 10px; color: #8b949e;">AI ရေးထားသော စာကြောင်း:</span>
+                <p id="ai-generated-sentence" style="font-size: 12.5px; color: #58a6ff; font-weight: bold; margin: 4px 0; line-height: 1.3;"></p>
             </div>
 
-            <button class="start-btn" style="background: #8957e5; padding: 7px; font-size: 11px; margin-top: 6px;" onclick="checkUserGrammarSentence(); playSound('click');">AI ဖြင့် စစ်ဆေးမည် 🤖</button>
-            <button id="next-grammar-prompt-btn" class="start-btn" style="background: #1f6feb; padding: 7px; font-size: 11px; margin-top: 6px; display: none;" onclick="loadNewGrammarPrompt(); playSound('click');">➡️ စာကြောင်းအသစ် ပြောင်းမည်</button>
+            <p style="font-size: 10.5px; color: #f0883e; margin-bottom: 6px; font-weight: bold;">ဒီစာကြောင်းက ဘာကို ပြောတာလဲ ရွေးပါ:</p>
+            
+            <div id="grammar-options-container"></div>
+
+            <button id="next-grammar-prompt-btn" class="start-btn" style="background: #1f6feb; padding: 7px; font-size: 11px; margin-top: 6px; display: none;" onclick="loadNewGrammarPrompt(); playSound('click');">➡️ နောက်စာကြောင်းတစ်ခု ပြောင်းမည်</button>
 
             <div id="grammar-feedback" class="essay-feedback" style="margin-top: 6px; font-size: 10.5px;"></div>
         </div>
@@ -634,113 +654,142 @@ let forestTimer = null;
 let forestSeconds = 25 * 60;
 let isForestRunning = false;
 
-/* Grammar Prompts */
-const grammarPrompts = [
+/* AI Sentence Identification Challenges Bank */
+const grammarSentencesBank = [
     {
-        task: "✍️ 1. Future Simple (will + V0) သုံး၍ 'လက်တလော ဆုံးဖြတ်ချက်' စာကြောင်းတစ်ကြောင်း ရေးပါ[cite: 1, 5]。",
-        ruleKeyword: "will",
-        hint: "ဥပမာ: I will play mobile game after a class.[cite: 1, 5]",
-        explanation: "Future Simple ကို သုံးရာတွင် 'will' နှင့်အတူ မူလကြိယာ (V0) ကို တွဲသုံးရပါမည်[cite: 1, 5]。"
+        sentence: "I will play mobile game after a class.",
+        correctCategory: "Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)",
+        options: [
+            "Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)",
+            "Future Simple: Note 2 (သဘောတူညီရန်)",
+            "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)",
+            "Be going to: No 2 (ခန့်မှန်းခြင်း)"
+        ],
+        explanation: "အတန်းပြီးရင် ဂိမ်းဆော့မယ်ဆိုတာ လက်တလော စဉ်းစားဆုံးဖြတ်လိုက်တာဖြစ်လို့ Future Simple Note 1 ဖြစ်ပါတယ်။"
     },
     {
-        task: "✍️ 2. Future Simple (will + V0) သုံး၍ 'သဘောတူညီရန်' စာကြောင်းတစ်ကြောင်း ရေးပါ[cite: 5]。",
-        ruleKeyword: "will",
-        hint: "ဥပမာ: I will come to the birthday party.[cite: 5]",
-        explanation: "သဘောတူညီချက်ပြရန်အတွက် 'will' ကို အသုံးပြုရပါမည်[cite: 5]。"
+        sentence: "I will come to the birthday party.",
+        correctCategory: "Future Simple: Note 2 (သဘောတူညီရန်)",
+        options: [
+            "Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)",
+            "Future Simple: Note 2 (သဘောတူညီရန်)",
+            "Future Simple: No 3 (ကမ်းလှမ်းရန်)",
+            "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)"
+        ],
+        explanation: "မွေးနေ့ပွဲ လာခဲ့မယ်လို့ သဘောတူညီတာဖြစ်လို့ Future Simple Note 2 ဖြစ်ပါတယ်။"
     },
     {
-        task: "✍️ 3. Future Simple (will + V0) သုံး၍ 'ကမ်းလှမ်းရန် သို့မဟုတ် ကတိပေးရန်' စာကြောင်းတစ်ကြောင်း ရေးပါ[cite: 5]。",
-        ruleKeyword: "will",
-        hint: "ဥပမာ: I will help you. / I won't tell your secret.[cite: 5]",
-        explanation: "ကမ်းလှမ်းရန် သို့မဟုတ် ကတိပေးရန်အတွက် 'will' သို့မဟုတ် 'won't' ကို သုံးရပါမည်[cite: 5]。"
+        sentence: "I will help you.",
+        correctCategory: "Future Simple: No 3 (ကမ်းလှမ်းရန်)",
+        options: [
+            "Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)",
+            "Future Simple: Note 2 (သဘောတူညီရန်)",
+            "Future Simple: No 3 (ကမ်းလှမ်းရန်)",
+            "Future Simple: No 4 (ကတိပေးရန်)"
+        ],
+        explanation: "ငါ ကူညီပေးပါမယ်လို့ ကမ်းလှမ်းတာဖြစ်လို့ Future Simple No 3 ဖြစ်ပါတယ်။"
     },
     {
-        task: "✍️ 4. Be going to သုံး၍ 'ကြိုတင်စီစဉ်ထားသော အစီအစဉ်' စာကြောင်းတစ်ကြောင်း ရေးပါ[cite: 2, 6]。",
-        ruleKeyword: "going to",
-        hint: "ဥပမာ: I am going to buy a new bike tomorrow.[cite: 2, 6]",
-        explanation: "ကြိုတင်စီစဉ်ထားပြီးသော အစီအစဉ်များအတွက် 'am/is/are going to + V0' ပုံစံကို သုံးရပါမည်[cite: 2, 6]。"
+        sentence: "I won't tell your secret.",
+        correctCategory: "Future Simple: No 4 (ကတိပေးရန်)",
+        options: [
+            "Future Simple: Note 2 (သဘောတူညီရန်)",
+            "Future Simple: No 3 (ကမ်းလှမ်းရန်)",
+            "Future Simple: No 4 (ကတိပေးရန်)",
+            "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)"
+        ],
+        explanation: "လျှို့ဝက်ချက်ကို မပြောပါဘူးလို့ ကတိပေးတာဖြစ်လို့ Future Simple No 4 ဖြစ်ပါတယ်။"
     },
     {
-        task: "✍️ 5. Be going to သုံး၍ 'အခြေအနေကိုကြည့်၍ ခန့်မှန်းခြင်း' စာကြောင်းတစ်ကြောင်း ရေးပါ[cite: 2, 6]。",
-        ruleKeyword: "going to",
-        hint: "ဥပမာ: It is going to rain. / The car is going to turn right.[cite: 2, 6]",
-        explanation: "မျက်စိရှေ့တွင် ဖြစ်ပျက်နေသော အခြေအနေကိုအခြေခံ၍ ခန့်မှန်းရာတွင် 'is/are going to' ကို သုံးရပါမည်[cite: 2, 6]。"
+        sentence: "I am going to buy a new bike tomorrow.",
+        correctCategory: "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)",
+        options: [
+            "Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)",
+            "Future Simple: Note 2 (သဘောတူညီရန်)",
+            "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)",
+            "Be going to: No 2 (ခန့်မှန်းခြင်း)"
+        ],
+        explanation: "မနက်ဖြန် စက်ဘီးအသစ်ဝယ်ဖို့ ကြိုတင်စီစဉ်ထားတာဖြစ်လို့ Be going to No 1 ဖြစ်ပါတယ်။"
+    },
+    {
+        sentence: "It is going to rain.",
+        correctCategory: "Be going to: No 2 (ခန့်မှန်းခြင်း)",
+        options: [
+            "Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)",
+            "Future Simple: No 3 (ကမ်းလှမ်းရန်)",
+            "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)",
+            "Be going to: No 2 (ခန့်မှန်းခြင်း)"
+        ],
+        explanation: "တိမ်မည်းတွေကြည့်ပြီး မိုးရွာတော့မယ်လို့ ခန့်မှန်းတာဖြစ်လို့ Be going to No 2 ဖြစ်ပါတယ်။"
+    },
+    {
+        sentence: "The car is going to turn right.",
+        correctCategory: "Be going to: No 2 (ခန့်မှန်းခြင်း)",
+        options: [
+            "Future Simple: Note 2 (သဘောတူညီရန်)",
+            "Future Simple: No 4 (ကတိပေးရန်)",
+            "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)",
+            "Be going to: No 2 (ခန့်မှန်းခြင်း)"
+        ],
+        explanation: "ကားက ညာဘက်ကွေ့တော့မယ်လို့ မျက်စိရှေ့အခြေအနေကို ကြည့်ပြီး ခန့်မှန်းတာဖြစ်လို့ Be going to No 2 ဖြစ်ပါတယ်။"
     }
 ];
 
-let currentPromptIdx = 0;
-let currentTryCount = 0;
+let currentGrammarItem = null;
 
 function loadCurrentGrammarPrompt() {
-    if (currentPromptIdx >= grammarPrompts.length) currentPromptIdx = 0;
-    const p = grammarPrompts[currentPromptIdx];
-    document.getElementById("grammar-prompt-text").innerText = `${p.task}\n(အကြံပြုချက်: ${p.hint})`;
-    document.getElementById("grammar-user-input").value = "";
+    const randomIdx = Math.floor(Math.random() * grammarSentencesBank.length);
+    currentGrammarItem = grammarSentencesBank[randomIdx];
+    
+    document.getElementById("ai-generated-sentence").innerText = `"${currentGrammarItem.sentence}"`;
     document.getElementById("grammar-feedback").style.display = "none";
     document.getElementById("next-grammar-prompt-btn").style.display = "none";
-    currentTryCount = 0;
-    updateGrammarTriesUI();
+
+    const optionsContainer = document.getElementById("grammar-options-container");
+    let optionsHTML = "";
+    
+    currentGrammarItem.options.forEach((opt) => {
+        optionsHTML += `<button class="grammar-option-btn" onclick="checkGrammarOption(this, '${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
+    });
+    
+    optionsContainer.innerHTML = optionsHTML;
 }
 
-function updateGrammarTriesUI() {
-    const triesLeft = 3 - currentTryCount;
-    const info = document.getElementById("grammar-tries-info");
-    info.innerText = `ကျန်ရှိသော အကြိမ်: ${triesLeft}/3`;
-}
-
-function checkUserGrammarSentence() {
-    const text = document.getElementById("grammar-user-input").value.trim();
+function checkGrammarOption(button, selectedOpt) {
+    document.querySelectorAll('.grammar-option-btn').forEach(btn => btn.disabled = true);
     const feedbackBox = document.getElementById("grammar-feedback");
-    const p = grammarPrompts[currentPromptIdx];
-
-    if (!text || text.split(/\s+/).length < 2) {
-        alert("ကျေးဇူးပြု၍ ပြည့်စုံသော စာကြောင်းတစ်ကြောင်း ရေးပါ။");
-        return;
-    }
-
-    currentTryCount++;
     feedbackBox.style.display = "block";
 
-    const lowerText = text.toLowerCase();
-    let hasKeyword = false;
-
-    if (p.ruleKeyword === "will") {
-        hasKeyword = (lowerText.includes("will") || lowerText.includes("won't") || lowerText.includes("i'll")) && !lowerText.includes("wil");
-    } else if (p.ruleKeyword === "going to") {
-        hasKeyword = (lowerText.includes("going to") || lowerText.includes("gong to")) && !lowerText.includes("goind");
-    }
-
-    if (hasKeyword) {
+    if (selectedOpt === currentGrammarItem.correctCategory) {
         playSound('correct');
         money += 50;
         localStorage.setItem('quizCoins', money);
         updateHeader();
+
+        button.style.background = "#0d3819";
+        button.style.borderColor = "#2ea043";
+        button.style.color = "#d3f9d8";
+
         feedbackBox.style.background = "#0d3819";
         feedbackBox.style.borderColor = "#2ea043";
         feedbackBox.style.color = "#d3f9d8";
-        feedbackBox.innerHTML = `<strong>✅ အလွန်တော်ပါသည်! AI စစ်ဆေးချက် မှန်ကန်ပါသည်။</strong><br>• ရေးသားချက်: "${text}"<br>📖 <strong>ရှင်းလင်းချက်:</strong> ${p.explanation}<br>🎉 🪙 50 Coins ရရှိပါပြီ!`;
-        document.getElementById("next-grammar-prompt-btn").style.display = "block";
+        feedbackBox.innerHTML = `<strong>✅ မှန်ကန်ပါသည်။ အလွန်တော်ပါသည်!</strong><br>📖 <strong>ရှင်းလင်းချက်:</strong> ${currentGrammarItem.explanation}<br>🎉 🪙 50 Coins ရရှိပါပြီ!`;
     } else {
-        if (currentTryCount >= 3) {
-            playSound('wrong');
-            feedbackBox.style.background = "#2b1515";
-            feedbackBox.style.borderColor = "#da3633";
-            feedbackBox.style.color = "#f85149";
-            feedbackBox.innerHTML = `<strong>❌ ကြိုးစားမှု ၃ ကြိမ် ပြည့်သွားပါပြီ။</strong><br>📖 <strong>အမှားပြင်ဆင်ချက် & ရှင်းလင်းချက်:</strong> သဒ္ဒါစည်းမျဉ်း (${p.ruleKeyword}) မပါဝင်ပါ။ <br>• မှန်ကန်သော ပုံစံမှာ: <em>${p.hint}</em><br>ကျေးဇူးပြု၍ စာကြောင်းအသစ် ပြောင်းရေးပါ။`;
-            document.getElementById("next-grammar-prompt-btn").style.display = "block";
-        } else {
-            playSound('wrong');
-            feedbackBox.style.background = "#2b1515";
-            feedbackBox.style.borderColor = "#da3633";
-            feedbackBox.style.color = "#f85149";
-            feedbackBox.innerHTML = `<strong>❌ မမှန်သေးပါ။ (စစ်ဆေးချက် အကြံပြုချက်)</strong><br>• <strong>ဘာကြောင့် မှားသလဲ:</strong> လိုအပ်သော သဒ္ဒါစည်းမျဉ်း (${p.ruleKeyword}) မပြည့်စုံခြင်း ဖြစ်ပါသည်။<br>📖 <strong>စည်းမျဉ်း:</strong> ${p.explanation}<br>(ကျန်ရှိသေးသော အကြိမ်: ${3 - currentTryCount})`;
-            updateGrammarTriesUI();
-        }
+        playSound('wrong');
+        button.style.background = "#2b1515";
+        button.style.borderColor = "#da3633";
+        button.style.color = "#f85149";
+
+        feedbackBox.style.background = "#2b1515";
+        feedbackBox.style.borderColor = "#da3633";
+        feedbackBox.style.color = "#f85149";
+        feedbackBox.innerHTML = `<strong>❌ မမှန်သေးပါ။</strong><br>• <strong>အဖြေမှန်မှာ:</strong> ${currentGrammarItem.correctCategory}<br>📖 <strong>ရှင်းလင်းချက်:</strong> ${currentGrammarItem.explanation}`;
     }
+
+    document.getElementById("next-grammar-prompt-btn").style.display = "block";
 }
 
 function loadNewGrammarPrompt() {
-    currentPromptIdx++;
     loadCurrentGrammarPrompt();
 }
 
