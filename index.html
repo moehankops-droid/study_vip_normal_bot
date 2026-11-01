@@ -46,7 +46,7 @@
             background: none;
             border: none;
             color: #8b949e;
-            font-size: 8px;
+            font-size: 7.5px;
             font-weight: 600;
             cursor: pointer;
             padding: 5px 2px;
@@ -58,7 +58,7 @@
             gap: 2px;
             flex: 1;
         }
-        .nav-tab span.icon { font-size: 13px; }
+        .nav-tab span.icon { font-size: 12px; }
         .nav-tab.active { color: #58a6ff; background: #162235; }
 
         .tab-content { display: none; }
@@ -281,8 +281,9 @@
                 <button style="padding: 2px 6px; background:#da3633; border:none; border-radius:4px; color:white; font-size:10px; cursor:pointer;" onclick="exitToLevelSelect(); playSound('click');">❌ ထွက်မည်</button>
             </div>
 
-            <div style="font-size: 10px; color: #8b949e; text-align: left; margin-bottom: 4px;">
-                မေးခွန်း: <span id="q-progress-text" style="color: #58a6ff; font-weight: bold;">1 / 10</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #8b949e; margin-bottom: 4px;">
+                <span>မေးခွန်း: <span id="q-progress-text" style="color: #58a6ff; font-weight: bold;">1 / 10</span></span>
+                <span id="player-lives-display" style="color: #ff7b72; font-weight: bold;">❤️❤️❤️</span>
             </div>
 
             <div id="level-q-box" class="grammar-card">
@@ -299,6 +300,48 @@
                 <textarea id="boss-essay-input" placeholder="ဒီနေရာတွင် ရေးသားပါ..." style="height: 60px; font-size: 11px;"></textarea>
                 <button class="start-btn" style="background: #8957e5; font-size: 11px;" onclick="submitBossEssay(); playSound('click');">Essay တင်သွင်းမည် 👑</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Ultimate Shop Tab -->
+    <div id="shop-tab" class="tab-content">
+        <h3 style="color: #f0883e; margin-top: 0; font-size: 12.5px;">🛍️ Ultimate Reward Shop</h3>
+        <p style="font-size: 10px; color: #8b949e; margin-bottom: 8px;">စုဆောင်းထားသော Coins များကို အသုံးချ၍ အထူးပစ္စည်းများ ဝယ်ယူပါ</p>
+        
+        <!-- 1. Extra Heart -->
+        <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; margin-bottom: 6px;">
+            <div style="text-align: left;">
+                <b style="color: #ff7b72; font-size: 11px;">❤️ Extra Heart (Life)</b>
+                <p style="font-size: 9px; color: #8b949e; margin: 2px 0 0 0;">အသက် တစ်လုံး ဖြည့်တင်းပေးသည်။</p>
+            </div>
+            <button class="start-btn" style="background: #238636; width: auto; padding: 5px 8px; font-size: 10px; margin: 0;" onclick="buyItem('heart', 50)">🪙 50 ဝယ်မည်</button>
+        </div>
+
+        <!-- 2. Streak Freeze -->
+        <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; margin-bottom: 6px;">
+            <div style="text-align: left;">
+                <b style="color: #58a6ff; font-size: 11px;">🔥 Streak Freeze</b>
+                <p style="font-size: 9px; color: #8b949e; margin: 2px 0 0 0;">Streak မပျက်အောင် ကာကွယ်ပေးသည်။</p>
+            </div>
+            <button class="start-btn" style="background: #238636; width: auto; padding: 5px 8px; font-size: 10px; margin: 0;" onclick="buyItem('freeze', 250)">🪙 250 ဝယ်မည်</button>
+        </div>
+
+        <!-- 3. XP Booster -->
+        <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; margin-bottom: 6px;">
+            <div style="text-align: left;">
+                <b style="color: #d29922; font-size: 11px;">⚡ 2x Coin Booster</b>
+                <p style="font-size: 9px; color: #8b949e; margin: 2px 0 0 0;">နောက်ထပ် Quiz တစ်ခုအတွက် Coins နှစ်ဆပေးသည်။</p>
+            </div>
+            <button class="start-btn" style="background: #238636; width: auto; padding: 5px 8px; font-size: 10px; margin: 0;" onclick="buyItem('booster', 150)">🪙 150 ဝယ်မည်</button>
+        </div>
+
+        <!-- 4. Epic Theme -->
+        <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px;">
+            <div style="text-align: left;">
+                <b style="color: #bc8cff; font-size: 11px;">🎨 Epic Dark Theme</b>
+                <p style="font-size: 9px; color: #8b949e; margin: 2px 0 0 0;">Bot ၏ အထူးဒီဇိုင်း Skin အသစ်ကို ဖွင့်ပေးသည်။</p>
+            </div>
+            <button class="start-btn" style="background: #238636; width: auto; padding: 5px 8px; font-size: 10px; margin: 0;" onclick="buyItem('theme', 500)">🪙 500 ဝယ်မည်</button>
         </div>
     </div>
 
@@ -391,13 +434,16 @@
     </div>
 </div>
 
-<!-- Bottom Navigation Bar (7 Tabs) -->
+<!-- Bottom Navigation Bar (8 Tabs: Added Shop) -->
 <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchTab('home-tab'); playSound('click');">
         <span class="icon">🏠</span>ပင်မ
     </button>
     <button class="nav-tab" onclick="switchTab('level-tab'); renderLevelGrid(); playSound('click');">
         <span class="icon">🎮</span>Levels
+    </button>
+    <button class="nav-tab" onclick="switchTab('shop-tab'); playSound('click');">
+        <span class="icon">🛍️</span>Shop
     </button>
     <button class="nav-tab" onclick="switchTab('grammar-tab'); loadCurrentGrammarPrompt(); playSound('click');">
         <span class="icon">📖</span>Grammar
@@ -505,6 +551,12 @@ let currentQIndex = 0;
 let currentLvlQuestions = [];
 let correctInLvl = 0;
 
+/* Lives & Shop Variables */
+let playerLives = parseInt(localStorage.getItem('playerLives')) || 3;
+let streakFreezeCount = parseInt(localStorage.getItem('streakFreezeCount')) || 0;
+let hasBooster = localStorage.getItem('hasBooster') === 'true';
+let hasEpicTheme = localStorage.getItem('hasEpicTheme') === 'true';
+
 /* AI Sentence Identification Bank */
 const grammarSentencesBank = [
     { sentence: "I will play mobile game after a class.", correctCategory: "Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)", options: ["Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)", "Future Simple: Note 2 (သဘောတူညီရန်)", "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)", "Be going to: No 2 (ခန့်မှန်းခြင်း)"], explanation: "အတန်းပြီးရင် ဂိမ်းဆော့မယ်ဆိုတာ လက်တလော ဆုံးဖြတ်တာဖြစ်လို့ Future Simple Note 1 ဖြစ်ပါတယ်။" },
@@ -569,6 +621,16 @@ function updateUI() {
     document.getElementById("home-money").innerText = `${money} 🪙`;
     document.getElementById("money-count").innerText = money;
     document.getElementById("home-max-level").innerText = `Level ${unlockedLevel}`;
+    updateLivesDisplay();
+}
+
+function updateLivesDisplay() {
+    let heartsStr = "";
+    for(let i=0; i<3; i++) {
+        heartsStr += (i < playerLives) ? "❤️" : "🖤";
+    }
+    const livesEl = document.getElementById("player-lives-display");
+    if(livesEl) livesEl.innerText = heartsStr;
 }
 
 function renderLevelGrid() {
@@ -587,6 +649,11 @@ function renderLevelGrid() {
 }
 
 function startLevel(lvl) {
+    if (playerLives <= 0) {
+        alert("❌ အသက် (Lives) ကုန်နေပါပြီ သူငယ်ချင်း! Shop ထဲတွင် 🪙 50 ဖြင့် အသက်ဝယ်ယူပါ။");
+        switchTab('shop-tab');
+        return;
+    }
     currentPlayingLvl = lvl; currentQIndex = 0; correctInLvl = 0;
     if (typeof levelQuestionsBank !== 'undefined' && levelQuestionsBank[lvl]) {
         currentLvlQuestions = levelQuestionsBank[lvl];
@@ -629,10 +696,22 @@ function checkLevelAnswer(btn, selected, correct, exp) {
     if (selected.trim() === correct.trim()) {
         playSound('correct');
         btn.style.background = "#0d3819"; btn.style.borderColor = "#2ea043"; btn.style.color = "#d3f9d8";
-        correctInLvl++; money += 15; localStorage.setItem('quizCoins', money); updateUI();
+        correctInLvl++; 
+        let coinGain = hasBooster ? 30 : 15; // 2x Booster active check
+        money += coinGain; 
+        localStorage.setItem('quizCoins', money); 
+        updateUI();
     } else {
         playSound('wrong');
         btn.style.background = "#2b1515"; btn.style.borderColor = "#da3633"; btn.style.color = "#f85149";
+        playerLives--;
+        localStorage.setItem('playerLives', playerLives);
+        updateUI();
+        if (playerLives <= 0) {
+            alert("❌ အသက် (Lives) လုံးဝကုန်သွားပါပြီ! Level မေးခွန်းမှ ထွက်ပါမည်။");
+            exitToLevelSelect();
+            return;
+        }
     }
     document.getElementById("next-q-btn").style.display = "block";
 }
@@ -671,6 +750,51 @@ function exitToLevelSelect() {
     document.getElementById("level-gameplay-view").style.display = "none";
     document.getElementById("level-selector-view").style.display = "block";
     updateUI(); renderLevelGrid();
+}
+
+/* Ultimate Shop Purchase Logic */
+function buyItem(itemType, cost) {
+    if (money < cost) {
+        playSound('wrong');
+        alert("❌ Coins မလုံလောက်ပါ သူငယ်ချင်း! Quiz တွေ ဆော့ပြီး Coins ထပ်စုပါဦး။");
+        return;
+    }
+
+    if (itemType === 'heart') {
+        if (playerLives >= 3) {
+            alert("⚠️ မင်းရဲ့ အသက်တွေ အပြည့်ရှိနေပါပြီ သူငယ်ချင်း!");
+            return;
+        }
+        playerLives++;
+        localStorage.setItem('playerLives', playerLives);
+    } 
+    else if (itemType === 'freeze') {
+        streakFreezeCount++;
+        localStorage.setItem('streakFreezeCount', streakFreezeCount);
+    } 
+    else if (itemType === 'booster') {
+        if (hasBooster) {
+            alert("⚠️ မင်းမှာ Booster ဝယ်ပြီးသား ဖြစ်နေပါပြီ!");
+            return;
+        }
+        hasBooster = true;
+        localStorage.setItem('hasBooster', 'true');
+    } 
+    else if (itemType === 'theme') {
+        if (hasEpicTheme) {
+            alert("⚠️ မင်းမှာ Epic Theme ဝယ်ပြီးသား ဖြစ်နေပါပြီ!");
+            return;
+        }
+        hasEpicTheme = true;
+        localStorage.setItem('hasEpicTheme', 'true');
+        document.body.style.filter = "contrast(1.1) brightness(1.05)";
+    }
+
+    money -= cost;
+    localStorage.setItem('quizCoins', money);
+    updateUI();
+    playSound('correct');
+    alert("🎉 ဂုဏ်ယူပါတယ်! ပစ္စည်းကို အောင်မြင်စွာ ဝယ်ယူပြီးပါပြီ သူငယ်ချင်း။");
 }
 
 /* Essay AI Evaluator */
@@ -777,12 +901,13 @@ function switchTab(tabId) {
     const tabs = document.querySelectorAll('.nav-tab');
     if(tabId === 'home-tab') tabs[0].classList.add('active');
     if(tabId === 'level-tab') { tabs[1].classList.add('active'); renderLevelGrid(); }
-    if(tabId === 'grammar-tab') { tabs[2].classList.add('active'); loadCurrentGrammarPrompt(); }
-    if(tabId === 'essay-tab') tabs[3].classList.add('active');
-    if(tabId === 'test-tab') { tabs[4].classList.add('active'); loadCustomTasks(); }
-    if(tabId === 'forest-tab') tabs[5].classList.add('active');
+    if(tabId === 'shop-tab') tabs[2].classList.add('active');
+    if(tabId === 'grammar-tab') { tabs[3].classList.add('active'); loadCurrentGrammarPrompt(); }
+    if(tabId === 'essay-tab') tabs[4].classList.add('active');
+    if(tabId === 'test-tab') { tabs[5].classList.add('active'); loadCustomTasks(); }
+    if(tabId === 'forest-tab') tabs[6].classList.add('active');
     if(tabId === 'leaderboard-tab') {
-        tabs[6].classList.add('active');
+        tabs[7].classList.add('active');
         if (typeof window.loadLeaderboardFromFirebase === 'function') { window.loadLeaderboardFromFirebase(); }
     }
 }
@@ -796,7 +921,7 @@ function checkSavedUser() {
                 <p style="margin: 0; font-size: 10px; color: #8b949e;">အသုံးပြုသူ နာမည်:</p>
                 <b style="font-size: 13px; color: #3fb950;">${playerName}</b>
             </div>
-            <button class="start-btn" onclick="switchTab('level-tab'); renderLevelGrid(); playSound('click');">🎮 Level မေးခွန်းများ ဆော့မည်</button>
+            <button class="start-btn" onclick="switchTab('level-tab'); renderLevelGrid(); playSound('click');">🎮 Level မေးခွန်းများ ဆော့တဲ့နေရာသို့သွားမည်</button>
         `;
     }
 }
