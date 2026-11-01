@@ -375,16 +375,16 @@
             <h3 style="color: #58a6ff; margin: 0; font-size: 13px;">📖 Unit 7 Grammar Identification Hub</h3>
             <button style="padding: 3px 8px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:10px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မသို့</button>
         </div>
-        <p style="font-size: 10.5px; color: #8b949e; margin-bottom: 8px;">AI စာကြောင်းအသစ်များကို ကြည့်ပြီး အမျိုးအစား မှန်အောင် ရွေးပါ[cite: 1, 2, 5]</p>
+        <p style="font-size: 10.5px; color: #8b949e; margin-bottom: 8px;">AI စာကြောင်းအသစ်များကို ကြည့်ပြီး အမျိုးအစား မှန်အောင် ရွေးပါ[cite: 1, 2]</p>
 
         <!-- Grammar Notebook Rules Reference (Ex များမပါ) -->
         <div class="grammar-card">
-            <h4 style="margin: 0 0 3px 0; color: #3fb950; font-size: 11px;">📌 (1) Future Simple = will + V0[cite: 1, 5]</h4>
+            <h4 style="margin: 0 0 3px 0; color: #3fb950; font-size: 11px;">📌 (1) Future Simple = will + V0[cite: 1]</h4>
             <p style="font-size: 10px; color: #c9d1d9; margin: 0 0 6px 0; line-height: 1.4;">
-                • **Note 1:** လက်တလော ဆုံးဖြတ်ထားသော ဆုံးဖြတ်ချက်များ[cite: 1, 5]<br>
-                • **Note 2:** သဘောတူညီရန်[cite: 5]<br>
-                • **No. 3:** ကမ်းလှမ်းရန်[cite: 5]<br>
-                • **No. 4:** ကတိပေးရန်[cite: 5]
+                • **Note 1:** လက်တလော ဆုံးဖြတ်ထားသော ဆုံးဖြတ်ချက်များ[cite: 1]<br>
+                • **Note 2:** သဘောတူညီရန်<br>
+                • **No. 3:** ကမ်းလှမ်းရန်<br>
+                • **No. 4:** ကတိပေးရန်
             </p>
             <h4 style="margin: 6px 0 3px 0; color: #58a6ff; font-size: 11px;">📌 (2) Be going to + V0 (100% သေချာမှု)[cite: 2]</h4>
             <p style="font-size: 10px; color: #c9d1d9; margin: 0; line-height: 1.4;">
@@ -395,7 +395,7 @@
 
         <!-- AI Interactive Identification Game Box -->
         <div class="grammar-card" style="border: 1.5px solid #8957e5; background: #161b22;">
-            <h4 style="margin: 0 0 3px 0; color: #a371f7; font-size: 12px;">🤖 AI Sentence Challenge</h4>
+            <h4 style="margin: 0 0 3px 0; color: #a371f7; font-size: 12px;">🤖 AI Sentence Challenge (V2)</h4>
             <div style="background: #0d121c; padding: 8px; border-radius: 6px; border: 1px solid #1f304a; margin: 6px 0;">
                 <span style="font-size: 10px; color: #8b949e;">AI ရေးထားသော စာကြောင်း:</span>
                 <p id="ai-generated-sentence" style="font-size: 12.5px; color: #58a6ff; font-weight: bold; margin: 4px 0; line-height: 1.3;"></p>
@@ -654,7 +654,7 @@ let forestTimer = null;
 let forestSeconds = 25 * 60;
 let isForestRunning = false;
 
-/* AI Sentence Identification Challenges Bank (စာကြောင်းအသစ်များ အမြဲထွက်ရန်) */
+/* Expanded Grammar Identification Bank with Multiple Dynamic Sentences */
 const grammarSentencesBank = [
     {
         sentence: "I will play mobile game after a class.",
@@ -665,7 +665,7 @@ const grammarSentencesBank = [
             "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)",
             "Be going to: No 2 (ခန့်မှန်းခြင်း)"
         ],
-        explanation: "အတန်းပြီးရင် ဂိမ်းဆော့မယ်ဆိုတာ လက်တလော စဉ်းစားဆုံးဖြတ်လိုက်တာဖြစ်လို့ Future Simple Note 1 ဖြစ်ပါတယ်။[cite: 1, 5]"
+        explanation: "အတန်းပြီးရင် ဂိမ်းဆော့မယ်ဆိုတာ လက်တလော စဉ်းစားဆုံးဖြတ်လိုက်တာဖြစ်လို့ Future Simple Note 1 ဖြစ်ပါတယ်။[cite: 1]"
     },
     {
         sentence: "I will come to the birthday party.",
@@ -676,10 +676,10 @@ const grammarSentencesBank = [
             "Future Simple: No 3 (ကမ်းလှမ်းရန်)",
             "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)"
         ],
-        explanation: "မွေးနေ့ပွဲ လာခဲ့မယ်လို့ သဘောတူညီတာဖြစ်လို့ Future Simple Note 2 ဖြစ်ပါတယ်။[cite: 5]"
+        explanation: "မွေးနေ့ပွဲ လာခဲ့မယ်လို့ သဘောတူညီတာဖြစ်လို့ Future Simple Note 2 ဖြစ်ပါတယ်။"
     },
     {
-        sentence: "I will help you.",
+        sentence: "I will help you with your homework.",
         correctCategory: "Future Simple: No 3 (ကမ်းလှမ်းရန်)",
         options: [
             "Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)",
@@ -687,10 +687,10 @@ const grammarSentencesBank = [
             "Future Simple: No 3 (ကမ်းလှမ်းရန်)",
             "Future Simple: No 4 (ကတိပေးရန်)"
         ],
-        explanation: "ငါ ကူညီပေးပါမယ်လို့ ကမ်းလှမ်းတာဖြစ်လို့ Future Simple No 3 ဖြစ်ပါတယ်။[cite: 5]"
+        explanation: "အိမ်စာ ကူလုပ်ပေးမယ်လို့ ကမ်းလှမ်းတာဖြစ်လို့ Future Simple No 3 ဖြစ်ပါတယ်။"
     },
     {
-        sentence: "I won't tell your secret.",
+        sentence: "I won't tell your secret to anyone.",
         correctCategory: "Future Simple: No 4 (ကတိပေးရန်)",
         options: [
             "Future Simple: Note 2 (သဘောတူညီရန်)",
@@ -698,7 +698,7 @@ const grammarSentencesBank = [
             "Future Simple: No 4 (ကတိပေးရန်)",
             "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)"
         ],
-        explanation: "လျှို့ဝက်ချက်ကို မပြောပါဘူးလို့ ကတိပေးတာဖြစ်လို့ Future Simple No 4 ဖြစ်ပါတယ်။[cite: 5]"
+        explanation: "လျှို့ဝက်ချက်ကို ဘယ်သူ့မှ မပြောပါဘူးလို့ ကတိပေးတာဖြစ်လို့ Future Simple No 4 ဖြစ်ပါတယ်။"
     },
     {
         sentence: "I am going to buy a new bike tomorrow.",
@@ -712,7 +712,7 @@ const grammarSentencesBank = [
         explanation: "မနက်ဖြန် စက်ဘီးအသစ်ဝယ်ဖို့ ကြိုတင်စီစဉ်ထားတာဖြစ်လို့ Be going to No 1 ဖြစ်ပါတယ်။[cite: 2]"
     },
     {
-        sentence: "It is going to rain.",
+        sentence: "Look at those dark clouds. It is going to rain.",
         correctCategory: "Be going to: No 2 (ခန့်မှန်းခြင်း)",
         options: [
             "Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)",
@@ -720,18 +720,18 @@ const grammarSentencesBank = [
             "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)",
             "Be going to: No 2 (ခန့်မှန်းခြင်း)"
         ],
-        explanation: "တိမ်မည်းတွေကြည့်ပြီး မိုးရွာတော့မယ်လို့ ခန့်မှန်းတာဖြစ်လို့ Be going to No 2 ဖြစ်ပါတယ်။[cite: 2]"
+        explanation: "တိမ်မည်းတွေကိုကြည့်ပြီး မိုးရွာတော့မယ်လို့ ယခုအခြေအနေကိုအခြေခံ၍ ခန့်မှန်းခြင်းဖြစ်ပါတယ်။[cite: 2]"
     },
     {
-        sentence: "The car is going to turn right.",
+        sentence: "The car is going to turn right here.",
         correctCategory: "Be going to: No 2 (ခန့်မှန်းခြင်း)",
         options: [
             "Future Simple: Note 2 (သဘောတူညီရန်)",
-            "Future Simple: No 4 (ကတိပေးရန်)",
+            "Future Simple: Note 4 (ကတိပေးရန်)",
             "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)",
             "Be going to: No 2 (ခန့်မှန်းခြင်း)"
         ],
-        explanation: "ကားက ညာဘက်ကွေ့တော့မယ်လို့ မျက်စိရှေ့အခြေအနေကို ကြည့်ပြီး ခန့်မှန်းတာဖြစ်လို့ Be going to No 2 ဖြစ်ပါတယ်။[cite: 2]"
+        explanation: "မျက်စိရှေ့တွင် ဖြစ်ပျက်နေသော အခြေအနေကိုကြည့်၍ ခန့်မှန်းခြင်းဖြစ်လို့ Be going to No 2 ဖြစ်ပါတယ်။[cite: 2]"
     }
 ];
 
@@ -754,7 +754,6 @@ function loadCurrentGrammarPrompt() {
     const optionsContainer = document.getElementById("grammar-options-container");
     let optionsHTML = "";
     
-    // အဖြေရွေးစရာများကို Random ရောပေးခြင်း
     let shuffledOptions = [...currentGrammarItem.options].sort(() => Math.random() - 0.5);
 
     shuffledOptions.forEach((opt) => {
