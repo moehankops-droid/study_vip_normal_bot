@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+|<!DOCTYPE html>
 <html lang="my">
 <head>
     <meta charset="UTF-8">
@@ -46,7 +46,7 @@
             background: none;
             border: none;
             color: #8b949e;
-            font-size: 7.5px;
+            font-size: 7px;
             font-weight: 600;
             cursor: pointer;
             padding: 5px 2px;
@@ -58,7 +58,7 @@
             gap: 2px;
             flex: 1;
         }
-        .nav-tab span.icon { font-size: 12px; }
+        .nav-tab span.icon { font-size: 11px; }
         .nav-tab.active { color: #58a6ff; background: #162235; }
 
         .tab-content { display: none; }
@@ -202,12 +202,12 @@
             color: #d3f9d8; display: none; border-radius: 6px; 
         }
 
-        .grammar-option-btn {
+        .grammar-option-btn, .level-test-btn {
             background: #161b22; border: 1px solid #30363d; color: #c9d1d9;
             padding: 8px; border-radius: 6px; font-size: 11px; cursor: pointer;
             text-align: left; width: 100%; margin-bottom: 4px; transition: 0.2s;
         }
-        .grammar-option-btn:hover { background: #21262d; border-color: #58a6ff; color: #fff; }
+        .grammar-option-btn:hover, .level-test-btn:hover { background: #21262d; border-color: #58a6ff; color: #fff; }
 
         .essay-feedback {
             background: #161b22; border: 1px solid #238636; border-radius: 6px;
@@ -303,12 +303,45 @@
         </div>
     </div>
 
+    <!-- NEW: English Proficiency Level Test Tab -->
+    <div id="proficiency-tab" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <h3 style="color: #f0883e; margin: 0; font-size: 12px;">🎯 English Level Check</h3>
+            <button style="padding: 3px 8px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:10px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မ</button>
+        </div>
+        <p style="font-size: 10px; color: #8b949e; margin-bottom: 6px;">ကိုယ့်ရဲ့ အင်္ဂလိပ်စာ အဆင့်အတန်း (Beginner / Intermediate / Advanced) ဘယ်လောက်ရှိလဲ စမ်းသပ်ပါ</p>
+
+        <!-- Start Screen -->
+        <div id="prof-start-screen" class="grammar-card" style="text-align: center; padding: 15px 10px;">
+            <div style="font-size: 30px; margin-bottom: 6px;">📊</div>
+            <h4 style="color: #58a6ff; margin: 0 0 4px 0; font-size: 12px;">Proficiency Assessment Test</h4>
+            <p style="font-size: 9.5px; color: #8b949e; margin-bottom: 10px;">မေးခွန်း ၁၀ ပုဒ် ဖြေဆိုရုံဖြင့် ကိုယ့်ရဲ့ CEFR Level ကို သိရှိနိုင်ပါပြီ။</p>
+            <button class="start-btn" style="background: #1f6feb; font-size: 11px; padding: 7px;" onclick="startProficiencyTest(); playSound('click');">စတင်စမ်းသပ်မည် 🚀</button>
+        </div>
+
+        <!-- Quiz Screen -->
+        <div id="prof-quiz-screen" class="grammar-card" style="display: none;">
+            <div style="display: flex; justify-content: space-between; font-size: 10px; color: #8b949e; margin-bottom: 4px;">
+                <span>မေးခွန်း: <b id="prof-q-num" style="color: #58a6ff;">1 / 10</b></span>
+                <span id="prof-q-level-tag" style="color: #f0883e; font-weight: bold;">Beginner</span>
+            </div>
+            <div id="prof-question-text" style="font-size: 11.5px; font-weight: bold; color: #fff; margin-bottom: 8px; text-align: left;"></div>
+            <div id="prof-options-box" style="display: flex; flex-direction: column; gap: 5px;"></div>
+        </div>
+
+        <!-- Result Screen -->
+        <div id="prof-result-screen" class="grammar-card" style="display: none; text-align: center; border-color: #3fb950;">
+            <h4 style="color: #3fb950; margin: 0 0 4px 0; font-size: 12.5px;">🏆 Test Result & Level Status</h4>
+            <div id="prof-result-content" style="font-size: 11px; color: #d3f9d8; margin: 8px 0; line-height: 1.4;"></div>
+            <button class="start-btn" style="background: #238636; font-size: 11px; padding: 7px;" onclick="resetProficiencyTest(); playSound('click');">🔄 အစကနေ ပြန်ဖြေမည်</button>
+        </div>
+    </div>
+
     <!-- Ultimate Shop Tab -->
     <div id="shop-tab" class="tab-content">
         <h3 style="color: #f0883e; margin-top: 0; font-size: 12.5px;">🛍️ Ultimate Reward Shop</h3>
         <p style="font-size: 10px; color: #8b949e; margin-bottom: 8px;">စုဆောင်းထားသော Coins များကို အသုံးချ၍ အထူးပစ္စည်းများ ဝယ်ယူပါ</p>
         
-        <!-- 1. Extra Heart -->
         <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; margin-bottom: 6px;">
             <div style="text-align: left;">
                 <b style="color: #ff7b72; font-size: 11px;">❤️ Extra Heart (Life)</b>
@@ -317,7 +350,6 @@
             <button class="start-btn" style="background: #238636; width: auto; padding: 5px 8px; font-size: 10px; margin: 0;" onclick="buyItem('heart', 50)">🪙 50 ဝယ်မည်</button>
         </div>
 
-        <!-- 2. Streak Freeze -->
         <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; margin-bottom: 6px;">
             <div style="text-align: left;">
                 <b style="color: #58a6ff; font-size: 11px;">🔥 Streak Freeze</b>
@@ -326,7 +358,6 @@
             <button class="start-btn" style="background: #238636; width: auto; padding: 5px 8px; font-size: 10px; margin: 0;" onclick="buyItem('freeze', 250)">🪙 250 ဝယ်မည်</button>
         </div>
 
-        <!-- 3. XP Booster -->
         <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; margin-bottom: 6px;">
             <div style="text-align: left;">
                 <b style="color: #d29922; font-size: 11px;">⚡ 2x Coin Booster</b>
@@ -335,7 +366,6 @@
             <button class="start-btn" style="background: #238636; width: auto; padding: 5px 8px; font-size: 10px; margin: 0;" onclick="buyItem('booster', 150)">🪙 150 ဝယ်မည်</button>
         </div>
 
-        <!-- 4. Epic Theme -->
         <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px;">
             <div style="text-align: left;">
                 <b style="color: #bc8cff; font-size: 11px;">🎨 Epic Dark Theme</b>
@@ -434,13 +464,16 @@
     </div>
 </div>
 
-<!-- Bottom Navigation Bar (8 Tabs: Added Shop) -->
+<!-- Bottom Navigation Bar (Updated with Proficiency Level Tab) -->
 <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchTab('home-tab'); playSound('click');">
         <span class="icon">🏠</span>ပင်မ
     </button>
     <button class="nav-tab" onclick="switchTab('level-tab'); renderLevelGrid(); playSound('click');">
         <span class="icon">🎮</span>Levels
+    </button>
+    <button class="nav-tab" onclick="switchTab('proficiency-tab'); playSound('click');">
+        <span class="icon">🎯</span>Level Check
     </button>
     <button class="nav-tab" onclick="switchTab('shop-tab'); playSound('click');">
         <span class="icon">🛍️</span>Shop
@@ -556,6 +589,95 @@ let playerLives = parseInt(localStorage.getItem('playerLives')) || 3;
 let streakFreezeCount = parseInt(localStorage.getItem('streakFreezeCount')) || 0;
 let hasBooster = localStorage.getItem('hasBooster') === 'true';
 let hasEpicTheme = localStorage.getItem('hasEpicTheme') === 'true';
+
+/* English Proficiency Assessment Questions */
+const proficiencyQuestions = [
+    { q: "She ___ to school every day.", options: ["go", "goes", "going", "gone"], answer: "goes", level: "Beginner (A1)" },
+    { q: "They ___ playing football now.", options: ["is", "am", "are", "be"], answer: "are", level: "Beginner (A2)" },
+    { q: "I have ___ my homework already.", options: ["finish", "finishes", "finishing", "finished"], answer: "finished", level: "Intermediate (B1)" },
+    { q: "If I were rich, I ___ buy a big house.", options: ["will", "would", "can", "shall"], answer: "would", level: "Intermediate (B1)" },
+    { q: "The letter ___ by John yesterday.", options: ["wrote", "was written", "is written", "writes"], answer: "was written", level: "Intermediate (B2)" },
+    { q: "He speaks English very ___.", options: ["good", "fluent", "fluently", "bad"], answer: "fluently", level: "Intermediate (B2)" },
+    { q: "Hardly had I arrived home ___ it started to rain.", options: ["when", "than", "then", "after"], answer: "when", level: "Advanced (C1)" },
+    { q: "Not only ___ late, but he also forgot his books.", options: ["he was", "was he", "he is", "is he"], answer: "was he", level: "Advanced (C1)" },
+    { q: "By next year, we ___ our school project.", options: ["will finish", "will have finished", "finish", "finished"], answer: "will have finished", level: "Advanced (C1)" },
+    { q: "She suggested ___ early to avoid traffic.", options: ["leave", "to leave", "leaving", "left"], answer: "leaving", level: "Advanced (C1)" }
+];
+
+let profCurrentIdx = 0;
+let profScore = 0;
+
+function startProficiencyTest() {
+    profCurrentIdx = 0;
+    profScore = 0;
+    document.getElementById("prof-start-screen").style.display = "none";
+    document.getElementById("prof-quiz-screen").style.display = "block";
+    document.getElementById("prof-result-screen").style.display = "none";
+    loadProficiencyQuestion();
+}
+
+function loadProficiencyQuestion() {
+    if (profCurrentIdx >= proficiencyQuestions.length) {
+        showProficiencyResult();
+        return;
+    }
+    const qData = proficiencyQuestions[profCurrentIdx];
+    document.getElementById("prof-q-num").innerText = `${profCurrentIdx + 1} / ${proficiencyQuestions.length}`;
+    document.getElementById("prof-q-level-tag").innerText = qData.level;
+    document.getElementById("prof-question-text").innerText = qData.q;
+
+    let optHtml = "";
+    qData.options.forEach(opt => {
+        optHtml += `<button class="level-test-btn" onclick="checkProficiencyAnswer(this, '${opt.replace(/'/g, "\\'")}', '${qData.answer.replace(/'/g, "\\'")}')">${opt}</button>`;
+    });
+    document.getElementById("prof-options-box").innerHTML = optHtml;
+}
+
+function checkProficiencyAnswer(btn, selected, correct) {
+    document.querySelectorAll('.level-test-btn').forEach(b => b.disabled = true);
+    if (selected.trim() === correct.trim()) {
+        playSound('correct');
+        btn.style.background = "#0d3819"; btn.style.borderColor = "#2ea043"; btn.style.color = "#d3f9d8";
+        profScore++;
+    } else {
+        playSound('wrong');
+        btn.style.background = "#2b1515"; btn.style.borderColor = "#da3633"; btn.style.color = "#f85149";
+    }
+    setTimeout(() => {
+        profCurrentIdx++;
+        loadProficiencyQuestion();
+    }, 800);
+}
+
+function showProficiencyResult() {
+    document.getElementById("prof-quiz-screen").style.display = "none";
+    document.getElementById("prof-result-screen").style.display = "block";
+    
+    let levelTitle = "";
+    let desc = "";
+    if (profScore <= 3) {
+        levelTitle = "🌱 Beginner (A1 - A2)";
+        desc = "အခြေခံသဒ္ဒါနှင့် ဝါကျတည်ဆောက်ပုံများကို ပိုမိုလေ့လာရန် လိုအပ်ပါသည်။ Beginner အဆင့် Level များမှ စတင်လေ့ကျင့်ပါ။";
+    } else if (profScore <= 7) {
+        levelTitle = "📈 Intermediate (B1 - B2)";
+        desc = "အလယ်အလတ်အဆင့် အင်္ဂလိပ်စာ ကျွမ်းကျင်မှု ရှိနေပါသည်။ ရှုပ်ထွေးသော သဒ္ဒါများနှင့် Essay ရေးသားခြင်းများကို ဆက်လက်လေ့လာပါ။";
+    } else {
+        levelTitle = "🚀 Advanced (C1)";
+        desc = "အင်္ဂလိပ်စာ အဆင့်မြင့်အဆင့်သို့ ရောက်ရှိနေပါပြီ! Boss Level များနှင့် AI Sentence Challenges များကို အလွယ်တကူ ကျော်ဖြတ်နိုင်စွမ်းရှိသည်။";
+    }
+
+    document.getElementById("prof-result-content").innerHTML = `
+        <p style="margin: 2px 0;">မှန်ကန်မှု: <b style="color: #58a6ff;">${profScore} / 10</b></p>
+        <p style="margin: 4px 0 2px 0; font-size: 12px; color: #f0883e;"><b>သင့်အဆင့်: ${levelTitle}</b></p>
+        <p style="font-size: 10px; color: #8b949e; margin-top: 4px;">${desc}</p>
+    `;
+    playSound('correct');
+}
+
+function resetProficiencyTest() {
+    document.getElementById("prof-result-screen").style.display = "none";
+    document.getElementById("prof-start-screen").style.display = "block";
+}
 
 /* AI Sentence Identification Bank */
 const grammarSentencesBank = [
@@ -697,7 +819,7 @@ function checkLevelAnswer(btn, selected, correct, exp) {
         playSound('correct');
         btn.style.background = "#0d3819"; btn.style.borderColor = "#2ea043"; btn.style.color = "#d3f9d8";
         correctInLvl++; 
-        let coinGain = hasBooster ? 30 : 15; // 2x Booster active check
+        let coinGain = hasBooster ? 30 : 15;
         money += coinGain; 
         localStorage.setItem('quizCoins', money); 
         updateUI();
@@ -901,13 +1023,14 @@ function switchTab(tabId) {
     const tabs = document.querySelectorAll('.nav-tab');
     if(tabId === 'home-tab') tabs[0].classList.add('active');
     if(tabId === 'level-tab') { tabs[1].classList.add('active'); renderLevelGrid(); }
-    if(tabId === 'shop-tab') tabs[2].classList.add('active');
-    if(tabId === 'grammar-tab') { tabs[3].classList.add('active'); loadCurrentGrammarPrompt(); }
-    if(tabId === 'essay-tab') tabs[4].classList.add('active');
-    if(tabId === 'test-tab') { tabs[5].classList.add('active'); loadCustomTasks(); }
-    if(tabId === 'forest-tab') tabs[6].classList.add('active');
+    if(tabId === 'proficiency-tab') tabs[2].classList.add('active');
+    if(tabId === 'shop-tab') tabs[3].classList.add('active');
+    if(tabId === 'grammar-tab') { tabs[4].classList.add('active'); loadCurrentGrammarPrompt(); }
+    if(tabId === 'essay-tab') tabs[5].classList.add('active');
+    if(tabId === 'test-tab') { tabs[6].classList.add('active'); loadCustomTasks(); }
+    if(tabId === 'forest-tab') tabs[7].classList.add('active');
     if(tabId === 'leaderboard-tab') {
-        tabs[7].classList.add('active');
+        tabs[8].classList.add('active');
         if (typeof window.loadLeaderboardFromFirebase === 'function') { window.loadLeaderboardFromFirebase(); }
     }
 }
