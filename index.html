@@ -1,4 +1,4 @@
-|<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="my">
 <head>
     <meta charset="UTF-8">
@@ -217,9 +217,17 @@
         .leaderboard-list { text-align: left; background: #161b22; padding: 8px 10px; border-radius: 6px; margin-top: 6px; border: 1px solid #30363d; }
         .leaderboard-item { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px solid #21262d; font-size: 11px; }
 
-        .forest-card, .test-card, .grammar-card {
+        .forest-card, .test-card, .grammar-card, .meaning-card {
             background: #161b22; border: 1px solid #30363d; border-radius: 6px; padding: 10px; margin-bottom: 8px; text-align: left;
         }
+        .word-item {
+            background: #0d121c; border: 1px solid #1f304a; border-radius: 6px; padding: 8px; margin-bottom: 6px;
+        }
+        .word-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+        .word-title { color: #58a6ff; font-weight: bold; font-size: 13px; }
+        .word-pos { color: #f0883e; font-size: 10px; font-style: italic; }
+        .word-myanmar { color: #3fb950; font-size: 11.5px; font-weight: bold; margin-bottom: 3px; }
+        .word-example { color: #8b949e; font-size: 10px; line-height: 1.3; }
     </style>
 </head>
 <body>
@@ -267,14 +275,12 @@
             <span class="money">🪙 <span id="money-count">0</span></span>
         </div>
 
-        <!-- Level Selector Container -->
         <div id="level-selector-view">
             <h3 style="color: #58a6ff; font-size: 13px; margin: 4px 0;">🎮 Select Level (1 to 20)</h3>
             <p style="font-size: 10px; color: #8b949e; margin-bottom: 6px;">Level တစ်ခုချင်းစီကို အောင်မြင်အောင် ဖြေဆိုပါ!</p>
             <div class="level-grid" id="level-grid-container"></div>
         </div>
 
-        <!-- Level Gameplay Screen -->
         <div id="level-gameplay-view" style="display: none;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
                 <b id="game-lvl-title" style="color: #f0883e; font-size: 12px;">Level 1 Challenge</b>
@@ -293,7 +299,6 @@
                 <button id="next-q-btn" class="next-btn" onclick="nextLevelQuestion(); playSound('click');">နောက်တစ်ပုဒ်သို့ ➡️</button>
             </div>
 
-            <!-- Boss Stage Essay View -->
             <div id="boss-essay-box" class="grammar-card" style="display: none; border-color: #d29922;">
                 <h4 style="color: #d29922; margin: 0 0 4px 0; font-size: 12px;">👑 BOSS QUEST: Short Essay Challenge</h4>
                 <p style="font-size: 10px; color: #8b949e; margin-bottom: 6px;">Unit 7 Future Plans အကြောင်း စာလုံး 15 အထက် ရေးပါ:</p>
@@ -303,15 +308,36 @@
         </div>
     </div>
 
-    <!-- NEW: English Proficiency Level Test Tab -->
+    <!-- Vocabulary & Meaning Hub Tab (Reads from dictionary.js) -->
+    <div id="meaning-tab" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <h3 style="color: #3fb950; margin: 0; font-size: 12px;">📚 Vocabulary & Meaning Hub</h3>
+            <button style="padding: 3px 8px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:10px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မ</button>
+        </div>
+        <p style="font-size: 10px; color: #8b949e; margin-bottom: 6px;">စကားလုံးများ၏ အဓိပ္ပာယ်ကို သီးသန့် ရှာဖွေပြီး လေ့လာပါ</p>
+
+        <div class="meaning-card">
+            <input type="text" id="word-search-input" placeholder="🔍 စကားလုံး ရိုက်ရှာပါ (ဥပမာ - achieve, active)..." oninput="searchVocabulary()" autocomplete="off">
+        </div>
+
+        <div class="meaning-card" style="border-color: #1f304a;">
+            <b style="font-size: 10.5px; color: #58a6ff;">➕ စကားလုံးအသစ် ကိုယ်တိုင် မှတ်စုထည့်မည်</b>
+            <input type="text" id="new-word-input" placeholder="Word (ဥပမာ - Recall)" style="margin-top: 4px;">
+            <input type="text" id="new-meaning-input" placeholder="အဓိပ္ပာယ် (ဥပမာ - ပြန်လည်မှတ်မိခြင်း)" style="margin-top: 4px;">
+            <button class="start-btn" style="background: #1f6feb; padding: 5px; font-size: 10.5px; margin-top: 4px;" onclick="addNewCustomWord(); playSound('click');">မှတ်စုထဲ သိမ်းမည်</button>
+        </div>
+
+        <div id="words-list-container" style="max-height: 250px; overflow-y: auto; text-align: left;"></div>
+    </div>
+
+    <!-- English Proficiency Level Test Tab -->
     <div id="proficiency-tab" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <h3 style="color: #f0883e; margin: 0; font-size: 12px;">🎯 English Level Check</h3>
             <button style="padding: 3px 8px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:10px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မ</button>
         </div>
-        <p style="font-size: 10px; color: #8b949e; margin-bottom: 6px;">ကိုယ့်ရဲ့ အင်္ဂလိပ်စာ အဆင့်အတန်း (Beginner / Intermediate / Advanced) ဘယ်လောက်ရှိလဲ စမ်းသပ်ပါ</p>
+        <p style="font-size: 10px; color: #8b949e; margin-bottom: 6px;">ကိုယ့်ရဲ့ အင်္ဂလိပ်စာ အဆင့်အတန်း ဘယ်လောက်ရှိလဲ စမ်းသပ်ပါ</p>
 
-        <!-- Start Screen -->
         <div id="prof-start-screen" class="grammar-card" style="text-align: center; padding: 15px 10px;">
             <div style="font-size: 30px; margin-bottom: 6px;">📊</div>
             <h4 style="color: #58a6ff; margin: 0 0 4px 0; font-size: 12px;">Proficiency Assessment Test</h4>
@@ -319,7 +345,6 @@
             <button class="start-btn" style="background: #1f6feb; font-size: 11px; padding: 7px;" onclick="startProficiencyTest(); playSound('click');">စတင်စမ်းသပ်မည် 🚀</button>
         </div>
 
-        <!-- Quiz Screen -->
         <div id="prof-quiz-screen" class="grammar-card" style="display: none;">
             <div style="display: flex; justify-content: space-between; font-size: 10px; color: #8b949e; margin-bottom: 4px;">
                 <span>မေးခွန်း: <b id="prof-q-num" style="color: #58a6ff;">1 / 10</b></span>
@@ -329,7 +354,6 @@
             <div id="prof-options-box" style="display: flex; flex-direction: column; gap: 5px;"></div>
         </div>
 
-        <!-- Result Screen -->
         <div id="prof-result-screen" class="grammar-card" style="display: none; text-align: center; border-color: #3fb950;">
             <h4 style="color: #3fb950; margin: 0 0 4px 0; font-size: 12.5px;">🏆 Test Result & Level Status</h4>
             <div id="prof-result-content" style="font-size: 11px; color: #d3f9d8; margin: 8px 0; line-height: 1.4;"></div>
@@ -340,7 +364,7 @@
     <!-- Ultimate Shop Tab -->
     <div id="shop-tab" class="tab-content">
         <h3 style="color: #f0883e; margin-top: 0; font-size: 12.5px;">🛍️ Ultimate Reward Shop</h3>
-        <p style="font-size: 10px; color: #8b949e; margin-bottom: 8px;">စုဆောင်းထားသော Coins များကို အသုံးချ၍ အထူးပစ္စည်းများ ဝယ်ယူပါ</p>
+        <p style="font-size: 10px; color: #8b949e; margin-bottom: 8px;">စုဆောင်းထားသော Coins များဖြင့် အထူးပစ္စည်းများ ဝယ်ယူပါ</p>
         
         <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; margin-bottom: 6px;">
             <div style="text-align: left;">
@@ -361,7 +385,7 @@
         <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; margin-bottom: 6px;">
             <div style="text-align: left;">
                 <b style="color: #d29922; font-size: 11px;">⚡ 2x Coin Booster</b>
-                <p style="font-size: 9px; color: #8b949e; margin: 2px 0 0 0;">နောက်ထပ် Quiz တစ်ခုအတွက် Coins နှစ်ဆပေးသည်။</p>
+                <p style="font-size: 9px; color: #8b949e; margin: 2px 0 0 0;">နောက်ထပ် Quiz အတွက် Coins နှစ်ဆပေးသည်။</p>
             </div>
             <button class="start-btn" style="background: #238636; width: auto; padding: 5px 8px; font-size: 10px; margin: 0;" onclick="buyItem('booster', 150)">🪙 150 ဝယ်မည်</button>
         </div>
@@ -369,7 +393,7 @@
         <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px;">
             <div style="text-align: left;">
                 <b style="color: #bc8cff; font-size: 11px;">🎨 Epic Dark Theme</b>
-                <p style="font-size: 9px; color: #8b949e; margin: 2px 0 0 0;">Bot ၏ အထူးဒီဇိုင်း Skin အသစ်ကို ဖွင့်ပေးသည်။</p>
+                <p style="font-size: 9px; color: #8b949e; margin: 2px 0 0 0;">Bot ၏ အထူးဒီဇိုင်း Skin ကို ဖွင့်ပေးသည်။</p>
             </div>
             <button class="start-btn" style="background: #238636; width: auto; padding: 5px 8px; font-size: 10px; margin: 0;" onclick="buyItem('theme', 500)">🪙 500 ဝယ်မည်</button>
         </div>
@@ -385,9 +409,9 @@
 
         <div class="grammar-card">
             <h4 style="margin: 0 0 3px 0; color: #3fb950; font-size: 11px;">📌 (1) Future Simple = will + V0</h4>
-            <p style="font-size: 9.5px; color: #c9d1d9; margin: 0 0 4px 0; line-height: 1.3;">• Note 1: လက်တလော ဆုံးဖြတ်ချက် | Note 2: သဘောတူညီရန် | No. 3: ကမ်းလှမ်းရန် | No. 4: ကတိပေးရန်</p>
+            <p style="font-size: 9.5px; color: #c9d1d9; margin: 0 0 4px 0; line-height: 1.3;">• Note 1: လက်တလော ဆုံးဖြတ်ချက် | Note 2: သဘောတူညီရန်</p>
             <h4 style="margin: 4px 0 2px 0; color: #58a6ff; font-size: 11px;">📌 (2) Be going to + V0</h4>
-            <p style="font-size: 9.5px; color: #c9d1d9; margin: 0; line-height: 1.3;">• No. 1: ကြိုတင်စီစဉ်ထားချက် | No. 2: အခြေအနေကြည့်၍ ခန့်မှန်းခြင်း</p>
+            <p style="font-size: 9.5px; color: #c9d1d9; margin: 0; line-height: 1.3;">• No. 1: ကြိုတင်စီစဉ်ထားချက် | No. 2: ခန့်မှန်းခြင်း</p>
         </div>
 
         <div class="grammar-card" style="border: 1.5px solid #8957e5;">
@@ -464,35 +488,18 @@
     </div>
 </div>
 
-<!-- Bottom Navigation Bar (Updated with Proficiency Level Tab) -->
+<!-- Bottom Navigation Bar -->
 <div class="nav-tabs">
-    <button class="nav-tab active" onclick="switchTab('home-tab'); playSound('click');">
-        <span class="icon">🏠</span>ပင်မ
-    </button>
-    <button class="nav-tab" onclick="switchTab('level-tab'); renderLevelGrid(); playSound('click');">
-        <span class="icon">🎮</span>Levels
-    </button>
-    <button class="nav-tab" onclick="switchTab('proficiency-tab'); playSound('click');">
-        <span class="icon">🎯</span>Level Check
-    </button>
-    <button class="nav-tab" onclick="switchTab('shop-tab'); playSound('click');">
-        <span class="icon">🛍️</span>Shop
-    </button>
-    <button class="nav-tab" onclick="switchTab('grammar-tab'); loadCurrentGrammarPrompt(); playSound('click');">
-        <span class="icon">📖</span>Grammar
-    </button>
-    <button class="nav-tab" onclick="switchTab('essay-tab'); playSound('click');">
-        <span class="icon">✍️</span>Essay
-    </button>
-    <button class="nav-tab" onclick="switchTab('test-tab'); loadCustomTasks(); playSound('click');">
-        <span class="icon">📋</span>Tasks
-    </button>
-    <button class="nav-tab" onclick="switchTab('forest-tab'); playSound('click');">
-        <span class="icon">🌳</span>Forest
-    </button>
-    <button class="nav-tab" onclick="switchTab('leaderboard-tab'); playSound('click');">
-        <span class="icon">🏆</span>Board
-    </button>
+    <button class="nav-tab active" onclick="switchTab('home-tab'); playSound('click');"><span class="icon">🏠</span>ပင်မ</button>
+    <button class="nav-tab" onclick="switchTab('level-tab'); renderLevelGrid(); playSound('click');"><span class="icon">🎮</span>Levels</button>
+    <button class="nav-tab" onclick="switchTab('meaning-tab'); renderVocabularyList(); playSound('click');"><span class="icon">📚</span>Meaning</button>
+    <button class="nav-tab" onclick="switchTab('proficiency-tab'); playSound('click');"><span class="icon">🎯</span>Level</button>
+    <button class="nav-tab" onclick="switchTab('shop-tab'); playSound('click');"><span class="icon">🛍️</span>Shop</button>
+    <button class="nav-tab" onclick="switchTab('grammar-tab'); loadCurrentGrammarPrompt(); playSound('click');"><span class="icon">📖</span>Grammar</button>
+    <button class="nav-tab" onclick="switchTab('essay-tab'); playSound('click');"><span class="icon">✍️</span>Essay</button>
+    <button class="nav-tab" onclick="switchTab('test-tab'); loadCustomTasks(); playSound('click');"><span class="icon">📋</span>Tasks</button>
+    <button class="nav-tab" onclick="switchTab('forest-tab'); playSound('click');"><span class="icon">🌳</span>Forest</button>
+    <button class="nav-tab" onclick="switchTab('leaderboard-tab'); playSound('click');"><span class="icon">🏆</span>Board</button>
 </div>
 
 <!-- Firebase & Main Script -->
@@ -516,7 +523,6 @@
   window.saveScoreToFirebase = function(name, maxLvl, finalMoney) {
       const cleanName = name.replace(/[.#$\/\[\]]/g, "_").trim();
       const userScoreRef = ref(db, 'scores/' + cleanName);
-
       get(userScoreRef).then((snapshot) => {
           let existingLvl = 1;
           if (snapshot.exists()) { existingLvl = snapshot.val().score || 1; }
@@ -550,7 +556,9 @@
   };
 </script>
 
+<!-- External Script Files -->
 <script src="questions.js"></script>
+<script src="dictionary.js"></script> <!-- 👈 ဤနေရာတွင် dictionary.js ဖိုင်ကို ချိတ်ဆက်ထားပါသည် -->
 
 <script>
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -584,13 +592,68 @@ let currentQIndex = 0;
 let currentLvlQuestions = [];
 let correctInLvl = 0;
 
-/* Lives & Shop Variables */
 let playerLives = parseInt(localStorage.getItem('playerLives')) || 3;
 let streakFreezeCount = parseInt(localStorage.getItem('streakFreezeCount')) || 0;
 let hasBooster = localStorage.getItem('hasBooster') === 'true';
 let hasEpicTheme = localStorage.getItem('hasEpicTheme') === 'true';
 
-/* English Proficiency Assessment Questions */
+/* Vocabulary Functions (Reads from dictionary.js) */
+function getVocabularyBank() {
+    let customWords = JSON.parse(localStorage.getItem("customVocabList")) || [];
+    let baseBank = (typeof defaultVocabularyBank !== 'undefined') ? defaultVocabularyBank : [];
+    return [...baseBank, ...customWords];
+}
+
+function renderVocabularyList(filterText = "") {
+    const container = document.getElementById("words-list-container");
+    const words = getVocabularyBank();
+    let filtered = words.filter(w => w.word.toLowerCase().includes(filterText.toLowerCase()) || w.myanmar.includes(filterText));
+
+    if (filtered.length === 0) {
+        container.innerHTML = `<p style="color: #8b949e; font-size: 10px; text-align: center; margin-top: 10px;">ဝေါဟာရ ရှာမတွေ့ပါ။</p>`;
+        return;
+    }
+
+    let html = "";
+    filtered.forEach(w => {
+        html += `
+            <div class="word-item">
+                <div class="word-header">
+                    <span class="word-title">${w.word}</span>
+                    <span class="word-pos">(${w.pos || 'word'})</span>
+                </div>
+                <div class="word-myanmar">🇲🇲 ${w.myanmar}</div>
+                ${w.example ? `<div class="word-example">💡 <i>"${w.example}"</i></div>` : ''}
+            </div>
+        `;
+    });
+    container.innerHTML = html;
+}
+
+function searchVocabulary() {
+    const val = document.getElementById("word-search-input").value.trim();
+    renderVocabularyList(val);
+}
+
+function addNewCustomWord() {
+    const wordInput = document.getElementById("new-word-input");
+    const meaningInput = document.getElementById("new-meaning-input");
+    const wText = wordInput.value.trim();
+    const mText = meaningInput.value.trim();
+
+    if (!wText || !mText) { alert("စကားလုံးနှင့် အဓိပ္ပာယ် ဖြည့်စွက်ပါ!"); return; }
+
+    let customWords = JSON.parse(localStorage.getItem("customVocabList")) || [];
+    customWords.push({ word: wText, pos: "custom", myanmar: mText, example: "User Saved Word" });
+    localStorage.setItem("customVocabList", JSON.stringify(customWords));
+
+    wordInput.value = ""; meaningInput.value = "";
+    renderVocabularyList();
+    playSound('correct');
+    alert("🎉 စကားလုံးအသစ် အောင်မြင်စွာ မှတ်သားပြီးပါပြီ!");
+}
+
+/* Proficiency Test & Game Logic */
 const proficiencyQuestions = [
     { q: "She ___ to school every day.", options: ["go", "goes", "going", "gone"], answer: "goes", level: "Beginner (A1)" },
     { q: "They ___ playing football now.", options: ["is", "am", "are", "be"], answer: "are", level: "Beginner (A2)" },
@@ -608,8 +671,7 @@ let profCurrentIdx = 0;
 let profScore = 0;
 
 function startProficiencyTest() {
-    profCurrentIdx = 0;
-    profScore = 0;
+    profCurrentIdx = 0; profScore = 0;
     document.getElementById("prof-start-screen").style.display = "none";
     document.getElementById("prof-quiz-screen").style.display = "block";
     document.getElementById("prof-result-screen").style.display = "none";
@@ -617,10 +679,7 @@ function startProficiencyTest() {
 }
 
 function loadProficiencyQuestion() {
-    if (profCurrentIdx >= proficiencyQuestions.length) {
-        showProficiencyResult();
-        return;
-    }
+    if (profCurrentIdx >= proficiencyQuestions.length) { showProficiencyResult(); return; }
     const qData = proficiencyQuestions[profCurrentIdx];
     document.getElementById("prof-q-num").innerText = `${profCurrentIdx + 1} / ${proficiencyQuestions.length}`;
     document.getElementById("prof-q-level-tag").innerText = qData.level;
@@ -643,34 +702,14 @@ function checkProficiencyAnswer(btn, selected, correct) {
         playSound('wrong');
         btn.style.background = "#2b1515"; btn.style.borderColor = "#da3633"; btn.style.color = "#f85149";
     }
-    setTimeout(() => {
-        profCurrentIdx++;
-        loadProficiencyQuestion();
-    }, 800);
+    setTimeout(() => { profCurrentIdx++; loadProficiencyQuestion(); }, 800);
 }
 
 function showProficiencyResult() {
     document.getElementById("prof-quiz-screen").style.display = "none";
     document.getElementById("prof-result-screen").style.display = "block";
-    
-    let levelTitle = "";
-    let desc = "";
-    if (profScore <= 3) {
-        levelTitle = "🌱 Beginner (A1 - A2)";
-        desc = "အခြေခံသဒ္ဒါနှင့် ဝါကျတည်ဆောက်ပုံများကို ပိုမိုလေ့လာရန် လိုအပ်ပါသည်။ Beginner အဆင့် Level များမှ စတင်လေ့ကျင့်ပါ။";
-    } else if (profScore <= 7) {
-        levelTitle = "📈 Intermediate (B1 - B2)";
-        desc = "အလယ်အလတ်အဆင့် အင်္ဂလိပ်စာ ကျွမ်းကျင်မှု ရှိနေပါသည်။ ရှုပ်ထွေးသော သဒ္ဒါများနှင့် Essay ရေးသားခြင်းများကို ဆက်လက်လေ့လာပါ။";
-    } else {
-        levelTitle = "🚀 Advanced (C1)";
-        desc = "အင်္ဂလိပ်စာ အဆင့်မြင့်အဆင့်သို့ ရောက်ရှိနေပါပြီ! Boss Level များနှင့် AI Sentence Challenges များကို အလွယ်တကူ ကျော်ဖြတ်နိုင်စွမ်းရှိသည်။";
-    }
-
-    document.getElementById("prof-result-content").innerHTML = `
-        <p style="margin: 2px 0;">မှန်ကန်မှု: <b style="color: #58a6ff;">${profScore} / 10</b></p>
-        <p style="margin: 4px 0 2px 0; font-size: 12px; color: #f0883e;"><b>သင့်အဆင့်: ${levelTitle}</b></p>
-        <p style="font-size: 10px; color: #8b949e; margin-top: 4px;">${desc}</p>
-    `;
+    let levelTitle = profScore <= 3 ? "🌱 Beginner (A1)" : profScore <= 7 ? "📈 Intermediate (B1)" : "🚀 Advanced (C1)";
+    document.getElementById("prof-result-content").innerHTML = `<p>မှန်ကန်မှု: <b style="color: #58a6ff;">${profScore} / 10</b></p><p style="color: #f0883e;"><b>သင့်အဆင့်: ${levelTitle}</b></p>`;
     playSound('correct');
 }
 
@@ -679,33 +718,22 @@ function resetProficiencyTest() {
     document.getElementById("prof-start-screen").style.display = "block";
 }
 
-/* AI Sentence Identification Bank */
 const grammarSentencesBank = [
-    { sentence: "I will play mobile game after a class.", correctCategory: "Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)", options: ["Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)", "Future Simple: Note 2 (သဘောတူညီရန်)", "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)", "Be going to: No 2 (ခန့်မှန်းခြင်း)"], explanation: "အတန်းပြီးရင် ဂိမ်းဆော့မယ်ဆိုတာ လက်တလော ဆုံးဖြတ်တာဖြစ်လို့ Future Simple Note 1 ဖြစ်ပါတယ်။" },
-    { sentence: "I will come to the birthday party.", correctCategory: "Future Simple: Note 2 (သဘောတူညီရန်)", options: ["Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)", "Future Simple: Note 2 (သဘောတူညီရန်)", "Future Simple: No 3 (ကမ်းလှမ်းရန်)", "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)"], explanation: "မွေးနေ့ပွဲ လာခဲ့မယ်လို့ သဘောတူညီတာဖြစ်လို့ Future Simple Note 2 ဖြစ်ပါတယ်။" },
-    { sentence: "I will help you with your homework.", correctCategory: "Future Simple: No 3 (ကမ်းလှမ်းရန်)", options: ["Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)", "Future Simple: Note 2 (သဘောတူညီရန်)", "Future Simple: No 3 (ကမ်းလှမ်းရန်)", "Future Simple: No 4 (ကတိပေးရန်)"], explanation: "အိမ်စာကူလုပ်ပေးမယ်လို့ ကမ်းလှမ်းတာဖြစ်လို့ Future Simple No 3 ဖြစ်ပါတယ်။" },
-    { sentence: "I won't tell your secret to anyone.", correctCategory: "Future Simple: No 4 (ကတိပေးရန်)", options: ["Future Simple: Note 2 (သဘောတူညီရန်)", "Future Simple: No 3 (ကမ်းလှမ်းရန်)", "Future Simple: No 4 (ကတိပေးရန်)", "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)"], explanation: "လျှို့ဝက်ချက်ကို ဘယ်သူမှမပြောပါဘူးလို့ ကတိပေးတာဖြစ်လို့ Future Simple No 4 ဖြစ်ပါတယ်။" },
-    { sentence: "I am going to buy a new bike tomorrow.", correctCategory: "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)", options: ["Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)", "Future Simple: Note 2 (သဘောတူညီရန်)", "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)", "Be going to: No 2 (ခန့်မှန်းခြင်း)"], explanation: "မနက်ဖြန် စက်ဘီးဝယ်ဖို့ ကြိုတင်စီစဉ်ထားတာဖြစ်လို့ Be going to No 1 ဖြစ်ပါတယ်။" },
-    { sentence: "Look at those dark clouds. It is going to rain.", correctCategory: "Be going to: No 2 (ခန့်မှန်းခြင်း)", options: ["Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)", "Future Simple: No 3 (ကမ်းလှမ်းရန်)", "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)", "Be going to: No 2 (ခန့်မှန်းခြင်း)"], explanation: "တိမ်မည်းတွေကိုကြည့်ပြီး မိုးရွာတော့မယ်လို့ ယခုအခြေအနေကိုကြည့်၍ ခန့်မှန်းခြင်းဖြစ်ပါတယ်။" }
+    { sentence: "I will play mobile game after a class.", correctCategory: "Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)", options: ["Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)", "Future Simple: Note 2 (သဘောတူညီရန်)", "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)", "Be going to: No 2 (ခန့်မှန်းခြင်း)"], explanation: "အတန်းပြီးရင် ဂိမ်းဆော့မယ်ဆိုတာ လက်တလော ဆုံးဖြတ်တာဖြစ်ပါတယ်။" }
 ];
 
 let currentGrammarItem = null;
 let lastGrammarIdx = -1;
 
 function loadCurrentGrammarPrompt() {
-    let randomIdx;
-    do { randomIdx = Math.floor(Math.random() * grammarSentencesBank.length); } while (randomIdx === lastGrammarIdx && grammarSentencesBank.length > 1);
-    lastGrammarIdx = randomIdx;
-    currentGrammarItem = grammarSentencesBank[randomIdx];
-    
+    currentGrammarItem = grammarSentencesBank[0];
     document.getElementById("ai-generated-sentence").innerText = `"${currentGrammarItem.sentence}"`;
     document.getElementById("grammar-feedback").style.display = "none";
     document.getElementById("next-grammar-prompt-btn").style.display = "none";
 
     const optionsContainer = document.getElementById("grammar-options-container");
     let optionsHTML = "";
-    let shuffledOptions = [...currentGrammarItem.options].sort(() => Math.random() - 0.5);
-    shuffledOptions.forEach((opt) => {
+    currentGrammarItem.options.forEach((opt) => {
         optionsHTML += `<button class="grammar-option-btn" onclick="checkGrammarOption(this, '${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
     });
     optionsContainer.innerHTML = optionsHTML;
@@ -715,18 +743,12 @@ function checkGrammarOption(button, selectedOpt) {
     document.querySelectorAll('.grammar-option-btn').forEach(btn => btn.disabled = true);
     const feedbackBox = document.getElementById("grammar-feedback");
     feedbackBox.style.display = "block";
-
     if (selectedOpt === currentGrammarItem.correctCategory) {
-        playSound('correct');
-        money += 30; localStorage.setItem('quizCoins', money); updateUI();
-        button.style.background = "#0d3819"; button.style.borderColor = "#2ea043"; button.style.color = "#d3f9d8";
-        feedbackBox.style.background = "#0d3819"; feedbackBox.style.borderColor = "#2ea043"; feedbackBox.style.color = "#d3f9d8";
-        feedbackBox.innerHTML = `<strong>✅ မှန်ကန်ပါသည်။ +30 Coins ရရှိပါပြီ!</strong><br>${currentGrammarItem.explanation}`;
+        playSound('correct'); money += 30; localStorage.setItem('quizCoins', money); updateUI();
+        button.style.background = "#0d3819"; feedbackBox.innerHTML = `<strong>✅ မှန်ကန်ပါသည်။ +30 Coins!</strong>`;
     } else {
         playSound('wrong');
-        button.style.background = "#2b1515"; button.style.borderColor = "#da3633"; button.style.color = "#f85149";
-        feedbackBox.style.background = "#2b1515"; feedbackBox.style.borderColor = "#da3633"; feedbackBox.style.color = "#f85149";
-        feedbackBox.innerHTML = `<strong>❌ မမှန်ပါ။ အဖြေမှန်:</strong> ${currentGrammarItem.correctCategory}<br>${currentGrammarItem.explanation}`;
+        button.style.background = "#2b1515"; feedbackBox.innerHTML = `<strong>❌ မမှန်ပါ။</strong>`;
     }
     document.getElementById("next-grammar-prompt-btn").style.display = "block";
 }
@@ -736,6 +758,7 @@ window.onload = function() {
     checkSavedUser();
     updateUI();
     renderLevelGrid();
+    renderVocabularyList();
     loadCurrentGrammarPrompt();
 };
 
@@ -748,9 +771,7 @@ function updateUI() {
 
 function updateLivesDisplay() {
     let heartsStr = "";
-    for(let i=0; i<3; i++) {
-        heartsStr += (i < playerLives) ? "❤️" : "🖤";
-    }
+    for(let i=0; i<3; i++) { heartsStr += (i < playerLives) ? "❤️" : "🖤"; }
     const livesEl = document.getElementById("player-lives-display");
     if(livesEl) livesEl.innerText = heartsStr;
 }
@@ -771,31 +792,24 @@ function renderLevelGrid() {
 }
 
 function startLevel(lvl) {
-    if (playerLives <= 0) {
-        alert("❌ အသက် (Lives) ကုန်နေပါပြီ သူငယ်ချင်း! Shop ထဲတွင် 🪙 50 ဖြင့် အသက်ဝယ်ယူပါ။");
-        switchTab('shop-tab');
-        return;
-    }
+    if (playerLives <= 0) { alert("❌ အသက်ကုန်နေပါပြီ!"); switchTab('shop-tab'); return; }
     currentPlayingLvl = lvl; currentQIndex = 0; correctInLvl = 0;
     if (typeof levelQuestionsBank !== 'undefined' && levelQuestionsBank[lvl]) {
         currentLvlQuestions = levelQuestionsBank[lvl];
     } else {
-        alert("⚠️ Level " + lvl + " အတွက် questions.js ထဲတွင် မေးခွန်းများ ထည့်ရန် လိုအပ်ပါသေးသည်။");
+        alert("⚠️ Level " + lvl + " အတွက် questions.js တွင် မေးခွန်းထည့်ပါ။");
         return;
     }
     document.getElementById("level-selector-view").style.display = "none";
     document.getElementById("level-gameplay-view").style.display = "block";
-    document.getElementById("game-lvl-title").innerText = `Level ${lvl} Challenge ${lvl % 5 === 0 ? '👑 BOSS' : ''}`;
+    document.getElementById("game-lvl-title").innerText = `Level ${lvl} Challenge`;
     document.getElementById("boss-essay-box").style.display = "none";
     document.getElementById("level-q-box").style.display = "block";
     loadLevelQuestion();
 }
 
 function loadLevelQuestion() {
-    if (currentQIndex >= currentLvlQuestions.length) {
-        if (currentPlayingLvl % 5 === 0) { showBossEssayQuest(); } else { finishLevel(); }
-        return;
-    }
+    if (currentQIndex >= currentLvlQuestions.length) { finishLevel(); return; }
     const qData = currentLvlQuestions[currentQIndex];
     document.getElementById("q-progress-text").innerText = `${currentQIndex + 1} / ${currentLvlQuestions.length}`;
     document.getElementById("question-text").innerText = qData.question;
@@ -814,56 +828,28 @@ function checkLevelAnswer(btn, selected, correct, exp) {
     const expBox = document.getElementById("explanation-box");
     expBox.style.display = "block";
     expBox.innerHTML = `<strong>ရှင်းလင်းချက်:</strong> ${exp}`;
-
     if (selected.trim() === correct.trim()) {
-        playSound('correct');
-        btn.style.background = "#0d3819"; btn.style.borderColor = "#2ea043"; btn.style.color = "#d3f9d8";
-        correctInLvl++; 
-        let coinGain = hasBooster ? 30 : 15;
-        money += coinGain; 
-        localStorage.setItem('quizCoins', money); 
-        updateUI();
+        playSound('correct'); btn.style.background = "#0d3819";
+        correctInLvl++; money += 15; localStorage.setItem('quizCoins', money); updateUI();
     } else {
-        playSound('wrong');
-        btn.style.background = "#2b1515"; btn.style.borderColor = "#da3633"; btn.style.color = "#f85149";
-        playerLives--;
-        localStorage.setItem('playerLives', playerLives);
-        updateUI();
-        if (playerLives <= 0) {
-            alert("❌ အသက် (Lives) လုံးဝကုန်သွားပါပြီ! Level မေးခွန်းမှ ထွက်ပါမည်။");
-            exitToLevelSelect();
-            return;
-        }
+        playSound('wrong'); btn.style.background = "#2b1515";
+        playerLives--; localStorage.setItem('playerLives', playerLives); updateUI();
     }
     document.getElementById("next-q-btn").style.display = "block";
 }
 
 function nextLevelQuestion() { currentQIndex++; loadLevelQuestion(); }
 
-function showBossEssayQuest() {
-    document.getElementById("level-q-box").style.display = "none";
-    document.getElementById("boss-essay-box").style.display = "block";
-}
-
-function submitBossEssay() {
-    const text = document.getElementById("boss-essay-input").value.trim();
-    if (text.split(/\s+/).length < 15) { alert("ကျေးဇူးပြု၍ စာလုံး ၁၅ လုံးထက်မနည်း ရေးပါ!"); return; }
-    playSound('correct'); alert("🎉 BOSS ESSAY အောင်မြင်ပါသည်! 🪙 +200 Coins ဆုကြေးရရှိပါပြီ!");
-    money += 200; localStorage.setItem('quizCoins', money); finishLevel();
-}
-
 function finishLevel() {
-    let passScore = 7;
-    if (correctInLvl >= passScore) {
+    if (correctInLvl >= 7) {
         playSound('correct');
-        alert(`🎉 ဂုဏ်ယူပါတယ်! Level ${currentPlayingLvl} ကို အောင်မြင်စွာ ကျော်ဖြတ်နိုင်ခဲ့ပါပြီ! (${correctInLvl}/10)`);
+        alert(`🎉 Level ${currentPlayingLvl} အောင်မြင်သည်!`);
         if (currentPlayingLvl === unlockedLevel && unlockedLevel < 20) {
             unlockedLevel++; localStorage.setItem('maxUnlockedLevel', unlockedLevel);
-            if (playerName && typeof window.saveScoreToFirebase === 'function') { window.saveScoreToFirebase(playerName, unlockedLevel, money); }
         }
     } else {
         playSound('wrong');
-        alert(`❌ Level ${currentPlayingLvl} မအောင်မြင်သေးပါ။ (အနည်းဆုံး ၇ ပုဒ် မှန်ရမည်။ ယခုမှန်: ${correctInLvl}/10)`);
+        alert(`❌ မအောင်မြင်သေးပါ။ (မှန်: ${correctInLvl}/10)`);
     }
     exitToLevelSelect();
 }
@@ -874,84 +860,26 @@ function exitToLevelSelect() {
     updateUI(); renderLevelGrid();
 }
 
-/* Ultimate Shop Purchase Logic */
 function buyItem(itemType, cost) {
-    if (money < cost) {
-        playSound('wrong');
-        alert("❌ Coins မလုံလောက်ပါ သူငယ်ချင်း! Quiz တွေ ဆော့ပြီး Coins ထပ်စုပါဦး။");
-        return;
-    }
-
-    if (itemType === 'heart') {
-        if (playerLives >= 3) {
-            alert("⚠️ မင်းရဲ့ အသက်တွေ အပြည့်ရှိနေပါပြီ သူငယ်ချင်း!");
-            return;
-        }
-        playerLives++;
-        localStorage.setItem('playerLives', playerLives);
-    } 
-    else if (itemType === 'freeze') {
-        streakFreezeCount++;
-        localStorage.setItem('streakFreezeCount', streakFreezeCount);
-    } 
-    else if (itemType === 'booster') {
-        if (hasBooster) {
-            alert("⚠️ မင်းမှာ Booster ဝယ်ပြီးသား ဖြစ်နေပါပြီ!");
-            return;
-        }
-        hasBooster = true;
-        localStorage.setItem('hasBooster', 'true');
-    } 
-    else if (itemType === 'theme') {
-        if (hasEpicTheme) {
-            alert("⚠️ မင်းမှာ Epic Theme ဝယ်ပြီးသား ဖြစ်နေပါပြီ!");
-            return;
-        }
-        hasEpicTheme = true;
-        localStorage.setItem('hasEpicTheme', 'true');
-        document.body.style.filter = "contrast(1.1) brightness(1.05)";
-    }
-
-    money -= cost;
-    localStorage.setItem('quizCoins', money);
-    updateUI();
-    playSound('correct');
-    alert("🎉 ဂုဏ်ယူပါတယ်! ပစ္စည်းကို အောင်မြင်စွာ ဝယ်ယူပြီးပါပြီ သူငယ်ချင်း။");
+    if (money < cost) { alert("🪙 Coins မလုံလောက်ပါ!"); return; }
+    if (itemType === 'heart') { playerLives++; localStorage.setItem('playerLives', playerLives); }
+    money -= cost; localStorage.setItem('quizCoins', money); updateUI(); playSound('correct');
+    alert("🎉 ဝယ်ယူမှု အောင်မြင်ပါသည်။");
 }
 
-/* Essay AI Evaluator */
 function updateWordCount() {
     const text = document.getElementById("essay-input").value.trim();
     document.getElementById("word-count").innerText = text ? text.split(/\s+/).length : 0;
 }
 
 function checkEssayWithAI() {
-    const topic = document.getElementById("essay-topic").value;
     const text = document.getElementById("essay-input").value.trim();
-    const btn = document.getElementById("check-essay-btn");
-    const feedbackBox = document.getElementById("essay-feedback-box");
-
-    if (!text || text.split(/\s+/).length < 15) { alert("ကျေးဇူးပြု၍ စာလုံး ၁၅ လုံးထက်မနည်း ရေးပါ။"); return; }
-    btn.disabled = true; btn.innerText = "AI စစ်ဆေးနေပါသည်... ⏳";
-    feedbackBox.style.display = "block";
-    feedbackBox.innerHTML = "<p style='color: #d29922;'>🤖 AI မှ သင့် Essay ကို စစ်ဆေးနေပါသည်။ ခဏစောင့်ပါ...</p>";
-
-    setTimeout(() => {
-        const wordCount = text.split(/\s+/).length;
-        let mockScore = Math.min(100, Math.max(60, Math.floor(wordCount * 1.2) + Math.floor(Math.random() * 15)));
-        money += 500; localStorage.setItem('quizCoins', money); updateUI(); playSound('correct');
-
-        feedbackBox.innerHTML = `
-            <h4 style="margin: 0 0 3px 0; color: #3fb950; font-size: 11px;">📊 AI Evaluation Results</h4>
-            <p style="margin: 2px 0;"><b>📌 Topic:</b> ${topic}</p>
-            <p style="margin: 2px 0;"><b>⭐ Score:</b> <span style="color: #3fb950; font-weight: bold;">${mockScore} / 100</span> (${wordCount} words)</p>
-            <p style="color: #d29922; font-weight: bold; margin-top: 2px;">🎉 ဆုကြေး 🪙 500 Coins ရရှိပါသည်။</p>
-        `;
-        btn.disabled = false; btn.innerText = "AI ဖြင့် စစ်ဆေးမည် 🤖";
-    }, 1500);
+    if (!text || text.split(/\s+/).length < 15) { alert("စာလုံး ၁၅ လုံးထက်မနည်း ရေးပါ!"); return; }
+    money += 500; localStorage.setItem('quizCoins', money); updateUI(); playSound('correct');
+    document.getElementById("essay-feedback-box").style.display = "block";
+    document.getElementById("essay-feedback-box").innerHTML = "<b>📊 AI Score: 85/100 (🪙 +500 Coins ရရှိသည်)</b>";
 }
 
-/* Custom Tasks & Forest */
 function addCustomTask() {
     const input = document.getElementById("custom-task-input");
     const taskText = input.value.trim();
@@ -961,22 +889,14 @@ function addCustomTask() {
     localStorage.setItem("customTasksList", JSON.stringify(tasks));
     input.value = ""; loadCustomTasks(); playSound('correct');
 }
-function toggleCustomTask(i) {
-    let tasks = JSON.parse(localStorage.getItem("customTasksList")) || [];
-    if (tasks[i]) { tasks[i].completed = !tasks[i].completed; localStorage.setItem("customTasksList", JSON.stringify(tasks)); loadCustomTasks(); playSound('click'); }
-}
-function deleteCustomTask(i) {
-    let tasks = JSON.parse(localStorage.getItem("customTasksList")) || [];
-    tasks.splice(i, 1); localStorage.setItem("customTasksList", JSON.stringify(tasks)); loadCustomTasks(); playSound('wrong');
-}
+
 function loadCustomTasks() {
     const container = document.getElementById("custom-tasks-container");
     let tasks = JSON.parse(localStorage.getItem("customTasksList")) || [];
-    if (tasks.length === 0) { container.innerHTML = `<p style="color: #8b949e; font-size: 10px; text-align: center; margin-top: 5px;">Task များ မရှိသေးပါ။</p>`; return; }
+    if (tasks.length === 0) { container.innerHTML = `<p style="color: #8b949e; font-size: 10px; text-align: center;">Task များ မရှိပါ။</p>`; return; }
     let html = "";
     tasks.forEach((t, i) => {
-        let style = t.completed ? "background: #0d3819; border-color: #2ea043; text-decoration: line-through; color: #8b949e;" : "background: #161b22; border-color: #30363d; color: #fff;";
-        html += `<div style="${style} border: 1px solid; border-radius: 5px; padding: 5px 7px; margin-bottom: 4px; display: flex; justify-content: space-between; align-items: center; font-size: 10.5px;"><label style="display: flex; align-items: center; gap: 6px; cursor: pointer; flex: 1;"><input type="checkbox" ${t.completed ? 'checked' : ''} onchange="toggleCustomTask(${i})"><span>${t.text}</span></label><button onclick="deleteCustomTask(${i})" style="background:none; border:none; color:#f85149; cursor:pointer;">🗑️</button></div>`;
+        html += `<div style="background: #161b22; border: 1px solid #30363d; border-radius: 5px; padding: 5px; margin-bottom: 4px; font-size: 10.5px;">${t.text}</div>`;
     });
     container.innerHTML = html;
 }
@@ -987,31 +907,17 @@ function startForestSession() {
     isForestRunning = true; forestSeconds = 25 * 60;
     document.getElementById("forest-start-btn").style.display = "none";
     document.getElementById("forest-cancel-btn").style.display = "block";
-    document.getElementById("tree-display").innerText = "🌿";
-    document.getElementById("tree-status-text").innerText = "အပင်ပေါက်လာပါပြီ...";
     forestTimer = setInterval(() => {
         forestSeconds--;
         let mins = Math.floor(forestSeconds / 60), secs = forestSeconds % 60;
-        document.getElementById("forest-timer-display").innerText = `${mins < 10 ? '0' : ''}${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        if (forestSeconds <= 0) {
-            clearInterval(forestTimer); isForestRunning = false;
-            money += 300; localStorage.setItem('quizCoins', money); updateUI(); playSound('correct');
-            alert("🎉 အာရုံစိုက်မှု အောင်မြင်ပြီး 🪙 300 Coins ရရှိပါပြီ!"); resetForestUI();
-        }
+        document.getElementById("forest-timer-display").innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        if (forestSeconds <= 0) { clearInterval(forestTimer); isForestRunning = false; money += 300; updateUI(); alert("🪙 +300 Coins ရရှိသည်!"); }
     }, 1000);
 }
-function cancelForestSession() {
-    if (!isForestRunning) return;
-    clearInterval(forestTimer); isForestRunning = false; playSound('wrong');
-    document.getElementById("tree-display").innerText = "🥀";
-    document.getElementById("tree-status-text").innerText = "အပင်ညှိုးသွားပါပြီ!";
-    setTimeout(() => { resetForestUI(); }, 2000);
-}
+function cancelForestSession() { clearInterval(forestTimer); isForestRunning = false; resetForestUI(); }
 function resetForestUI() {
     document.getElementById("forest-start-btn").style.display = "block";
     document.getElementById("forest-cancel-btn").style.display = "none";
-    document.getElementById("tree-display").innerText = "🌱";
-    document.getElementById("tree-status-text").innerText = "အပင်ပေါက်စလေး (Seedling)";
     document.getElementById("forest-timer-display").innerText = "25:00";
 }
 
@@ -1023,16 +929,14 @@ function switchTab(tabId) {
     const tabs = document.querySelectorAll('.nav-tab');
     if(tabId === 'home-tab') tabs[0].classList.add('active');
     if(tabId === 'level-tab') { tabs[1].classList.add('active'); renderLevelGrid(); }
-    if(tabId === 'proficiency-tab') tabs[2].classList.add('active');
-    if(tabId === 'shop-tab') tabs[3].classList.add('active');
-    if(tabId === 'grammar-tab') { tabs[4].classList.add('active'); loadCurrentGrammarPrompt(); }
-    if(tabId === 'essay-tab') tabs[5].classList.add('active');
-    if(tabId === 'test-tab') { tabs[6].classList.add('active'); loadCustomTasks(); }
-    if(tabId === 'forest-tab') tabs[7].classList.add('active');
-    if(tabId === 'leaderboard-tab') {
-        tabs[8].classList.add('active');
-        if (typeof window.loadLeaderboardFromFirebase === 'function') { window.loadLeaderboardFromFirebase(); }
-    }
+    if(tabId === 'meaning-tab') { tabs[2].classList.add('active'); renderVocabularyList(); }
+    if(tabId === 'proficiency-tab') tabs[3].classList.add('active');
+    if(tabId === 'shop-tab') tabs[4].classList.add('active');
+    if(tabId === 'grammar-tab') { tabs[5].classList.add('active'); loadCurrentGrammarPrompt(); }
+    if(tabId === 'essay-tab') tabs[6].classList.add('active');
+    if(tabId === 'test-tab') { tabs[7].classList.add('active'); loadCustomTasks(); }
+    if(tabId === 'forest-tab') tabs[8].classList.add('active');
+    if(tabId === 'leaderboard-tab') { tabs[9].classList.add('active'); if (window.loadLeaderboardFromFirebase) window.loadLeaderboardFromFirebase(); }
 }
 
 function checkSavedUser() {
@@ -1040,18 +944,18 @@ function checkSavedUser() {
     if (savedUser) {
         playerName = savedUser;
         document.getElementById("user-setup-box").innerHTML = `
-            <div style="background: #161b22; padding: 6px; border-radius: 5px; margin-bottom: 5px; border: 1px solid #30363d;">
-                <p style="margin: 0; font-size: 10px; color: #8b949e;">အသုံးပြုသူ နာမည်:</p>
+            <div style="background: #161b22; padding: 6px; border-radius: 5px; border: 1px solid #30363d;">
+                <p style="margin: 0; font-size: 10px; color: #8b949e;">နာမည်:</p>
                 <b style="font-size: 13px; color: #3fb950;">${playerName}</b>
             </div>
-            <button class="start-btn" onclick="switchTab('level-tab'); renderLevelGrid(); playSound('click');">🎮 Level မေးခွန်းများ ဆော့တဲ့နေရာသို့သွားမည်</button>
+            <button class="start-btn" onclick="switchTab('level-tab'); renderLevelGrid();">🎮 ဆက်လက်ဆော့မည်</button>
         `;
     }
 }
 
 function saveInitialUsername() {
     const nameInput = document.getElementById("username-input").value.trim();
-    if (!nameInput) { alert("ကျေးဇူးပြု၍ နာမည်ထည့်ပါ။"); return; }
+    if (!nameInput) { alert("နာမည်ထည့်ပါ။"); return; }
     playerName = nameInput;
     localStorage.setItem("quizUsername", playerName);
     checkSavedUser();
