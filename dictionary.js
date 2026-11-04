@@ -1,3 +1,6 @@
+// Study Bot VLP Pro - Dictionary & Vocabulary Data Bank
+
+// ၁။ မူလ ဝေါဟာရ ဘဏ် (Default Vocabulary Bank)
 const defaultVocabularyBank = [
     { word: "Achieve", pos: "verb", myanmar: "အောင်မြင်အောင် ဆောင်ရွက်သည်", example: "He wants to achieve All A grades in his exam." },
     { word: "Active Recall", pos: "noun", myanmar: "ပြန်လည်ထုတ်ဖော် မှတ်မိခြင်း စာကျက်နည်း", example: "Active recall helps you remember lesson concepts faster." },
@@ -20,3 +23,42 @@ const defaultVocabularyBank = [
     { word: "Spaced Repetition", pos: "noun", myanmar: "အကွာအဝေးခြား ပြန်လည်နွှေးခြင်း", example: "Spaced repetition prevents forgetting new words." },
     { word: "Strategy", pos: "noun", myanmar: "ဗျူဟာ / အစီအစဉ်", example: "He plays chess with a smart strategy." }
 ];
+
+// ၂။ Local Storage မှ Custom Words များနှင့် default များကို ပေါင်းစပ်ဖတ်ရှုသည့် Function
+function getVocabularyBank() {
+    let customWords = JSON.parse(localStorage.getItem("customVocabList")) || [];
+    let baseBank = (typeof defaultVocabularyBank !== 'undefined') ? defaultVocabularyBank : [];
+    return [...baseBank, ...customWords];
+}
+
+// ၃. UI (Input Box) မှတဆင့် စကားလုံးအသစ် တိုက်ရိုက် Save သည့် Function
+function addNewCustomWord() {
+    const wordInput = document.getElementById("new-word-input");
+    const meaningInput = document.getElementById("new-meaning-input");
+    const wText = wordInput.value.trim();
+    const mText = meaningInput.value.trim();
+
+    if (!wText || !mText) { 
+        alert("ကျေးဇူးပြု၍ စကားလုံးနှင့် အဓိပ္ပာယ် နှစ်ခုစလုံး ဖြည့်စွက်ပါ!"); 
+        return; 
+    }
+
+    let customWords = JSON.parse(localStorage.getItem("customVocabList")) || [];
+    customWords.push({ word: wText, pos: "custom", myanmar: mText, example: "User Saved Word" });
+    
+    localStorage.setItem("customVocabList", JSON.stringify(customWords));
+
+    wordInput.value = ""; 
+    meaningInput.value = "";
+    
+    // UI ပေါ်ရှိ စာရင်းကိုပါ တစ်ခါတည်း update လုပ်ပေးရန်
+    if (typeof renderVocabularyList === 'function') {
+        renderVocabularyList();
+    }
+    
+    if (typeof playSound === 'function') {
+        playSound('correct');
+    }
+    
+    alert("🎉 စကားလုံးအသစ် အောင်မြင်စွာ မှတ်သားပြီးပါပြီ!");
+}
