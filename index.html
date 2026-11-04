@@ -425,13 +425,13 @@
         </div>
     </div>
 
-    <!-- AI Essay Evaluator Tab -->
+    <!-- AI Essay Builder & Evaluator Tab (Combined & Integrated) -->
     <div id="essay-tab" class="tab-content">
-        <h3 style="color: #3fb950; margin-top: 0; font-size: 12.5px;">✍️ AI Essay Evaluator</h3>
-        <p style="font-size: 10px; color: #8b949e;">အင်္ဂလိပ်လို စာစီစာကွန်း ရေးသားပြီး စစ်ဆေးပါ</p>
+        <h3 style="color: #3fb950; margin-top: 0; font-size: 12.5px;">✍️ Essay Builder & AI Evaluator</h3>
+        <p style="font-size: 10px; color: #8b949e; margin-bottom: 6px;">အင်္ဂလိပ်လို စာစီစာကွန်း ရေးသားပြီး စစ်ဆေးပါ</p>
         
         <div style="text-align: left; margin-top: 4px;">
-            <label style="font-size: 10px; color: #f0883e;">Essay ခေါင်းစဉ်:</label>
+            <label style="font-size: 10px; color: #f0883e;">Essay ခေါင်းစဉ် ရွေးချယ်ရန်:</label>
             <select id="essay-topic">
                 <option value="My Favorite Hobby and Why I Like It">1. My Favorite Hobby and Why I Like It</option>
                 <option value="The Importance of Learning English Language">2. The Importance of Learning English Language</option>
@@ -440,14 +440,32 @@
             </select>
         </div>
 
-        <textarea id="essay-input" placeholder="ဒီနေရာတွင် သင့် Essay ကို ရေးသားပါ..." oninput="updateWordCount()" style="height: 65px; font-size: 11px;"></textarea>
+        <!-- 1. Introduction Box -->
+        <label style="font-size: 10px; color: #8b949e; margin-top: 6px; display: block; text-align: left;">၁။ Introduction (နိဒါန်း)</label>
+        <textarea id="essay-intro" placeholder="ခေါင်းစဉ်ကို မိတ်ဆက်သည့် စာကြောင်းရေးပါ..." rows="2" style="width: 100%; font-size: 11px; margin-top: 2px;" oninput="updateFullEssayText()"></textarea>
         
-        <div style="display: flex; justify-content: space-between; font-size: 9.5px; color: #8b949e; margin-top: 2px;">
-            <span>Words: <b id="word-count" style="color: #fff;">0</b></span>
+        <!-- 2. Body Paragraph Box -->
+        <label style="font-size: 10px; color: #8b949e; margin-top: 6px; display: block; text-align: left;">၂။ Body Paragraphs (အဓိက အကြောင်းအရာများ)</label>
+        <textarea id="essay-body" placeholder="အဓိက အချက်များနှင့် ဥပမာများကို ရေးပါ..." rows="4" style="width: 100%; font-size: 11px; margin-top: 2px;" oninput="updateFullEssayText()"></textarea>
+        
+        <!-- 3. Conclusion Box -->
+        <label style="font-size: 10px; color: #8b949e; margin-top: 6px; display: block; text-align: left;">၃။ Conclusion (နိဂုံး)</label>
+        <textarea id="essay-outro" placeholder="နိဂုံးချုပ် စာကြောင်း ရေးပါ..." rows="2" style="width: 100%; font-size: 11px; margin-top: 2px;" oninput="updateFullEssayText()"></textarea>
+
+        <!-- Linking Words Quick Insert Buttons -->
+        <div style="margin-top: 6px; text-align: left;">
+            <span style="font-size: 9.5px; color: #8b949e;">အသုံးဝင်သော စကားဆက်များ: </span>
+            <button class="start-btn" style="padding: 2px 5px; font-size: 9px; width: auto; display: inline-block; margin: 2px;" onclick="insertPhraseToBody('Moreover, ')">+ Moreover</button>
+            <button class="start-btn" style="padding: 2px 5px; font-size: 9px; width: auto; display: inline-block; margin: 2px;" onclick="insertPhraseToBody('However, ')">+ However</button>
+            <button class="start-btn" style="padding: 2px 5px; font-size: 9px; width: auto; display: inline-block; margin: 2px;" onclick="insertPhraseToBody('In conclusion, ')">+ In conclusion</button>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; font-size: 9.5px; color: #8b949e; margin-top: 6px;">
+            <span>Total Words: <b id="word-count" style="color: #fff;">0</b></span>
             <span style="color: #d29922;">🪙 +500 Coins ဆုကြေးရမည်</span>
         </div>
 
-        <button id="check-essay-btn" class="start-btn" style="background: #8957e5; padding: 6px; font-size: 11px;" onclick="checkEssayWithAI(); playSound('click');">AI ဖြင့် စစ်ဆေးမည် 🤖</button>
+        <button id="check-essay-btn" class="start-btn" style="background: #8957e5; padding: 6px; font-size: 11px; margin-top: 6px;" onclick="checkEssayWithAI(); playSound('click');">AI ဖြင့် စစ်ဆေးမည် 🤖</button>
         <div id="essay-feedback-box" class="essay-feedback" style="font-size: 10px;"></div>
     </div>
 
@@ -558,7 +576,7 @@
 
 <!-- External Script Files -->
 <script src="questions.js"></script>
-<script src="dictionary.js"></script> <!-- 👈 ဤနေရာတွင် dictionary.js ဖိုင်ကို ချိတ်ဆက်ထားပါသည် -->
+<script src="dictionary.js"></script>
 
 <script>
 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -723,7 +741,6 @@ const grammarSentencesBank = [
 ];
 
 let currentGrammarItem = null;
-let lastGrammarIdx = -1;
 
 function loadCurrentGrammarPrompt() {
     currentGrammarItem = grammarSentencesBank[0];
@@ -753,6 +770,46 @@ function checkGrammarOption(button, selectedOpt) {
     document.getElementById("next-grammar-prompt-btn").style.display = "block";
 }
 function loadNewGrammarPrompt() { loadCurrentGrammarPrompt(); }
+
+/* Essay Builder & AI Evaluator Logic */
+function updateFullEssayText() {
+    const intro = document.getElementById("essay-intro").value.trim();
+    const body = document.getElementById("essay-body").value.trim();
+    const outro = document.getElementById("essay-outro").value.trim();
+    
+    const fullText = `${intro} ${body} ${outro}`.trim();
+    const words = fullText ? fullText.split(/\s+/) : [];
+    document.getElementById("word-count").innerText = words.length;
+}
+
+function insertPhraseToBody(phrase) {
+    const bodyBox = document.getElementById("essay-body");
+    bodyBox.value += (bodyBox.value ? " " : "") + phrase;
+    bodyBox.focus();
+    updateFullEssayText();
+    playSound('click');
+}
+
+function checkEssayWithAI() {
+    const intro = document.getElementById("essay-intro").value.trim();
+    const body = document.getElementById("essay-body").value.trim();
+    const outro = document.getElementById("essay-outro").value.trim();
+    const fullText = `${intro} ${body} ${outro}`.trim();
+    
+    if (!fullText || fullText.split(/\s+/).length < 15) { 
+        alert("ကျေးဇူးပြု၍ Introduction၊ Body သို့မဟုတ် Conclusion တွင် စာလုံး ၁၅ လုံးထက်မနည်း ရေးပါ!"); 
+        return; 
+    }
+    
+    money += 500; 
+    localStorage.setItem('quizCoins', money); 
+    updateUI(); 
+    playSound('correct');
+    
+    const feedbackBox = document.getElementById("essay-feedback-box");
+    feedbackBox.style.display = "block";
+    feedbackBox.innerHTML = "<b>📊 AI Score: 85/100 - အရမ်းကောင်းပါတယ်။ (🪙 +500 Coins ရရှိသည်)</b><br><i>အကြံပြုချက်: Linking words များကို ပိုမိုသုံးစွဲပေးပါ။</i>";
+}
 
 window.onload = function() {
     checkSavedUser();
@@ -865,19 +922,6 @@ function buyItem(itemType, cost) {
     if (itemType === 'heart') { playerLives++; localStorage.setItem('playerLives', playerLives); }
     money -= cost; localStorage.setItem('quizCoins', money); updateUI(); playSound('correct');
     alert("🎉 ဝယ်ယူမှု အောင်မြင်ပါသည်။");
-}
-
-function updateWordCount() {
-    const text = document.getElementById("essay-input").value.trim();
-    document.getElementById("word-count").innerText = text ? text.split(/\s+/).length : 0;
-}
-
-function checkEssayWithAI() {
-    const text = document.getElementById("essay-input").value.trim();
-    if (!text || text.split(/\s+/).length < 15) { alert("စာလုံး ၁၅ လုံးထက်မနည်း ရေးပါ!"); return; }
-    money += 500; localStorage.setItem('quizCoins', money); updateUI(); playSound('correct');
-    document.getElementById("essay-feedback-box").style.display = "block";
-    document.getElementById("essay-feedback-box").innerHTML = "<b>📊 AI Score: 85/100 (🪙 +500 Coins ရရှိသည်)</b>";
 }
 
 function addCustomTask() {
