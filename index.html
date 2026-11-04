@@ -37,7 +37,7 @@
             background: #0d121c;
             display: flex;
             justify-content: space-around;
-            padding: 6px 2px;
+            padding: 8px 4px;
             border-top: 1px solid #1f304a;
             box-shadow: 0 -4px 15px rgba(0,0,0,0.7);
             z-index: 1000;
@@ -46,10 +46,10 @@
             background: none;
             border: none;
             color: #8b949e;
-            font-size: 7px;
+            font-size: 8px;
             font-weight: 600;
             cursor: pointer;
-            padding: 5px 2px;
+            padding: 4px 2px;
             border-radius: 6px;
             transition: 0.2s;
             display: flex;
@@ -58,7 +58,7 @@
             gap: 2px;
             flex: 1;
         }
-        .nav-tab span.icon { font-size: 11px; }
+        .nav-tab span.icon { font-size: 13px; }
         .nav-tab.active { color: #58a6ff; background: #162235; }
 
         .tab-content { display: none; }
@@ -228,12 +228,36 @@
         .word-pos { color: #f0883e; font-size: 10px; font-style: italic; }
         .word-myanmar { color: #3fb950; font-size: 11.5px; font-weight: bold; margin-bottom: 3px; }
         .word-example { color: #8b949e; font-size: 10px; line-height: 1.3; }
+
+        /* More Menu Grid */
+        .more-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        .more-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .more-card:hover {
+            border-color: #58a6ff;
+            background: #1f304a;
+        }
+        .more-card .icon { font-size: 22px; display: block; margin-bottom: 4px; }
+        .more-card .title { font-size: 11px; font-weight: bold; color: #fff; }
+        .more-card .desc { font-size: 9px; color: #8b949e; margin-top: 2px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- Home Tab -->
+    <!-- 1. Home Tab -->
     <div id="home-tab" class="tab-content active">
         <div class="home-hero">
             <h2>Study Bot VLP Pro</h2>
@@ -268,7 +292,69 @@
         </div>
     </div>
 
-    <!-- Levels Challenge Tab -->
+    <!-- 2. Vocabulary & Meaning Hub Tab -->
+    <div id="meaning-tab" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <h3 style="color: #3fb950; margin: 0; font-size: 12px;">📚 Vocabulary & Meaning Hub</h3>
+            <button style="padding: 3px 8px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:10px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မ</button>
+        </div>
+        <p style="font-size: 10px; color: #8b949e; margin-bottom: 6px;">စကားလုံးများ၏ အဓိပ္ပာယ်ကို သီးသန့် ရှာဖွေပြီး လေ့လာပါ</p>
+
+        <div class="meaning-card">
+            <input type="text" id="word-search-input" placeholder="🔍 စကားလုံး ရိုက်ရှာပါ (ဥပမာ - achieve, active)..." oninput="searchVocabulary()" autocomplete="off">
+        </div>
+
+        <div class="meaning-card" style="border-color: #1f304a;">
+            <b style="font-size: 10.5px; color: #58a6ff;">➕ စကားလုံးအသစ် ကိုယ်တိုင် မှတ်စုထည့်မည်</b>
+            <input type="text" id="new-word-input" placeholder="Word (ဥပမာ - Recall)" style="margin-top: 4px;">
+            <input type="text" id="new-meaning-input" placeholder="အဓိပ္ပာယ် (ဥပမာ - ပြန်လည်မှတ်မိခြင်း)" style="margin-top: 4px;">
+            <button class="start-btn" style="background: #1f6feb; padding: 5px; font-size: 10.5px; margin-top: 4px;" onclick="addNewCustomWord(); playSound('click');">မှတ်စုထဲ သိမ်းမည်</button>
+        </div>
+
+        <div id="words-list-container" style="max-height: 250px; overflow-y: auto; text-align: left;"></div>
+    </div>
+
+    <!-- 3. AI Essay Builder & Evaluator Tab -->
+    <div id="essay-tab" class="tab-content">
+        <h3 style="color: #3fb950; margin-top: 0; font-size: 12.5px;">✍️ Essay Builder & AI Evaluator</h3>
+        <p style="font-size: 10px; color: #8b949e; margin-bottom: 6px;">အင်္ဂလိပ်လို စာစီစာကွန်း ရေးသားပြီး စစ်ဆေးပါ</p>
+        
+        <div style="text-align: left; margin-top: 4px;">
+            <label style="font-size: 10px; color: #f0883e;">Essay ခေါင်းစဉ် ရွေးချယ်ရန်:</label>
+            <select id="essay-topic">
+                <option value="My Favorite Hobby and Why I Like It">1. My Favorite Hobby and Why I Like It</option>
+                <option value="The Importance of Learning English Language">2. The Importance of Learning English Language</option>
+                <option value="How Technology Changes Our Daily Life">3. How Technology Changes Our Daily Life</option>
+                <option value="My Dreams and Goals for the Future">4. My Dreams and Goals for the Future</option>
+            </select>
+        </div>
+
+        <label style="font-size: 10px; color: #8b949e; margin-top: 6px; display: block; text-align: left;">၁။ Introduction (နိဒါန်း)</label>
+        <textarea id="essay-intro" placeholder="ခေါင်းစဉ်ကို မိတ်ဆက်သည့် စာကြောင်းရေးပါ..." rows="2" style="width: 100%; font-size: 11px; margin-top: 2px;" oninput="updateFullEssayText()"></textarea>
+        
+        <label style="font-size: 10px; color: #8b949e; margin-top: 6px; display: block; text-align: left;">၂။ Body Paragraphs (အဓိက အကြောင်းအရာများ)</label>
+        <textarea id="essay-body" placeholder="အဓိက အချက်များနှင့် ဥပမာများကို ရေးပါ..." rows="4" style="width: 100%; font-size: 11px; margin-top: 2px;" oninput="updateFullEssayText()"></textarea>
+        
+        <label style="font-size: 10px; color: #8b949e; margin-top: 6px; display: block; text-align: left;">၃။ Conclusion (နိဂုံး)</label>
+        <textarea id="essay-outro" placeholder="နိဂုံးချုပ် စာကြောင်း ရေးပါ..." rows="2" style="width: 100%; font-size: 11px; margin-top: 2px;" oninput="updateFullEssayText()"></textarea>
+
+        <div style="margin-top: 6px; text-align: left;">
+            <span style="font-size: 9.5px; color: #8b949e;">အသုံးဝင်သော စကားဆက်များ: </span>
+            <button class="start-btn" style="padding: 2px 5px; font-size: 9px; width: auto; display: inline-block; margin: 2px;" onclick="insertPhraseToBody('Moreover, ')">+ Moreover</button>
+            <button class="start-btn" style="padding: 2px 5px; font-size: 9px; width: auto; display: inline-block; margin: 2px;" onclick="insertPhraseToBody('However, ')">+ However</button>
+            <button class="start-btn" style="padding: 2px 5px; font-size: 9px; width: auto; display: inline-block; margin: 2px;" onclick="insertPhraseToBody('In conclusion, ')">+ In conclusion</button>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; font-size: 9.5px; color: #8b949e; margin-top: 6px;">
+            <span>Total Words: <b id="word-count" style="color: #fff;">0</b></span>
+            <span style="color: #d29922;">🪙 +500 Coins ဆုကြေးရမည်</span>
+        </div>
+
+        <button id="check-essay-btn" class="start-btn" style="background: #8957e5; padding: 6px; font-size: 11px; margin-top: 6px;" onclick="checkEssayWithAI(); playSound('click');">AI ဖြင့် စစ်ဆေးမည် 🤖</button>
+        <div id="essay-feedback-box" class="essay-feedback" style="font-size: 10px;"></div>
+    </div>
+
+    <!-- 4. Levels Challenge Tab -->
     <div id="level-tab" class="tab-content">
         <div class="header">
             <span class="score">⭐ Current Level: <span id="current-lvl-display">1</span></span>
@@ -298,53 +384,60 @@
                 <div id="explanation-box" class="explanation"></div>
                 <button id="next-q-btn" class="next-btn" onclick="nextLevelQuestion(); playSound('click');">နောက်တစ်ပုဒ်သို့ ➡️</button>
             </div>
+        </div>
+    </div>
 
-            <div id="boss-essay-box" class="grammar-card" style="display: none; border-color: #d29922;">
-                <h4 style="color: #d29922; margin: 0 0 4px 0; font-size: 12px;">👑 BOSS QUEST: Short Essay Challenge</h4>
-                <p style="font-size: 10px; color: #8b949e; margin-bottom: 6px;">Unit 7 Future Plans အကြောင်း စာလုံး 15 အထက် ရေးပါ:</p>
-                <textarea id="boss-essay-input" placeholder="ဒီနေရာတွင် ရေးသားပါ..." style="height: 60px; font-size: 11px;"></textarea>
-                <button class="start-btn" style="background: #8957e5; font-size: 11px;" onclick="submitBossEssay(); playSound('click');">Essay တင်သွင်းမည် 👑</button>
+    <!-- 5. More Menu Hub (အခြား Mode များ စုဆောင်းရာ) -->
+    <div id="more-tab" class="tab-content">
+        <h3 style="color: #58a6ff; margin-top: 0; font-size: 12.5px;">⚙️ More Modes & Tools</h3>
+        <p style="font-size: 10px; color: #8b949e; margin-bottom: 10px;">အခြား လေ့လာရေး လုပ်ဆောင်ချက်များကို ရွေးချယ်ပါ</p>
+
+        <div class="more-grid">
+            <div class="more-card" onclick="switchTab('proficiency-tab'); playSound('click');">
+                <span class="icon">🎯</span>
+                <div class="title">Level Check</div>
+                <div class="desc">CEFR Level စမ်းသပ်မည်</div>
+            </div>
+            <div class="more-card" onclick="switchTab('grammar-tab'); playSound('click');">
+                <span class="icon">📖</span>
+                <div class="title">Grammar</div>
+                <div class="desc">သဒ္ဒါ လေ့ကျင့်ခန်းများ</div>
+            </div>
+            <div class="more-card" onclick="switchTab('shop-tab'); playSound('click');">
+                <span class="icon">🛍️</span>
+                <div class="title">Shop</div>
+                <div class="desc">Coins ဖြင့် ပစ္စည်းဝယ်မည်</div>
+            </div>
+            <div class="more-card" onclick="switchTab('test-tab'); playSound('click');">
+                <span class="icon">📋</span>
+                <div class="title">Tasks</div>
+                <div class="desc">လုပ်စရာများ မှတ်ရန်</div>
+            </div>
+            <div class="more-card" onclick="switchTab('forest-tab'); playSound('click');">
+                <span class="icon">🌳</span>
+                <div class="title">Forest</div>
+                <div class="desc">Focus Mode စာကျက်ရန်</div>
+            </div>
+            <div class="more-card" onclick="switchTab('leaderboard-tab'); playSound('click');">
+                <span class="icon">🏆</span>
+                <div class="title">Leaderboard</div>
+                <div class="desc">အဆင့်ဇယား ကြည့်ရန်</div>
             </div>
         </div>
     </div>
 
-    <!-- Vocabulary & Meaning Hub Tab (Reads from dictionary.js) -->
-    <div id="meaning-tab" class="tab-content">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-            <h3 style="color: #3fb950; margin: 0; font-size: 12px;">📚 Vocabulary & Meaning Hub</h3>
-            <button style="padding: 3px 8px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:10px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မ</button>
-        </div>
-        <p style="font-size: 10px; color: #8b949e; margin-bottom: 6px;">စကားလုံးများ၏ အဓိပ္ပာယ်ကို သီးသန့် ရှာဖွေပြီး လေ့လာပါ</p>
-
-        <div class="meaning-card">
-            <input type="text" id="word-search-input" placeholder="🔍 စကားလုံး ရိုက်ရှာပါ (ဥပမာ - achieve, active)..." oninput="searchVocabulary()" autocomplete="off">
-        </div>
-
-        <div class="meaning-card" style="border-color: #1f304a;">
-            <b style="font-size: 10.5px; color: #58a6ff;">➕ စကားလုံးအသစ် ကိုယ်တိုင် မှတ်စုထည့်မည်</b>
-            <input type="text" id="new-word-input" placeholder="Word (ဥပမာ - Recall)" style="margin-top: 4px;">
-            <input type="text" id="new-meaning-input" placeholder="အဓိပ္ပာယ် (ဥပမာ - ပြန်လည်မှတ်မိခြင်း)" style="margin-top: 4px;">
-            <button class="start-btn" style="background: #1f6feb; padding: 5px; font-size: 10.5px; margin-top: 4px;" onclick="addNewCustomWord(); playSound('click');">မှတ်စုထဲ သိမ်းမည်</button>
-        </div>
-
-        <div id="words-list-container" style="max-height: 250px; overflow-y: auto; text-align: left;"></div>
-    </div>
-
-    <!-- English Proficiency Level Test Tab -->
+    <!-- Sub Screens (More Menu ထဲမှတဆင့် သို့မဟုတ် Logic အရ သွားမည့် Screen များ) -->
     <div id="proficiency-tab" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <h3 style="color: #f0883e; margin: 0; font-size: 12px;">🎯 English Level Check</h3>
-            <button style="padding: 3px 8px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:10px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မ</button>
+            <button style="padding: 3px 8px; background:#1f6feb; border:none; border-radius:4px; font-weight:bold; color:white; cursor:pointer; font-size:10px;" onclick="switchTab('more-tab'); playSound('click');">⬅️ ပြန်ထွက်မည်</button>
         </div>
-        <p style="font-size: 10px; color: #8b949e; margin-bottom: 6px;">ကိုယ့်ရဲ့ အင်္ဂလိပ်စာ အဆင့်အတန်း ဘယ်လောက်ရှိလဲ စမ်းသပ်ပါ</p>
-
         <div id="prof-start-screen" class="grammar-card" style="text-align: center; padding: 15px 10px;">
             <div style="font-size: 30px; margin-bottom: 6px;">📊</div>
             <h4 style="color: #58a6ff; margin: 0 0 4px 0; font-size: 12px;">Proficiency Assessment Test</h4>
             <p style="font-size: 9.5px; color: #8b949e; margin-bottom: 10px;">မေးခွန်း ၁၀ ပုဒ် ဖြေဆိုရုံဖြင့် ကိုယ့်ရဲ့ CEFR Level ကို သိရှိနိုင်ပါပြီ။</p>
             <button class="start-btn" style="background: #1f6feb; font-size: 11px; padding: 7px;" onclick="startProficiencyTest(); playSound('click');">စတင်စမ်းသပ်မည် 🚀</button>
         </div>
-
         <div id="prof-quiz-screen" class="grammar-card" style="display: none;">
             <div style="display: flex; justify-content: space-between; font-size: 10px; color: #8b949e; margin-bottom: 4px;">
                 <span>မေးခွန်း: <b id="prof-q-num" style="color: #58a6ff;">1 / 10</b></span>
@@ -353,7 +446,6 @@
             <div id="prof-question-text" style="font-size: 11.5px; font-weight: bold; color: #fff; margin-bottom: 8px; text-align: left;"></div>
             <div id="prof-options-box" style="display: flex; flex-direction: column; gap: 5px;"></div>
         </div>
-
         <div id="prof-result-screen" class="grammar-card" style="display: none; text-align: center; border-color: #3fb950;">
             <h4 style="color: #3fb950; margin: 0 0 4px 0; font-size: 12.5px;">🏆 Test Result & Level Status</h4>
             <div id="prof-result-content" style="font-size: 11px; color: #d3f9d8; margin: 8px 0; line-height: 1.4;"></div>
@@ -361,11 +453,11 @@
         </div>
     </div>
 
-    <!-- Ultimate Shop Tab -->
     <div id="shop-tab" class="tab-content">
-        <h3 style="color: #f0883e; margin-top: 0; font-size: 12.5px;">🛍️ Ultimate Reward Shop</h3>
-        <p style="font-size: 10px; color: #8b949e; margin-bottom: 8px;">စုဆောင်းထားသော Coins များဖြင့် အထူးပစ္စည်းများ ဝယ်ယူပါ</p>
-        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <h3 style="color: #f0883e; margin: 0; font-size: 12.5px;">🛍️ Ultimate Reward Shop</h3>
+            <button style="padding: 3px 8px; background:#1f6feb; border:none; border-radius:4px; font-weight:bold; color:white; cursor:pointer; font-size:10px;" onclick="switchTab('more-tab'); playSound('click');">⬅️ ပြန်ထွက်မည်</button>
+        </div>
         <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; margin-bottom: 6px;">
             <div style="text-align: left;">
                 <b style="color: #ff7b72; font-size: 11px;">❤️ Extra Heart (Life)</b>
@@ -373,7 +465,6 @@
             </div>
             <button class="start-btn" style="background: #238636; width: auto; padding: 5px 8px; font-size: 10px; margin: 0;" onclick="buyItem('heart', 50)">🪙 50 ဝယ်မည်</button>
         </div>
-
         <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; margin-bottom: 6px;">
             <div style="text-align: left;">
                 <b style="color: #58a6ff; font-size: 11px;">🔥 Streak Freeze</b>
@@ -381,99 +472,31 @@
             </div>
             <button class="start-btn" style="background: #238636; width: auto; padding: 5px 8px; font-size: 10px; margin: 0;" onclick="buyItem('freeze', 250)">🪙 250 ဝယ်မည်</button>
         </div>
-
-        <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; margin-bottom: 6px;">
-            <div style="text-align: left;">
-                <b style="color: #d29922; font-size: 11px;">⚡ 2x Coin Booster</b>
-                <p style="font-size: 9px; color: #8b949e; margin: 2px 0 0 0;">နောက်ထပ် Quiz အတွက် Coins နှစ်ဆပေးသည်။</p>
-            </div>
-            <button class="start-btn" style="background: #238636; width: auto; padding: 5px 8px; font-size: 10px; margin: 0;" onclick="buyItem('booster', 150)">🪙 150 ဝယ်မည်</button>
-        </div>
-
-        <div class="grammar-card" style="display: flex; justify-content: space-between; align-items: center; padding: 8px 10px;">
-            <div style="text-align: left;">
-                <b style="color: #bc8cff; font-size: 11px;">🎨 Epic Dark Theme</b>
-                <p style="font-size: 9px; color: #8b949e; margin: 2px 0 0 0;">Bot ၏ အထူးဒီဇိုင်း Skin ကို ဖွင့်ပေးသည်။</p>
-            </div>
-            <button class="start-btn" style="background: #238636; width: auto; padding: 5px 8px; font-size: 10px; margin: 0;" onclick="buyItem('theme', 500)">🪙 500 ဝယ်မည်</button>
-        </div>
     </div>
 
-    <!-- AI Grammar Sentence Challenge Tab -->
     <div id="grammar-tab" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <h3 style="color: #58a6ff; margin: 0; font-size: 12px;">📖 AI Sentence Challenge Hub</h3>
-            <button style="padding: 3px 8px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:10px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မ</button>
+            <button style="padding: 3px 8px; background:#1f6feb; border:none; border-radius:4px; font-weight:bold; color:white; cursor:pointer; font-size:10px;" onclick="switchTab('more-tab'); playSound('click');">⬅️ ပြန်ထွက်မည်</button>
         </div>
-        <p style="font-size: 10px; color: #8b949e; margin-bottom: 6px;">စာကြောင်းအသစ်များကို လေ့လာပြီး အမျိုးအစားခွဲပါ</p>
-
         <div class="grammar-card">
-            <h4 style="margin: 0 0 3px 0; color: #3fb950; font-size: 11px;">📌 (1) Future Simple = will + V0</h4>
-            <p style="font-size: 9.5px; color: #c9d1d9; margin: 0 0 4px 0; line-height: 1.3;">• Note 1: လက်တလော ဆုံးဖြတ်ချက် | Note 2: သဘောတူညီရန်</p>
-            <h4 style="margin: 4px 0 2px 0; color: #58a6ff; font-size: 11px;">📌 (2) Be going to + V0</h4>
-            <p style="font-size: 9.5px; color: #c9d1d9; margin: 0; line-height: 1.3;">• No. 1: ကြိုတင်စီစဉ်ထားချက် | No. 2: ခန့်မှန်းခြင်း</p>
+            <h4 style="margin: 0 0 3px 0; color: #3fb950; font-size: 11px;">📌 Future Simple vs Be going to</h4>
+            <p style="font-size: 9.5px; color: #c9d1d9; margin: 0; line-height: 1.3;">• will + V0 = လက်တလော ဆုံးဖြတ်ချက်<br>• be going to + V0 = ကြိုတင်စီစဉ်ထားချက်</p>
         </div>
-
         <div class="grammar-card" style="border: 1.5px solid #8957e5;">
-            <h4 style="margin: 0 0 3px 0; color: #a371f7; font-size: 11.5px;">🤖 AI Sentence Challenge</h4>
             <div style="background: #0d121c; padding: 6px; border-radius: 6px; border: 1px solid #1f304a; margin: 4px 0;">
                 <p id="ai-generated-sentence" style="font-size: 11.5px; color: #58a6ff; font-weight: bold; margin: 0;"></p>
             </div>
             <div id="grammar-options-container"></div>
-            <button id="next-grammar-prompt-btn" class="start-btn" style="background: #1f6feb; padding: 6px; font-size: 10.5px; margin-top: 4px; display: none;" onclick="loadNewGrammarPrompt(); playSound('click');">➡️ နောက်စာကြောင်းအသစ် ပြောင်းမည်</button>
+            <button id="next-grammar-prompt-btn" class="start-btn" style="background: #1f6feb; padding: 6px; font-size: 10.5px; margin-top: 4px; display: none;" onclick="loadNewGrammarPrompt(); playSound('click');">➡️ နောက်တစ်ပုဒ် ပြောင်းမည်</button>
             <div id="grammar-feedback" class="essay-feedback" style="font-size: 10px;"></div>
         </div>
     </div>
 
-    <!-- AI Essay Builder & Evaluator Tab (Combined & Integrated) -->
-    <div id="essay-tab" class="tab-content">
-        <h3 style="color: #3fb950; margin-top: 0; font-size: 12.5px;">✍️ Essay Builder & AI Evaluator</h3>
-        <p style="font-size: 10px; color: #8b949e; margin-bottom: 6px;">အင်္ဂလိပ်လို စာစီစာကွန်း ရေးသားပြီး စစ်ဆေးပါ</p>
-        
-        <div style="text-align: left; margin-top: 4px;">
-            <label style="font-size: 10px; color: #f0883e;">Essay ခေါင်းစဉ် ရွေးချယ်ရန်:</label>
-            <select id="essay-topic">
-                <option value="My Favorite Hobby and Why I Like It">1. My Favorite Hobby and Why I Like It</option>
-                <option value="The Importance of Learning English Language">2. The Importance of Learning English Language</option>
-                <option value="How Technology Changes Our Daily Life">3. How Technology Changes Our Daily Life</option>
-                <option value="My Dreams and Goals for the Future">4. My Dreams and Goals for the Future</option>
-            </select>
-        </div>
-
-        <!-- 1. Introduction Box -->
-        <label style="font-size: 10px; color: #8b949e; margin-top: 6px; display: block; text-align: left;">၁။ Introduction (နိဒါန်း)</label>
-        <textarea id="essay-intro" placeholder="ခေါင်းစဉ်ကို မိတ်ဆက်သည့် စာကြောင်းရေးပါ..." rows="2" style="width: 100%; font-size: 11px; margin-top: 2px;" oninput="updateFullEssayText()"></textarea>
-        
-        <!-- 2. Body Paragraph Box -->
-        <label style="font-size: 10px; color: #8b949e; margin-top: 6px; display: block; text-align: left;">၂။ Body Paragraphs (အဓိက အကြောင်းအရာများ)</label>
-        <textarea id="essay-body" placeholder="အဓိက အချက်များနှင့် ဥပမာများကို ရေးပါ..." rows="4" style="width: 100%; font-size: 11px; margin-top: 2px;" oninput="updateFullEssayText()"></textarea>
-        
-        <!-- 3. Conclusion Box -->
-        <label style="font-size: 10px; color: #8b949e; margin-top: 6px; display: block; text-align: left;">၃။ Conclusion (နိဂုံး)</label>
-        <textarea id="essay-outro" placeholder="နိဂုံးချုပ် စာကြောင်း ရေးပါ..." rows="2" style="width: 100%; font-size: 11px; margin-top: 2px;" oninput="updateFullEssayText()"></textarea>
-
-        <!-- Linking Words Quick Insert Buttons -->
-        <div style="margin-top: 6px; text-align: left;">
-            <span style="font-size: 9.5px; color: #8b949e;">အသုံးဝင်သော စကားဆက်များ: </span>
-            <button class="start-btn" style="padding: 2px 5px; font-size: 9px; width: auto; display: inline-block; margin: 2px;" onclick="insertPhraseToBody('Moreover, ')">+ Moreover</button>
-            <button class="start-btn" style="padding: 2px 5px; font-size: 9px; width: auto; display: inline-block; margin: 2px;" onclick="insertPhraseToBody('However, ')">+ However</button>
-            <button class="start-btn" style="padding: 2px 5px; font-size: 9px; width: auto; display: inline-block; margin: 2px;" onclick="insertPhraseToBody('In conclusion, ')">+ In conclusion</button>
-        </div>
-
-        <div style="display: flex; justify-content: space-between; font-size: 9.5px; color: #8b949e; margin-top: 6px;">
-            <span>Total Words: <b id="word-count" style="color: #fff;">0</b></span>
-            <span style="color: #d29922;">🪙 +500 Coins ဆုကြေးရမည်</span>
-        </div>
-
-        <button id="check-essay-btn" class="start-btn" style="background: #8957e5; padding: 6px; font-size: 11px; margin-top: 6px;" onclick="checkEssayWithAI(); playSound('click');">AI ဖြင့် စစ်ဆေးမည် 🤖</button>
-        <div id="essay-feedback-box" class="essay-feedback" style="font-size: 10px;"></div>
-    </div>
-
-    <!-- Custom Tasks Tab -->
     <div id="test-tab" class="tab-content">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
             <h3 style="color: #58a6ff; margin: 0; font-size: 12.5px;">📋 Custom Tasks</h3>
-            <button style="padding: 3px 8px; background:#d29922; border:none; border-radius:4px; font-weight:bold; cursor:pointer; font-size:10px;" onclick="switchTab('home-tab'); playSound('click');">🏠 ပင်မ</button>
+            <button style="padding: 3px 8px; background:#1f6feb; border:none; border-radius:4px; font-weight:bold; color:white; cursor:pointer; font-size:10px;" onclick="switchTab('more-tab'); playSound('click');">⬅️ ပြန်ထွက်မည်</button>
         </div>
         <div class="test-card">
             <input type="text" id="custom-task-input" placeholder="လုပ်စရာ အသစ်ထည့်ရန်..." maxlength="40" autocomplete="off">
@@ -482,42 +505,40 @@
         <div style="text-align: left; max-height: 160px; overflow-y: auto;" id="custom-tasks-container"></div>
     </div>
 
-    <!-- Forest Mode Tab -->
     <div id="forest-tab" class="tab-content">
-        <h3 style="color: #3fb950; margin-top: 0; font-size: 12.5px;">🌳 Forest Focus Mode</h3>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <h3 style="color: #3fb950; margin: 0; font-size: 12.5px;">🌳 Forest Focus Mode</h3>
+            <button style="padding: 3px 8px; background:#1f6feb; border:none; border-radius:4px; font-weight:bold; color:white; cursor:pointer; font-size:10px;" onclick="switchTab('more-tab'); playSound('click');">⬅️ ပြန်ထွက်မည်</button>
+        </div>
         <div class="forest-card" style="text-align: center; padding: 8px;">
             <div id="tree-display" style="font-size: 35px; margin: 4px 0;">🌱</div>
-            <h4 id="tree-status-text" style="color: #58a6ff; font-size: 11px; margin: 2px 0;">အပင်ပေါက်စလေး (Seedling)</h4>
+            <h4 id="tree-status-text" style="color: #58a6ff; font-size: 11px; margin: 2px 0;">အပင်ပေါက်စလေး</h4>
             <div id="forest-timer-display" style="font-size: 18px; font-family: monospace; color: #3fb950; margin: 6px 0;">25:00</div>
             <button id="forest-start-btn" class="start-btn" style="background: #238636; font-size: 11px; padding: 6px;" onclick="startForestSession(); playSound('click');">🌱 အပင်စိုက်မည်</button>
             <button id="forest-cancel-btn" class="finish-btn" style="display: none; font-size: 11px; padding: 6px;" onclick="cancelForestSession(); playSound('click');">❌ ဖျက်သိမ်းမည်</button>
         </div>
     </div>
 
-    <!-- Leaderboard Tab -->
     <div id="leaderboard-tab" class="tab-content">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <h3 style="color: #f0883e; margin: 0; font-size: 12.5px;">🏆 Leaderboard</h3>
+            <button style="padding: 3px 8px; background:#1f6feb; border:none; border-radius:4px; font-weight:bold; color:white; cursor:pointer; font-size:10px;" onclick="switchTab('more-tab'); playSound('click');">⬅️ ပြန်ထွက်မည်</button>
+        </div>
         <div class="leaderboard-list">
-            <strong style="color: #f0883e; font-size: 10px;">🏆 Level Progress Leaderboard</strong>
             <div id="high-scores" style="margin-top: 4px;">
                 <p style="color: #8b949e; font-size: 10px; text-align: center;">ဒေတာများ ရယူနေပါသည်...</p>
             </div>
         </div>
-        <a id="share-tg-btn" href="#" target="_blank" class="tg-btn" onclick="playSound('click')" style="font-size: 11px; padding: 6px;">📤 Telegram သို့ ရမှတ်မျှဝေရန်</a>
     </div>
 </div>
 
-<!-- Bottom Navigation Bar -->
+<!-- Clean Bottom Navigation Bar (၅ ခုတည်း သပ်ရပ်စွာ ထားရှိခြင်း) -->
 <div class="nav-tabs">
     <button class="nav-tab active" onclick="switchTab('home-tab'); playSound('click');"><span class="icon">🏠</span>ပင်မ</button>
-    <button class="nav-tab" onclick="switchTab('level-tab'); renderLevelGrid(); playSound('click');"><span class="icon">🎮</span>Levels</button>
     <button class="nav-tab" onclick="switchTab('meaning-tab'); renderVocabularyList(); playSound('click');"><span class="icon">📚</span>Meaning</button>
-    <button class="nav-tab" onclick="switchTab('proficiency-tab'); playSound('click');"><span class="icon">🎯</span>Level</button>
-    <button class="nav-tab" onclick="switchTab('shop-tab'); playSound('click');"><span class="icon">🛍️</span>Shop</button>
-    <button class="nav-tab" onclick="switchTab('grammar-tab'); loadCurrentGrammarPrompt(); playSound('click');"><span class="icon">📖</span>Grammar</button>
     <button class="nav-tab" onclick="switchTab('essay-tab'); playSound('click');"><span class="icon">✍️</span>Essay</button>
-    <button class="nav-tab" onclick="switchTab('test-tab'); loadCustomTasks(); playSound('click');"><span class="icon">📋</span>Tasks</button>
-    <button class="nav-tab" onclick="switchTab('forest-tab'); playSound('click');"><span class="icon">🌳</span>Forest</button>
-    <button class="nav-tab" onclick="switchTab('leaderboard-tab'); playSound('click');"><span class="icon">🏆</span>Board</button>
+    <button class="nav-tab" onclick="switchTab('level-tab'); renderLevelGrid(); playSound('click');"><span class="icon">🎮</span>Levels</button>
+    <button class="nav-tab" onclick="switchTab('more-tab'); playSound('click');"><span class="icon">⚙️</span>More</button>
 </div>
 
 <!-- Firebase & Main Script -->
@@ -537,18 +558,6 @@
 
   const app = initializeApp(firebaseConfig);
   const db = getDatabase(app);
-
-  window.saveScoreToFirebase = function(name, maxLvl, finalMoney) {
-      const cleanName = name.replace(/[.#$\/\[\]]/g, "_").trim();
-      const userScoreRef = ref(db, 'scores/' + cleanName);
-      get(userScoreRef).then((snapshot) => {
-          let existingLvl = 1;
-          if (snapshot.exists()) { existingLvl = snapshot.val().score || 1; }
-          if (maxLvl >= existingLvl) {
-              set(userScoreRef, { name: name, score: maxLvl, money: finalMoney, timestamp: Date.now() });
-          }
-      });
-  };
 
   window.loadLeaderboardFromFirebase = function() {
       const scoresRef = ref(db, 'scores');
@@ -574,7 +583,6 @@
   };
 </script>
 
-<!-- External Script Files -->
 <script src="questions.js"></script>
 <script src="dictionary.js"></script>
 
@@ -609,13 +617,9 @@ let currentPlayingLvl = 1;
 let currentQIndex = 0;
 let currentLvlQuestions = [];
 let correctInLvl = 0;
-
 let playerLives = parseInt(localStorage.getItem('playerLives')) || 3;
-let streakFreezeCount = parseInt(localStorage.getItem('streakFreezeCount')) || 0;
-let hasBooster = localStorage.getItem('hasBooster') === 'true';
-let hasEpicTheme = localStorage.getItem('hasEpicTheme') === 'true';
 
-/* Vocabulary Functions (Reads from dictionary.js) */
+/* Vocabulary Functions */
 function getVocabularyBank() {
     let customWords = JSON.parse(localStorage.getItem("customVocabList")) || [];
     let baseBank = (typeof defaultVocabularyBank !== 'undefined') ? defaultVocabularyBank : [];
@@ -671,107 +675,7 @@ function addNewCustomWord() {
     alert("🎉 စကားလုံးအသစ် အောင်မြင်စွာ မှတ်သားပြီးပါပြီ!");
 }
 
-/* Proficiency Test & Game Logic */
-const proficiencyQuestions = [
-    { q: "She ___ to school every day.", options: ["go", "goes", "going", "gone"], answer: "goes", level: "Beginner (A1)" },
-    { q: "They ___ playing football now.", options: ["is", "am", "are", "be"], answer: "are", level: "Beginner (A2)" },
-    { q: "I have ___ my homework already.", options: ["finish", "finishes", "finishing", "finished"], answer: "finished", level: "Intermediate (B1)" },
-    { q: "If I were rich, I ___ buy a big house.", options: ["will", "would", "can", "shall"], answer: "would", level: "Intermediate (B1)" },
-    { q: "The letter ___ by John yesterday.", options: ["wrote", "was written", "is written", "writes"], answer: "was written", level: "Intermediate (B2)" },
-    { q: "He speaks English very ___.", options: ["good", "fluent", "fluently", "bad"], answer: "fluently", level: "Intermediate (B2)" },
-    { q: "Hardly had I arrived home ___ it started to rain.", options: ["when", "than", "then", "after"], answer: "when", level: "Advanced (C1)" },
-    { q: "Not only ___ late, but he also forgot his books.", options: ["he was", "was he", "he is", "is he"], answer: "was he", level: "Advanced (C1)" },
-    { q: "By next year, we ___ our school project.", options: ["will finish", "will have finished", "finish", "finished"], answer: "will have finished", level: "Advanced (C1)" },
-    { q: "She suggested ___ early to avoid traffic.", options: ["leave", "to leave", "leaving", "left"], answer: "leaving", level: "Advanced (C1)" }
-];
-
-let profCurrentIdx = 0;
-let profScore = 0;
-
-function startProficiencyTest() {
-    profCurrentIdx = 0; profScore = 0;
-    document.getElementById("prof-start-screen").style.display = "none";
-    document.getElementById("prof-quiz-screen").style.display = "block";
-    document.getElementById("prof-result-screen").style.display = "none";
-    loadProficiencyQuestion();
-}
-
-function loadProficiencyQuestion() {
-    if (profCurrentIdx >= proficiencyQuestions.length) { showProficiencyResult(); return; }
-    const qData = proficiencyQuestions[profCurrentIdx];
-    document.getElementById("prof-q-num").innerText = `${profCurrentIdx + 1} / ${proficiencyQuestions.length}`;
-    document.getElementById("prof-q-level-tag").innerText = qData.level;
-    document.getElementById("prof-question-text").innerText = qData.q;
-
-    let optHtml = "";
-    qData.options.forEach(opt => {
-        optHtml += `<button class="level-test-btn" onclick="checkProficiencyAnswer(this, '${opt.replace(/'/g, "\\'")}', '${qData.answer.replace(/'/g, "\\'")}')">${opt}</button>`;
-    });
-    document.getElementById("prof-options-box").innerHTML = optHtml;
-}
-
-function checkProficiencyAnswer(btn, selected, correct) {
-    document.querySelectorAll('.level-test-btn').forEach(b => b.disabled = true);
-    if (selected.trim() === correct.trim()) {
-        playSound('correct');
-        btn.style.background = "#0d3819"; btn.style.borderColor = "#2ea043"; btn.style.color = "#d3f9d8";
-        profScore++;
-    } else {
-        playSound('wrong');
-        btn.style.background = "#2b1515"; btn.style.borderColor = "#da3633"; btn.style.color = "#f85149";
-    }
-    setTimeout(() => { profCurrentIdx++; loadProficiencyQuestion(); }, 800);
-}
-
-function showProficiencyResult() {
-    document.getElementById("prof-quiz-screen").style.display = "none";
-    document.getElementById("prof-result-screen").style.display = "block";
-    let levelTitle = profScore <= 3 ? "🌱 Beginner (A1)" : profScore <= 7 ? "📈 Intermediate (B1)" : "🚀 Advanced (C1)";
-    document.getElementById("prof-result-content").innerHTML = `<p>မှန်ကန်မှု: <b style="color: #58a6ff;">${profScore} / 10</b></p><p style="color: #f0883e;"><b>သင့်အဆင့်: ${levelTitle}</b></p>`;
-    playSound('correct');
-}
-
-function resetProficiencyTest() {
-    document.getElementById("prof-result-screen").style.display = "none";
-    document.getElementById("prof-start-screen").style.display = "block";
-}
-
-const grammarSentencesBank = [
-    { sentence: "I will play mobile game after a class.", correctCategory: "Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)", options: ["Future Simple: Note 1 (လက်တလော ဆုံးဖြတ်ချက်)", "Future Simple: Note 2 (သဘောတူညီရန်)", "Be going to: No 1 (ကြိုတင်စီစဉ်ထားချက်)", "Be going to: No 2 (ခန့်မှန်းခြင်း)"], explanation: "အတန်းပြီးရင် ဂိမ်းဆော့မယ်ဆိုတာ လက်တလော ဆုံးဖြတ်တာဖြစ်ပါတယ်။" }
-];
-
-let currentGrammarItem = null;
-
-function loadCurrentGrammarPrompt() {
-    currentGrammarItem = grammarSentencesBank[0];
-    document.getElementById("ai-generated-sentence").innerText = `"${currentGrammarItem.sentence}"`;
-    document.getElementById("grammar-feedback").style.display = "none";
-    document.getElementById("next-grammar-prompt-btn").style.display = "none";
-
-    const optionsContainer = document.getElementById("grammar-options-container");
-    let optionsHTML = "";
-    currentGrammarItem.options.forEach((opt) => {
-        optionsHTML += `<button class="grammar-option-btn" onclick="checkGrammarOption(this, '${opt.replace(/'/g, "\\'")}')">${opt}</button>`;
-    });
-    optionsContainer.innerHTML = optionsHTML;
-}
-
-function checkGrammarOption(button, selectedOpt) {
-    document.querySelectorAll('.grammar-option-btn').forEach(btn => btn.disabled = true);
-    const feedbackBox = document.getElementById("grammar-feedback");
-    feedbackBox.style.display = "block";
-    if (selectedOpt === currentGrammarItem.correctCategory) {
-        playSound('correct'); money += 30; localStorage.setItem('quizCoins', money); updateUI();
-        button.style.background = "#0d3819"; feedbackBox.innerHTML = `<strong>✅ မှန်ကန်ပါသည်။ +30 Coins!</strong>`;
-    } else {
-        playSound('wrong');
-        button.style.background = "#2b1515"; feedbackBox.innerHTML = `<strong>❌ မမှန်ပါ။</strong>`;
-    }
-    document.getElementById("next-grammar-prompt-btn").style.display = "block";
-}
-function loadNewGrammarPrompt() { loadCurrentGrammarPrompt(); }
-
-/* Essay Builder & AI Evaluator Logic */
+/* Essay Builder Functions */
 function updateFullEssayText() {
     const intro = document.getElementById("essay-intro").value.trim();
     const body = document.getElementById("essay-body").value.trim();
@@ -808,31 +712,32 @@ function checkEssayWithAI() {
     
     const feedbackBox = document.getElementById("essay-feedback-box");
     feedbackBox.style.display = "block";
-    feedbackBox.innerHTML = "<b>📊 AI Score: 85/100 - အရမ်းကောင်းပါတယ်။ (🪙 +500 Coins ရရှိသည်)</b><br><i>အကြံပြုချက်: Linking words များကို ပိုမိုသုံးစွဲပေးပါ။</i>";
+    feedbackBox.innerHTML = "<b>📊 AI Score: 85/100 - အရမ်းကောင်းပါတယ်။ (🪙 +500 Coins ရရှိသည်)</b>";
 }
 
-window.onload = function() {
-    checkSavedUser();
-    updateUI();
-    renderLevelGrid();
-    renderVocabularyList();
-    loadCurrentGrammarPrompt();
-};
+/* Tab Switcher Logic */
+function switchTab(tabId) {
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
+    
+    const targetTab = document.getElementById(tabId);
+    if(targetTab) targetTab.classList.add('active');
+    
+    const tabs = document.querySelectorAll('.nav-tab');
+    if(tabId === 'home-tab') tabs[0].classList.add('active');
+    if(tabId === 'meaning-tab') { tabs[1].classList.add('active'); renderVocabularyList(); }
+    if(tabId === 'essay-tab') tabs[2].classList.add('active');
+    if(tabId === 'level-tab') { tabs[3].classList.add('active'); renderLevelGrid(); }
+    if(tabId === 'more-tab' || tabId === 'proficiency-tab' || tabId === 'shop-tab' || tabId === 'grammar-tab' || tabId === 'test-tab' || tabId === 'forest-tab' || tabId === 'leaderboard-tab') {
+        tabs[4].classList.add('active');
+    }
 
-function updateUI() {
-    document.getElementById("home-money").innerText = `${money} 🪙`;
-    document.getElementById("money-count").innerText = money;
-    document.getElementById("home-max-level").innerText = `Level ${unlockedLevel}`;
-    updateLivesDisplay();
+    if(tabId === 'leaderboard-tab' && window.loadLeaderboardFromFirebase) {
+        window.loadLeaderboardFromFirebase();
+    }
 }
 
-function updateLivesDisplay() {
-    let heartsStr = "";
-    for(let i=0; i<3; i++) { heartsStr += (i < playerLives) ? "❤️" : "🖤"; }
-    const livesEl = document.getElementById("player-lives-display");
-    if(livesEl) livesEl.innerText = heartsStr;
-}
-
+/* Level Grid Logic */
 function renderLevelGrid() {
     const grid = document.getElementById("level-grid-container");
     let html = "";
@@ -848,139 +753,18 @@ function renderLevelGrid() {
     grid.innerHTML = html;
 }
 
-function startLevel(lvl) {
-    if (playerLives <= 0) { alert("❌ အသက်ကုန်နေပါပြီ!"); switchTab('shop-tab'); return; }
-    currentPlayingLvl = lvl; currentQIndex = 0; correctInLvl = 0;
-    if (typeof levelQuestionsBank !== 'undefined' && levelQuestionsBank[lvl]) {
-        currentLvlQuestions = levelQuestionsBank[lvl];
-    } else {
-        alert("⚠️ Level " + lvl + " အတွက် questions.js တွင် မေးခွန်းထည့်ပါ။");
-        return;
-    }
-    document.getElementById("level-selector-view").style.display = "none";
-    document.getElementById("level-gameplay-view").style.display = "block";
-    document.getElementById("game-lvl-title").innerText = `Level ${lvl} Challenge`;
-    document.getElementById("boss-essay-box").style.display = "none";
-    document.getElementById("level-q-box").style.display = "block";
-    loadLevelQuestion();
+function updateUI() {
+    document.getElementById("home-money").innerText = `${money} 🪙`;
+    document.getElementById("money-count").innerText = money;
+    document.getElementById("home-max-level").innerText = `Level ${unlockedLevel}`;
+    updateLivesDisplay();
 }
 
-function loadLevelQuestion() {
-    if (currentQIndex >= currentLvlQuestions.length) { finishLevel(); return; }
-    const qData = currentLvlQuestions[currentQIndex];
-    document.getElementById("q-progress-text").innerText = `${currentQIndex + 1} / ${currentLvlQuestions.length}`;
-    document.getElementById("question-text").innerText = qData.question;
-    document.getElementById("explanation-box").style.display = "none";
-    document.getElementById("next-q-btn").style.display = "none";
-
-    let optionsHTML = "";
-    qData.options.forEach(opt => {
-        optionsHTML += `<button onclick="checkLevelAnswer(this, '${opt.replace(/'/g, "\\'")}', '${qData.answer.replace(/'/g, "\\'")}', '${qData.explanation.replace(/'/g, "\\'")}')">${opt}</button>`;
-    });
-    document.getElementById("options-box").innerHTML = optionsHTML;
-}
-
-function checkLevelAnswer(btn, selected, correct, exp) {
-    document.querySelectorAll('#options-box button').forEach(b => b.disabled = true);
-    const expBox = document.getElementById("explanation-box");
-    expBox.style.display = "block";
-    expBox.innerHTML = `<strong>ရှင်းလင်းချက်:</strong> ${exp}`;
-    if (selected.trim() === correct.trim()) {
-        playSound('correct'); btn.style.background = "#0d3819";
-        correctInLvl++; money += 15; localStorage.setItem('quizCoins', money); updateUI();
-    } else {
-        playSound('wrong'); btn.style.background = "#2b1515";
-        playerLives--; localStorage.setItem('playerLives', playerLives); updateUI();
-    }
-    document.getElementById("next-q-btn").style.display = "block";
-}
-
-function nextLevelQuestion() { currentQIndex++; loadLevelQuestion(); }
-
-function finishLevel() {
-    if (correctInLvl >= 7) {
-        playSound('correct');
-        alert(`🎉 Level ${currentPlayingLvl} အောင်မြင်သည်!`);
-        if (currentPlayingLvl === unlockedLevel && unlockedLevel < 20) {
-            unlockedLevel++; localStorage.setItem('maxUnlockedLevel', unlockedLevel);
-        }
-    } else {
-        playSound('wrong');
-        alert(`❌ မအောင်မြင်သေးပါ။ (မှန်: ${correctInLvl}/10)`);
-    }
-    exitToLevelSelect();
-}
-
-function exitToLevelSelect() {
-    document.getElementById("level-gameplay-view").style.display = "none";
-    document.getElementById("level-selector-view").style.display = "block";
-    updateUI(); renderLevelGrid();
-}
-
-function buyItem(itemType, cost) {
-    if (money < cost) { alert("🪙 Coins မလုံလောက်ပါ!"); return; }
-    if (itemType === 'heart') { playerLives++; localStorage.setItem('playerLives', playerLives); }
-    money -= cost; localStorage.setItem('quizCoins', money); updateUI(); playSound('correct');
-    alert("🎉 ဝယ်ယူမှု အောင်မြင်ပါသည်။");
-}
-
-function addCustomTask() {
-    const input = document.getElementById("custom-task-input");
-    const taskText = input.value.trim();
-    if (!taskText) return;
-    let tasks = JSON.parse(localStorage.getItem("customTasksList")) || [];
-    tasks.push({ text: taskText, completed: false });
-    localStorage.setItem("customTasksList", JSON.stringify(tasks));
-    input.value = ""; loadCustomTasks(); playSound('correct');
-}
-
-function loadCustomTasks() {
-    const container = document.getElementById("custom-tasks-container");
-    let tasks = JSON.parse(localStorage.getItem("customTasksList")) || [];
-    if (tasks.length === 0) { container.innerHTML = `<p style="color: #8b949e; font-size: 10px; text-align: center;">Task များ မရှိပါ။</p>`; return; }
-    let html = "";
-    tasks.forEach((t, i) => {
-        html += `<div style="background: #161b22; border: 1px solid #30363d; border-radius: 5px; padding: 5px; margin-bottom: 4px; font-size: 10.5px;">${t.text}</div>`;
-    });
-    container.innerHTML = html;
-}
-
-let forestTimer = null, forestSeconds = 25 * 60, isForestRunning = false;
-function startForestSession() {
-    if (isForestRunning) return;
-    isForestRunning = true; forestSeconds = 25 * 60;
-    document.getElementById("forest-start-btn").style.display = "none";
-    document.getElementById("forest-cancel-btn").style.display = "block";
-    forestTimer = setInterval(() => {
-        forestSeconds--;
-        let mins = Math.floor(forestSeconds / 60), secs = forestSeconds % 60;
-        document.getElementById("forest-timer-display").innerText = `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-        if (forestSeconds <= 0) { clearInterval(forestTimer); isForestRunning = false; money += 300; updateUI(); alert("🪙 +300 Coins ရရှိသည်!"); }
-    }, 1000);
-}
-function cancelForestSession() { clearInterval(forestTimer); isForestRunning = false; resetForestUI(); }
-function resetForestUI() {
-    document.getElementById("forest-start-btn").style.display = "block";
-    document.getElementById("forest-cancel-btn").style.display = "none";
-    document.getElementById("forest-timer-display").innerText = "25:00";
-}
-
-function switchTab(tabId) {
-    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-    document.querySelectorAll('.nav-tab').forEach(btn => btn.classList.remove('active'));
-    document.getElementById(tabId).classList.add('active');
-    
-    const tabs = document.querySelectorAll('.nav-tab');
-    if(tabId === 'home-tab') tabs[0].classList.add('active');
-    if(tabId === 'level-tab') { tabs[1].classList.add('active'); renderLevelGrid(); }
-    if(tabId === 'meaning-tab') { tabs[2].classList.add('active'); renderVocabularyList(); }
-    if(tabId === 'proficiency-tab') tabs[3].classList.add('active');
-    if(tabId === 'shop-tab') tabs[4].classList.add('active');
-    if(tabId === 'grammar-tab') { tabs[5].classList.add('active'); loadCurrentGrammarPrompt(); }
-    if(tabId === 'essay-tab') tabs[6].classList.add('active');
-    if(tabId === 'test-tab') { tabs[7].classList.add('active'); loadCustomTasks(); }
-    if(tabId === 'forest-tab') tabs[8].classList.add('active');
-    if(tabId === 'leaderboard-tab') { tabs[9].classList.add('active'); if (window.loadLeaderboardFromFirebase) window.loadLeaderboardFromFirebase(); }
+function updateLivesDisplay() {
+    let heartsStr = "";
+    for(let i=0; i<3; i++) { heartsStr += (i < playerLives) ? "❤️" : "🖤"; }
+    const livesEl = document.getElementById("player-lives-display");
+    if(livesEl) livesEl.innerText = heartsStr;
 }
 
 function checkSavedUser() {
@@ -1004,6 +788,13 @@ function saveInitialUsername() {
     localStorage.setItem("quizUsername", playerName);
     checkSavedUser();
 }
+
+window.onload = function() {
+    checkSavedUser();
+    updateUI();
+    renderLevelGrid();
+    renderVocabularyList();
+};
 </script>
 </body>
 </html>
