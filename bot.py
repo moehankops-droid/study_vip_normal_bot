@@ -37,12 +37,12 @@ async def process_library(callback_query: types.CallbackQuery):
     code = callback_query.data.split('_')[1]
     
     details = {
-        "1": "📚 **ပိုင်း (၁) - အခြေခံ ဝါကျတည်ဆောက်ခြင်း ကျင့်စဉ်**\n\n• **အဓိက အချက်များ:**\n- S + V (နာမ်/စားနာမ် + ကြိယာ)\n- S + V + O (နာမ်/စားနာမ် + ကြိယာ + ကံ)\n- S + V + C (နာမ်/စားနာမ် + ကြိယာ + ဖြည့်စွက်စာ)\n• **လေ့ကျင့်ရန်:** နေ့စဉ်သုံး ရိုးရှင်းသော ဝါကျများကို ဤပုံစံအတိုင်း အရင်တည်ဆောက်ပါ။",
-        "2": "📚 **ပိုင်း (၂) - ပစ္စုပ္ပန်ကာလ ကျင့်စဉ်များ**\n\n• **Simple Present Tense:** Subject + V1 (s/es)\n  - ဥပမာ: I play chess every day. (နေ့စဉ်လုပ်ဆောင်သော အလေ့အထများအတွက်)\n• **Present Continuous Tense:** Subject + is/am/are + V-ing\n  - ဥပမာ: I am studying now. (ယခုလက်ရှိ လုပ်ဆောင်နေဆဲ)",
-        "3": "📚 **ပိုင်း (၃) - အတိတ်ကာလ ကျင့်စဉ်များ**\n\n• **Simple Past Tense:** Subject + V2\n  - ဥပမာ: I studied yesterday. (အတိတ်က ပြီးဆုံးသွားသော အလုပ်များ)\n• **Past Continuous Tense:** Subject + was/were + V-ing\n  - ဥပမာ: She was reading when I came. (အတိတ်တွင် တစ်ချိန်တည်း ဖြစ်ပျက်နေဆဲ)",
-        "4": "📚 **ပိုင်း (၄) - အနာဂတ်ကာလ ကျင့်စဉ်များ**\n\n• **Simple Future Tense:** Subject + will + V1\n  - ဥပမာ: I will code tomorrow. (နောင်လာမည့် အနာဂတ်တွင် လုပ်မည့်အရာများ)\n• **Future Plan:** အနာဂတ် အစီအစဉ်များကို ပြောဆိုပုံများ။",
-        "5": "📚 **ပိုင်း (၅) - အဆင့်မြင့် ဝါကျဆက်စပ်ခြင်း ကျင့်စဉ်**\n\n• **Active & Passive Voice:**\n  - တက်ကြွဝါကျနှင့် ခံ동ါဝကျ ပြောင်းလဲပုံများ။\n• **Relative Clauses:**\n  - Who, Which, That စသည့် ဆက်စပ်စာလုံးများ သုံး၍ ဝါကျရှည်များ တည်ဆောက်ခြင်း။",
-        "6": "📚 **ပိုင်း (၆) - အလုံးစုံ စစ်ဆေးသည့် နောက်ဆုံးကျင့်စဉ်**\n\n• **စုံလင်သော စာမေးပွဲပုံစံ:** သင်ယူခဲ့သမျှ အခြေခံနှင့် အဆင့်မြင့် ကျင့်စဉ်များကို ပေါင်းစပ်ကာ ကိုယ်ပိုင် အက်ဆေးနှင့် ဝါကျပြင်ဆင်မှုများ ပြုလုပ်ရန် အဆင့်။"
+        "1": "📚 **အပိုင်း (၁) - အခြေခံ ဝါကျတည်ဆောက်ခြင်း ကျင့်စဉ်**\n\n• **အဓိက အချက်များ:**\n- S + V (နာမ်/စားနာမ် + ကြိယာ)\n- S + V + O (နာမ်/စားနာမ် + ကြိယာ + ကံ)\n- S + V + C (နာမ်/စားနာမ် + ကြိယာ + ဖြည့်စွက်စာ)\n• **လေ့ကျင့်ရန်:** နေ့စဉ်သုံး ရိုးရှင်းသော ဝါကျများကို ဤပုံစံအတိုင်း အရင်တည်ဆောက်ပါ။",
+        "2": "📚 **အပိုင်း (၂) - ပစ္စုပ္ပန်ကာလ ကျင့်စဉ်များ**\n\n• **Simple Present Tense:** Subject + V1 (s/es)\n  - ဥပမာ: I play chess every day. (နေ့စဉ်လုပ်ဆောင်သော အလေ့အထများအတွက်)\n• **Present Continuous Tense:** Subject + is/am/are + V-ing\n  - ဥပမာ: I am studying now. (ယခုလက်ရှိ လုပ်ဆောင်နေဆဲ)",
+        "3": "📚 **အပိုင်း (၃) - အတိတ်ကာလ ကျင့်စဉ်များ**\n\n• **Simple Past Tense:** Subject + V2\n  - ဥပမာ: I studied yesterday. (အတိတ်က ပြီးဆုံးသွားသော အလုပ်များ)\n• **Past Continuous Tense:** Subject + was/were + V-ing\n  - ဥပမာ: She was reading when I came. (အတိတ်တွင် တစ်ချိန်တည်း ဖြစ်ပျက်နေဆဲ)",
+        "4": "📚 **အပိုင်း (၄) - အနာဂတ်ကာလ ကျင့်စဉ်များ**\n\n• **Simple Future Tense:** Subject + will + V1\n  - ဥပမာ: I will code tomorrow. (နောင်လာမည့် အနာဂတ်တွင် လုပ်မည့်အရာများ)\n• **Future Plan:** အနာဂတ် အစီအစဉ်များကို ပြောဆိုပုံများ။",
+        "5": "📚 **အပိုင်း (၅) - အဆင့်မြင့် ဝါကျဆက်စပ်ခြင်း ကျင့်စဉ်**\n\n• **Active & Passive Voice:**\n  - တက်ကြွဝါကျနှင့် ခံ동ါဝကျ ပြောင်းလဲပုံများ။\n• **Relative Clauses:**\n  - Who, Which, That စသည့် ဆက်စပ်စာလုံးများ သုံး၍ ဝါကျရှည်များ တည်ဆောက်ခြင်း။",
+        "6": "📚 **အပိုင်း (၆) - အလုံးစုံ စစ်ဆေးသည့် နောက်ဆုံးကျင့်စဉ်**\n\n• **စုံလင်သော စာမေးပွဲပုံစံ:** သင်ယူခဲ့သမျှ အခြေခံနှင့် အဆင့်မြင့် ကျင့်စဉ်များကို ပေါင်းစပ်ကာ ကိုယ်ပိုင် အက်ဆေးနှင့် ဝါကျပြင်ဆင်မှုများ ပြုလုပ်ရန် အဆင့်။"
     }
     
     text = details.get(code, "ကျင့်စဉ် အချက်အလက်များ...")
@@ -65,7 +65,7 @@ async def start_ai_quiz(callback_query: types.CallbackQuery):
     await bot.send_message(callback_query.from_user.id, quiz_text, reply_markup=back_kb, parse_mode="Markdown")
 
 # Message handler for Quiz Answer checking
-@dp.message_handler(lambda message: message.text and "ဖရိန်" not in message.text)
+@dp.message_handler(lambda message: message.text and not message.text.startswith('/'))
 async def check_quiz_answer(message: types.Message):
     user_answer = message.text.strip().lower()
     if "goes" in user_answer or "correct" in user_answer or "မှန်" in user_answer:
