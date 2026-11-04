@@ -1,13 +1,13 @@
-import asyncio
-from aiogram import Bot, Dispatcher, types
-from aiogram.filters import Command
+import logging
+from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
 # 🔑 မင်းရဲ့ Bot Token အစစ်အမှန်
 TOKEN = "8437112340:AAEgXfvJ07jeBnGCtTsZgG69zHLCDBaOjRI"
 
 bot = Bot(token=TOKEN)
-dp = Dispatcher()
+dp = Dispatcher(bot)
+logging.basicConfig(level=logging.INFO)
 
 # ယာယီ အမှတ်စာရင်း သိမ်းဆည်းရန် Dictionary
 user_scores = {}
@@ -28,17 +28,13 @@ def get_rank(points):
         return "🌱 Level 1: Novice (အခြေခံ စတင်သူ)"
 
 # 📱 ပင်မ Menu Keyboard ခလုတ်များ
-main_keyboard = ReplyKeyboardMarkup(
-    keyboard=[
-        [KeyboardButton(text="🥋 Level 1 (🌱 Novice)"), KeyboardButton(text="⚔️ Level 2 (🌿 Beginner)")],
-        [KeyboardButton(text="🔥 Level 3 (🌳 Inter)"), KeyboardButton(text="🛡️ Level 4 (⚡ Adv)")],
-        [KeyboardButton(text="⚡ Level 5 (🌟 Master)"), KeyboardButton(text="👑 Level 6 (🏆 G-Master)")],
-        [KeyboardButton(text="📊 My Rank & Leaderboard"), KeyboardButton(text="🎯 Training Quiz")]
-    ],
-    resize_keyboard=True
-)
+main_keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
+main_keyboard.row(KeyboardButton("🥋 Level 1 (🌱 Novice)"), KeyboardButton("⚔️ Level 2 (🌿 Beginner)"))
+main_keyboard.row(KeyboardButton("🔥 Level 3 (🌳 Inter)"), KeyboardButton("🛡️ Level 4 (⚡ Adv)"))
+main_keyboard.row(KeyboardButton("⚡ Level 5 (🌟 Master)"), KeyboardButton("👑 Level 6 (🏆 G-Master)"))
+main_keyboard.row(KeyboardButton("📊 My Rank & Leaderboard"), KeyboardButton("🎯 Training Quiz"))
 
-@dp.message(Command("start"))
+@dp.message_handler(commands=['start'])
 async def start_handler(message: types.Message):
     await message.answer(
         f"🥋 မင်္ဂလာပါ စစ်သည်တော် {message.from_user.first_name}!\n"
@@ -47,12 +43,13 @@ async def start_handler(message: types.Message):
         reply_markup=main_keyboard
     )
 
-@dp.message()
+@dp.message_handler()
 async def handle_menu(message: types.Message):
     user_id = message.from_user.id
+    text = message.text
 
     # --- Level 1 ---
-    if message.text == "🥋 Level 1 (🌱 Novice)":
+    if text == "🥋 Level 1 (🌱 Novice)":
         await message.answer(
             "🌱 **Level 1: အခြေခံဆုံး အုတ်မြစ် (Novice Stage)**\n\n"
             "1. **Basic Patterns:** S+V, S+V+O, S+V+C\n"
@@ -65,7 +62,7 @@ async def handle_menu(message: types.Message):
         )
 
     # --- Level 2 ---
-    elif message.text == "⚔️ Level 2 (🌿 Beginner)":
+    elif text == "⚔️ Level 2 (🌿 Beginner)":
         await message.answer(
             "🌿 **Level 2: လက်ရှိနှင့် ဆက်စပ်မှုများ (Beginner Stage)**\n\n"
             "5. **Continuous Tenses:** Present, Past, Future Continuous\n"
@@ -76,7 +73,7 @@ async def handle_menu(message: types.Message):
         )
 
     # --- Level 3 ---
-    elif message.text == "🔥 Level 3 (🌳 Inter)":
+    elif text == "🔥 Level 3 (🌳 Inter)":
         await message.answer(
             "🌳 **Level 3: ပြီးမြောက်မှုနှင့် နေ့စဉ်သုံး ပုံစံများ (Intermediate Stage)**\n\n"
             "8. **Perfect Tenses:** Subject + have/has/had + V3\n"
@@ -90,7 +87,7 @@ async def handle_menu(message: types.Message):
         )
 
     # --- Level 4 ---
-    elif message.text == "🛡️ Level 4 (⚡ Adv)":
+    elif text == "🛡️ Level 4 (⚡ Adv)":
         await message.answer(
             "🛡️ **Level 4: အဆင့်မြင့် တိုက်ကွက်များ (Advanced Stage)**\n\n"
             "12. **Perfect Continuous Tenses:** Have/Has/Had been + V-ing\n"
@@ -102,7 +99,7 @@ async def handle_menu(message: types.Message):
         )
 
     # --- Level 5 ---
-    elif message.text == "⚡ Level 5 (🌟 Master)":
+    elif text == "⚡ Level 5 (🌟 Master)":
         await message.answer(
             "🌟 **Level 5: ဂရန်းမား တိုက်ပွဲ အထူးအဆင့် (Master Stage)**\n\n"
             "17. **Conditionals (Type 1, 2, 3):** If Clauses\n"
@@ -113,7 +110,7 @@ async def handle_menu(message: types.Message):
         )
 
     # --- Level 6 ---
-    elif message.text == "👑 Level 6 (🏆 G-Master)":
+    elif text == "👑 Level 6 (🏆 G-Master)":
         await message.answer(
             "🏆 **Level 6: ဂရင်းမာစာ ကျင့်ကြံသူ (Grandmaster Stage)**\n\n"
             "21. **Prefixes & Suffixes:** Un-, Dis-, -ful, -less\n"
@@ -123,7 +120,7 @@ async def handle_menu(message: types.Message):
         )
 
     # --- Leaderboard & Rank ---
-    elif message.text == "📊 My Rank & Leaderboard":
+    elif text == "📊 My Rank & Leaderboard":
         pts = user_scores.get(user_id, 100)
         rank_title = get_rank(pts)
         await message.answer(
@@ -134,7 +131,7 @@ async def handle_menu(message: types.Message):
         )
 
     # --- Quiz Mode ---
-    elif message.text == "🎯 Training Quiz":
+    elif text == "🎯 Training Quiz":
         await message.answer(
             "🎯 **သိုင်းကွက် စိန်ခေါ်မှု မေးခွန်း:**\n\n"
             "She _____ (play / plays) chess every day.\n\n"
@@ -151,10 +148,6 @@ async def handle_menu(message: types.Message):
             f"အဆင့်: {get_rank(user_scores[user_id])}"
         )
 
-async def main():
-    print("🤖 Study Bot is running...")
-    await dp.start_polling(bot)
-
 if __name__ == "__main__":
-    asyncio.run(main())
-    
+    executor.start_polling(dp, skip_updates=True)
+            
