@@ -3,59 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English Open World RPG</title>
+    <title>Study VIP English - Open World</title>
     <style>
         body {
-            background-color: #0f172a;
+            background-color: #0b0f19;
             color: #f8fafc;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            text-align: center;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
         }
         .container {
+            width: 100%;
             max-width: 400px;
-            margin: auto;
-            background: #1e293b;
+            background: #111827;
             padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+            border: 1px solid #1f2937;
         }
+        .header {
+            background: linear-gradient(135deg, #4f46e5, #9333ea);
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .header h2 { margin: 0; font-size: 20px; color: #fff; }
+        .header p { margin: 5px 0 0; font-size: 12px; color: #e2e8f0; }
+        
+        .card {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            border-left: 4px solid #6366f1;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        .card h3 { margin: 0 0 8px 0; font-size: 16px; color: #38bdf8; }
+        .card p { margin: 0; font-size: 13px; color: #94a3b8; line-height: 1.5; }
+        
         .stats {
             display: flex;
             justify-content: space-around;
-            background: #334155;
+            background: #1f2937;
             padding: 10px;
             border-radius: 8px;
             margin-bottom: 20px;
             font-weight: bold;
+            font-size: 14px;
         }
         .btn {
-            background: #3b82f6;
+            background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: white;
             border: none;
-            padding: 10px 20px;
-            margin: 8px 0;
+            padding: 12px;
             width: 100%;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .btn:hover { background: #2563eb; }
-        .hidden { display: none; }
-        .question-box {
-            background: #334155;
-            padding: 15px;
             border-radius: 8px;
-            margin-bottom: 15px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
         }
+        .btn:hover { opacity: 0.9; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>🗺️ English Open World RPG</h2>
-    
+    <!-- App Header -->
+    <div class="header">
+        <h2>Study VIP English</h2>
+        <p>Grade 8 & General English Practice</p>
+    </div>
+
     <!-- Player Stats -->
     <div class="stats">
         <div>⭐ Level: <span id="lvl">1</span></div>
@@ -63,40 +87,45 @@
         <div>❤️ HP: <span id="hp">100</span></div>
     </div>
 
-    <!-- Map Screen -->
-    <div id="map-screen">
-        <p>သင်သည် အင်္ဂလိပ်စာ တောအုပ်ထဲသို့ ရောက်ရှိနေပါသည်။ ရှေ့ဆက်ရန် လမ်းကြောင်းကို ရွေးပါ။</p>
-        <button class="btn" onclick="startQuest('grammar')">🌲 Grammar တောအုပ်သို့ ဝင်မည်</button>
-        <button class="btn" onclick="startQuest('vocab')">⚔️ Vocabulary နဂါးနှင့် တိုက်မည်</button>
+    <!-- Main Content / SMART Goals View -->
+    <div id="main-view">
+        <div class="card">
+            <h3>🎯 How to develop SMART Goals?</h3>
+            <p>SMART goals ဆိုသည်မှာ ကိုယ့်ရဲ့ လေ့လာမှု သို့မဟုတ် ရည်မှန်းချက်များကို စနစ်တကျ အကောင်းဆုံးဖော်ထုတ်ရာတွင် အလွန်ထိရောက်သော ရည်မှန်းချက် သတ်မှတ်နည်း ဖြစ်ပါသည်။</p>
+        </div>
+
+        <div class="card">
+            <h3>📌 Specific (တိကျမှုရှိခြင်း)</h3>
+            <p>ကိုယ်လိုချင်တာ ဘာလဲ(What)၊ ဘာကြောင့်လုပ်ချင်တာလဲ(Why)၊ ဘယ်လိုရအောင်လုပ်မလဲ(How) တိကျစွာ ရေးဆွဲပါ။</p>
+        </div>
+
+        <div class="card">
+            <h3>📊 Measurable (တိုင်းတာနိုင်ခြင်း)</h3>
+            <p>ကိုယ့်ရဲ့ တိုးတက်မှုကို အလွယ်တကူ တိုင်းတာနိုင်မယ့် အညွှန်းများ ထားရှိပါ။</p>
+        </div>
+
+        <button class="btn" onclick="startAdventure()">🚀 စွန့်စားခန်း (Quiz) စတင်မည်</button>
     </div>
 
-    <!-- Quest / Battle Screen -->
-    <div id="quest-screen" class="hidden">
-        <div class="question-box">
-            <p id="q-text">Question goes here</p>
-            <div id="options"></div>
+    <!-- Quiz / Quest View -->
+    <div id="quest-view" class="hidden">
+        <div class="card">
+            <h3 id="q-title">Question 1</h3>
+            <p id="q-text" style="color: #fff; font-size: 15px; margin-top: 10px;"></p>
         </div>
-        <button class="btn" style="background: #ef4444;" onclick="returnToMap()">🔙 ထွက်မည်</button>
+        <div id="options"></div>
+        <button class="btn" style="background: #ef4444; margin-top: 15px;" onclick="returnHome()">🔙 ပင်မစာမျက်နှာသို့</button>
     </div>
 </div>
 
 <script>
     let player = { level: 1, xp: 0, hp: 100 };
 
-    const questions = {
-        grammar: {
-            q: "What is the past tense of 'go'?",
-            options: ["Goed", "Gone", "Went", "Going"],
-            answer: 2
-        },
-        vocab: {
-            q: "What does 'Courage' mean?",
-            options: ["ကြောက်ရွံ့ခြင်း", "သတ္တိရှိခြင်း", "ပျင်းရိခြင်း", "ဝမ်းနည်းခြင်း"],
-            answer: 1
-        }
+    const quizData = {
+        q: "What is the past tense of 'go'?",
+        options: ["Goed", "Gone", "Went", "Going"],
+        answer: 2
     };
-
-    let currentQuestType = '';
 
     function updateStats() {
         document.getElementById('lvl').innerText = player.level;
@@ -104,27 +133,23 @@
         document.getElementById('hp').innerText = player.hp;
     }
 
-    function startQuest(type) {
-        currentQuestType = type;
-        document.getElementById('map-screen').classList.add('hidden');
-        document.getElementById('quest-screen').classList.remove('hidden');
+    function startAdventure() {
+        document.getElementById('main-view').classList.add('hidden');
+        document.getElementById('quest-view').classList.remove('hidden');
 
-        let qData = questions[type];
-        document.getElementById('q-text').innerText = qData.q;
-        
+        document.getElementById('q-text').innerText = quizData.q;
         let optHtml = '';
-        qData.options.forEach((opt, index) => {
-            optHtml += `<button class="btn" onclick="checkAnswer(${index})">${opt}</button>`;
+        quizData.options.forEach((opt, index) => {
+            optHtml += `<button class="btn" style="background: #334155; margin-top: 8px;" onclick="checkAnswer(${index})">${opt}</button>`;
         });
         document.getElementById('options').innerHTML = optHtml;
     }
 
     function checkAnswer(selected) {
-        let qData = questions[currentQuestType];
-        if (selected === qData.answer) {
+        if (selected === quizData.answer) {
             alert("🎉 အဖြေမှန်ပါတယ်! XP +20 ရရှိသည်။");
             player.xp += 20;
-            if (player.xp >= 50) {
+            if (player.xp >= 40) {
                 player.level++;
                 player.xp = 0;
                 alert("🌟 Level တက်သွားပါပြီ!");
@@ -133,18 +158,18 @@
             alert("❌ အဖြေမှားပါတယ်။ HP -20 လျော့သွားသည်။");
             player.hp -= 20;
             if (player.hp <= 0) {
-                alert("💀 Game Over! သင့်အသက်ကုန်သွားပါပြီ။");
+                alert("💀 Game Over! အသက်ကုန်သွားပါပြီ။");
                 player.hp = 100;
                 player.xp = 0;
             }
         }
         updateStats();
-        returnToMap();
+        returnHome();
     }
 
-    function returnToMap() {
-        document.getElementById('quest-screen').classList.add('hidden');
-        document.getElementById('map-screen').classList.remove('hidden');
+    function returnHome() {
+        document.getElementById('quest-view').classList.add('hidden');
+        document.getElementById('main-view').classList.remove('hidden');
     }
 
     updateStats();
