@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study VIP English - Open World</title>
+    <title>Study VIP English - Open World RPG</title>
     <style>
         body {
             background-color: #0b0f19;
@@ -27,22 +27,11 @@
             background: linear-gradient(135deg, #4f46e5, #9333ea);
             padding: 15px;
             border-radius: 12px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             text-align: center;
         }
-        .header h2 { margin: 0; font-size: 20px; color: #fff; }
-        .header p { margin: 5px 0 0; font-size: 12px; color: #e2e8f0; }
-        
-        .card {
-            background: #1e293b;
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            border-left: 4px solid #6366f1;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-        }
-        .card h3 { margin: 0 0 8px 0; font-size: 16px; color: #38bdf8; }
-        .card p { margin: 0; font-size: 13px; color: #94a3b8; line-height: 1.5; }
+        .header h2 { margin: 0; font-size: 18px; color: #fff; }
+        .header p { margin: 5px 0 0; font-size: 11px; color: #e2e8f0; }
         
         .stats {
             display: flex;
@@ -50,81 +39,147 @@
             background: #1f2937;
             padding: 10px;
             border-radius: 8px;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 13px;
         }
+        .card {
+            background: #1e293b;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            border-left: 4px solid #38bdf8;
+        }
+        .card h3 { margin: 0 0 5px 0; font-size: 15px; color: #38bdf8; }
+        .card p { margin: 0; font-size: 12px; color: #94a3b8; line-height: 1.4; }
+        .example-box {
+            background: #0f172a;
+            padding: 8px;
+            border-radius: 6px;
+            margin-top: 6px;
+            font-size: 11px;
+            color: #38bdf8;
+            border: 1px dashed #334155;
+        }
+        
         .btn {
             background: linear-gradient(135deg, #3b82f6, #2563eb);
             color: white;
             border: none;
-            padding: 12px;
+            padding: 10px;
             width: 100%;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 13px;
             font-weight: bold;
-            margin-top: 10px;
+            margin-top: 8px;
             box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
+            text-align: left;
         }
         .btn:hover { opacity: 0.9; }
+        .option-btn {
+            background: #334155;
+            color: white;
+            border: none;
+            padding: 10px;
+            width: 100%;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            margin-top: 6px;
+            text-align: left;
+        }
+        .option-btn:hover { background: #475569; }
         .hidden { display: none; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- App Header -->
+    <!-- Header -->
     <div class="header">
-        <h2>Study VIP English</h2>
-        <p>Grade 8 & General English Practice</p>
+        <h2>🗺️ Study VIP English RPG</h2>
+        <p>Open World Adventure & Grammar Quests</p>
     </div>
 
-    <!-- Player Stats -->
+    <!-- Stats -->
     <div class="stats">
         <div>⭐ Level: <span id="lvl">1</span></div>
         <div>⚡ XP: <span id="xp">0</span></div>
         <div>❤️ HP: <span id="hp">100</span></div>
     </div>
 
-    <!-- Main Content / SMART Goals View -->
-    <div id="main-view">
-        <div class="card">
-            <h3>🎯 How to develop SMART Goals?</h3>
-            <p>SMART goals ဆိုသည်မှာ ကိုယ့်ရဲ့ လေ့လာမှု သို့မဟုတ် ရည်မှန်းချက်များကို စနစ်တကျ အကောင်းဆုံးဖော်ထုတ်ရာတွင် အလွန်ထိရောက်သော ရည်မှန်းချက် သတ်မှတ်နည်း ဖြစ်ပါသည်။</p>
+    <!-- MAP SCREEN -->
+    <div id="map-screen">
+        <div class="card" style="border-left-color: #10b981;">
+            <h3>🌲 Open World Map</h3>
+            <p>စွန့်စားခန်းကမ္ဘာမှ ကြိုဆိုပါတယ်။ လေ့လာလိုသော နယ်မြေကို ရွေးချယ်ပါ -</p>
         </div>
 
-        <div class="card">
-            <h3>📌 Specific (တိကျမှုရှိခြင်း)</h3>
-            <p>ကိုယ်လိုချင်တာ ဘာလဲ(What)၊ ဘာကြောင့်လုပ်ချင်တာလဲ(Why)၊ ဘယ်လိုရအောင်လုပ်မလဲ(How) တိကျစွာ ရေးဆွဲပါ။</p>
-        </div>
-
-        <div class="card">
-            <h3>📊 Measurable (တိုင်းတာနိုင်ခြင်း)</h3>
-            <p>ကိုယ့်ရဲ့ တိုးတက်မှုကို အလွယ်တကူ တိုင်းတာနိုင်မယ့် အညွှန်းများ ထားရှိပါ။</p>
-        </div>
-
-        <button class="btn" onclick="startAdventure()">🚀 စွန့်စားခန်း (Quiz) စတင်မည်</button>
+        <button class="btn" style="background: linear-gradient(135deg, #059669, #047857);" onclick="goToLocation('smart')">
+            🎯 1. SMART Goals နယ်မြေ
+        </button>
+        <button class="btn" style="background: linear-gradient(135deg, #d97706, #b45309);" onclick="goToLocation('tenses')">
+            ⚔️ 2. Tenses (၁၂) မျိုး လေ့လာရေးဂူ
+        </button>
+        <button class="btn" style="background: linear-gradient(135deg, #7c3aed, #6d28d9);" onclick="goToLocation('confusing')">
+            💎 3. Confusing Words (မှားတတ်သောစကားလုံးများ)
+        </button>
     </div>
 
-    <!-- Quiz / Quest View -->
-    <div id="quest-view" class="hidden">
-        <div class="card">
-            <h3 id="q-title">Question 1</h3>
-            <p id="q-text" style="color: #fff; font-size: 15px; margin-top: 10px;"></p>
+    <!-- CONTENT SCREEN -->
+    <div id="content-screen" class="hidden">
+        <div id="location-info" class="card"></div>
+        <button class="btn" style="background: #0284c7;" onclick="startQuizFromLocation()">⚔️ ဤနယ်မြေ စိန်ခေါ်မှု (Quiz) ဖြေမည်</button>
+        <button class="btn" style="background: #ef4444; margin-top: 10px;" onclick="returnToMap()">🗺️ မြေပုံသို့ ပြန်မည်</button>
+    </div>
+
+    <!-- QUIZ SCREEN -->
+    <div id="quiz-screen" class="hidden">
+        <div class="card" style="border-left-color: #ef4444;">
+            <h3 id="q-location-title">⚡ Quest Challenge</h3>
+            <p id="q-text" style="color: #fff; font-size: 13px; margin-top: 8px;"></p>
         </div>
-        <div id="options"></div>
-        <button class="btn" style="background: #ef4444; margin-top: 15px;" onclick="returnHome()">🔙 ပင်မစာမျက်နှာသို့</button>
+        <div id="options-container"></div>
+        <button class="btn" style="background: #64748b; margin-top: 10px;" onclick="goToLocation(currentLoc)">🔙 နယ်မြေသို့ ပြန်မည်</button>
     </div>
 </div>
 
 <script>
     let player = { level: 1, xp: 0, hp: 100 };
+    let currentLoc = '';
 
-    const quizData = {
-        q: "What is the past tense of 'go'?",
-        options: ["Goed", "Gone", "Went", "Going"],
-        answer: 2
+    const locations = {
+        smart: {
+            title: "🎯 SMART Goals နယ်မြေ",
+            desc: "SMART goals ဆိုသည်မှာ ကိုယ့်ရဲ့ လေ့လာမှု ရည်မှန်းချက်များကို Specific (တိကျမှု)၊ Measurable (တိုင်းတာနိုင်မှု)၊ Attainable (ရယူနိုင်မှု)၊ Realistic (လက်တွေ့ကျမှု)၊ Timely (အချိန်သတ်မှတ်မှု) ဖြင့် စနစ်တကျ ဖော်ထုတ်နည်း ဖြစ်ပါသည်။",
+            ex: "📌 Example: ✔️ I gonna eat breakfast at 8Am. (မနက် ၈ နာရီမှာ မနက်စာစားမယ်။)",
+            quest: {
+                q: "SMART goals တွင် 'M' က ဘာကို ကိုယ်စားပြုသနည်း?",
+                options: ["A) Meaningful (အဓိပ္ပာယ်ရှိသော)", "B) Measurable (တိုင်းတာနိုင်သော)", "C) Modern (ခေတ်မီသော)", "D) Moving (ရွေ့လျားသော)"],
+                answer: 1
+            }
+        },
+        tenses: {
+            title: "⚔️ Tenses (၁၂) မျိုး လေ့လာရေးဂူ",
+            desc: "Present Simple, Present Continuous မှစ၍ Tenses (၁၂) မျိုးလုံးကို စနစ်တကျ လေ့လာရမည့်နေရာ ဖြစ်ပါသည်။ ဥပမာများကို သေချာဖတ်ပြီးမှ မေးခွန်းဖြေပါ။",
+            ex: "📌 Example (Present Simple): ✔️ She reads every morning. (သူမက မနက်တိုင်း စာဖတ်တယ်။)",
+            quest: {
+                q: "What is the past tense of 'go'?",
+                options: ["A) Goed", "B) Gone", "C) Went", "D) Going"],
+                answer: 2
+            }
+        },
+        confusing: {
+            title: "💎 Confusing Words (မှားတတ်သောစကားလုံးများ)",
+            desc: "It's vs Its, A vs An, Do vs make စသည့် အမြဲမှားတတ်သော အခြေခံစကားလုံးများကို လေ့လာရမည့်နေရာ ဖြစ်ပါသည်။",
+            ex: "📌 Example: ✔️ I need to do my homework. (ငါ့ရဲ့ အိမ်စာလုပ်ဖို့ လိုတယ်။) | ✔️ I made a cake for you. (မင်းအတွက် ကိတ်မုန့်လုပ်ခဲ့တယ်။)",
+            quest: {
+                q: "အောက်ပါတို့အနက် 'လုပ်သည်' ဟု သုံးနှုန်းရာတွင် homework အတွက် သုံးရသည့် စကားလုံး မှန်ကန်သည်မှာ -",
+                options: ["A) Make homework", "B) Do homework", "C) Play homework", "D) Take homework"],
+                answer: 1
+            }
+        }
     };
 
     function updateStats() {
@@ -133,23 +188,41 @@
         document.getElementById('hp').innerText = player.hp;
     }
 
-    function startAdventure() {
-        document.getElementById('main-view').classList.add('hidden');
-        document.getElementById('quest-view').classList.remove('hidden');
+    function goToLocation(locKey) {
+        currentLoc = locKey;
+        document.getElementById('map-screen').classList.add('hidden');
+        document.getElementById('quiz-screen').classList.add('hidden');
+        document.getElementById('content-screen').classList.remove('hidden');
 
-        document.getElementById('q-text').innerText = quizData.q;
+        let data = locations[locKey];
+        document.getElementById('location-info').innerHTML = `
+            <h3>${data.title}</h3>
+            <p>${data.desc}</p>
+            <div class="example-box">${data.ex}</div>
+        `;
+    }
+
+    function startQuizFromLocation() {
+        document.getElementById('content-screen').classList.add('hidden');
+        document.getElementById('quiz-screen').classList.remove('hidden');
+
+        let data = locations[currentLoc];
+        document.getElementById('q-location-title').innerText = data.title + " - Quiz";
+        document.getElementById('q-text').innerText = data.quest.q;
+
         let optHtml = '';
-        quizData.options.forEach((opt, index) => {
-            optHtml += `<button class="btn" style="background: #334155; margin-top: 8px;" onclick="checkAnswer(${index})">${opt}</button>`;
+        data.quest.options.forEach((opt, index) => {
+            optHtml += `<button class="option-btn" onclick="checkAnswer(${index})">${opt}</button>`;
         });
-        document.getElementById('options').innerHTML = optHtml;
+        document.getElementById('options-container').innerHTML = optHtml;
     }
 
     function checkAnswer(selected) {
-        if (selected === quizData.answer) {
-            alert("🎉 အဖြေမှန်ပါတယ်! XP +20 ရရှိသည်။");
-            player.xp += 20;
-            if (player.xp >= 40) {
+        let data = locations[currentLoc];
+        if (selected === data.quest.answer) {
+            alert("🎉 အဖြေမှန်ပါတယ်! XP +25 ရရှိသည်။");
+            player.xp += 25;
+            if (player.xp >= 50) {
                 player.level++;
                 player.xp = 0;
                 alert("🌟 Level တက်သွားပါပြီ!");
@@ -164,12 +237,13 @@
             }
         }
         updateStats();
-        returnHome();
+        returnToMap();
     }
 
-    function returnHome() {
-        document.getElementById('quest-view').classList.add('hidden');
-        document.getElementById('main-view').classList.remove('hidden');
+    function returnToMap() {
+        document.getElementById('content-screen').classList.add('hidden');
+        document.getElementById('quiz-screen').classList.add('hidden');
+        document.getElementById('map-screen').classList.remove('hidden');
     }
 
     updateStats();
