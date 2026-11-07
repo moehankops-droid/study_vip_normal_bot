@@ -1,185 +1,151 @@
-import logging
-import random
-from aiogram import Bot, Dispatcher, executor, types
+from aiogram import Bot, Dispatcher, types
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.utils import executor
 
 API_TOKEN = '8437112340:AAEgXfvJ07jeBnGCtTsZgG69zHLCDBaOjRI'
-
-logging.basicConfig(level=logging.INFO)
 
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
-# Store simple user state to track if user is playing quiz
-USER_QUIZ_STATE = {}
+# ၁။ ရောင်စုံအီမိုဂျီ ဇယားကွက် (Grid) ပုံစံ မီနူးခလုတ်များ
+def get_study_menu():
+    keyboard = InlineKeyboardMarkup(row_width=2) # တစ်တန်းကို ခလုတ် ၂ ခုစီ
+    
+    btn_smart = InlineKeyboardButton("🎯 SMART Goals", callback_data="lesson_smart")
+    btn_thanks = InlineKeyboardButton("🙏 ကျေးဇူးတင်စကားများ", callback_data="lesson_thanks")
+    btn_sorry = InlineKeyboardButton("🙇 တောင်းပန်စကားများ", callback_data="lesson_sorry")
+    btn_writing = InlineKeyboardButton("✍️ Writing Tips", callback_data="lesson_writing")
+    btn_basic = InlineKeyboardButton("🌱 ပထမအခြေခံ English", callback_data="lesson_basic")
+    btn_future = InlineKeyboardButton("🌟 Future Tense", callback_data="lesson_future")
+    btn_confusing = InlineKeyboardButton("🔍 Confusing Words", callback_data="lesson_confusing")
+    btn_rank = InlineKeyboardButton("📊 Profile & Rank", callback_data="profile_rank")
+    
+    keyboard.add(btn_smart, btn_thanks)
+    keyboard.add(btn_sorry, btn_writing)
+    keyboard.add(btn_basic, btn_future)
+    keyboard.add(btn_confusing, btn_rank)
+    
+    return keyboard
 
-QUIZ_POOL = [
-    {"q": "Correct: 'He go to school every day.'", "ans": ["goes"], "hint": "Subject က He ဖြစ်၍ V1 မှာ s/es ထည့်ပါ။"},
-    {"q": "Correct: 'They plays football.'", "ans": ["play"], "hint": "Subject က plural ဖြစ်၍ V1 သာသုံးပါ။"},
-    {"q": "Fill: 'She ___ English yesterday.' (study)", "ans": ["studied"], "hint": "Past tense (V2) သုံးပါ။"},
-    {"q": "Fill: 'I ___ a letter now.' (write)", "ans": ["am writing"], "hint": "Present continuous သုံးပါ။"},
-    {"q": "Correct: 'She will goes tomorrow.'", "ans": ["go"], "hint": "will နောက်တွင် V1 သာလိုက်ရပါမည်။"}
-]
-
-@dp.message_handler(commands=['start', 'help'])
+# ၂။ /start သို့မဟုတ် /menu ဖြင့် မီနူးခေါ်ရန်
+@dp.message_handler(commands=['start', 'menu'])
 async def send_welcome(message: types.Message):
-    USER_QUIZ_STATE.pop(message.from_user.id, None)
-    keyboard = InlineKeyboardMarkup(row_width=1)
-    keyboard.add(
-        InlineKeyboardButton("🌱 အဆင့် (၁) - အခြေခံ အုတ်မြစ် ကျင့်စဉ်များ (အပိုင်း ၁-၈)", callback_data="tier_1"),
-        InlineKeyboardButton("🌿 အဆင့် (၂) - တိုက်ခိုက်ရေး ကာလများ (အပိုင်း ၉-၁၇)", callback_data="tier_2"),
-        InlineKeyboardButton("🔥 အဆင့် (၃) - အဆင့်မြင့် သိုင်းကွက်များ (အပိုင်း ၁၈-၂၅)", callback_data="tier_3"),
-        InlineKeyboardButton("👑 အဆင့် (၄) - ဂရင်းမာစတာ စိန်ခေါ်ပွဲ (အပိုင်း ၂၆-၃၀)", callback_data="tier_4"),
-        InlineKeyboardButton("📊 စစ်သည်တော် Profile & Rank", callback_data="profile"),
-        InlineKeyboardButton("🎯 AI Quiz Battle (တိုက်ရိုက်ယှဉ်ပြိုင်ရန်)", callback_data="quiz_start")
-    )
-    
     welcome_text = (
-        "🏯 မင်္ဂလာပါ စစ်သည်တော် MOHE။\n"
-        "အင်္ဂလိပ်စာ ကျင့်စဉ်စာကြည့်တိုက်မှ ကြိုဆိုပါတယ်။\n\n"
-        "လေ့လာလိုသော အဆင့်အလိုက် ကဏ္ဍကို ရွေးချယ်ပါ!"
+        "🌟 **မင်္ဂလာပါ သူငယ်ချင်း!**\n\n"
+        "📖 အင်္ဂလိပ်စာလေ့လာရန် လိုအပ်သော သင်ခန်းစာများနှင့် နေ့စဉ်လေ့ကျင့်ခန်းများကို အောက်ပါ ရောင်စုံမီနူးမှ ရွေးချယ်လေ့လာနိုင်ပါပြီ။"
     )
-    await message.answer(welcome_text, reply_markup=keyboard)
+    await message.reply(welcome_text, reply_markup=get_study_menu(), parse_mode="Markdown")
 
-@dp.callback_query_handler(lambda c: c.data == 'tier_1')
-async def show_tier_1(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    keyboard = InlineKeyboardMarkup(row_width=2)
-    keyboard.add(
-        InlineKeyboardButton("အပိုင်း (၁) - အက္ခရာ", callback_data="lib_1"),
-        InlineKeyboardButton("အပိုင်း (၂) - နာမ်", callback_data="lib_2"),
-        InlineKeyboardButton("အပိုင်း (၃) - စားနာမ်", callback_data="lib_3"),
-        InlineKeyboardButton("အပိုင်း (၄) - ကြိယာ", callback_data="lib_4"),
-        InlineKeyboardButton("အပိုင်း (၅) - ဝိဘတ်", callback_data="lib_5"),
-        InlineKeyboardButton("အပိုင်း (၆) - အထူးပြု", callback_data="lib_6"),
-        InlineKeyboardButton("အပိုင်း (၇) - ကြိယာဝိဘတ်", callback_data="lib_7"),
-        InlineKeyboardButton("အပိုင်း (၈) - ဝါကျဆက်", callback_data="lib_8"),
-        InlineKeyboardButton("⬅️ ပင်မမီနူးသို့", callback_data="back_home")
+# ၃။ SMART Goals သင်ခန်းစာ
+@dp.callback_query_handler(text="lesson_smart")
+async def send_smart_lesson(call: types.CallbackQuery):
+    text = (
+        "💡 **How to develop SMART Goals?** 🎯\n\n"
+        "🟢 SMART goals ဆိုတာ ကိုယ့်ရဲ့ personal or professional development အတွက် အသုံးဝင်တဲ့ goals တွေသတ်မှတ်နည်းပဲ ဖြစ်ပါတယ်။\n\n"
+        "📌 **Specific:** ကိုယ်လိုချင်တာဘာလဲ(What)၊ ဘာကြောင့်လုပ်ချင်တာလဲ(Why)၊ ဘယ်လိုရအောင်လုပ်မလဲ(How)၊ ဘယ်အချိန်မှာရအောင်လုပ်မလဲ(When) ဆိုတဲ့ တိကျတဲ့ ရည်ရွယ်ချက်ထားရမယ်။\n"
+        "📝 **Measurable:** ကိုယ့်ရဲ့ progress တွေကို တိုင်းတာခြင်းပါ။\n"
+        "💻 **Attainable:** ကိုယ်ထားထားတဲ့ Goals တွေကို ရယူဖို့ resources ကောင်းကောင်းရှာတတ်ဖို့လိုပါတယ်။\n"
+        "✔️ **Realistic:** လက်တွေ့ကျဖို့လည်းလိုပါတယ်။\n"
+        "⏰ **Timely:** အချိန်သတ်မှတ်ပါ။"
     )
-    await bot.send_message(callback_query.from_user.id, "🌱 **အဆင့် (၁) - အခြေခံ အုတ်မြစ် ကျင့်စဉ်များ**", reply_markup=keyboard)
+    await call.message.answer(text, parse_mode="Markdown")
+    await call.answer()
 
-@dp.callback_query_handler(lambda c: c.data == 'tier_2')
-async def show_tier_2(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    keyboard = InlineKeyboardMarkup(row_width=2)
-    keyboard.add(
-        InlineKeyboardButton("အပိုင်း (၉) - S+V+O", callback_data="lib_9"),
-        InlineKeyboardButton("အပိုင်း (၁၀) - Simple Pres", callback_data="lib_10"),
-        InlineKeyboardButton("အပိုင်း (၁၁) - Pres Cont", callback_data="lib_11"),
-        InlineKeyboardButton("အပိုင်း (၁၂) - Pres Perf", callback_data="lib_12"),
-        InlineKeyboardButton("အပိုင်း (၁၃) - Simple Past", callback_data="lib_13"),
-        InlineKeyboardButton("အပိုင်း (၁၄) - Past Cont", callback_data="lib_14"),
-        InlineKeyboardButton("အပိုင်း (၁၅) - Past Perf", callback_data="lib_15"),
-        InlineKeyboardButton("အပိုင်း (၁၆) - Simple Fut", callback_data="lib_16"),
-        InlineKeyboardButton("အပိုင်း (၁၇) - Fut Cont", callback_data="lib_17"),
-        InlineKeyboardButton("⬅️ ပင်မမီနူးသို့", callback_data="back_home")
+# ၄။ ကျေးဇူးတင်စကားများ
+@dp.callback_query_handler(text="lesson_thanks")
+async def send_thanks_lesson(call: types.CallbackQuery):
+    text = (
+        "🎁 **ကျေးဇူးတင်ပါတယ် (Thank you လို့ပြောမယ့်အစား သုံးကြည့်ပါ)**\n\n"
+        "🟩 Thank you\n"
+        "🟩 Many Thanks\n"
+        "🟦 I can't thank you enough.\n"
+        "🟦 Thanks a bunch\n"
+        "🟪 I appreciate it\n"
+        "🟪 Thanks a million\n\n"
+        "⚡ သင်ဟာ meaning တစ်လုံးကို ကျွယ်ကျွယ် ပြန့်ပြန့်သုံးတတ်နေပြီဆိုရင် မဆိုးလှတဲ့ English level ကိုရောက်နေပြီ ဖြစ်ပါတယ်။"
     )
-    await bot.send_message(callback_query.from_user.id, "🌿 **အဆင့် (၂) - တိုက်ခိုက်ရေး ကာလများ**", reply_markup=keyboard)
+    await call.message.answer(text, parse_mode="Markdown")
+    await call.answer()
 
-@dp.callback_query_handler(lambda c: c.data == 'tier_3')
-async def show_tier_3(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    keyboard = InlineKeyboardMarkup(row_width=2)
-    keyboard.add(
-        InlineKeyboardButton("အပိုင်း (၁၈) - Active/Pass 1", callback_data="lib_18"),
-        InlineKeyboardButton("အပိုင်း (၁၉) - Active/Pass 2", callback_data="lib_19"),
-        InlineKeyboardButton("အပိုင်း (၂၀) - Direct Speech", callback_data="lib_20"),
-        InlineKeyboardButton("အပိုင်း (၂၁) - Relative Clause", callback_data="lib_21"),
-        InlineKeyboardButton("အပိုင်း (၂၂) - Conditionals", callback_data="lib_22"),
-        InlineKeyboardButton("အပိုင်း (၂၃) - Question Tags", callback_data="lib_23"),
-        InlineKeyboardButton("အပိုင်း (၂၄) - Comparison", callback_data="lib_24"),
-        InlineKeyboardButton("အပိုင်း (၂၅) - Modal Verbs", callback_data="lib_25"),
-        InlineKeyboardButton("⬅️ ပင်မမီနူးသို့", callback_data="back_home")
+# ၅။ တောင်းပန်စကားများ
+@dp.callback_query_handler(text="lesson_sorry")
+async def send_sorry_lesson(call: types.CallbackQuery):
+    text = (
+        "🙇 **တောင်းပန်ပါတယ် & မသိဘူး (Phrases)**\n\n"
+        "🔸 **တောင်းပန်ပါတယ်:**\n"
+        "• I'm sorry for that.\n"
+        "• I apologize\n"
+        "• I regret that.\n\n"
+        "🔸 **မသိဘူး:**\n"
+        "• I don't know.\n"
+        "• I have no idea.\n"
+        "• It's beyond me."
     )
-    await bot.send_message(callback_query.from_user.id, "🔥 **အဆင့် (၃) - အဆင့်မြင့် သိုင်းကွက်များ**", reply_markup=keyboard)
+    await call.message.answer(text, parse_mode="Markdown")
+    await call.answer()
 
-@dp.callback_query_handler(lambda c: c.data == 'tier_4')
-async def show_tier_4(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    keyboard = InlineKeyboardMarkup(row_width=2)
-    keyboard.add(
-        InlineKeyboardButton("အပိုင်း (၂၆) - Gerunds", callback_data="lib_26"),
-        InlineKeyboardButton("အပိုင်း (၂၇) - Vocabulary", callback_data="lib_27"),
-        InlineKeyboardButton("အပိုင်း (၂၈) - Essay Patterns", callback_data="lib_28"),
-        InlineKeyboardButton("အပိုင်း (၂၉) - Paragraph", callback_data="lib_29"),
-        InlineKeyboardButton("အပိုင်း (၃၀) - Final Exam", callback_data="lib_30"),
-        InlineKeyboardButton("⬅️ ပင်မမီနူးသို့", callback_data="back_home")
+# ၆။ Writing Tips
+@dp.callback_query_handler(text="lesson_writing")
+async def send_writing_lesson(call: types.CallbackQuery):
+    text = (
+        "✍️ **Writing Tips! It works 💯 all the time.**\n\n"
+        "⏰ Writing လေ့ကျင့်ဖို့အတွက် အကောင်းဆုံးအချိန်က မနက်အိပ်ယာထချိန်နဲ့ ညအိပ်ယာမဝင်ခင်အချိန်ပဲ ဖြစ်ပါတယ်။\n\n"
+        "🌅 **မနက်ခင်း:** အိပ်ယာထချင်း စာရွက်နဲ့ ဘောပင် သို့မဟုတ် ဖုန်း note ထဲမှာ 'တစ်နေ့တာလုပ်ဆောင်မယ့် To-do-list' တွေကို ချရေးပါ။ 📝\n"
+        "🌙 **ညအိပ်ယာမဝင်ခင်:** Jounaling ပြန်လုပ်ပါ။ တစ်နေ့တာဖြစ်ပျက်သမျှကို ပြန်ချရေးပါ။"
     )
-    await bot.send_message(callback_query.from_user.id, "👑 **အဆင့် (၄) - ဂရင်းမာစတာ စိန်ခေါ်ပွဲ**", reply_markup=keyboard)
+    await call.message.answer(text, parse_mode="Markdown")
+    await call.answer()
 
-@dp.callback_query_handler(lambda c: c.data and c.data.startswith('lib_'))
-async def process_library(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    code = callback_query.data.split('_')[1]
-    text = f"📚 **ကျင့်စဉ် အပိုင်း ({code})**\n\n• ဤကျင့်စဉ်တွင် သက်ဆိုင်ရာ လေ့လာရန်အချက်များနှင့် အစွမ်းထက် တိုက်ကွက်များ ပါဝင်ပါသည်။"
-    
-    action_kb = InlineKeyboardMarkup(row_width=2)
-    action_kb.add(
-        InlineKeyboardButton("🎯 AI Quiz ဆက်ဖြေမည်", callback_data="quiz_start"),
-        InlineKeyboardButton("⬅️ ပင်မမီနူးသို့", callback_data="back_home")
+# ၇။ အခြေခံအင်္ဂလိပ်စာ
+@dp.callback_query_handler(text="lesson_basic")
+async def send_basic_lesson(call: types.CallbackQuery):
+    text = (
+        "🌱 **နံပါတ် တွဲသုံး အခြေခံအင်္ဂလိပ်စာ**\n\n"
+        "1️⃣ **8 parts of Speech** (Noun, Verb, Adjective, Adverb, Pronoun, Preposition, Conjunction, Interjection)\n"
+        "2️⃣ **Sentence Structures** (Simple, Compound, Complex, Compound-complex)\n"
+        "3️⃣ **Subject-verb Agreement**\n"
+        "4️⃣ **Articles** (a, an, the)\n"
+        "5️⃣ **Tenses (12 မျိုး)**"
     )
-    await bot.send_message(callback_query.from_user.id, text, reply_markup=action_kb, parse_mode="Markdown")
+    await call.message.answer(text, parse_mode="Markdown")
+    await call.answer()
 
-@dp.callback_query_handler(lambda c: c.data == 'profile')
-async def show_profile(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    profile_text = (
-        "📊 **စစ်သည်တော် Profile & Rank**\n\n"
-        "• အမည်: MOHE\n"
-        "• လက်ရှိအဆင့်: 👑 အဆင့်မြင့် ဂရင်းမာစတာ လေ့လာသူ\n"
-        "• ရရှိထားသော အမှတ်: 350 XP\n"
-        "• AI Battle အနိုင်ရနှုန်း: 95%"
+# ၈။ Future Tense
+@dp.callback_query_handler(text="lesson_future")
+async def send_future_lesson(call: types.CallbackQuery):
+    text = (
+        "🌟 **Future Tense (အနာဂတ်)**\n\n"
+        "အနာဂတ်အကြောင်းပြောမှာ ဖြစ်တဲ့အတွက် 'လိမ့်မည်' ဆိုတဲ့ အဓိပ္ပာယ် 'will' ကို အသုံးပြုပါတယ်။\n\n"
+        "1️⃣ **Future Simple (will + V1)**\n"
+        "• eg. I will read the book tomorrow.\n"
+        "2️⃣ **Future Continuous (will + be + Ving)**\n"
+        "• eg. I will be reading the book at 5PM tomorrow.\n"
+        "3️⃣ **Future Perfect (will + have + V3)**\n"
+        "• eg. I will have read the book by tomorrow.\n"
+        "4️⃣ **Future Perfect Continuous (will + have + been + Ving)**\n"
+        "• eg. I'll have been reading for two hours by the time you arrive."
     )
-    back_kb = InlineKeyboardMarkup().add(InlineKeyboardButton("⬅️ ပင်မမီနူးသို့ ပြန်ရန်", callback_data="back_home"))
-    await bot.send_message(callback_query.from_user.id, profile_text, reply_markup=back_kb, parse_mode="Markdown")
+    await call.message.answer(text, parse_mode="Markdown")
+    await call.answer()
 
-@dp.callback_query_handler(lambda c: c.data == 'quiz_start')
-async def start_ai_quiz(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    user_id = callback_query.from_user.id
-    USER_QUIZ_STATE[user_id] = True  # Mark user as active in quiz mode
-    
-    current_q = random.choice(QUIZ_POOL)
-    quiz_text = (
-        "🤖 **AI ကျင့်စဉ်နှင့် တိုက်ရိုက်ယှဉ်ပြိုင်ရန် (Quiz Battle)**\n\n"
-        f"⚔️ **စိန်ခေါ်မှု မေးခွန်း:**\n{current_q['q']}\n\n"
-        "💡 *အရိပ်အမြွက်:* သင့်ရဲ့ အဖြေကို ချတ်ဘောက်စ်ထဲမှာ တိုက်ရိုက် ရေးပို့ပေးပါ!"
+# ၉။ Confusing Words
+@dp.callback_query_handler(text="lesson_confusing")
+async def send_confusing_lesson(call: types.CallbackQuery):
+    text = (
+        "🔍 **အမှားများတတ်သော အခြေခံစကားလုံးများ**\n\n"
+        "📌 **It's vs Its**\n"
+        "• It's = It is သို့မဟုတ် It has ကို အတိုကောက်သုံးခြင်း။\n"
+        "• Its = ပိုင်ဆိုင်မှုကို ပြခြင်း\n\n"
+        "📌 **A vs An**\n"
+        "• A = သာမန် ဗျည်းသံ (consonant sound) ရှေ့တွင်သုံးသည်။\n"
+        "• An = သရသံ (vowel sound - a, e, i, o, u) ရှေ့တွင်သုံးသည်။\n\n"
+        "📌 **Do vs Make**\n"
+        "• Do = တာဝန်လုပ်ငန်းတစ်ခုခုကို လုပ်ဆောင်ရာတွင် သုံးသည်။\n"
+        "• Make = အသစ်ဖန်တီးတာ၊ ပစ္စည်းပြုလုပ်ရာတွင် သုံးသည်။"
     )
-    back_kb = InlineKeyboardMarkup().add(InlineKeyboardButton("⬅️ ပင်မမီနူးသို့ ပြန်ရန်", callback_data="back_home"))
-    await bot.send_message(callback_query.from_user.id, quiz_text, reply_markup=back_kb, parse_mode="Markdown")
-
-@dp.message_handler(lambda message: message.text and not message.text.startswith('/'))
-async def check_quiz_answer(message: types.Message):
-    user_id = message.from_user.id
-    
-    # Check if user actually initiated a quiz battle
-    if USER_QUIZ_STATE.get(user_id):
-        user_answer = message.text.strip().lower()
-        is_correct = any(ans in user_answer for ans in ["goes", "play", "studied", "correct", "မှန်", "go", "am writing"])
-        
-        if is_correct:
-            reply_text = "✨ **တိုက်ခိုက်မှု အောင်မြင်သည်! AI Bot ကို အနိုင်ယူလိုက်ပြီ 🔥 (+50 XP)**\n\nထပ်မံယှဉ်ပြိုင်ရန် /start ကို နှိပ်ပါ သို့မဟုတ် မီနူးသို့ သွားပါ။"
-        else:
-            reply_text = "❌ **တိုက်ခိုက်မှု လွဲချော်သွားသည်! AI Bot က တိုက်ခိုက်လိုက်သည် 🛡️**\n\nထပ်မံကြိုးစားကြည့်ပါဦး သူငယ်ချင်း။"
-        
-        USER_QUIZ_STATE.pop(user_id, None)
-        await message.answer(reply_text, parse_mode="Markdown")
-
-@dp.callback_query_handler(lambda c: c.data == 'back_home')
-async def back_home(callback_query: types.CallbackQuery):
-    await callback_query.answer()
-    USER_QUIZ_STATE.pop(callback_query.from_user.id, None)
-    keyboard = InlineKeyboardMarkup(row_width=1)
-    keyboard.add(
-        InlineKeyboardButton("🌱 အဆင့် (၁) - အခြေခံ အုတ်မြစ် ကျင့်စဉ်များ (အပိုင်း ၁-၈)", callback_data="tier_1"),
-        InlineKeyboardButton("🌿 အဆင့် (၂) - တိုက်ခိုက်ရေး ကာလများ (အပိုင်း ၉-၁၇)", callback_data="tier_2"),
-        InlineKeyboardButton("🔥 အဆင့် (၃) - အဆင့်မြင့် သိုင်းကွက်များ (အပိုင်း ၁၈-၂၅)", callback_data="tier_3"),
-        InlineKeyboardButton("👑 အဆင့် (၄) - ဂရင်းမာစတာ စိန်ခေါ်ပွဲ (အပိုင်း ၂၆-၃၀)", callback_data="tier_4"),
-        InlineKeyboardButton("📊 စစ်သည်တော် Profile & Rank", callback_data="profile"),
-        InlineKeyboardButton("🎯 AI Quiz Battle (တိုက်ရိုက်ယှဉ်ပြိုင်ရန်)", callback_data="quiz_start")
-    )
-    await bot.send_message(callback_query.from_user.id, "🏯 ပင်မ မီနူးသို့ ပြန်ရောက်ပါပြီ စစ်သည်တော် MOHE။", reply_markup=keyboard)
+    await call.message.answer(text, parse_mode="Markdown")
+    await call.answer()
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
-    
+
