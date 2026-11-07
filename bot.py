@@ -3,12 +3,13 @@ from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 from aiogram.utils import executor
 
 API_TOKEN = '8437112340:AAEV-a5qzKjtC-N2_KLacw8oizi-SLQ1yJI'
+
 bot = Bot(token=API_TOKEN)
 dp = Dispatcher(bot)
 
 # ၁။ ရောင်စုံအီမိုဂျီ ဇယားကွက် (Grid) ပုံစံ မီနူးခလုတ်များ
 def get_study_menu():
-    keyboard = InlineKeyboardMarkup(row_width=2) # တစ်တန်းကို ခလုတ် ၂ ခုစီ
+    keyboard = InlineKeyboardMarkup(row_width=2)
     
     btn_smart = InlineKeyboardButton("🎯 SMART Goals", callback_data="lesson_smart")
     btn_thanks = InlineKeyboardButton("🙏 ကျေးဇူးတင်စကားများ", callback_data="lesson_thanks")
@@ -35,7 +36,7 @@ async def send_welcome(message: types.Message):
     )
     await message.reply(welcome_text, reply_markup=get_study_menu(), parse_mode="Markdown")
 
-# ၃။ SMART Goals သင်ခန်းစာ
+# ၃။ SMART Goals သင်ခန်းစာ (ခလုတ်ပါ ერთად ပို့မည်)
 @dp.callback_query_handler(text="lesson_smart")
 async def send_smart_lesson(call: types.CallbackQuery):
     text = (
@@ -47,7 +48,8 @@ async def send_smart_lesson(call: types.CallbackQuery):
         "✔️ **Realistic:** လက်တွေ့ကျဖို့လည်းလိုပါတယ်။\n"
         "⏰ **Timely:** အချိန်သတ်မှတ်ပါ။"
     )
-    await call.message.answer(text, parse_mode="Markdown")
+    # edit_text သုံးထားသဖြင့် မက်ဆေ့ခ်ျအဟောင်းမှာပင် စာအသစ်နှင့် မီနူးခလုတ်များ တန်းပေါ်လာမည်
+    await call.message.edit_text(text, reply_markup=get_study_menu(), parse_mode="Markdown")
     await call.answer()
 
 # ၄။ ကျေးဇူးတင်စကားများ
@@ -63,7 +65,7 @@ async def send_thanks_lesson(call: types.CallbackQuery):
         "🟪 Thanks a million\n\n"
         "⚡ သင်ဟာ meaning တစ်လုံးကို ကျွယ်ကျွယ် ပြန့်ပြန့်သုံးတတ်နေပြီဆိုရင် မဆိုးလှတဲ့ English level ကိုရောက်နေပြီ ဖြစ်ပါတယ်။"
     )
-    await call.message.answer(text, parse_mode="Markdown")
+    await call.message.edit_text(text, reply_markup=get_study_menu(), parse_mode="Markdown")
     await call.answer()
 
 # ၅။ တောင်းပန်စကားများ
@@ -80,7 +82,7 @@ async def send_sorry_lesson(call: types.CallbackQuery):
         "• I have no idea.\n"
         "• It's beyond me."
     )
-    await call.message.answer(text, parse_mode="Markdown")
+    await call.message.edit_text(text, reply_markup=get_study_menu(), parse_mode="Markdown")
     await call.answer()
 
 # ၆။ Writing Tips
@@ -92,7 +94,7 @@ async def send_writing_lesson(call: types.CallbackQuery):
         "🌅 **မနက်ခင်း:** အိပ်ယာထချင်း စာရွက်နဲ့ ဘောပင် သို့မဟုတ် ဖုန်း note ထဲမှာ 'တစ်နေ့တာလုပ်ဆောင်မယ့် To-do-list' တွေကို ချရေးပါ။ 📝\n"
         "🌙 **ညအိပ်ယာမဝင်ခင်:** Jounaling ပြန်လုပ်ပါ။ တစ်နေ့တာဖြစ်ပျက်သမျှကို ပြန်ချရေးပါ။"
     )
-    await call.message.answer(text, parse_mode="Markdown")
+    await call.message.edit_text(text, reply_markup=get_study_menu(), parse_mode="Markdown")
     await call.answer()
 
 # ၇။ အခြေခံအင်္ဂလိပ်စာ
@@ -106,7 +108,7 @@ async def send_basic_lesson(call: types.CallbackQuery):
         "4️⃣ **Articles** (a, an, the)\n"
         "5️⃣ **Tenses (12 မျိုး)**"
     )
-    await call.message.answer(text, parse_mode="Markdown")
+    await call.message.edit_text(text, reply_markup=get_study_menu(), parse_mode="Markdown")
     await call.answer()
 
 # ၈။ Future Tense
@@ -124,7 +126,7 @@ async def send_future_lesson(call: types.CallbackQuery):
         "4️⃣ **Future Perfect Continuous (will + have + been + Ving)**\n"
         "• eg. I'll have been reading for two hours by the time you arrive."
     )
-    await call.message.answer(text, parse_mode="Markdown")
+    await call.message.edit_text(text, reply_markup=get_study_menu(), parse_mode="Markdown")
     await call.answer()
 
 # ၉။ Confusing Words
@@ -142,9 +144,9 @@ async def send_confusing_lesson(call: types.CallbackQuery):
         "• Do = တာဝန်လုပ်ငန်းတစ်ခုခုကို လုပ်ဆောင်ရာတွင် သုံးသည်။\n"
         "• Make = အသစ်ဖန်တီးတာ၊ ပစ္စည်းပြုလုပ်ရာတွင် သုံးသည်။"
     )
-    await call.message.answer(text, parse_mode="Markdown")
+    await call.message.edit_text(text, reply_markup=get_study_menu(), parse_mode="Markdown")
     await call.answer()
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
-
+    
