@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study VIP English - Open World RPG</title>
+    <title>Study VIP English RPG</title>
     <style>
         body {
             background-color: #0b0f19;
@@ -61,7 +61,7 @@
             font-size: 11px;
             color: #34d399;
             border: 1px dashed #334155;
-            line-height: 1.5;
+            line-height: 1.6;
         }
         
         .btn {
@@ -76,9 +76,28 @@
             font-weight: bold;
             margin-top: 10px;
             box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
+            text-align: left;
         }
         .btn:hover { opacity: 0.9; }
         
+        .map-btn {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border: 1px solid #475569;
+            color: #f8fafc;
+            padding: 14px;
+            width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .map-btn:hover { background: #334155; border-color: #38bdf8; }
+
         .option-btn {
             background: #334155;
             color: white;
@@ -98,94 +117,91 @@
 <body>
 
 <div class="container">
-    <!-- Header -->
     <div class="header">
         <h2>🗺️ Study VIP English RPG</h2>
-        <p>Complete Tenses & Master Dashboard</p>
+        <p>Open World Clean Dashboard</p>
     </div>
 
-    <!-- Stats -->
     <div class="stats">
         <div>⭐ Level: <span id="lvl">1</span></div>
         <div>⚡ XP: <span id="xp">0</span></div>
         <div>❤️ HP: <span id="hp">100</span></div>
     </div>
 
-    <!-- SINGLE PAGE MASTER VIEW -->
-    <div id="main-dashboard">
-        <!-- 1. SMART Goals -->
-        <div class="card" style="border-left-color: #10b981;">
-            <h3>🎯 1. SMART Goals ရည်မှန်းချက်များ</h3>
-            <p>Specific, Measurable, Attainable, Realistic, Timely ဖြင့် စနစ်တကျ ဖော်ထုတ်ပါ။</p>
-            <div class="example-box">
-                ✔️ I gonna eat breakfast at 8Am. (မနက် ၈ နာရီမှာ မနက်စာစားမယ်။)[span_0](start_span)[span_0](end_span)<br>
-                ✔️ I will shower at 12Pm. (၁၂ နာရီမှာ ရေချိုးမယ်။)[span_1](start_span)[span_1](end_span)
-            </div>
+    <!-- 1. MAP SELECTION SCREEN (Home) -->
+    <div id="map-screen">
+        <div class="card" style="border-left-color: #10b981; margin-bottom: 15px;">
+            <h3>📍 လေ့လာလိုသော နယ်မြေကို ရွေးပါ</h3>
+            <p>အောက်ပါ နယ်မြေများထဲမှ တစ်ခုချင်းစီကို သီးသန့် ဝင်ရောက်လေ့လာနိုင်ပါသည်။</p>
         </div>
 
-        <!-- 2. Present Tenses (4 Types) -->
-        <div class="card" style="border-left-color: #d97706;">
-            <h3>⚔️ 2. Present Tenses (၄) မျိုး</h3>
-            <p>လက်ရှိကာလ အသုံးပြုပုံများနှင့် ဥပမာများ</p>
-            <div class="example-box">
-                📌 **Present Simple (V1):** She reads every morning. (သူမက မနက်တိုင်း စာဖတ်တယ်။)[span_2](start_span)[span_2](end_span)<br>
-                📌 **Present Continuous (am/is/are + V_ing):** You are watching my video right now. (မင်းအခု video ကြည့်နေတယ်။)[span_3](start_span)[span_3](end_span)<br>
-                📌 **Present Perfect (has/have + V3):** She has read five books this month. (သူမ စာအုပ် ၅ အုပ် ဖတ်ပြီးပြီ။)[span_4](start_span)[span_4](end_span)<br>
-                📌 **Present Perfect Continuous:** I have been reading for two hours. (ငါ စာဖတ်နေတာ ၂ နာရီရှိပြီ။)[span_5](start_span)[span_5](end_span)
-            </div>
-        </div>
-
-        <!-- 3. Past Tenses (4 Types) -->
-        <div class="card" style="border-left-color: #3b82f6;">
-            <h3>🛡️ 3. Past Tenses (၄) မျိုး</h3>
-            <p>လွန်ခဲ့သော အတိတ်ကာလ အသုံးပြုပုံများနှင့် ဥပမာများ</p>
-            <div class="example-box">
-                📌 **Past Simple (V2):** I visited my grandparents yesterday. (ငါ မနေ့က အဘိုးအဘွားတွေဆီ သွားခဲ့တယ်။)[span_6](start_span)[span_6](end_span)<br>
-                📌 **Past Continuous (was/were + V_ing):** When I saw Koko, he was playing football. (ကိုကို့ကို တွေ့စဥ်က သူဘောလုံးကစားနေတယ်။)[span_7](start_span)[span_7](end_span)<br>
-                📌 **Past Perfect (had + V3):** I had read the book before the class started. မစခင်ကတည်းက စာအုပ်ဖတ်ပြီးသား။[span_8](start_span)[span_8](end_span)<br>
-                📌 **Past Perfect Continuous:** I had been studying for hours before the exam started.[span_9](start_span)[span_9](end_span)
-            </div>
-        </div>
-
-        <!-- 4. Future Tenses (4 Types) -->
-        <div class="card" style="border-left-color: #8b5cf6;">
-            ### 🚀 4. Future Tenses (၄) မျိုး
-            <p>နောင်လာမည့် အနာဂတ်ကာလ အသုံးပြုပုံများနှင့် ဥပမာများ</p>
-            <div class="example-box">
-                📌 **Future Simple (will + V1):** I will read the book tomorrow. (ငါမနက်ဖြန် စာအုပ်ဖတ်မယ်။)[span_10](start_span)[span_10](end_span)<br>
-                📌 **Future Continuous (will be + V_ing):** I will be reading the book at 5PM tomorrow.[span_11](start_span)[span_11](end_span)<br>
-                📌 **Future Perfect (will have + V3):** I will have read the book by tomorrow.[span_12](start_span)[span_12](end_span)<br>
-                📌 **Future Perfect Continuous:** I'll have been reading for two hours by the time you arrive.[span_13](start_span)[span_13](end_span)
-            </div>
-        </div>
-
-        <!-- 5. Confusing Words -->
-        <div class="card" style="border-left-color: #ec4899;">
-            <h3>💎 5. Confusing Words (မှားတတ်သောစကားလုံးများ)</h3>
-            <p>It's vs Its, Do vs Make စသည့် အမြဲမှားတတ်သော စကားစုများ။</p>
-            <div class="example-box">
-                ✔️ I need to do my homework. (အိမ်စာလုပ်သည် - do)[span_14](start_span)[span_14](end_span)<br>
-                ✔️ I made a cake for you. (ကိတ်မုန့်လုပ်သည် - make)[span_15](start_span)[span_15](end_span)
-            </div>
-        </div>
-
-        <!-- Quick Quiz Button -->
-        <button class="btn" onclick="openQuiz()">⚔️ အထွေထွေ စိန်ခေါ်မှု (Quiz) ဖြေမည်</button>
+        <button class="map-btn" onclick="openSection('smart')">
+            <span>🎯 1. SMART Goals နယ်မြေ</span> ➔
+        </button>
+        <button class="map-btn" onclick="openSection('present')">
+            <span>⚔️ 2. Present Tenses (၄) မျိုး</span> ➔
+        </button>
+        <button class="map-btn" onclick="openSection('past')">
+            <span>🛡️ 3. Past Tenses (၄) မျိုး</span> ➔
+        </button>
+        <button class="map-btn" onclick="openSection('future')">
+            <span>🚀 4. Future Tenses (၄) မျိုး</span> ➔
+        </button>
+        <button class="map-btn" onclick="openSection('confusing')">
+            <span>💎 5. Confusing Words</span> ➔
+        </button>
+        <button class="map-btn" style="border-color: #ef4444; background: #1f1725;" onclick="openQuiz()">
+            <span>⚡ စိန်ခေါ်မှု (Quiz) ဖြေမည်</span> ⚔️
+        </button>
     </div>
 
-    <!-- QUIZ SCREEN -->
+    <!-- 2. DETAIL CONTENT SCREEN (Individual Section) -->
+    <div id="detail-screen" class="hidden">
+        <div id="detail-content"></div>
+        <button class="btn" style="background: #ef4444; margin-top: 15px;" onclick="returnToMap()">🔙 မြေပုံသို့ ပြန်မည်</button>
+    </div>
+
+    <!-- 3. QUIZ SCREEN -->
     <div id="quiz-screen" class="hidden">
         <div class="card" style="border-left-color: #ef4444;">
-            <h3>⚡ Open World Quest Quiz</h3>
+            <h3>⚡ Quest Quiz Challenge</h3>
             <p id="q-text" style="color: #fff; font-size: 13px; margin-top: 8px;"></p>
         </div>
         <div id="options-container"></div>
-        <button class="btn" style="background: #ef4444; margin-top: 15px;" onclick="closeQuiz()">🔙 ပင်မစာမျက်နှာသို့</button>
+        <button class="btn" style="background: #ef4444; margin-top: 15px;" onclick="returnToMap()">🔙 မြေပုံသို့ ပြန်မည်</button>
     </div>
 </div>
 
 <script>
     let player = { level: 1, xp: 0, hp: 100 };
+
+    const sections = {
+        smart: {
+            title: "🎯 1. SMART Goals ရည်မှန်းချက်များ",
+            desc: "Specific, Measurable, Attainable, Realistic, Timely ဖြင့် စနစ်တကျ ဖော်ထုတ်ပါ။",
+            ex: "✔️ I gonna eat breakfast at 8Am. (မနက် ၈ နာရီမှာ မနက်စာစားမယ်။)<br>✔️ I will shower at 12Pm. (၁၂ နာရီမှာ ရေချိုးမယ်။)"
+        },
+        present: {
+            title: "⚔️ 2. Present Tenses (၄) မျိုး",
+            desc: "လက်ရှိကာလ အသုံးပြုပုံများနှင့် ဥပမာများ",
+            ex: "• <b>Present Simple:</b> She reads every morning. (သူမ မနက်တိုင်း စာဖတ်သည်။)<br>• <b>Present Continuous:</b> You are watching my video. (မင်း video ကြည့်နေသည်။)<br>• <b>Present Perfect:</b> She has read five books. (သူမ စာအုပ် ၅ အုပ် ဖတ်ပြီးပြီ။)<br>• <b>Present Perfect Cont.:</b> I have been reading for 2 hours."
+        },
+        past: {
+            title: "🛡️ 3. Past Tenses (၄) မျိုး",
+            desc: "လွန်ခဲ့သော အတိတ်ကာလ အသုံးပြုပုံများနှင့် ဥပမာများ",
+            ex: "• <b>Past Simple:</b> I visited my grandparents yesterday. (မနေ့က အဘိုးအဘွားတွေဆီ သွားခဲ့တယ်။)<br>• <b>Past Continuous:</b> He was playing football. (သူ ဘောလုံးကစားနေသည်။)<br>• <b>Past Perfect:</b> I had read the book before.<br>• <b>Past Perfect Cont.:</b> I had been studying for hours."
+        },
+        future: {
+            title: "🚀 4. Future Tenses (၄) မျိုး",
+            desc: "နောင်လာမည့် အနာဂတ်ကာလ အသုံးပြုပုံများနှင့် ဥပမာများ",
+            ex: "• <b>Future Simple:</b> I will read the book tomorrow. (မနက်ဖြန် စာအုပ်ဖတ်မယ်။)<br>• <b>Future Continuous:</b> I will be reading at 5PM.<br>• <b>Future Perfect:</b> I will have read the book.<br>• <b>Future Perfect Cont.:</b> I'll have been reading for two hours."
+        },
+        confusing: {
+            title: "💎 5. Confusing Words",
+            desc: "အမြဲမှားတတ်သော စကားစုများ",
+            ex: "✔️ I need to do my homework. (အိမ်စာလုပ်သည် - do)<br>✔️ I made a cake for you. (ကိတ်မုန့်လုပ်သည် - make)"
+        }
+    };
 
     const questions = [
         {
@@ -199,9 +215,9 @@
             answer: 2
         },
         {
-            q: "Present Simple တွင် အသုံးပြုလေ့ရှိသော ပုံစံမှာ -",
-            options: ["A) V1 (reads/read)", "B) V2", "C) will + V1", "D) was + V_ing"],
-            answer: 0
+            q: "အိမ်စာလုပ်သည် ဟု သုံးနှုန်းရာတွင် အသုံးပြုရသည့် စကားလုံးမှာ -",
+            options: ["A) Make homework", "B) Do homework", "C) Play homework", "D) Take homework"],
+            answer: 1
         }
     ];
 
@@ -213,8 +229,24 @@
         document.getElementById('hp').innerText = player.hp;
     }
 
+    function openSection(key) {
+        document.getElementById('map-screen').classList.add('hidden');
+        document.getElementById('quiz-screen').classList.add('hidden');
+        document.getElementById('detail-screen').classList.remove('hidden');
+
+        let data = sections[key];
+        document.getElementById('detail-content').innerHTML = `
+            <div class="card">
+                <h3>${data.title}</h3>
+                <p>${data.desc}</p>
+                <div class="example-box">${data.ex}</div>
+            </div>
+        `;
+    }
+
     function openQuiz() {
-        document.getElementById('main-dashboard').classList.add('hidden');
+        document.getElementById('map-screen').classList.add('hidden');
+        document.getElementById('detail-screen').classList.add('hidden');
         document.getElementById('quiz-screen').classList.remove('hidden');
         loadQuestion();
     }
@@ -251,12 +283,13 @@
         }
         updateStats();
         currentQIndex = (currentQIndex + 1) % questions.length;
-        closeQuiz();
+        returnToMap();
     }
 
-    function closeQuiz() {
+    function returnToMap() {
+        document.getElementById('detail-screen').classList.add('hidden');
         document.getElementById('quiz-screen').classList.add('hidden');
-        document.getElementById('main-dashboard').classList.remove('hidden');
+        document.getElementById('map-screen').classList.remove('hidden');
     }
 
     updateStats();
