@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="my" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Study VIP English - Interactive Learning App</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Font Inter & Padauk -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Padauk', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0f172a',
+                            card: '#1e293b',
+                            accent: '#6366f1',
+                            pink: '#ec4899',
+                            emerald: '#10b981',
+                            amber: '#f59e0b',
+                            cyan: '#06b6d4',
+                            purple: '#a855f7'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar & glassmorphism effects */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-full flex flex-col selection:bg-brand-purple selection:text-white">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-30 bg-slate-900/80 backdrop-blur-md border-b border-slate-800 px-4 py-3 sm:px-6">
+        <div class="max-w-5xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showView('main-menu')">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-purple to-brand-pink flex items-center justify-center text-white shadow-lg shadow-pink-500/20">
+                    <i class="fa-solid font-bold fa-graduation-cap text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-extrabold text-lg sm:text-xl tracking-tight gradient-text">Study VIP English</h1>
+                    <p class="text-xs text-slate-400 font-medium">Grade 8 & General English Practice</p>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+                <button onclick="showView('practice-todo')" class="flex items-center gap-2 text-xs font-semibold px-3 py-2 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 hover:bg-emerald-500/20 transition-all">
+                    <i class="fa-solid fa-list-check"></i> <span class="hidden sm:inline">To-do Logger</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-1 max-w-5xl w-full mx-auto p-4 sm:p-6 mb-12">
+
+        <!-- ================= MAIN MENU VIEW ================= -->
+        <div id="main-menu" class="space-y-6 animate-fade-in">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-indigo-900/60 via-purple-900/40 to-slate-900 border border-indigo-500/20 p-6 sm:p-8 shadow-2xl">
+                <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-purple-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative z-10 max-w-2xl">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 mb-3">
+                        <i class="fa-solid fa-sparkles text-amber-400"></i> Interactive Learning Grid
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white leading-tight mb-2">
+                        မင်္ဂလာပါ! အင်္ဂလိပ်စာ သင်ခန်းစာများနှင့် လက်တွေ့လေ့ကျင့်ခန်းများ
+                    </h2>
+                    <p class="text-slate-300 text-sm sm:text-base">
+                        အောက်ပါ ရောင်စုံ Grid ခလုတ်များမှ လေ့လာလိုသော သင်ခန်းစာကို ရွေးချယ်ပါ။ စာအသစ်ပြောင်းရလွယ်ကူပြီး မလိုအပ်ဘဲ အပေါ်အောက် ဆွဲနေစရာမလိုဘဲ အေးဆေးလေ့လာနိုင်ပါသည်။
+                    </p>
+                </div>
+            </div>
+
+            <!-- Category Filter / Search Header -->
+            <div class="flex items-center justify-between pt-2">
+                <h3 class="text-base sm:text-lg font-bold text-slate-200 flex items-center gap-2">
+                    <i class="fa-solid fa-border-all text-brand-purple"></i> သင်ခန်းစာ ကတ်များ (Lesson Cards)
+                </h3>
+                <span class="text-xs text-slate-400">8 Lessons Available</span>
+            </div>
+
+            <!-- Colorful Grid Menu -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                <!-- Card 1: SMART Goals -->
+                <div onclick="showView('lesson-smart')" class="glass-card hover:bg-slate-800/80 transition-all duration-300 rounded-2xl p-5 cursor-pointer border border-slate-700/60 hover:border-indigo-500/50 hover:shadow-xl hover:shadow-indigo-500/10 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">🎯</div>
+                        <h4 class="font-bold text-slate-100 text-base mb-1 group-hover:text-indigo-400 transition-colors">SMART Goals</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">ထိရောက်သော Goal သတ်မှတ်နည်းနှင့် Interactive Checklist</p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-indigo-400 font-semibold pt-2 border-t border-slate-800">
+                        <span>လေ့လာရန်</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- Card 2: Thank You Phrases -->
+                <div onclick="showView('lesson-thanks')" class="glass-card hover:bg-slate-800/80 transition-all duration-300 rounded-2xl p-5 cursor-pointer border border-slate-700/60 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-500/10 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">🙏</div>
+                        <h4 class="font-bold text-slate-100 text-base mb-1 group-hover:text-emerald-400 transition-colors">Thank You Phrases</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">ကျေးဇူးတင်စကား အမျိုးမျိုး ပိုမိုလှပစွာ ပြောဆိုနည်းများ</p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-emerald-400 font-semibold pt-2 border-t border-slate-800">
+                        <span>လေ့လာရန်</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- Card 3: Sorry & Doubt Phrases -->
+                <div onclick="showView('lesson-sorry')" class="glass-card hover:bg-slate-800/80 transition-all duration-300 rounded-2xl p-5 cursor-pointer border border-slate-700/60 hover:border-amber-500/50 hover:shadow-xl hover:shadow-amber-500/10 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-amber-500/20 border border-amber-500/30 text-amber-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">🙇</div>
+                        <h4 class="font-bold text-slate-100 text-base mb-1 group-hover:text-amber-400 transition-colors">Sorry & Phrases</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">တောင်းပန်ခြင်း နှင့် မသိကြောင်း ယဉ်ကျေးစွာ ပြောဆိုခြင်း</p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-amber-400 font-semibold pt-2 border-t border-slate-800">
+                        <span>လေ့လာရန်</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- Card 4: Writing & To-do Tips -->
+                <div onclick="showView('lesson-writing')" class="glass-card hover:bg-slate-800/80 transition-all duration-300 rounded-2xl p-5 cursor-pointer border border-slate-700/60 hover:border-pink-500/50 hover:shadow-xl hover:shadow-pink-500/10 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-pink-500/20 border border-pink-500/30 text-pink-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">✍️</div>
+                        <h4 class="font-bold text-slate-100 text-base mb-1 group-hover:text-pink-400 transition-colors">Writing & Daily Tips</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">မနက်/ည အိပ်ရာဝင်ချိန် Writing လေ့ကျင့်ရေး အလေ့အကျင့်</p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-pink-400 font-semibold pt-2 border-t border-slate-800">
+                        <span>လေ့လာရန်</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- Card 5: Basic English -->
+                <div onclick="showView('lesson-basic')" class="glass-card hover:bg-slate-800/80 transition-all duration-300 rounded-2xl p-5 cursor-pointer border border-slate-700/60 hover:border-cyan-500/50 hover:shadow-xl hover:shadow-cyan-500/10 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-cyan-500/20 border border-cyan-500/30 text-cyan-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">🌱</div>
+                        <h4 class="font-bold text-slate-100 text-base mb-1 group-hover:text-cyan-400 transition-colors">Basic English Foundational</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">Parts of Speech, Grammar & Articles အခြေခံများ</p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-cyan-400 font-semibold pt-2 border-t border-slate-800">
+                        <span>လေ့လာရန်</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- Card 6: Future Tense -->
+                <div onclick="showView('lesson-future')" class="glass-card hover:bg-slate-800/80 transition-all duration-300 rounded-2xl p-5 cursor-pointer border border-slate-700/60 hover:border-purple-500/50 hover:shadow-xl hover:shadow-purple-500/10 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-purple-500/20 border border-purple-500/30 text-purple-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">🌟</div>
+                        <h4 class="font-bold text-slate-100 text-base mb-1 group-hover:text-purple-400 transition-colors">Future Tenses</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">Future Simple, Continuous, Perfect ရှင်းလင်းချက်များ</p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-purple-400 font-semibold pt-2 border-t border-slate-800">
+                        <span>လေ့လာရန်</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- Card 7: Confusing Words -->
+                <div onclick="showView('lesson-confusing')" class="glass-card hover:bg-slate-800/80 transition-all duration-300 rounded-2xl p-5 cursor-pointer border border-slate-700/60 hover:border-rose-500/50 hover:shadow-xl hover:shadow-rose-500/10 group flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-rose-500/20 border border-rose-500/30 text-rose-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">🔍</div>
+                        <h4 class="font-bold text-slate-100 text-base mb-1 group-hover:text-rose-400 transition-colors">Confusing Words</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">It's vs Its, A vs An, Do vs Make အမှားများတတ်သည်များ</p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-rose-400 font-semibold pt-2 border-t border-slate-800">
+                        <span>လေ့လာရန်</span>
+                        <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+
+                <!-- Card 8: Interactive Practice To-do -->
+                <div onclick="showView('practice-todo')" class="glass-card hover:bg-slate-800/80 transition-all duration-300 rounded-2xl p-5 cursor-pointer border border-slate-700/60 hover:border-emerald-500/50 hover:shadow-xl hover:shadow-emerald-500/10 group flex flex-col justify-between bg-gradient-to-br from-emerald-950/30 to-slate-900">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-emerald-500/20 border border-emerald-500/30 text-emerald-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">📝</div>
+                        <h4 class="font-bold text-slate-100 text-base mb-1 group-hover:text-emerald-400 transition-colors">လက်တွေ့ To-do Logger</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed mb-4">အင်္ဂလိပ်လို Daily To-do ရေးပြီး သိမ်းဆည်းလေ့ကျင့်ရန်</p>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-emerald-400 font-semibold pt-2 border-t border-slate-800">
+                        <span>လေ့ကျင့်ခန်းစရန်</span>
+                        <i class="fa-solid fa-play group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ================= LESSON 1: SMART GOALS ================= -->
+        <div id="lesson-smart" class="hidden space-y-6 animate-fade-in">
+            <button onclick="showView('main-menu')" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 px-3 py-1.5 rounded-lg transition-all">
+                <i class="fa-solid fa-arrow-left"></i> Main Menu သို့ပြန်သွားရန်
+            </button>
+
+            <div class="glass-card rounded-2xl p-6 sm:p-8 border border-indigo-500/30">
+                <div class="flex items-center gap-3 mb-4">
+                    <span class="text-3xl">🎯</span>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">How to develop SMART Goals?</h2>
+                        <p class="text-xs text-indigo-400 font-medium">Personal & Academic Growth Strategy</p>
+                    </div>
+                </div>
+
+                <div class="prose prose-invert max-w-none text-slate-300 text-sm sm:text-base space-y-4">
+                    <p class="bg-indigo-950/40 p-4 rounded-xl border border-indigo-800/40 text-slate-200">
+                        <strong class="text-indigo-400">SMART goals</strong> ဆိုသည်မှာ ကိုယ့်၏ လေ့လာမှု သို့မဟုတ် ရည်မှန်းချက်များကို စနစ်တကျ အကောင်အထည်ဖော်ရာတွင် အလွန်ထိရောက်သော ရည်မှန်းချက် သတ်မှတ်နည်းဖြစ်ပါသည်။
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 my-4">
+                        <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700">
+                            <h4 class="font-bold text-indigo-400 mb-1">📌 Specific (တိကျမှုရှိခြင်း)</h4>
+                            <p class="text-xs text-slate-400">ကိုယ်လိုချင်တာဘာလဲ (What)၊ ဘာကြောင့်လုပ်ချင်တာလဲ (Why)၊ ဘယ်လိုရအောင်လုပ်မလဲ (How) တိကျစွာ ရေးဆွဲပါ။</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700">
+                            <h4 class="font-bold text-indigo-400 mb-1">📝 Measurable (တိုင်းတာနိုင်ခြင်း)</h4>
+                            <p class="text-xs text-slate-400">ကိုယ့်၏ တိုးတက်မှုကို အလွယ်တကူ တိုင်းတာနိုင်မည့် အညွှန်းများ ထားရှိပါ။</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700">
+                            <h4 class="font-bold text-indigo-400 mb-1">💻 Attainable (ရယူနိုင်ခြင်း)</h4>
+                            <p class="text-xs text-slate-400">ကိုယ့်မှာရှိသည့် resource (စာအုပ်၊ သင်ခန်းစာ၊ အချိန်) ဖြင့် အမှန်တကယ် ပြုလုပ်နိုင်ပါစေ။</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700">
+                            <h4 class="font-bold text-indigo-400 mb-1">✔️ Realistic (လက်တွေ့ကျခြင်း)</h4>
+                            <p class="text-xs text-slate-400">ဖြစ်နိုင်ခြေရှိသော လက်တွေ့ကျသည့် ရည်မှန်းချက်များဖြစ်ရမည်။</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700">
+                        <h4 class="font-bold text-indigo-400 mb-1">⏰ Timely (အချိန်သတ်မှတ်ချက်)</h4>
+                        <p class="text-xs text-slate-400">"နောက်မှလုပ်မည်" ဟု အချိန်ဆွဲမထားဘဲ (ဥပမာ- ၃ လအတွင်း အင်္ဂလိပ်စာ Tense ၁၂ မျိုးကို အပိုင်ကျက်မည်) အချိန်ကာလ အတိအကျ သတ်မှတ်ပါ။</p>
+                    </div>
+                </div>
+
+                <!-- Interactive SMART Checklist -->
+                <div class="mt-8 pt-6 border-t border-slate-800">
+                    <h3 class="font-bold text-base text-white mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-list-check text-indigo-400"></i> Interactive SMART Goal Check
+                    </h3>
+                    <p class="text-xs text-slate-400 mb-4">သင့်ရဲ့ Goal က SMART ဖြစ်မဖြစ် အောက်ပါမေးခွန်းများကို အမှန်ခြစ်ကြည့်ပါ:</p>
+                    
+                    <div class="space-y-2">
+                        <label class="flex items-start gap-3 p-3 rounded-lg bg-slate-900/60 border border-slate-800 cursor-pointer hover:border-slate-700">
+                            <input type="checkbox" onchange="updateSmartProgress()" class="smart-check mt-1 rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-indigo-500">
+                            <span class="text-xs sm:text-sm text-slate-300"><b>Specific:</b> ဘာလုပ်မယ်ဆိုတာ တိကျရှင်းလင်းစွာ ရေးထားပါသလား။</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3 rounded-lg bg-slate-900/60 border border-slate-800 cursor-pointer hover:border-slate-700">
+                            <input type="checkbox" onchange="updateSmartProgress()" class="smart-check mt-1 rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-indigo-500">
+                            <span class="text-xs sm:text-sm text-slate-300"><b>Measurable:</b> ပြီးမြောက်ကြောင်း ဘယ်လိုတိုင်းတာမလဲဆိုတာ သတ်မှတ်ပြီးပြီလား။</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3 rounded-lg bg-slate-900/60 border border-slate-800 cursor-pointer hover:border-slate-700">
+                            <input type="checkbox" onchange="updateSmartProgress()" class="smart-check mt-1 rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-indigo-500">
+                            <span class="text-xs sm:text-sm text-slate-300"><b>Attainable:</b> ကိုယ့်ရဲ့ အရည်အချင်းနဲ့ ရရှိနိုင်တဲ့ အခြေအနေနဲ့ ကိုက်ညီရဲ့လား။</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3 rounded-lg bg-slate-900/60 border border-slate-800 cursor-pointer hover:border-slate-700">
+                            <input type="checkbox" onchange="updateSmartProgress()" class="smart-check mt-1 rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-indigo-500">
+                            <span class="text-xs sm:text-sm text-slate-300"><b>Realistic:</b> လက်တွေ့ အမှန်တကယ် လုပ်ဆောင်နိုင်တာမျိုး ဖြစ်ရဲ့လား။</span>
+                        </label>
+                        <label class="flex items-start gap-3 p-3 rounded-lg bg-slate-900/60 border border-slate-800 cursor-pointer hover:border-slate-700">
+                            <input type="checkbox" onchange="updateSmartProgress()" class="smart-check mt-1 rounded border-slate-700 bg-slate-800 text-indigo-600 focus:ring-indigo-500">
+                            <span class="text-xs sm:text-sm text-slate-300"><b>Timely:</b> ပြီးစီးရမည့် နေ့စွဲ သို့မဟုတ် အချိန်ကန့်သတ်ချက် ပါဝင်ပါသလား။</span>
+                        </label>
+                    </div>
+
+                    <div id="smart-status" class="mt-4 p-3 rounded-xl bg-slate-900 text-center text-xs font-semibold text-slate-400">
+                        Check all items to verify your SMART goal readiness!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= LESSON 2: THANK YOU PHRASES ================= -->
+        <div id="lesson-thanks" class="hidden space-y-6 animate-fade-in">
+            <button onclick="showView('main-menu')" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 px-3 py-1.5 rounded-lg transition-all">
+                <i class="fa-solid fa-arrow-left"></i> Main Menu သို့ပြန်သွားရန်
+            </button>
+
+            <div class="glass-card rounded-2xl p-6 sm:p-8 border border-emerald-500/30">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-3xl">🙏</span>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Expressing Gratitude (Thank You Phrases)</h2>
+                        <p class="text-xs text-emerald-400 font-medium">Polite & Natural English Expressions</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60">
+                        <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Formal (ယဉ်ကျေးစွာ ပြောဆိုခြင်း)</span>
+                        <ul class="mt-3 space-y-2 text-xs sm:text-sm text-slate-300">
+                            <li class="p-2 rounded bg-slate-900/50"><strong>"I truly appreciate your help."</strong><br><span class="text-slate-400 text-xs">ကူညီပေးမှုကို အထူးပင် ကျေးဇူးတင်ပါသည်။</span></li>
+                            <li class="p-2 rounded bg-slate-900/50"><strong>"I am very grateful for your guidance."</strong><br><span class="text-slate-400 text-xs">လမ်းညွှန်ပေးမှုအတွက် ကျေးဇူးအများကြီးတင်ပါသည်။</span></li>
+                            <li class="p-2 rounded bg-slate-900/50"><strong>"Thank you for taking the time to explain."</strong><br><span class="text-slate-400 text-xs">အချိန်ပေးပြီး ရှင်းပြပေးလို့ ကျေးဇူးတင်ပါတယ်။</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700/60">
+                        <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Informal (သူငယ်ချင်းချင်း ပြောဆိုခြင်း)</span>
+                        <ul class="mt-3 space-y-2 text-xs sm:text-sm text-slate-300">
+                            <li class="p-2 rounded bg-slate-900/50"><strong>"Thanks a bunch!"</strong><br><span class="text-slate-400 text-xs">ကျေးဇူး အများကြီးနော်!</span></li>
+                            <li class="p-2 rounded bg-slate-900/50"><strong>"You're a lifesaver!"</strong><br><span class="text-slate-400 text-xs">မင်း ငါ့ကို ကယ်လိုက်တာပဲ!</span></li>
+                            <li class="p-2 rounded bg-slate-900/50"><strong>"I owe you one."</strong><br><span class="text-slate-400 text-xs">ငါ မင်းကို ကျေးဇူးကြွေး တင်သွားပြီ။</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= LESSON 3: SORRY & DOUBT PHRASES ================= -->
+        <div id="lesson-sorry" class="hidden space-y-6 animate-fade-in">
+            <button onclick="showView('main-menu')" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 px-3 py-1.5 rounded-lg transition-all">
+                <i class="fa-solid fa-arrow-left"></i> Main Menu သို့ပြန်သွားရန်
+            </button>
+
+            <div class="glass-card rounded-2xl p-6 sm:p-8 border border-amber-500/30">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-3xl">🙇</span>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Apologizing & Expressing Uncertainty</h2>
+                        <p class="text-xs text-amber-400 font-medium">Sorry & "I Don't Know" Alternatives</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700">
+                        <h3 class="font-bold text-amber-400 text-sm mb-2">Apologizing (တောင်းပန်ခြင်း)</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+                            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+                                <p class="font-semibold text-slate-200">"I sincerely apologize for the delay."</p>
+                                <p class="text-xs text-slate-400">နှောင့်နှေးကြန့်ကြာသွားသည့်အတွက် အမှန်တကယ် တောင်းပန်ပါသည်။</p>
+                            </div>
+                            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+                                <p class="font-semibold text-slate-200">"My mistake, I'll fix it right away."</p>
+                                <p class="text-xs text-slate-400">ငါ့အမှားပါ၊ ချက်ချင်း ပြန်ပြင်လိုက်ပါမယ်။</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700">
+                        <h3 class="font-bold text-amber-400 text-sm mb-2">Better Ways to Say "I Don't Know"</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+                            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+                                <p class="font-semibold text-slate-200">"I'm not quite sure, but I'll check."</p>
+                                <p class="text-xs text-slate-400">သေချာ မသိသေးပါဘူး၊ စုံစမ်းကြည့်လိုက်ပါမယ်။</p>
+                            </div>
+                            <div class="bg-slate-900/60 p-3 rounded-lg border border-slate-800">
+                                <p class="font-semibold text-slate-200">"I have no idea about this."</p>
+                                <p class="text-xs text-slate-400">ဒါနဲ့ပတ်သက်လို့ လုံးဝ မသိပါဘူး။</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= LESSON 4: WRITING & DAILY TIPS ================= -->
+        <div id="lesson-writing" class="hidden space-y-6 animate-fade-in">
+            <button onclick="showView('main-menu')" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 px-3 py-1.5 rounded-lg transition-all">
+                <i class="fa-solid fa-arrow-left"></i> Main Menu သို့ပြန်သွားရန်
+            </button>
+
+            <div class="glass-card rounded-2xl p-6 sm:p-8 border border-pink-500/30">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-3xl">✍️</span>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Daily English Writing Habits</h2>
+                        <p class="text-xs text-pink-400 font-medium">Morning & Evening Practice Routines</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-5 rounded-xl bg-slate-800/60 border border-pink-500/20">
+                        <h3 class="font-bold text-pink-400 text-base mb-2">🌅 Morning Writing Prompt</h3>
+                        <p class="text-xs text-slate-300 mb-3">မနက်စောစော အိပ်ရာထချိန်တွင် အနည်းဆုံး စာကြောင်း ၃ ကြောင်း ရေးပါ:</p>
+                        <ul class="list-disc list-inside text-xs text-slate-400 space-y-1.5">
+                            <li>What are 3 things you want to achieve today?</li>
+                            <li>How are you feeling right now?</li>
+                            <li>What is one quote that motivates you?</li>
+                        </ul>
+                    </div>
+
+                    <div class="p-5 rounded-xl bg-slate-800/60 border border-purple-500/20">
+                        <h3 class="font-bold text-purple-400 text-base mb-2">🌙 Evening Reflection</h3>
+                        <p class="text-xs text-slate-300 mb-3">ညအိပ်ရာဝင်ချိန် ရေးသားရန် မေးခွန်းများ:</p>
+                        <ul class="list-disc list-inside text-xs text-slate-400 space-y-1.5">
+                            <li>What was the best part of your day?</li>
+                            <li>What mistake did you learn from today?</li>
+                            <li>What are you thankful for before sleeping?</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= LESSON 5: BASIC ENGLISH ================= -->
+        <div id="lesson-basic" class="hidden space-y-6 animate-fade-in">
+            <button onclick="showView('main-menu')" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 px-3 py-1.5 rounded-lg transition-all">
+                <i class="fa-solid fa-arrow-left"></i> Main Menu သို့ပြန်သွားရန်
+            </button>
+
+            <div class="glass-card rounded-2xl p-6 sm:p-8 border border-cyan-500/30">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-3xl">🌱</span>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Basic English Grammar Foundations</h2>
+                        <p class="text-xs text-cyan-400 font-medium">Core Grammar Building Blocks</p>
+                    </div>
+                </div>
+
+                <div class="space-y-4 text-xs sm:text-sm">
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700">
+                        <h3 class="font-bold text-cyan-400 mb-2">1. Parts of Speech (ဝါစင်္ဂ ၈ မျိုး)</h3>
+                        <p class="text-slate-300 text-xs">Noun (နာမ်), Pronoun (နာမ်စား), Verb (ကြိယာ), Adjective (နာမဝိသေသန), Adverb (ကြိယာဝိသေသန), Preposition (ဝိဘတ်), Conjunction (အဆက်), Interjection (အာမေဍိတ်)</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700">
+                        <h3 class="font-bold text-cyan-400 mb-2">2. Subject-Verb Agreement Rules</h3>
+                        <p class="text-slate-300 text-xs">Singular Subject တွင် Singular Verb သုံးပါ။ (e.g., <em>He walks</em> to school.)<br>Plural Subject တွင် Plural Verb သုံးပါ။ (e.g., <em>They walk</em> to school.)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= LESSON 6: FUTURE TENSES ================= -->
+        <div id="lesson-future" class="hidden space-y-6 animate-fade-in">
+            <button onclick="showView('main-menu')" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 px-3 py-1.5 rounded-lg transition-all">
+                <i class="fa-solid fa-arrow-left"></i> Main Menu သို့ပြန်သွားရန်
+            </button>
+
+            <div class="glass-card rounded-2xl p-6 sm:p-8 border border-purple-500/30">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-3xl">🌟</span>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Understanding Future Tenses</h2>
+                        <p class="text-xs text-purple-400 font-medium">Will vs Going to vs Future Continuous</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700">
+                        <h3 class="font-bold text-purple-400 text-sm mb-1">Simple Future</h3>
+                        <p class="text-xs text-slate-400 mb-2">Subject + Will + V1</p>
+                        <p class="text-xs text-slate-300">ရုတ်တရက် ဆုံးဖြတ်ချက် သို့မဟုတ် ခန့်မှန်းချက်။<br><em>e.g., I will help you.</em></p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700">
+                        <h3 class="font-bold text-purple-400 text-sm mb-1">Be Going To</h3>
+                        <p class="text-xs text-slate-400 mb-2">Subject + am/is/are + going to + V1</p>
+                        <p class="text-xs text-slate-300">ကြိုတင်စီစဉ်ထားသော အစီအစဉ်။<br><em>e.g., I am going to study English.</em></p>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700">
+                        <h3 class="font-bold text-purple-400 text-sm mb-1">Future Continuous</h3>
+                        <p class="text-xs text-slate-400 mb-2">Subject + will be + V-ing</p>
+                        <p class="text-xs text-slate-300">အနာဂတ် အချိန်အတိအကျတွင် ပြုလုပ်နေမည့် အရာ။<br><em>e.g., Tomorrow at 8 PM, I will be reading.</em></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= LESSON 7: CONFUSING WORDS ================= -->
+        <div id="lesson-confusing" class="hidden space-y-6 animate-fade-in">
+            <button onclick="showView('main-menu')" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 px-3 py-1.5 rounded-lg transition-all">
+                <i class="fa-solid fa-arrow-left"></i> Main Menu သို့ပြန်သွားရန်
+            </button>
+
+            <div class="glass-card rounded-2xl p-6 sm:p-8 border border-rose-500/30">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-3xl">🔍</span>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Commonly Confused English Words</h2>
+                        <p class="text-xs text-rose-400 font-medium">Avoid Frequent Mistakes</p>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <span class="text-rose-400 font-bold text-sm">It's vs Its</span>
+                            <p class="text-xs text-slate-300"><b>It's</b> = It is (It's raining.) | <b>Its</b> = ၎င်း၏ (The dog wags its tail.)</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <span class="text-rose-400 font-bold text-sm">Do vs Make</span>
+                            <p class="text-xs text-slate-300"><b>Do</b> = လုပ်ငန်း/တာဝန် (Do homework, do work) | <b>Make</b> = ဖန်တီးပြုလုပ်ခြင်း (Make a mistake, make coffee)</p>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-800/60 border border-slate-700 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                        <div>
+                            <span class="text-rose-400 font-bold text-sm">Their vs There vs They're</span>
+                            <p class="text-xs text-slate-300"><b>Their</b> = သူတို့၏ | <b>There</b> = ဟိုမှာ/ထိုနေရာ | <b>They're</b> = They are</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PRACTICE: TO-DO LOGGER ================= -->
+        <div id="practice-todo" class="hidden space-y-6 animate-fade-in">
+            <button onclick="showView('main-menu')" class="inline-flex items-center gap-2 text-xs font-semibold text-slate-400 hover:text-white bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 px-3 py-1.5 rounded-lg transition-all">
+                <i class="fa-solid fa-arrow-left"></i> Main Menu သို့ပြန်သွားရန်
+            </button>
+
+            <div class="glass-card rounded-2xl p-6 sm:p-8 border border-emerald-500/30">
+                <div class="flex items-center gap-3 mb-6">
+                    <span class="text-3xl">📝</span>
+                    <div>
+                        <h2 class="text-2xl font-bold text-white">Daily English Practice To-do Logger</h2>
+                        <p class="text-xs text-emerald-400 font-medium">လေ့ကျင့်ခန်း လုပ်ဆောင်ချက်များ သိမ်းဆည်းရန်</p>
+                    </div>
+                </div>
+
+                <!-- Form to add todo -->
+                <form id="todo-form" onsubmit="addTodoItem(event)" class="flex flex-col sm:flex-row gap-3 mb-6">
+                    <input type="text" id="todo-input" required placeholder="Write a task in English (e.g., Read 1 page of English news)" class="flex-1 bg-slate-900/90 border border-slate-700 rounded-xl px-4 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500">
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-5 py-2.5 rounded-xl text-xs sm:text-sm transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-plus"></i> Add Goal
+                    </button>
+                </form>
+
+                <!-- Todo List -->
+                <div class="space-y-3">
+                    <h3 class="font-bold text-xs text-slate-400 uppercase tracking-wider">Your Active Study Goals</h3>
+                    <ul id="todo-list" class="space-y-2">
+                        <!-- Items rendered dynamically -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-slate-900 bg-slate-950 py-4 px-4 text-center text-xs text-slate-500">
+        <div class="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+            <p>© 2026 Study VIP English Application. All rights reserved.</p>
+            <p class="text-slate-600">Empowering Myanmar English Learners</p>
+        </div>
+    </footer>
+
+    <!-- Interactive Logic Script -->
+    <script>
+        // Navigation Handler
+        function showView(viewId) {
+            const views = [
+                'main-menu', 
+                'lesson-smart', 
+                'lesson-thanks', 
+                'lesson-sorry', 
+                'lesson-writing', 
+                'lesson-basic', 
+                'lesson-future', 
+                'lesson-confusing', 
+                'practice-todo'
+            ];
+
+            views.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (id === viewId) {
+                        el.classList.remove('hidden');
+                    } else {
+                        el.classList.add('hidden');
+                    }
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // SMART Goal Checklist Logic
+        function updateSmartProgress() {
+            const checkboxes = document.querySelectorAll('.smart-check');
+            const total = checkboxes.length;
+            let checked = 0;
+            checkboxes.forEach(cb => { if(cb.checked) checked++; });
+
+            const statusEl = document.getElementById('smart-status');
+            if (checked === total) {
+                statusEl.className = "mt-4 p-3 rounded-xl bg-emerald-500/20 border border-emerald-500/40 text-center text-xs font-bold text-emerald-300";
+                statusEl.innerHTML = "🎉 Excellent! Your goal fully satisfies all SMART criteria!";
+            } else if (checked > 0) {
+                statusEl.className = "mt-4 p-3 rounded-xl bg-indigo-500/20 border border-indigo-500/40 text-center text-xs font-medium text-indigo-300";
+                statusEl.innerHTML = `Checked ${checked} of ${total} SMART parameters. Keep fine-tuning your goal!`;
+            } else {
+                statusEl.className = "mt-4 p-3 rounded-xl bg-slate-900 text-center text-xs font-semibold text-slate-400";
+                statusEl.innerHTML = "Check all items to verify your SMART goal readiness!";
+            }
+        }
+
+        // To-Do Logger Application Logic
+        let todos = JSON.parse(localStorage.getItem('study_vip_todos') || '[]');
+
+        function saveTodos() {
+            localStorage.setItem('study_vip_todos', JSON.stringify(todos));
+            renderTodos();
+        }
+
+        function addTodoItem(e) {
+            e.preventDefault();
+            const input = document.getElementById('todo-input');
+            const text = input.value.trim();
+            if (text) {
+                todos.push({ id: Date.now(), text, completed: false });
+                input.value = '';
+                saveTodos();
+            }
+        }
+
+        function toggleTodo(id) {
+            todos = todos.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
+            saveTodos();
+        }
+
+        function deleteTodo(id) {
+            todos = todos.filter(t => t.id !== id);
+            saveTodos();
+        }
+
+        function renderTodos() {
+            const listEl = document.getElementById('todo-list');
+            if (!listEl) return;
+
+            if (todos.length === 0) {
+                listEl.innerHTML = `<li class="text-xs text-slate-500 italic p-4 text-center border border-dashed border-slate-800 rounded-xl">No study tasks added yet. Add your first goal above!</li>`;
+                return;
+            }
+
+            listEl.innerHTML = todos.map(todo => `
+                <li class="flex items-center justify-between p-3 rounded-xl bg-slate-900/70 border border-slate-800 text-xs sm:text-sm transition-all hover:border-slate-700">
+                    <div class="flex items-center gap-3 cursor-pointer" onclick="toggleTodo(${todo.id})">
+                        <input type="checkbox" ${todo.completed ? 'checked' : ''} class="rounded border-slate-700 bg-slate-800 text-emerald-500 focus:ring-emerald-500 pointer-events-none">
+                        <span class="${todo.completed ? 'line-through text-slate-500' : 'text-slate-200'}">${escapeHtml(todo.text)}</span>
+                    </div>
+                    <button onclick="deleteTodo(${todo.id})" class="text-slate-500 hover:text-rose-400 p-1 transition-colors">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+                </li>
+            `).join('');
+        }
+
+        function escapeHtml(text) {
+            return text.replace(/[&<>"']/g, function(m) {
+                return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m];
+            });
+        }
+
+        // Initialize state on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTodos();
+        });
+    </script>
+</body>
+</html>
