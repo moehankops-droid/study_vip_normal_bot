@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study VIP English RPG</title>
+    <title>Study VIP English - 100 Points Master Guide</title>
     <style>
         body {
             background-color: #0b0f19;
@@ -16,7 +16,7 @@
         }
         .container {
             width: 100%;
-            max-width: 400px;
+            max-width: 420px;
             background: #111827;
             padding: 20px;
             border-radius: 16px;
@@ -27,60 +27,13 @@
             background: linear-gradient(135deg, #4f46e5, #9333ea);
             padding: 15px;
             border-radius: 12px;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             text-align: center;
         }
         .header h2 { margin: 0; font-size: 18px; color: #fff; }
         .header p { margin: 5px 0 0; font-size: 11px; color: #e2e8f0; }
         
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            background: #1f2937;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-            font-weight: bold;
-            font-size: 13px;
-        }
-        .card {
-            background: #1e293b;
-            padding: 14px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            border-left: 4px solid #38bdf8;
-        }
-        .card h3 { margin: 0 0 6px 0; font-size: 15px; color: #38bdf8; }
-        .card p { margin: 0; font-size: 12px; color: #94a3b8; line-height: 1.5; }
-        
-        .example-box {
-            background: #0f172a;
-            padding: 10px;
-            border-radius: 6px;
-            margin-top: 8px;
-            font-size: 11px;
-            color: #34d399;
-            border: 1px dashed #334155;
-            line-height: 1.6;
-        }
-        
-        .btn {
-            background: linear-gradient(135deg, #3b82f6, #2563eb);
-            color: white;
-            border: none;
-            padding: 12px;
-            width: 100%;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            margin-top: 10px;
-            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4);
-            text-align: left;
-        }
-        .btn:hover { opacity: 0.9; }
-        
-        .map-btn {
+        .section-btn {
             background: linear-gradient(135deg, #1e293b, #334155);
             border: 1px solid #475569;
             color: #f8fafc;
@@ -90,27 +43,49 @@
             cursor: pointer;
             font-size: 14px;
             font-weight: bold;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             text-align: left;
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        .map-btn:hover { background: #334155; border-color: #38bdf8; }
+        .section-btn:hover { background: #334155; border-color: #38bdf8; }
 
-        .option-btn {
-            background: #334155;
+        .card {
+            background: #1e293b;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border-left: 4px solid #38bdf8;
+        }
+        .card h3 { margin: 0 0 8px 0; font-size: 15px; color: #38bdf8; }
+        .card p { margin: 0 0 10px 0; font-size: 12px; color: #94a3b8; line-height: 1.6; }
+        
+        .list-box {
+            background: #0f172a;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #34d399;
+            border: 1px dashed #334155;
+            line-height: 1.8;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        
+        .back-btn {
+            background: #ef4444;
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px;
             width: 100%;
-            border-radius: 6px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 13px;
-            margin-top: 6px;
-            text-align: left;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 10px;
         }
-        .option-btn:hover { background: #475569; }
+        .back-btn:hover { opacity: 0.9; }
         .hidden { display: none; }
     </style>
 </head>
@@ -118,181 +93,202 @@
 
 <div class="container">
     <div class="header">
-        <h2>🗺️ Study VIP English RPG</h2>
-        <p>Open World Clean Dashboard</p>
+        <h2>📚 Study VIP English</h2>
+        <p>Grade A 100 Points Master Guide</p>
     </div>
 
-    <div class="stats">
-        <div>⭐ Level: <span id="lvl">1</span></div>
-        <div>⚡ XP: <span id="xp">0</span></div>
-        <div>❤️ HP: <span id="hp">100</span></div>
-    </div>
-
-    <!-- 1. MAP SELECTION SCREEN (Home) -->
-    <div id="map-screen">
+    <!-- HOME MENU SCREEN -->
+    <div id="menu-screen">
         <div class="card" style="border-left-color: #10b981; margin-bottom: 15px;">
-            <h3>📍 လေ့လာလိုသော နယ်မြေကို ရွေးပါ</h3>
-            <p>အောက်ပါ နယ်မြေများထဲမှ တစ်ခုချင်းစီကို သီးသန့် ဝင်ရောက်လေ့လာနိုင်ပါသည်။</p>
+            <h3>🎯 လေ့လာလိုသော အပိုင်းကို ရွေးပါ</h3>
+            <p>အချက် (၁၀၀) လုံးအပြည့်အစုံကို ခေါင်းစဉ်အလိုက် သပ်ရပ်စွာ စုစည်းထားပါသည်။</p>
         </div>
 
-        <button class="map-btn" onclick="openSection('smart')">
-            <span>🎯 1. SMART Goals နယ်မြေ</span> ➔
+        <button class="section-btn" onclick="openTopic('part1')">
+            <span>📌 1. နေ့စဉ် လေ့လာရန်နှင့် အလေ့အထ (1-20)</span> ➔
         </button>
-        <button class="map-btn" onclick="openSection('present')">
-            <span>⚔️ 2. Present Tenses (၄) မျိုး</span> ➔
+        <button class="section-btn" onclick="openTopic('part2')">
+            <span>⚔️ 2. Tenses နှင့် Grammar အဓိက (21-40)</span> ➔
         </button>
-        <button class="map-btn" onclick="openSection('past')">
-            <span>🛡️ 3. Past Tenses (၄) မျိုး</span> ➔
+        <button class="section-btn" onclick="openTopic('part3')">
+            <span>🛡️ 3. Verb ပုံစံများ & Confusing Words (41-60)</span> ➔
         </button>
-        <button class="map-btn" onclick="openSection('future')">
-            <span>🚀 4. Future Tenses (၄) မျိုး</span> ➔
+        <button class="section-btn" onclick="openTopic('part4')">
+            <span>📝 4. စာမေးပွဲ အောင်ချက်မြင့်မားရေး (61-75)</span> ➔
         </button>
-        <button class="map-btn" onclick="openSection('confusing')">
-            <span>💎 5. Confusing Words</span> ➔
+        <button class="section-btn" onclick="openTopic('part5')">
+            <span>🚀 5. Advanced Phrases & Writing (76-90)</span> ➔
         </button>
-        <button class="map-btn" style="border-color: #ef4444; background: #1f1725;" onclick="openQuiz()">
-            <span>⚡ စိန်ခေါ်မှု (Quiz) ဖြေမည်</span> ⚔️
+        <button class="section-btn" onclick="openTopic('part6')">
+            <span>💎 6. General Mastery & Mindset (91-100)</span> ➔
         </button>
     </div>
 
-    <!-- 2. DETAIL CONTENT SCREEN (Individual Section) -->
-    <div id="detail-screen" class="hidden">
-        <div id="detail-content"></div>
-        <button class="btn" style="background: #ef4444; margin-top: 15px;" onclick="returnToMap()">🔙 မြေပုံသို့ ပြန်မည်</button>
-    </div>
-
-    <!-- 3. QUIZ SCREEN -->
-    <div id="quiz-screen" class="hidden">
-        <div class="card" style="border-left-color: #ef4444;">
-            <h3>⚡ Quest Quiz Challenge</h3>
-            <p id="q-text" style="color: #fff; font-size: 13px; margin-top: 8px;"></p>
-        </div>
-        <div id="options-container"></div>
-        <button class="btn" style="background: #ef4444; margin-top: 15px;" onclick="returnToMap()">🔙 မြေပုံသို့ ပြန်မည်</button>
+    <!-- CONTENT READING SCREEN -->
+    <div id="content-screen" class="hidden">
+        <div id="topic-container"></div>
+        <button class="back-btn" onclick="returnToMenu()">🔙 ပင်မမီနူးသို့ ပြန်မည်</button>
     </div>
 </div>
 
 <script>
-    let player = { level: 1, xp: 0, hp: 100 };
-
-    const sections = {
-        smart: {
-            title: "🎯 1. SMART Goals ရည်မှန်းချက်များ",
-            desc: "Specific, Measurable, Attainable, Realistic, Timely ဖြင့် စနစ်တကျ ဖော်ထုတ်ပါ။",
-            ex: "✔️ I gonna eat breakfast at 8Am. (မနက် ၈ နာရီမှာ မနက်စာစားမယ်။)<br>✔️ I will shower at 12Pm. (၁၂ နာရီမှာ ရေချိုးမယ်။)"
+    const data100 = {
+        part1: {
+            title: "📌 1. နေ့စဉ် လေ့လာရန်နှင့် အလေ့အထ (၁ မှ ၂၀)",
+            desc: "Daily Study & Habits တည်ဆောက်ခြင်း",
+            content: `
+                1. SMART Goals စနစ်ဖြင့် မိမိ၏ အင်္ဂလိပ်စာ လေ့လာမှုကို တိကျစွာ (Specific) ချမှတ်ပါ။<br>
+                2. တိုးတက်မှုကို အလွယ်တကူ တိုင်းတာနိုင်ရန် (Measurable) အညွှန်းများ ထားရှိပါ။<br>
+                3. မိမိလက်ရှိအဆင့်နှင့် ကိုက်ညီပြီး ရယူနိုင်သော (Attainable) ရည်မှန်းချက်များ ချမှတ်ပါ။<br>
+                4. လက်တွေ့ကျကျ အကောင်အထည်ဖော်နိုင်သော (Realistic) ရည်မှန်းချက်များကိုသာ ထားပါ။<br>
+                5. ရည်မှန်းချက်တစ်ခုချင်းစီအတွက် အချိန်သတ်မှတ်ချက် (Timely) တိတိကျကျ ပေးပါ။<br>
+                6. မနက်ခင်းတိုင်းတွင် မိမိလုပ်မယ့် အစီအစဉ်များကို အင်္ဂလိပ်လို To-do list ရေးသားပါ။<br>
+                7. ညအိပ်ရာဝင်ခါနီးတွင် တစ်နေ့တာ ဖြစ်ပျက်ခဲ့သမျှကို အင်္ဂလိပ်လို Journal ပြန်လည်ရေးသားပါ။<br>
+                8. ဝေါဟာရအသစ် (Vocabulary) တစ်ခုကို သင်ယူတဲ့အခါ ဥပမာစာကြောင်းနှင့်တကွ တွဲမှတ်ပါ။<br>
+                9. ဖတ်ပြီးသား သင်ခန်းစာများကို အချိန်ခြားပြီး ပြန်လည်ဖတ်ရှုသည့် Spaced Repetition နည်းလမ်းကို အသုံးပြုပါ။<br>
+                10. စာအုပ်မကြည့်ဘဲ မိမိကိုယ်တိုင် ပြန်လည်ရွတ်ဆို သုံးသပ်ပြနိုင်သည့် Active Recall လေ့ကျင့်မှုကို ပုံမှန်လုပ်ဆောင်ပါ။<br>
+                11. နေ့စဉ် အင်္ဂလိပ်စာ လေ့လာချိန်ကို တိကျသေချာသော Pomodoro ချိန်ကိုက်စက်များဖြင့် အာရုံစိုက်လုပ်ဆောင်ပါ။<br>
+                12. အင်္ဂလိပ်စာ ဝေါဟာရများကို မှတ်မိစေရန် Flashcards များကို အသုံးပြုပါ။<br>
+                13. အင်္ဂလိပ်စာ နားထောင်စွမ်းရည် (Listening) တိုးတက်စေရန် ပညာပေး အသံဖိုင် သို့မဟုတ် ဗီဒီယိုများကို နားထောင်ပါ။<br>
+                14. အသံထွက် (Pronunciation) မှန်ကန်စေရန် အသံထွက်ကောင်းမွန်သော နေရာများမှ နားထောင်ပြီး လိုက်လံရွတ်ဆိုပါ (Shadowing)။<br>
+                15. အိပ်ရေးဝဝအိပ်စက်ပြီး စာမေးပွဲရက်များတွင် ဦးနှောက်ကို ကြည်လင်နေစေရန် ဂရုစိုက်ပါ။<br>
+                16. စာကျက်သည့်အခါ ဖုန်းနှင့် အခြားအာရုံနောက်စရာများကို ဖယ်ရှားပြီး အာရုံစိုက်မှုအပြည့်ဖြင့် လုပ်ဆောင်ပါ။<br>
+                17. မိမိကိုယ်ကို ယုံကြည်မှုအပြည့်အဝထားရှိပြီး နေ့စဉ် ပုံမှန်လေ့ကျင့်မှုကို တစ်ရက်မှ မပျက်ကွက်ဘဲ ဆက်လုပ်ပါ။<br>
+                18. အမှားလုပ်မိခြင်းကို မကြောက်ဘဲ မှားလေလေ ပိုသိလေလေဟူသော သဘောထားဖြင့် အမြဲတမ်း တိုးတက်အောင် ကြိုးစားပါ။<br>
+                19. လေ့လာထားသော သဒ္ဒါစည်းမျဉ်းများကို သူငယ်ချင်းများ သို့မဟုတ် မိသားစုဝင်များကို ပြန်လည်ရှင်းပြပေးခြင်းဖြင့် အသိပညာကို ခိုင်မာစေပါ။<br>
+                20. တစ်ပတ်တစ်ကြိမ် မိမိလေ့လာခဲ့သမျှကို ပြန်လည်သုံးသပ်သည့် Weekly Review ပြုလုပ်ပါ။
+            `
         },
-        present: {
-            title: "⚔️ 2. Present Tenses (၄) မျိုး",
-            desc: "လက်ရှိကာလ အသုံးပြုပုံများနှင့် ဥပမာများ",
-            ex: "• <b>Present Simple:</b> She reads every morning. (သူမ မနက်တိုင်း စာဖတ်သည်။)<br>• <b>Present Continuous:</b> You are watching my video. (မင်း video ကြည့်နေသည်။)<br>• <b>Present Perfect:</b> She has read five books. (သူမ စာအုပ် ၅ အုပ် ဖတ်ပြီးပြီ။)<br>• <b>Present Perfect Cont.:</b> I have been reading for 2 hours."
+        part2: {
+            title: "⚔️ 2. Tenses နှင့် Grammar အဓိက (၂၁ မှ ၄၀)",
+            desc: "Tenses & Core Grammar Rules",
+            content: `
+                21. Tenses (၁၂) မျိုးလုံးရဲ့ တည်ဆောက်ပုံနဲ့ အသုံးပြုပုံတွေကို ရှင်းလင်းစွာ နားလည်ထားပါ။<br>
+                22. Present Simple tense ကို နေ့စဉ်လုပ်လေ့ရှိသော အလေ့အထများအတွက် မှန်ကန်စွာ သုံးတတ်ပါစေ။<br>
+                23. Present Continuous tense ကို လက်တလော ဖြစ်ပျက်နေသော အခြေအနေများတွင် အသုံးပြုပါ။<br>
+                24. Present Perfect tense ကို ရလဒ် ပြီးမြောက်သွားပြီဖြစ်သော အရာများအတွက် သုံးပါ။<br>
+                25. Present Perfect Continuous ကို အစပြုပြီး ယခုတိုင် ဆက်လက်လုပ်ဆောင်ဆဲ အခြေအနေများတွင် သုံးပါ။<br>
+                26. Past Simple tense ကို လွန်ခဲ့သော အတိတ်က ပြီးဆုံးသွားသော အကြောင်းအရာများအတွက် သုံးပါ။<br>
+                27. Past Continuous tense ကို အတိတ်ကာလ တစ်ခုခုတွင် လုပ်ဆောင်ဆဲဖြစ်သော အခြေအနေများတွင် သုံးပါ။<br>
+                28. Past Perfect tense ကို အတိတ်တွင် အခြားအရာတစ်ခု မဖြစ်မီက ပြီးစီးသွားခဲ့သော အရာအတွက် သုံးပါ။<br>
+                29. Past Perfect Continuous ကို အတိတ်တွင် အခြားအရာတစ်ခု မတိုင်မီကတည်းက စတင်လုပ်ဆောင်နေခဲ့သော အခြေအနေအတွက် သုံးပါ။<br>
+                30. Future Simple tense တွင် နောင်လာမည့် အနာဂတ်အတွက် "will" ကို အဓိကထား အသုံးပြုပါ။<br>
+                31. Future Continuous tense ကို အနာဂတ်၏ အချိန်အပိုင်းအခြားတစ်ခုတွင် ဖြစ်နေမည့် အရာများအတွက် သုံးပါ။<br>
+                32. Future Perfect tense ကို အနာဂတ်ကာလ တစ်ခုခုမတိုင်မီ ပြီးစီးသွားမည့် အရာများအတွက် သုံးပါ။<br>
+                33. Future Perfect Continuous tense ကို အနာဂတ်တွင် အချိန်ကာလတစ်ခုအထိ ဆက်လက်လုပ်ဆောင်နေမည့် အခြေအနေအတွက် သုံးပါ။<br>
+                34. Active Voice နှင့် Passive Voice ပြောင်းလဲပုံ စည်းမျဉ်းများကို လေ့လာပါ။<br>
+                35. Direct Speech နှင့် Indirect Speech (Narration) ပြောင်းလဲခြင်း စည်းမျဉ်းများကို ကျွမ်းကျင်အောင် လုပ်ပါ။<br>
+                36. Subject-Verb Agreement (နာမ်နှင့် ကြိယာ ကိုက်ညီမှု) စည်းမျဉ်းများကို မှန်ကန်စွာ သုံးတတ်ပါစေ။<br>
+                37. Relative Pronouns (who, which, that) များကို မှန်ကန်စွာ ဆက်စပ်သုံးတတ်ပါ။<br>
+                38. Prepositions (in, on, at, by, with စသည်ဖြင့်) တို့၏ တည်နေရာနှင့် အချိန်ပြ အသုံးပြုပုံများကို ခွဲခြားတတ်ပါ။<br>
+                39. Conjunctions (and, but, because, although) များကို စာကြောင်းဆက်ရာတွင် သုံးတတ်ပါ။<br>
+                40. Articles (a, an, the) များကို တိကျမှန်ကန်စွာ သုံးစွဲတတ်ရန် လေ့ကျင့်ပါ။
+            `
         },
-        past: {
-            title: "🛡️ 3. Past Tenses (၄) မျိုး",
-            desc: "လွန်ခဲ့သော အတိတ်ကာလ အသုံးပြုပုံများနှင့် ဥပမာများ",
-            ex: "• <b>Past Simple:</b> I visited my grandparents yesterday. (မနေ့က အဘိုးအဘွားတွေဆီ သွားခဲ့တယ်။)<br>• <b>Past Continuous:</b> He was playing football. (သူ ဘောလုံးကစားနေသည်။)<br>• <b>Past Perfect:</b> I had read the book before.<br>• <b>Past Perfect Cont.:</b> I had been studying for hours."
+        part3: {
+            title: "🛡️ 3. Verb ပုံစံများ & Confusing Words (၄၁ မှ ၆၀)",
+            desc: "V0-V5 Forms & Confusing Words",
+            content: `
+                41. V1 (Base Form) ကို Present Simple Tense နှင့် ပင်မကြိယာအဖြစ် သုံးတတ်ပါစေ။<br>
+                42. V2 (Past Form) ကို အတိတ်ကာလ လုပ်ဆောင်ချက်များအတွက် အသုံးပြုပါ။<br>
+                43. V3 (Past Participle Form) ကို Perfect Tenses နှင့် Passive Voice များတွင် သုံးပါ။<br>
+                44. V-ing (Present Participle) ကို Continuous Tenses များတွင် သုံးပါ။<br>
+                45. V-s / V-es (Third-Person Singular) ကို Present Simple (He/She/It) တွင် သုံးပါ။<br>
+                46. Irregular Verbs (မူလပုံစံပြောင်းလဲသော ကြိယာများ ဥပမာ - go-went-gone) များကို အလွတ်ကျက်မှတ်ပါ။<br>
+                47. Confusing words ဖြစ်သော "It's" နှင့် "Its" တို့၏ ကွာခြားချက်ကို သေချာခွဲခြားတတ်ပါ။<br>
+                48. "They're", "Their", နှင့် "There" တို့၏ အဓိပ္ပာယ်နှင့် သုံးပုံသုံးနည်း ကွာခြားချက်ကို သိရှိထားပါ။<br>
+                49. "Do" နှင့် "Make" တို့ကို အိမ်စာလုပ်ခြင်းနှင့် ပစ္စည်းလုပ်ခြင်းတို့တွင် ကွဲပြားစွာ သုံးတတ်ပါ။<br>
+                50. "Much" နှင့် "Many" တို့ကို ရေတွက်၍ရသော noun နှင့် မရသော noun များအလိုက် ခွဲခြားသုံးပါ။<br>
+                51. "Say" နှင့် "Tell" တို့၏ အသုံးအနှုန်း ကွာခြားချက်ကို သေချာစွာ ခွဲခြားလေ့လာပါ။<br>
+                52. "Affect" နှင့် "Effect" တို့၏ ကွာခြားချက်ကို နားလည်ထားပါ။<br>
+                53. "Accept" နှင့် "Except" တို့၏ အသုံးကို ခွဲခြားတတ်ပါ။<br>
+                54. "Lose" နှင့် "Loose" တို့၏ စာလုံးပေါင်းနှင့် အဓိပ္ပာယ်ကို သတိပြုပါ။<br>
+                55. "Then" နှင့် "Than" တို့ကို နှိုင်းယှဉ်ရာတွင် မှန်ကန်စွာ သုံးပါ။<br>
+                56. "Your" နှင့် "You're" တို့၏ ကွာခြားချက်ကို သေချာမှတ်သားပါ။<br>
+                57. "Too", "To", နှင့် "Two" တို့၏ အသုံးများကို ခွဲခြားတတ်ပါ။<br>
+                58. "Quiet" နှင့် "Quite" တို့၏ အသံထွက်နှင့် အဓိပ္ပာယ်ကို ခွဲခြားပါ။<br>
+                59. "Weather" နှင့် "Whether" တို့ကို သုံးစွဲရာတွင် မရောထွေးပါစေနှင့်။<br>
+                60. "Advice" (နာမ်) နှင့် "Advise" (ကြိယာ) တို့၏ ကွာခြားချက်ကို သိရှိထားပါ။
+            `
         },
-        future: {
-            title: "🚀 4. Future Tenses (၄) မျိုး",
-            desc: "နောင်လာမည့် အနာဂတ်ကာလ အသုံးပြုပုံများနှင့် ဥပမာများ",
-            ex: "• <b>Future Simple:</b> I will read the book tomorrow. (မနက်ဖြန် စာအုပ်ဖတ်မယ်။)<br>• <b>Future Continuous:</b> I will be reading at 5PM.<br>• <b>Future Perfect:</b> I will have read the book.<br>• <b>Future Perfect Cont.:</b> I'll have been reading for two hours."
+        part4: {
+            title: "📝 4. စာမေးပွဲ အောင်ချက်မြင့်မားရေး (၆၁ မှ ၇၅)",
+            desc: "Exam Preparation & Accuracy",
+            content: `
+                61. ကျောင်းသုံးစာအုပ်ပါ ဖတ်စာပိုဒ် (Reading Comprehension) များကို အပေါ်ယံမဟုတ်ဘဲ အဓိပ္ပာယ်ပေါ်လွင်အောင် သေချာဖတ်ပါ။<br>
+                62. စာမေးပွဲမေးခွန်းဟောင်းများကို အချိန်သတ်မှတ်ပြီး ကိုယ်တိုင် စမ်းသပ်ဖြေဆိုကြည့်ပါ။<br>
+                63. လေ့ကျင့်ခန်းလုပ်ရာတွင် မိမိမှားယွင်းခဲ့သော အချက်များကို စာရင်းလုပ်ပြီး ပြန်လည်သုံးသပ်ပါ (Error Correction)။<br>
+                64. သဒ္ဒါစည်းမျဉ်းများကို အလွတ်ကျက်သည်ထက် ကိုယ်တိုင် ဥပမာစာကြောင်းအသစ်များ တည်ဆောက်ရေးသားပါ။<br>
+                65. စာပိုဒ်တစ်ပိုဒ်ကို ရေးသားသည့်အခါ Introduction, Body, Conclusion ဟူ၍ အပိုင်းလိုက် စနစ်တကျ ဖွဲ့စည်းတတ်ပါစေ။<br>
+                66. စာကြောင်းတစ်ကြောင်းနှင့် တစ်ကြောင်း ချိတ်ဆက်ရာတွင် Transition words (Furthermore, However, Therefore) များကို မှန်ကန်စွာ အသုံးပြုပါ။<br>
+                67. စာမေးပွဲမဖြေမီ မိမိ၏ အားနည်းချက်များကို ရှာဖွေပြီး အထူးပြုပြင်လေ့လာပါ။<br>
+                68. စာမေးပွဲဖြေဆိုချိန်ကို စီမံခန့်ခွဲတတ်စေရန် အချိန်အကန့်အသတ်ဖြင့် စာမေးပွဲပုံစံ မေးခွန်းများကို ဖြေဆိုလေ့ကျင့်ပါ။<br>
+                69. စာမေးပွဲဖြေဆိုနေစဉ် မေးခွန်းကို သေချာစွာ ဖတ်ရှုပြီးမှ ဖြေဆိုသည့် အလေ့အထကို ကျင့်သုံးပါ။<br>
+                70. အမှတ်အများဆုံးပေးမည့် အပိုင်းများကို ဦးစားပေးဖြေဆိုတတ်သည့် စွမ်းရည်ကို တည်ဆောက်ပါ။<br>
+                71. စာမေးပွဲမဖြေမီ ဖြေဆိုမည့် စာရွက်စာတမ်းများနှင့် ပစ္စည်းများကို ကြိုတင်စစ်ဆေးပြင်ဆင်ထားပါ။<br>
+                72. စာမေးပွဲခန်းအတွင်း စိတ်ဖိစီးမှုကင်းစေရန် အသက်ရှူလေ့ကျင့်ခန်း လုပ်ဆောင်ပါ။<br>
+                73. ဖြေဆိုပြီးစီးပါက အမှားအယွင်း ရှိမရှိ ပြန်လည်စစ်ဆေးရန် (Review) အချိန်ချန်ထားပါ။<br>
+                74. စာမေးပွဲတွင် လက်ရေးသပ်ရပ်ပြီး ဖတ်ရလွယ်ကူအောင် ရေးသားပါ။<br>
+                75. အဖြေလွှာတွင် စာလုံးပေါင်းသတ်ပုံ (Spelling) မှန်ကန်မှုကို အထူးဂရုစိုက်ပါ။
+            `
         },
-        confusing: {
-            title: "💎 5. Confusing Words",
-            desc: "အမြဲမှားတတ်သော စကားစုများ",
-            ex: "✔️ I need to do my homework. (အိမ်စာလုပ်သည် - do)<br>✔️ I made a cake for you. (ကိတ်မုန့်လုပ်သည် - make)"
+        part5: {
+            title: "🚀 5. Advanced Phrases & Writing (၇၆ မှ ၉၀)",
+            desc: "Advanced Expressions & Writing Structure",
+            content: `
+                76. ကျေးဇူးတင်စကား (Thank you / I can't thank you enough) များကို အခြေအနေအလိုက် အဆင့်မြင့်မြင့် သုံးတတ်ပါစေ။<br>
+                77. တောင်းပန်စကားများ (I'm sorry / I apologize) ကို မှန်ကန်စွာ သုံးတတ်ပါစေ။<br>
+                78. မသိပါဘူး ဟု ပြောလိုသည့်အခါ "I have no idea" သို့မဟုတ် "It's beyond me" ကဲ့သို့ အသုံးအနှုန်းများကို သုံးပါ။<br>
+                79. ဂုဏ်ပြုသည့်အခါ "Congratulations!" အပြင် "Kudos!" သို့မဟုတ် "You rock!" ကဲ့သို့ စကားစုများကို သုံးပါ။<br>
+                80. ဝမ်းသာပျော်ရွှင်ကြောင်း ဖော်ပြရာတွင် "I'm on cloud nine" သို့မဟုတ် "I'm over the moon" ကို သုံးတတ်ပါစေ။<br>
+                81. သဘောတူညီကြောင်းပြသရန် "I couldn't agree more" သို့မဟုတ် "That's spot on" ကို သုံးပါ။<br>
+                82. သဘောမတူညီကြောင်း ယဉ်ကျေးစွာပြောဆိုရန် "I see your point, but..." ဟူသော အသုံးကို သုံးပါ။<br>
+                83. အကြံဉာဏ်တောင်းခံလိုသည့်အခါ "What do you suggest?" သို့မဟုတ် "Got any ideas?" ကို သုံးပါ။<br>
+                84. တစ်စုံတစ်ဦးကို အားပေးလိုသည့်အခါ "Hang in there" သို့မဟုတ် "Keep your chin up" ကို သုံးပါ။<br>
+                85. အံ့သြသွားကြောင်းပြရန် "You're kidding!" သို့မဟုတ် "I can't believe it!" ကို သုံးပါ။<br>
+                86. အလုပ်များနေကြောင်းဖော်ပြရန် "I'm swamped" သို့မဟုတ် "I'm up to my ears in work" ကို သုံးပါ။<br>
+                87. အခြေအနေကောင်းတစ်ခုကို ဖော်ပြရန် "A blessing in disguise" ဟူသော idiom ကို သုံးတတ်ပါစေ။<br>
+                88. အလွန်လွယ်ကူကြောင်းပြရန် "A piece of cake" ဟူသော အသုံးကို သုံးပါ။<br>
+                89. တရားဝင်စာများရေးသားရာတွင် "Dear Sir/Madam," နှင့် "Yours faithfully," တို့ဖြင့် အစပြုအဆုံးသတ်ပါ။<br>
+                90. မိတ်ဆွေချင်းရေးသားရာတွင် "Dear [Name]," နှင့် "Best regards," ကို သုံးပါ။
+            `
+        },
+        part6: {
+            title: "💎 6. General Mastery & Mindset (၉၁ မှ ၁၀၀)",
+            desc: "General Fluency & Winning Mindset",
+            content: `
+                91. အင်္ဂလိပ်ဘာသာစကားဖြင့် ထုတ်လွှင့်သော သတင်းများ သို့မဟုတ် ပညာပေးဗီဒီယိုများကို ကြည့်ရှုပါ။<br>
+                92. အင်္ဂလိပ်လို ရေးသားထားသော ဝတ္ထုငယ်များ သို့မဟုတ် ဆောင်းပါးများကို လေ့လာဖတ်ရှုပါ။<br>
+                93. မိမိကိုယ်ကို အင်္ဂလိပ်လို စဉ်းစားတွေးခေါ်တတ်အောင် (Thinking in English) အလေ့အကျင့်လုပ်ပါ။<br>
+                94. အင်္ဂလိပ်စာ လေ့လာရာတွင် ပျင်းရိခြင်းမရှိစေရန် ရည်မှန်းချက်အသစ်များကို အမြဲချမှတ်ပါ။<br>
+                95. အင်္ဂလိပ်စာ ကျွမ်းကျင်သူများ၏ အကြံပြုချက်များနှင့် လေ့လာမှုနည်းလမ်းများကို လိုက်နာလေ့လာပါ။<br>
+                96. အွန်လိုင်းမှ အခမဲ့ရရှိနိုင်သော အင်္ဂလိပ်စာ လေ့လာရေး App များနှင့် ဝဘ်ဆိုက်များကို အကျိုးရှိရှိ အသုံးပြုပါ။<br>
+                97. စာမေးပွဲတွင် အမှတ်ကောင်းကောင်းရရှိရန် မိမိကိုယ်ကို ယုံကြည်ချက်အပြည့်အဝ တည်ဆောက်ပါ။<br>
+                98. ခက်ခဲသော သင်ခန်းစာများနှင့် ကြုံတွေ့ရသည့်အခါ လက်မလျှော့ဘဲ အကြိမ်ကြိမ် ထပ်မံလေ့လာပါ။<br>
+                99. နေ့စဉ်ဘဝတွင် အင်္ဂလိပ်စာကို လက်တွေ့အသုံးပြုနိုင်ရန် အခွင့်အလမ်းများကို ဖန်တီးပါ။<br>
+                100. အင်္ဂလိပ်စာဖြင့် Grade A သေချာပေါက် ရရှိမည်ဟူသော ခိုင်မာသည့် ရည်မှန်းချက်ဖြင့် အကောင်းဆုံး ကြိုးစားအားထုတ်ပါ။
+            `
         }
     };
 
-    const questions = [
-        {
-            q: "SMART goals တွင် 'M' က ဘာကို ကိုယ်စားပြုသနည်း?",
-            options: ["A) Meaningful", "B) Measurable", "C) Modern", "D) Moving"],
-            answer: 1
-        },
-        {
-            q: "What is the past tense of 'go'?",
-            options: ["A) Goed", "B) Gone", "C) Went", "D) Going"],
-            answer: 2
-        },
-        {
-            q: "အိမ်စာလုပ်သည် ဟု သုံးနှုန်းရာတွင် အသုံးပြုရသည့် စကားလုံးမှာ -",
-            options: ["A) Make homework", "B) Do homework", "C) Play homework", "D) Take homework"],
-            answer: 1
-        }
-    ];
+    function openTopic(key) {
+        document.getElementById('menu-screen').classList.add('hidden');
+        document.getElementById('content-screen').classList.remove('hidden');
 
-    let currentQIndex = 0;
-
-    function updateStats() {
-        document.getElementById('lvl').innerText = player.level;
-        document.getElementById('xp').innerText = player.xp;
-        document.getElementById('hp').innerText = player.hp;
-    }
-
-    function openSection(key) {
-        document.getElementById('map-screen').classList.add('hidden');
-        document.getElementById('quiz-screen').classList.add('hidden');
-        document.getElementById('detail-screen').classList.remove('hidden');
-
-        let data = sections[key];
-        document.getElementById('detail-content').innerHTML = `
+        let data = data100[key];
+        document.getElementById('topic-container').innerHTML = `
             <div class="card">
                 <h3>${data.title}</h3>
                 <p>${data.desc}</p>
-                <div class="example-box">${data.ex}</div>
+                <div class="list-box">${data.content}</div>
             </div>
         `;
     }
 
-    function openQuiz() {
-        document.getElementById('map-screen').classList.add('hidden');
-        document.getElementById('detail-screen').classList.add('hidden');
-        document.getElementById('quiz-screen').classList.remove('hidden');
-        loadQuestion();
+    function returnToMenu() {
+        document.getElementById('content-screen').classList.add('hidden');
+        document.getElementById('menu-screen').classList.remove('hidden');
     }
-
-    function loadQuestion() {
-        let qData = questions[currentQIndex];
-        document.getElementById('q-text').innerText = qData.q;
-        
-        let optHtml = '';
-        qData.options.forEach((opt, index) => {
-            optHtml += `<button class="option-btn" onclick="checkAnswer(${index})">${opt}</button>`;
-        });
-        document.getElementById('options-container').innerHTML = optHtml;
-    }
-
-    function checkAnswer(selected) {
-        let qData = questions[currentQIndex];
-        if (selected === qData.answer) {
-            alert("🎉 အဖြေမှန်ပါတယ်! XP +25 ရရှိသည်။");
-            player.xp += 25;
-            if (player.xp >= 50) {
-                player.level++;
-                player.xp = 0;
-                alert("🌟 Level တက်သွားပါပြီ!");
-            }
-        } else {
-            alert("❌ အဖြေမှားပါတယ်။ HP -20 လျော့သွားသည်။");
-            player.hp -= 20;
-            if (player.hp <= 0) {
-                alert("💀 Game Over! အသက်ကုန်သွားပါပြီ။");
-                player.hp = 100;
-                player.xp = 0;
-            }
-        }
-        updateStats();
-        currentQIndex = (currentQIndex + 1) % questions.length;
-        returnToMap();
-    }
-
-    function returnToMap() {
-        document.getElementById('detail-screen').classList.add('hidden');
-        document.getElementById('quiz-screen').classList.add('hidden');
-        document.getElementById('map-screen').classList.remove('hidden');
-    }
-
-    updateStats();
 </script>
 
 </body>
