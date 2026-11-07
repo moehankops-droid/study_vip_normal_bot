@@ -59,15 +59,14 @@ async def back_to_menu_handler(call: types.CallbackQuery):
 @dp.callback_query_handler(text="lesson_smart")
 async def send_smart_lesson(call: types.CallbackQuery):
     text = (
-        "💡 **How to develop SMART Goals?** 🎯[span_0](start_span)[span_0](end_span)[span_1](start_span)[span_1](end_span)[span_2](start_span)[span_2](end_span)[span_3](start_span)[span_3](end_span)[span_4](start_span)[span_4](end_span)\n\n"
-        "🟢 SMART goals ဆိုတာ ကိုယ့်ရဲ့ personal development အတွက် အသုံးဝင်တဲ့ goals သတ်မှတ်နည်းပါ[span_5](start_span)[span_5](end_span)[span_6](start_span)[span_6](end_span)[span_7](start_span)[span_7](end_span)[span_8](start_span)[span_8](end_span)[span_9](start_span)[span_9](end_span)။\n\n"
-        "📌 **Specific:** ဘာလုပ်မယ်၊ ဘာကြောင့်လုပ်မယ်[span_10](start_span)[span_10](end_span)[span_11](start_span)[span_11](end_span)[span_12](start_span)[span_12](end_span)[span_13](start_span)[span_13](end_span)။\n"
-        "📝 **Measurable:** progress တွေကို တိုင်းတာမယ်[span_14](start_span)[span_14](end_span)[span_15](start_span)[span_15](end_span)[span_16](start_span)[span_16](end_span)[span_17](start_span)[span_17](end_span)။\n"
-        "💻 **Attainable:** resource ကောင်းကောင်းရှာမယ်[span_18](start_span)[span_18](end_span)[span_19](start_span)[span_19](end_span)[span_20](start_span)[span_20](end_span)။\n"
-        "✔️ **Realistic:** လက်တွေ့ကျတာကို ထားမယ်[span_21](start_span)[span_21](end_span)[span_22](start_span)[span_22](end_span)[span_23](start_span)[span_23](end_span)။\n"
-        "⏰ **Timely:** အချိန်အတိအကျ သတ်မှတ်မယ်[span_24](start_span)[span_24](end_span)[span_25](start_span)[span_25](end_span)[span_26](start_span)[span_26](end_span)။"
+        "💡 **How to develop SMART Goals?** 🎯\n\n"
+        "🟢 SMART goals ဆိုတာ ကိုယ့်ရဲ့ personal development အတွက် အသုံးဝင်တဲ့ goals သတ်မှတ်နည်းပါ ဖြစ်ပါတယ်။\n\n"
+        "📌 **Specific:** ဘာလုပ်မယ်၊ ဘာကြောင့်လုပ်မယ်။\n"
+        "📝 **Measurable:** progress တွေကို တိုင်းတာမယ်။\n"
+        "💻 **Attainable:** resource ကောင်းကောင်းရှာမယ်။\n"
+        "✔️ **Realistic:** လက်တွေ့ကျတာကို ထားမယ်။\n"
+        "⏰ **Timely:** အချိန်အတိအကျ သတ်မှတ်မယ်။"
     )
-    # စာအသစ်ပြောင်းလဲပြီး အောက်ဆုံးတွင် Back ခလုတ်တစ်ခုတည်းသာ တွဲပြမည်
     await call.message.edit_text(text, reply_markup=get_back_menu(), parse_mode="Markdown")
     await call.answer()
 
@@ -75,10 +74,10 @@ async def send_smart_lesson(call: types.CallbackQuery):
 @dp.callback_query_handler(text="lesson_thanks")
 async def send_thanks_lesson(call: types.CallbackQuery):
     text = (
-        "🎁 **Thank you လို့ပြောမယ့်အစား သုံးရန်**[span_27](start_span)[span_27](end_span)[span_28](start_span)[span_28](end_span)\n\n"
-        "🟩 Many Thanks / Thank you[span_29](start_span)[span_29](end_span)[span_30](start_span)[span_30](end_span)\n"
-        "🟦 I can't thank you enough. / Thanks a bunch[span_31](start_span)[span_31](end_span)[span_32](start_span)[span_32](end_span)\n"
-        "🟪 I appreciate it / Thanks a million[span_33](start_span)[span_33](end_span)[span_34](start_span)[span_34](end_span)"
+        "🎁 **Thank you လို့ပြောမယ့်အစား သုံးရန်**\n\n"
+        "🟩 Many Thanks / Thank you\n"
+        "🟦 I can't thank you enough. / Thanks a bunch\n"
+        "🟪 I appreciate it / Thanks a million"
     )
     await call.message.edit_text(text, reply_markup=get_back_menu(), parse_mode="Markdown")
     await call.answer()
@@ -87,9 +86,9 @@ async def send_thanks_lesson(call: types.CallbackQuery):
 @dp.callback_query_handler(text="lesson_sorry")
 async def send_sorry_lesson(call: types.CallbackQuery):
     text = (
-        "🙇 **တောင်းပန်ခြင်း & မသိကြောင်းပြခြင်း**[span_35](start_span)[span_35](end_span)\n\n"
-        "🔸 **I'm sorry for that / I apologize / I regret that**[span_36](start_span)[span_36](end_span)\n"
-        "🔸 **I don't know / I have no idea / It's beyond me**[span_37](start_span)[span_37](end_span)"
+        "🙇 **တောင်းပန်ခြင်း & မသိကြောင်းပြခြင်း**\n\n"
+        "🔸 **I'm sorry for that / I apologize / I regret that**\n"
+        "🔸 **I don't know / I have no idea / It's beyond me**"
     )
     await call.message.edit_text(text, reply_markup=get_back_menu(), parse_mode="Markdown")
     await call.answer()
@@ -98,8 +97,8 @@ async def send_sorry_lesson(call: types.CallbackQuery):
 @dp.callback_query_handler(text="lesson_writing")
 async def send_writing_lesson(call: types.CallbackQuery):
     text = (
-        "✍️ **Writing & To-do List Tips**[span_38](start_span)[span_38](end_span)[span_39](start_span)[span_39](end_span)[span_40](start_span)[span_40](end_span)[span_41](start_span)[span_41](end_span)\n\n"
-        "⏰ မနက်အိပ်ယာထချိန်နဲ့ ညအိပ်ယာမဝင်ခင်မှာ အချိန် ၁၀ မိနစ်မှ ၁၅ မိနစ်ပေးပြီး To-do list တွေနဲ့ Journal ရေးပါ[span_42](start_span)[span_42](end_span)[span_43](start_span)[span_43](end_span)[span_44](start_span)[span_44](end_span)[span_45](start_span)[span_45](end_span)။"
+        "✍️ **Writing & To-do List Tips**\n\n"
+        "⏰ မနက်အိပ်ယာထချိန်နဲ့ ညအိပ်ယာမဝင်ခင်မှာ အချိန် ၁၀ မိနစ်မှ ၁၅ မိနစ်ပေးပြီး To-do list တွေနဲ့ Journal ရေးပါ။"
     )
     await call.message.edit_text(text, reply_markup=get_back_menu(), parse_mode="Markdown")
     await call.answer()
@@ -108,12 +107,12 @@ async def send_writing_lesson(call: types.CallbackQuery):
 @dp.callback_query_handler(text="lesson_basic")
 async def send_basic_lesson(call: types.CallbackQuery):
     text = (
-        "🌱 **နံပါတ် တွဲသုံး အခြေခံအင်္ဂလိပ်စာ**[span_46](start_span)[span_46](end_span)\n\n"
-        "1️⃣ 8 parts of Speech[span_47](start_span)[span_47](end_span)\n"
-        "2️⃣ Sentence Structures[span_48](start_span)[span_48](end_span)\n"
-        "3️⃣ Subject-verb Agreement[span_49](start_span)[span_49](end_span)\n"
-        "4️⃣ Articles (a, an, the)[span_50](start_span)[span_50](end_span)\n"
-        "5️⃣ Tenses (12 မျိုး)[span_51](start_span)[span_51](end_span)"
+        "🌱 **နံပါတ် တွဲသုံး အခြေခံအင်္ဂလိပ်စာ**\n\n"
+        "1️⃣ 8 parts of Speech\n"
+        "2️⃣ Sentence Structures\n"
+        "3️⃣ Subject-verb Agreement\n"
+        "4️⃣ Articles (a, an, the)\n"
+        "5️⃣ Tenses (12 မျိုး)"
     )
     await call.message.edit_text(text, reply_markup=get_back_menu(), parse_mode="Markdown")
     await call.answer()
@@ -122,9 +121,9 @@ async def send_basic_lesson(call: types.CallbackQuery):
 @dp.callback_query_handler(text="lesson_future")
 async def send_future_lesson(call: types.CallbackQuery):
     text = (
-        "🌟 **Future Tense (အနာဂတ် လေ့ကျင့်ခန်း)**[span_52](start_span)[span_52](end_span)[span_53](start_span)[span_53](end_span)[span_54](start_span)[span_54](end_span)[span_55](start_span)[span_55](end_span)[span_56](start_span)[span_56](end_span)\n\n"
-        "• **Future Simple:** I will read the book tomorrow.[span_57](start_span)[span_57](end_span)[span_58](start_span)[span_58](end_span)\n"
-        "• **Future Continuous:** I will be reading at 5PM tomorrow.[span_59](start_span)[span_59](end_span)"
+        "🌟 **Future Tense (အနာဂတ် လေ့ကျင့်ခန်း)**\n\n"
+        "• **Future Simple:** I will read the book tomorrow.\n"
+        "• **Future Continuous:** I will be reading at 5PM tomorrow."
     )
     await call.message.edit_text(text, reply_markup=get_back_menu(), parse_mode="Markdown")
     await call.answer()
@@ -133,10 +132,10 @@ async def send_future_lesson(call: types.CallbackQuery):
 @dp.callback_query_handler(text="lesson_confusing")
 async def send_confusing_lesson(call: types.CallbackQuery):
     text = (
-        "🔍 **Confusing Words (အမေ့ပျောက်များ)**[span_60](start_span)[span_60](end_span)\n\n"
-        "• **It's vs Its**[span_61](start_span)[span_61](end_span)\n"
-        "• **A vs An**[span_62](start_span)[span_62](end_span)\n"
-        "• **Do vs Make**[span_63](start_span)[span_63](end_span)"
+        "🔍 **Confusing Words (အမေ့ပျောက်များ)**\n\n"
+        "• **It's vs Its**\n"
+        "• **A vs An**\n"
+        "• **Do vs Make**"
     )
     await call.message.edit_text(text, reply_markup=get_back_menu(), parse_mode="Markdown")
     await call.answer()
@@ -145,14 +144,13 @@ async def send_confusing_lesson(call: types.CallbackQuery):
 @dp.callback_query_handler(text="practice_todo")
 async def practice_todo_handler(call: types.CallbackQuery):
     text = (
-        "📝 **လက်တွေ့ To-do List & Time လေ့ကျင့်ခန်း**[span_64](start_span)[span_64](end_span)[span_65](start_span)[span_65](end_span)\n\n"
-        "✔️ *I gonna eat breakfast at 8 AM.*[span_66](start_span)[span_66](end_span)\n"
-        "✔️ *I will shower at 12 PM.*[span_67](start_span)[span_67](end_span)\n"
-        "✔️ *I want to eat banana for dinner.*[span_68](start_span)[span_68](end_span)"
+        "📝 **လက်တွေ့ To-do List & Time လေ့ကျင့်ခန်း**\n\n"
+        "✔️ *I gonna eat breakfast at 8 AM.*\n"
+        "✔️ *I will shower at 12 PM.*\n"
+        "✔️ *I want to eat banana for dinner.*"
     )
     await call.message.edit_text(text, reply_markup=get_back_menu(), parse_mode="Markdown")
     await call.answer()
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
-    
