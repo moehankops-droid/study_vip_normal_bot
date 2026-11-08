@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Study VIP English - 100 Points Master Guide</title>
+    <title>Deku's Ultra Mastery & Mindset Guide</title>
     <style>
         body {
             background-color: #0b0f19;
@@ -13,10 +13,12 @@
             padding: 15px;
             display: flex;
             justify-content: center;
+            align-items: center;
+            min-height: 90vh;
         }
         .container {
             width: 100%;
-            max-width: 420px;
+            max-width: 400px;
             background: #111827;
             padding: 20px;
             border-radius: 16px;
@@ -24,271 +26,141 @@
             border: 1px solid #1f2937;
         }
         .header {
-            background: linear-gradient(135deg, #4f46e5, #9333ea);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        .header h2 { margin: 0; font-size: 18px; color: #fff; }
-        .header p { margin: 5px 0 0; font-size: 11px; color: #e2e8f0; }
-        
-        .section-btn {
-            background: linear-gradient(135deg, #1e293b, #334155);
-            border: 1px solid #475569;
-            color: #f8fafc;
-            padding: 14px;
-            width: 100%;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: bold;
-            margin-bottom: 12px;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .section-btn:hover { background: #334155; border-color: #38bdf8; }
-
-        .card {
-            background: #1e293b;
-            padding: 16px;
+            background: linear-gradient(135deg, #2563eb, #1e40af);
+            padding: 12px;
             border-radius: 12px;
             margin-bottom: 15px;
-            border-left: 4px solid #38bdf8;
+            text-align: center;
         }
-        .card h3 { margin: 0 0 8px 0; font-size: 15px; color: #38bdf8; }
-        .card p { margin: 0 0 10px 0; font-size: 12px; color: #94a3b8; line-height: 1.6; }
+        .header h2 { margin: 0; font-size: 16px; color: #fff; }
+        .header p { margin: 3px 0 0; font-size: 10px; color: #93c5fd; }
+
+        .card-slider {
+            background: #1e293b;
+            padding: 18px;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+            min-height: 240px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .card-slider h3 { margin: 0 0 10px 0; font-size: 15px; color: #60a5fa; }
+        .card-slider p { margin: 0 0 10px 0; font-size: 12px; color: #94a3b8; line-height: 1.6; }
         
-        .list-box {
+        .action-box {
             background: #0f172a;
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 12px;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 11px;
             color: #34d399;
             border: 1px dashed #334155;
-            line-height: 1.8;
-            max-height: 350px;
+            margin-top: 10px;
+            max-height: 180px;
             overflow-y: auto;
         }
-        
-        .back-btn {
-            background: #ef4444;
+        .action-box strong { color: #facc15; display: block; margin-bottom: 4px; }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .nav-btn {
+            background: #334155;
             color: white;
             border: none;
             padding: 12px;
-            width: 100%;
+            flex: 1;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
-            margin-top: 10px;
         }
-        .back-btn:hover { opacity: 0.9; }
-        .hidden { display: none; }
+        .nav-btn:hover { background: #475569; }
+        .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        .progress-text {
+            text-align: center;
+            font-size: 11px;
+            color: #64748b;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <h2>📚 Study VIP English</h2>
-        <p>Grade A 100 Points Master Guide</p>
+        <h2>⚡ Deku's Ultra Growth Guide</h2>
+        <p>From Zero to Hero - Physical & Mental Mastery</p>
     </div>
 
-    <!-- HOME MENU SCREEN -->
-    <div id="menu-screen">
-        <div class="card" style="border-left-color: #10b981; margin-bottom: 15px;">
-            <h3>🎯 လေ့လာလိုသော အပိုင်းကို ရွေးပါ</h3>
-            <p>အချက် (၁၀၀) လုံးအပြည့်အစုံကို ခေါင်းစဉ်အလိုက် သပ်ရပ်စွာ စုစည်းထားပါသည်။</p>
-        </div>
+    <div class="progress-text" id="progress-indicator">အဆင့် (၁ / ၄)</div>
 
-        <button class="section-btn" onclick="openTopic('part1')">
-            <span>📌 1. နေ့စဉ် လေ့လာရန်နှင့် အလေ့အထ (1-20)</span> ➔
-        </button>
-        <button class="section-btn" onclick="openTopic('part2')">
-            <span>⚔️ 2. Tenses နှင့် Grammar အဓိက (21-40)</span> ➔
-        </button>
-        <button class="section-btn" onclick="openTopic('part3')">
-            <span>🛡️ 3. Verb ပုံစံများ & Confusing Words (41-60)</span> ➔
-        </button>
-        <button class="section-btn" onclick="openTopic('part4')">
-            <span>📝 4. စာမေးပွဲ အောင်ချက်မြင့်မားရေး (61-75)</span> ➔
-        </button>
-        <button class="section-btn" onclick="openTopic('part5')">
-            <span>🚀 5. Advanced Phrases & Writing (76-90)</span> ➔
-        </button>
-        <button class="section-btn" onclick="openTopic('part6')">
-            <span>💎 6. General Mastery & Mindset (91-100)</span> ➔
-        </button>
+    <div class="card-slider" id="card-content">
+        <!-- JS CONTENT -->
     </div>
 
-    <!-- CONTENT READING SCREEN -->
-    <div id="content-screen" class="hidden">
-        <div id="topic-container"></div>
-        <button class="back-btn" onclick="returnToMenu()">🔙 ပင်မမီနူးသို့ ပြန်မည်</button>
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prev-btn" onclick="changeCard(-1)">⬅️ ရှေ့သို့</button>
+        <button class="nav-btn" id="next-btn" onclick="changeCard(1)">နောက်သို့ ➡️</button>
     </div>
 </div>
 
 <script>
-    const data100 = {
-        part1: {
-            title: "📌 1. နေ့စဉ် လေ့လာရန်နှင့် အလေ့အထ (၁ မှ ၂၀)",
-            desc: "Daily Study & Habits တည်ဆောက်ခြင်း",
-            content: `
-                1. SMART Goals စနစ်ဖြင့် မိမိ၏ အင်္ဂလိပ်စာ လေ့လာမှုကို တိကျစွာ (Specific) ချမှတ်ပါ။<br>
-                2. တိုးတက်မှုကို အလွယ်တကူ တိုင်းတာနိုင်ရန် (Measurable) အညွှန်းများ ထားရှိပါ။<br>
-                3. မိမိလက်ရှိအဆင့်နှင့် ကိုက်ညီပြီး ရယူနိုင်သော (Attainable) ရည်မှန်းချက်များ ချမှတ်ပါ။<br>
-                4. လက်တွေ့ကျကျ အကောင်အထည်ဖော်နိုင်သော (Realistic) ရည်မှန်းချက်များကိုသာ ထားပါ။<br>
-                5. ရည်မှန်းချက်တစ်ခုချင်းစီအတွက် အချိန်သတ်မှတ်ချက် (Timely) တိတိကျကျ ပေးပါ။<br>
-                6. မနက်ခင်းတိုင်းတွင် မိမိလုပ်မယ့် အစီအစဉ်များကို အင်္ဂလိပ်လို To-do list ရေးသားပါ။<br>
-                7. ညအိပ်ရာဝင်ခါနီးတွင် တစ်နေ့တာ ဖြစ်ပျက်ခဲ့သမျှကို အင်္ဂလိပ်လို Journal ပြန်လည်ရေးသားပါ။<br>
-                8. ဝေါဟာရအသစ် (Vocabulary) တစ်ခုကို သင်ယူတဲ့အခါ ဥပမာစာကြောင်းနှင့်တကွ တွဲမှတ်ပါ။<br>
-                9. ဖတ်ပြီးသား သင်ခန်းစာများကို အချိန်ခြားပြီး ပြန်လည်ဖတ်ရှုသည့် Spaced Repetition နည်းလမ်းကို အသုံးပြုပါ။<br>
-                10. စာအုပ်မကြည့်ဘဲ မိမိကိုယ်တိုင် ပြန်လည်ရွတ်ဆို သုံးသပ်ပြနိုင်သည့် Active Recall လေ့ကျင့်မှုကို ပုံမှန်လုပ်ဆောင်ပါ။<br>
-                11. နေ့စဉ် အင်္ဂလိပ်စာ လေ့လာချိန်ကို တိကျသေချာသော Pomodoro ချိန်ကိုက်စက်များဖြင့် အာရုံစိုက်လုပ်ဆောင်ပါ။<br>
-                12. အင်္ဂလိပ်စာ ဝေါဟာရများကို မှတ်မိစေရန် Flashcards များကို အသုံးပြုပါ။<br>
-                13. အင်္ဂလိပ်စာ နားထောင်စွမ်းရည် (Listening) တိုးတက်စေရန် ပညာပေး အသံဖိုင် သို့မဟုတ် ဗီဒီယိုများကို နားထောင်ပါ။<br>
-                14. အသံထွက် (Pronunciation) မှန်ကန်စေရန် အသံထွက်ကောင်းမွန်သော နေရာများမှ နားထောင်ပြီး လိုက်လံရွတ်ဆိုပါ (Shadowing)။<br>
-                15. အိပ်ရေးဝဝအိပ်စက်ပြီး စာမေးပွဲရက်များတွင် ဦးနှောက်ကို ကြည်လင်နေစေရန် ဂရုစိုက်ပါ။<br>
-                16. စာကျက်သည့်အခါ ဖုန်းနှင့် အခြားအာရုံနောက်စရာများကို ဖယ်ရှားပြီး အာရုံစိုက်မှုအပြည့်ဖြင့် လုပ်ဆောင်ပါ။<br>
-                17. မိမိကိုယ်ကို ယုံကြည်မှုအပြည့်အဝထားရှိပြီး နေ့စဉ် ပုံမှန်လေ့ကျင့်မှုကို တစ်ရက်မှ မပျက်ကွက်ဘဲ ဆက်လုပ်ပါ။<br>
-                18. အမှားလုပ်မိခြင်းကို မကြောက်ဘဲ မှားလေလေ ပိုသိလေလေဟူသော သဘောထားဖြင့် အမြဲတမ်း တိုးတက်အောင် ကြိုးစားပါ။<br>
-                19. လေ့လာထားသော သဒ္ဒါစည်းမျဉ်းများကို သူငယ်ချင်းများ သို့မဟုတ် မိသားစုဝင်များကို ပြန်လည်ရှင်းပြပေးခြင်းဖြင့် အသိပညာကို ခိုင်မာစေပါ။<br>
-                20. တစ်ပတ်တစ်ကြိမ် မိမိလေ့လာခဲ့သမျှကို ပြန်လည်သုံးသပ်သည့် Weekly Review ပြုလုပ်ပါ။
-            `
+    const steps = [
+        {
+            title: "၁။ ကိုယ့်စိတ်ကိုယ် ပြောင်းလဲခြင်းနှင့် သံယောဇဉ်ဖြတ်တောက်ခြင်း",
+            desc: "လူတစ်ယောက်ကို ပြောင်းလဲဖို့ အချိန်တွေ မပေးပါနဲ့။ သူ့စိတ်ကို ပြောင်းလို့မရရင် ကိုယ့်စိတ်ကိုပဲ ပြောင်းပစ်လိုက်ပါ။ သူမရှိရင် မဖြစ်ဘူးဆိုတဲ့ အားငယ်စိတ်တွေကို ပြတ်ပြတ်သားသား ဖြတ်တောက်ပြီး ကိုယ့်ပန်းတိုင်ကို အဓိထားပါ။",
+            action: "✍️ လက်တွေ့လုပ်ဆောင်ရန်များ:<br>1. သူတပါးထက် ကိုယ့်စိတ်ကို ပိုမိုအာရုံစိုက်ပါ။<br>2. မှီခိုလိုစိတ်နှင့် မျှော်လင့်ချက်များကို ဖယ်ရှားပါ။<br>3. မလိုအပ်ဘဲ အချိန်ပေးစောင့်ဆိုင်းနေခြင်းကို ရပ်တန့်ပါ။"
         },
-        part2: {
-            title: "⚔️ 2. Tenses နှင့် Grammar အဓိက (၂၁ မှ ၄၀)",
-            desc: "Tenses & Core Grammar Rules",
-            content: `
-                21. Tenses (၁၂) မျိုးလုံးရဲ့ တည်ဆောက်ပုံနဲ့ အသုံးပြုပုံတွေကို ရှင်းလင်းစွာ နားလည်ထားပါ။<br>
-                22. Present Simple tense ကို နေ့စဉ်လုပ်လေ့ရှိသော အလေ့အထများအတွက် မှန်ကန်စွာ သုံးတတ်ပါစေ။<br>
-                23. Present Continuous tense ကို လက်တလော ဖြစ်ပျက်နေသော အခြေအနေများတွင် အသုံးပြုပါ။<br>
-                24. Present Perfect tense ကို ရလဒ် ပြီးမြောက်သွားပြီဖြစ်သော အရာများအတွက် သုံးပါ။<br>
-                25. Present Perfect Continuous ကို အစပြုပြီး ယခုတိုင် ဆက်လက်လုပ်ဆောင်ဆဲ အခြေအနေများတွင် သုံးပါ။<br>
-                26. Past Simple tense ကို လွန်ခဲ့သော အတိတ်က ပြီးဆုံးသွားသော အကြောင်းအရာများအတွက် သုံးပါ။<br>
-                27. Past Continuous tense ကို အတိတ်ကာလ တစ်ခုခုတွင် လုပ်ဆောင်ဆဲဖြစ်သော အခြေအနေများတွင် သုံးပါ။<br>
-                28. Past Perfect tense ကို အတိတ်တွင် အခြားအရာတစ်ခု မဖြစ်မီက ပြီးစီးသွားခဲ့သော အရာအတွက် သုံးပါ။<br>
-                29. Past Perfect Continuous ကို အတိတ်တွင် အခြားအရာတစ်ခု မတိုင်မီကတည်းက စတင်လုပ်ဆောင်နေခဲ့သော အခြေအနေအတွက် သုံးပါ။<br>
-                30. Future Simple tense တွင် နောင်လာမည့် အနာဂတ်အတွက် "will" ကို အဓိကထား အသုံးပြုပါ။<br>
-                31. Future Continuous tense ကို အနာဂတ်၏ အချိန်အပိုင်းအခြားတစ်ခုတွင် ဖြစ်နေမည့် အရာများအတွက် သုံးပါ။<br>
-                32. Future Perfect tense ကို အနာဂတ်ကာလ တစ်ခုခုမတိုင်မီ ပြီးစီးသွားမည့် အရာများအတွက် သုံးပါ။<br>
-                33. Future Perfect Continuous tense ကို အနာဂတ်တွင် အချိန်ကာလတစ်ခုအထိ ဆက်လက်လုပ်ဆောင်နေမည့် အခြေအနေအတွက် သုံးပါ။<br>
-                34. Active Voice နှင့် Passive Voice ပြောင်းလဲပုံ စည်းမျဉ်းများကို လေ့လာပါ။<br>
-                35. Direct Speech နှင့် Indirect Speech (Narration) ပြောင်းလဲခြင်း စည်းမျဉ်းများကို ကျွမ်းကျင်အောင် လုပ်ပါ။<br>
-                36. Subject-Verb Agreement (နာမ်နှင့် ကြိယာ ကိုက်ညီမှု) စည်းမျဉ်းများကို မှန်ကန်စွာ သုံးတတ်ပါစေ။<br>
-                37. Relative Pronouns (who, which, that) များကို မှန်ကန်စွာ ဆက်စပ်သုံးတတ်ပါ။<br>
-                38. Prepositions (in, on, at, by, with စသည်ဖြင့်) တို့၏ တည်နေရာနှင့် အချိန်ပြ အသုံးပြုပုံများကို ခွဲခြားတတ်ပါ။<br>
-                39. Conjunctions (and, but, because, although) များကို စာကြောင်းဆက်ရာတွင် သုံးတတ်ပါ။<br>
-                40. Articles (a, an, the) များကို တိကျမှန်ကန်စွာ သုံးစွဲတတ်ရန် လေ့ကျင့်ပါ။
-            `
+        {
+            title: "၂။ Deku လို စိတ်ဓာတ်နှင့် မာန် တည်ဆောက်ခြင်း",
+            desc: "ဘယ်တော့မှ စိတ်ဓာတ်မကျပါနဲ့။ အထင်သေးတဲ့အကြည့်တွေ၊ သနားတဲ့အကြည့်တွေကို နာကျင်စရာအဖြစ် မထားဘဲ အားကျလာရမယ့်အထိ ကြိုးစားမှု မာန်အဖြစ် ပြောင်းလဲလိုက်ပါ။",
+            action: "✍️ လက်တွေ့လုပ်ဆောင်ရန်များ:<br>1. အထင်သေးခံရမှုနှင့် နာကျင်ချက်များကို ခွန်အားလုပ်ပါ။<br>2. အနိုင်ကျင့်ခံရတာတွေကို မမေ့ဘဲ ကြိုးစားမှု လောင်စာအဖြစ် ပြောင်းပါ။<br>3. ဘယ်တော့မှ လက်မလျှော့ဘဲ ရှေ့ဆက်ပါ။"
         },
-        part3: {
-            title: "🛡️ 3. Verb ပုံစံများ & Confusing Words (၄၁ မှ ၆၀)",
-            desc: "V0-V5 Forms & Confusing Words",
-            content: `
-                41. V1 (Base Form) ကို Present Simple Tense နှင့် ပင်မကြိယာအဖြစ် သုံးတတ်ပါစေ။<br>
-                42. V2 (Past Form) ကို အတိတ်ကာလ လုပ်ဆောင်ချက်များအတွက် အသုံးပြုပါ။<br>
-                43. V3 (Past Participle Form) ကို Perfect Tenses နှင့် Passive Voice များတွင် သုံးပါ။<br>
-                44. V-ing (Present Participle) ကို Continuous Tenses များတွင် သုံးပါ။<br>
-                45. V-s / V-es (Third-Person Singular) ကို Present Simple (He/She/It) တွင် သုံးပါ။<br>
-                46. Irregular Verbs (မူလပုံစံပြောင်းလဲသော ကြိယာများ ဥပမာ - go-went-gone) များကို အလွတ်ကျက်မှတ်ပါ။<br>
-                47. Confusing words ဖြစ်သော "It's" နှင့် "Its" တို့၏ ကွာခြားချက်ကို သေချာခွဲခြားတတ်ပါ။<br>
-                48. "They're", "Their", နှင့် "There" တို့၏ အဓိပ္ပာယ်နှင့် သုံးပုံသုံးနည်း ကွာခြားချက်ကို သိရှိထားပါ။<br>
-                49. "Do" နှင့် "Make" တို့ကို အိမ်စာလုပ်ခြင်းနှင့် ပစ္စည်းလုပ်ခြင်းတို့တွင် ကွဲပြားစွာ သုံးတတ်ပါ။<br>
-                50. "Much" နှင့် "Many" တို့ကို ရေတွက်၍ရသော noun နှင့် မရသော noun များအလိုက် ခွဲခြားသုံးပါ။<br>
-                51. "Say" နှင့် "Tell" တို့၏ အသုံးအနှုန်း ကွာခြားချက်ကို သေချာစွာ ခွဲခြားလေ့လာပါ။<br>
-                52. "Affect" နှင့် "Effect" တို့၏ ကွာခြားချက်ကို နားလည်ထားပါ။<br>
-                53. "Accept" နှင့် "Except" တို့၏ အသုံးကို ခွဲခြားတတ်ပါ။<br>
-                54. "Lose" နှင့် "Loose" တို့၏ စာလုံးပေါင်းနှင့် အဓိပ္ပာယ်ကို သတိပြုပါ။<br>
-                55. "Then" နှင့် "Than" တို့ကို နှိုင်းယှဉ်ရာတွင် မှန်ကန်စွာ သုံးပါ။<br>
-                56. "Your" နှင့် "You're" တို့၏ ကွာခြားချက်ကို သေချာမှတ်သားပါ။<br>
-                57. "Too", "To", နှင့် "Two" တို့၏ အသုံးများကို ခွဲခြားတတ်ပါ။<br>
-                58. "Quiet" နှင့် "Quite" တို့၏ အသံထွက်နှင့် အဓိပ္ပာယ်ကို ခွဲခြားပါ။<br>
-                59. "Weather" နှင့် "Whether" တို့ကို သုံးစွဲရာတွင် မရောထွေးပါစေနှင့်။<br>
-                60. "Advice" (နာမ်) နှင့် "Advise" (ကြိယာ) တို့၏ ကွာခြားချက်ကို သိရှိထားပါ။
-            `
+        {
+            title: "၃။ Deku's Daily Physical Routine (ကိုယ်လက်လေ့ကျင့်ခန်း)",
+            desc: "Deku လို ခန္ဓာကိုယ်ကြံ့ခိုင်ပြီး သန်မာလာစေရန် နေ့စဉ် မနက်နှင့် ညပိုင်းများတွင် ကိုယ်ထည်တည်ဆောက်ရေး လေ့ကျင့်ခန်းများကို ပုံမှန်လုပ်ဆောင်ပါ။",
+            action: "✍️ နေ့စဉ် လုပ်ဆောင်ရမည့် စာရင်း:<br>1. မနက်/ည Push-ups (တွန်းထိုးထمرين) စטיםများ ပုံမှန်လုပ်ရန်။<br>2. 10-rep Squats (ထိုင်ထ) များ ဇွဲရှိရှိ လုပ်ရန်။<br>3. Planks (ဗိုက်ကြောအားပြုခြင်း) ၃၅ မှ ၄၀ စက္ကန့်အထိ အချိန်ယူ တည်ဆောက်ရန်။<br>4. အကြောင်းပြချက်မပေးဘဲ တစ်နေ့ ၁ နာရီ လေ့ကျင့်ခန်းလုပ်ရန်။"
         },
-        part4: {
-            title: "📝 4. စာမေးပွဲ အောင်ချက်မြင့်မားရေး (၆၁ မှ ၇၅)",
-            desc: "Exam Preparation & Accuracy",
-            content: `
-                61. ကျောင်းသုံးစာအုပ်ပါ ဖတ်စာပိုဒ် (Reading Comprehension) များကို အပေါ်ယံမဟုတ်ဘဲ အဓိပ္ပာယ်ပေါ်လွင်အောင် သေချာဖတ်ပါ။<br>
-                62. စာမေးပွဲမေးခွန်းဟောင်းများကို အချိန်သတ်မှတ်ပြီး ကိုယ်တိုင် စမ်းသပ်ဖြေဆိုကြည့်ပါ။<br>
-                63. လေ့ကျင့်ခန်းလုပ်ရာတွင် မိမိမှားယွင်းခဲ့သော အချက်များကို စာရင်းလုပ်ပြီး ပြန်လည်သုံးသပ်ပါ (Error Correction)။<br>
-                64. သဒ္ဒါစည်းမျဉ်းများကို အလွတ်ကျက်သည်ထက် ကိုယ်တိုင် ဥပမာစာကြောင်းအသစ်များ တည်ဆောက်ရေးသားပါ။<br>
-                65. စာပိုဒ်တစ်ပိုဒ်ကို ရေးသားသည့်အခါ Introduction, Body, Conclusion ဟူ၍ အပိုင်းလိုက် စနစ်တကျ ဖွဲ့စည်းတတ်ပါစေ။<br>
-                66. စာကြောင်းတစ်ကြောင်းနှင့် တစ်ကြောင်း ချိတ်ဆက်ရာတွင် Transition words (Furthermore, However, Therefore) များကို မှန်ကန်စွာ အသုံးပြုပါ။<br>
-                67. စာမေးပွဲမဖြေမီ မိမိ၏ အားနည်းချက်များကို ရှာဖွေပြီး အထူးပြုပြင်လေ့လာပါ။<br>
-                68. စာမေးပွဲဖြေဆိုချိန်ကို စီမံခန့်ခွဲတတ်စေရန် အချိန်အကန့်အသတ်ဖြင့် စာမေးပွဲပုံစံ မေးခွန်းများကို ဖြေဆိုလေ့ကျင့်ပါ။<br>
-                69. စာမေးပွဲဖြေဆိုနေစဉ် မေးခွန်းကို သေချာစွာ ဖတ်ရှုပြီးမှ ဖြေဆိုသည့် အလေ့အထကို ကျင့်သုံးပါ။<br>
-                70. အမှတ်အများဆုံးပေးမည့် အပိုင်းများကို ဦးစားပေးဖြေဆိုတတ်သည့် စွမ်းရည်ကို တည်ဆောက်ပါ။<br>
-                71. စာမေးပွဲမဖြေမီ ဖြေဆိုမည့် စာရွက်စာတမ်းများနှင့် ပစ္စည်းများကို ကြိုတင်စစ်ဆေးပြင်ဆင်ထားပါ။<br>
-                72. စာမေးပွဲခန်းအတွင်း စိတ်ဖိစီးမှုကင်းစေရန် အသက်ရှူလေ့ကျင့်ခန်း လုပ်ဆောင်ပါ။<br>
-                73. ဖြေဆိုပြီးစီးပါက အမှားအယွင်း ရှိမရှိ ပြန်လည်စစ်ဆေးရန် (Review) အချိန်ချန်ထားပါ။<br>
-                74. စာမေးပွဲတွင် လက်ရေးသပ်ရပ်ပြီး ဖတ်ရလွယ်ကူအောင် ရေးသားပါ။<br>
-                75. အဖြေလွှာတွင် စာလုံးပေါင်းသတ်ပုံ (Spelling) မှန်ကန်မှုကို အထူးဂရုစိုက်ပါ။
-            `
-        },
-        part5: {
-            title: "🚀 5. Advanced Phrases & Writing (၇၆ မှ ၉၀)",
-            desc: "Advanced Expressions & Writing Structure",
-            content: `
-                76. ကျေးဇူးတင်စကား (Thank you / I can't thank you enough) များကို အခြေအနေအလိုက် အဆင့်မြင့်မြင့် သုံးတတ်ပါစေ။<br>
-                77. တောင်းပန်စကားများ (I'm sorry / I apologize) ကို မှန်ကန်စွာ သုံးတတ်ပါစေ။<br>
-                78. မသိပါဘူး ဟု ပြောလိုသည့်အခါ "I have no idea" သို့မဟုတ် "It's beyond me" ကဲ့သို့ အသုံးအနှုန်းများကို သုံးပါ။<br>
-                79. ဂုဏ်ပြုသည့်အခါ "Congratulations!" အပြင် "Kudos!" သို့မဟုတ် "You rock!" ကဲ့သို့ စကားစုများကို သုံးပါ။<br>
-                80. ဝမ်းသာပျော်ရွှင်ကြောင်း ဖော်ပြရာတွင် "I'm on cloud nine" သို့မဟုတ် "I'm over the moon" ကို သုံးတတ်ပါစေ။<br>
-                81. သဘောတူညီကြောင်းပြသရန် "I couldn't agree more" သို့မဟုတ် "That's spot on" ကို သုံးပါ။<br>
-                82. သဘောမတူညီကြောင်း ယဉ်ကျေးစွာပြောဆိုရန် "I see your point, but..." ဟူသော အသုံးကို သုံးပါ။<br>
-                83. အကြံဉာဏ်တောင်းခံလိုသည့်အခါ "What do you suggest?" သို့မဟုတ် "Got any ideas?" ကို သုံးပါ။<br>
-                84. တစ်စုံတစ်ဦးကို အားပေးလိုသည့်အခါ "Hang in there" သို့မဟုတ် "Keep your chin up" ကို သုံးပါ။<br>
-                85. အံ့သြသွားကြောင်းပြရန် "You're kidding!" သို့မဟုတ် "I can't believe it!" ကို သုံးပါ။<br>
-                86. အလုပ်များနေကြောင်းဖော်ပြရန် "I'm swamped" သို့မဟုတ် "I'm up to my ears in work" ကို သုံးပါ။<br>
-                87. အခြေအနေကောင်းတစ်ခုကို ဖော်ပြရန် "A blessing in disguise" ဟူသော idiom ကို သုံးတတ်ပါစေ။<br>
-                88. အလွန်လွယ်ကူကြောင်းပြရန် "A piece of cake" ဟူသော အသုံးကို သုံးပါ။<br>
-                89. တရားဝင်စာများရေးသားရာတွင် "Dear Sir/Madam," နှင့် "Yours faithfully," တို့ဖြင့် အစပြုအဆုံးသတ်ပါ။<br>
-                90. မိတ်ဆွေချင်းရေးသားရာတွင် "Dear [Name]," နှင့် "Best regards," ကို သုံးပါ။
-            `
-        },
-        part6: {
-            title: "💎 6. General Mastery & Mindset (၉၁ မှ ၁၀၀)",
-            desc: "General Fluency & Winning Mindset",
-            content: `
-                91. အင်္ဂလိပ်ဘာသာစကားဖြင့် ထုတ်လွှင့်သော သတင်းများ သို့မဟုတ် ပညာပေးဗီဒီယိုများကို ကြည့်ရှုပါ။<br>
-                92. အင်္ဂလိပ်လို ရေးသားထားသော ဝတ္ထုငယ်များ သို့မဟုတ် ဆောင်းပါးများကို လေ့လာဖတ်ရှုပါ။<br>
-                93. မိမိကိုယ်ကို အင်္ဂလိပ်လို စဉ်းစားတွေးခေါ်တတ်အောင် (Thinking in English) အလေ့အကျင့်လုပ်ပါ။<br>
-                94. အင်္ဂလိပ်စာ လေ့လာရာတွင် ပျင်းရိခြင်းမရှိစေရန် ရည်မှန်းချက်အသစ်များကို အမြဲချမှတ်ပါ။<br>
-                95. အင်္ဂလိပ်စာ ကျွမ်းကျင်သူများ၏ အကြံပြုချက်များနှင့် လေ့လာမှုနည်းလမ်းများကို လိုက်နာလေ့လာပါ။<br>
-                96. အွန်လိုင်းမှ အခမဲ့ရရှိနိုင်သော အင်္ဂလိပ်စာ လေ့လာရေး App များနှင့် ဝဘ်ဆိုက်များကို အကျိုးရှိရှိ အသုံးပြုပါ။<br>
-                97. စာမေးပွဲတွင် အမှတ်ကောင်းကောင်းရရှိရန် မိမိကိုယ်ကို ယုံကြည်ချက်အပြည့်အဝ တည်ဆောက်ပါ။<br>
-                98. ခက်ခဲသော သင်ခန်းစာများနှင့် ကြုံတွေ့ရသည့်အခါ လက်မလျှော့ဘဲ အကြိမ်ကြိမ် ထပ်မံလေ့လာပါ။<br>
-                99. နေ့စဉ်ဘဝတွင် အင်္ဂလိပ်စာကို လက်တွေ့အသုံးပြုနိုင်ရန် အခွင့်အလမ်းများကို ဖန်တီးပါ။<br>
-                100. အင်္ဂလိပ်စာဖြင့် Grade A သေချာပေါက် ရရှိမည်ဟူသော ခိုင်မာသည့် ရည်မှန်းချက်ဖြင့် အကောင်းဆုံး ကြိုးစားအားထုတ်ပါ။
-            `
+        {
+            title: "၄။ 63 Days Disappear Challenge (အဆင့်မြှင့်တင်ခြင်း)",
+            desc: "ရက် ၆၀ ကျော်အတွင်း ကိုယ့်ကိုယ်ကိုယ် လုံးဝ မသိနိုင်လောက်အောင် ပြောင်းလဲပစ်ဖို့ ဒီစည်းကမ်း ၆ ချက်ကို တင်းတင်းကျပ်ကျပ် လိုက်နာပါရန်။",
+            action: "✍️ ရက် ၆၀+ စိန်ခေါ်မှု အချက် ၆ ချက်:<br>1. Social Media ကို တစ်နေ့ ၁၅ မိနစ်ထက် ပိုမသုံးရန်။<br>2. Skill အသစ် တစ်နေ့ အနည်းဆုံး ၁ နာရီ လေ့လာရန်။<br>3. တစ်နေ့ ၁၀ မိနစ် တရားထိုင်ရန်။<br>4. တစ်နေ့ စာအုပ် ၁၀ မျက်နှာ ဖတ်ရန်။<br>5. ည ၁၀ နာရီ အိပ်ရာဝင်ပြီး မနက် ၅ နာရီ အတိအကျ ထရန်။"
         }
-    };
+    ];
 
-    function openTopic(key) {
-        document.getElementById('menu-screen').classList.add('hidden');
-        document.getElementById('content-screen').classList.remove('hidden');
+    let currentIndex = 0;
 
-        let data = data100[key];
-        document.getElementById('topic-container').innerHTML = `
-            <div class="card">
-                <h3>${data.title}</h3>
-                <p>${data.desc}</p>
-                <div class="list-box">${data.content}</div>
+    function renderCard() {
+        let item = steps[currentIndex];
+        document.getElementById('card-content').innerHTML = `
+            <div>
+                <h3>${item.title}</h3>
+                <p>${item.desc}</p>
+                <div class="action-box">
+                    <strong>💪 လက်တွေ့လုပ်ဆောင်ရန် အချက်များ:</strong>
+                    ${item.action}
+                </div>
             </div>
         `;
+        document.getElementById('progress-indicator').innerText = `အဆင့် (${currentIndex + 1} / ${steps.length})`;
+        
+        document.getElementById('prev-btn').disabled = currentIndex === 0;
+        document.getElementById('next-btn').disabled = currentIndex === steps.length - 1;
+        document.getElementById('next-btn').innerText = currentIndex === steps.length - 1 ? 'ပြီးပါပြီ 🎉' : 'နောက်သို့ ➡️';
     }
 
-    function returnToMenu() {
-        document.getElementById('content-screen').classList.add('hidden');
-        document.getElementById('menu-screen').classList.remove('hidden');
+    function changeCard(direction) {
+        currentIndex += direction;
+        if (currentIndex < 0) currentIndex = 0;
+        if (currentIndex >= steps.length) currentIndex = steps.length - 1;
+        renderCard();
     }
+
+    renderCard();
 </script>
 
 </body>
