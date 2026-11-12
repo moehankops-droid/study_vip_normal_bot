@@ -3,35 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zombie Apocalypse: Choices & Consequences</title>
+    <title>Zombie Apocalypse: 3 Years Survival</title>
     <style>
         body {
-            background-color: #0b0b0b;
+            background-color: #070707;
             color: #f1f1f1;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             padding: 20px;
         }
         .game-container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 0 auto;
-            background: #1a1a1a;
+            background: #151515;
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
             border: 1px solid #333;
         }
         h2 {
             color: #ff4757;
-            margin-bottom: 20px;
+            margin-bottom: 5px;
+        }
+        #timeline-title {
+            color: #2ed573;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-transform: uppercase;
         }
         #story-text {
             font-size: 17px;
             line-height: 1.6;
             margin-bottom: 25px;
             text-align: left;
-            background: #262626;
-            padding: 15px;
+            background: #1e1e1e;
+            padding: 18px;
             border-radius: 8px;
             border-left: 4px solid #ff4757;
         }
@@ -59,133 +66,140 @@
 <body>
 
     <div class="game-container">
-        <h2>🧟‍♂️ Zombie Apocalypse: Survival</h2>
+        <h2>🧟‍♂️ Zombie Apocalypse</h2>
+        <div id="timeline-title">ကာလအပိုင်းအခြား: ပထမနှစ် (Year 1) - ကပ်ရောဂါစတင်ချိန်</div>
         <div id="story-text">
-            သင်ဟာ တိတ်ဆိတ်ခြောက်ချားနေတဲ့ မြို့တစ်မြို့က တိုက်ခန်းကျဉ်းလေးထဲမှာ နိုးလာခဲ့ပါတယ်။ အပြင်ဘက်ကနေ လူသားတွေရဲ့ အော်ဟစ်သံတွေနဲ့ ခြေသံပြင်းပြင်းတွေကို ကြားနေရပါပြီ။ ကမ္ဘာကြီး ပျက်သုဉ်းသွားပါပြီ။ သင် ဘာလုပ်မလဲ?
+            <b>ရက်စွဲ (Day 1):</b> ကမ္ဘာပေါ်မှာ လူသားတွေကို Zombie အဖြစ်ပြောင်းလဲစေတဲ့ ဗိုင်းရပ်စ်ဆိုးကြီး တိုက်ခိုက်ခံရပါပြီ။ သင်ဟာ တိုက်ခန်းကျဉ်းလေးထဲမှာ ပိတ်မိနေပြီး အပြင်ဘက်မှာ အော်ဟစ်သံတွေနဲ့ ပြည့်နှက်နေပါပြီ။ တံခါးကို Zombie တွေ လာထုနေချိန်မှာ သင် ဘာလုပ်မလဲ?
         </div>
         
         <div id="button-container">
-            <button class="btn" onclick="choice1A()">🚪 အခန်းတံခါးကို ဖြည်းညင်းစွာ ဖွင့်ပြီး အခြေအနေကြည့်မည်</button>
-            <button class="btn" onclick="choice1B()">🎒 ကျောပိုးအိတ်ထဲက ပစ္စည်းများကို အရင်စစ်ဆေးမည်</button>
-            <button class="btn" onclick="choice1C()">🛏️ ကြောက်လန့်ပြီး ခုတင်အောက်မှာ ဆက်ပုန်းနေမည်</button>
+            <button class="btn" onclick="year1_fight()">⚔️ အနီးအနားက သံချောင်းကိုယူပြီး တံခါးဝမှာ စောင့်တိုက်မည်</button>
+            <button class="btn" onclick="year1_window()">🪟 နောက်ဖေးပြတင်းပေါက်ကနေ အောက်ကို ဆင်းပြေးမည်</button>
+            <button class="btn" onclick="year1_hide()">🛏️ ဗီရိုထဲမှာ အလောတကြီး ပုန်းအောင်းနေမည်</button>
         </div>
     </div>
 
     <script>
-        // --- အပိုင်း (၁) ---
-        function choice1A() {
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> သင်တံခါးကို ဖွင့်လိုက်တဲ့အခါ ဆူညံသံကြောင့် စင်္ကြန်လမ်းက Zombie တစ်ကောင်က သင့်ဘက်ကို တဟုန်ထိုး ပြေးလာပါပြီ!<br><br>လျင်မြန်စွာ ဆုံးဖြတ်ရပါတော့မယ် ဘာလုပ်မလဲ?";
+        // ==========================================
+        // ပထမနှစ် (Year 1) ဇာတ်လမ်းခွဲများ
+        // ==========================================
+        function year1_fight() {
+            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: ပထမနှစ် (Year 1) - မြို့တွင်းမှ ထွက်မြောက်ခြင်း";
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> တံခါးဝမှာ ဝင်လာတဲ့ Zombie ကို သံချောင်းနဲ့ ရှင်းထုတ်နိုင်ခဲ့ပါတယ်။ ဒါပေမဲ့ မြို့ထဲမှာ ဆက်နေဖို့ မဖြစ်နိုင်တော့တာကြောင့် ခရီးစတင်ထွက်ဖို့ ဆုံးဖြတ်လိုက်ပါတယ်။<br><br>ဘယ်ကို ဦးတည်သွားမလဲ?";
             document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="choice2A()">⚔️ အနီးအနားမှာ ရှိတဲ့ သံချောင်းနဲ့ ဝင်ရောက်တိုက်ခိုက်မည်</button>
-                <button class="btn" onclick="choice2B()">🚪 တံခါးကို အမြန်ပြန်ပိတ်ပြီး သော့ခတ်လိုက်မည်</button>
-                <button class="btn" onclick="choice2C()">🏃‍♂️ လှေကားအတိုင်း အောက်ထပ်ကို အလောတကြီး ပြေးဆင်းမည်</button>
+                <button class="btn" onclick="year2_phaseA()">🏥 စွန့်ပစ်ထားတဲ့ ဆေးရုံဆီသို့ ရိက္ခာရှာရန် သွားမည်</button>
+                <button class="btn" onclick="year2_phaseB()">🌲 မြို့ပြင်တောစပ်လမ်းအတိုင်း ခြေလျင်ထွက်မည်</button>
             `;
         }
 
-        function choice1B() {
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> အိတ်ကိုစစ်ဆေးကြည့်တော့ ရေဘူးတစ်ဘူးနဲ့ သံဓားမြှောင်ငယ် တစ်လက် တွေ့ရပါတယ်။ ဒါပေမဲ့ အိတ်ဇစ်ဖွင့်တဲ့အသံကြောင့် ပြတင်းပေါက်ကနေ Zombie တစ်ကောင်က တိုက်ခန်းထဲ ခုန်ဝင်လာပါပြီ!<br><br>ဘာလုပ်မလဲ?";
+        function year1_window() {
+            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: ပထမနှစ် (Year 1) - ဒဏ်ရာနှင့် ထွက်ပြေးခြင်း";
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ပြတင်းပေါက်ကနေ ဆင်းရာမှာ အမြင့်ကခုန်ချမိလို့ ခြေထောက်အနည်းငယ် ထိခိုက်သွားပါတယ်။ ဒါပေမဲ့ ကံကောင်းထောက်မစွာနဲ့ လမ်းပေါ်က စွန့်ပစ်ကားတစ်စီးဆီ ရောက်သွားပါတယ်။<br><br>ဘာဆက်လုပ်မလဲ?";
             document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="choice2D()">🔪 လက်ထဲက သံဓားမြှောင်နဲ့ ဓားထိုးခုခံမည်</button>
-                <button class="btn" onclick="choice2E()">🪟 ပြတင်းပေါက်ကနေ အပြင်ဘက် လမ်းမပေါ်ကို ခုန်ချထွက်ပြေးမည်</button>
+                <button class="btn" onclick="year2_phaseB()">🚗 ကားစက်နှိုးပြီး မြို့ပြင်တောစပ်ဆီ မောင်းမည်</button>
+                <button class="btn" onclick="year2_phaseC()">🗺️ မြေပုံကိုကြည့်ပြီး စစ်တပ်စခန်းဟောင်းဆီ သွားမည်</button>
             `;
         }
 
-        function choice1C() {
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> သင်ဟာ ကြောက်လန့်ပြီး ခုတင်အောက်မှာ တိတ်တဆိတ် ဆက်ပုန်းနေခဲ့ပါတယ်။ နာရီပေါင်းများစွာကြာတော့ ရေငတ်လာပြီး ဆာလောင်လာတဲ့အပြင် Zombie တွေက တိုက်ခန်းထဲကို ဖောက်ဝင်လာပါပြီ။<br><br><b>(Game Over: အစာရေစာပြတ်လပ်ပြီး Zombie ရဲ့ သားကောင်ဖြစ်သွားပါပြီ)</b>";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
-            `;
-        }
-
-        // --- အပိုင်း (၂) ---
-        function choice2A() {
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> သင်ရဲရင့်စွာ တိုက်ခိုက်ခဲ့ပေမဲ့ လက်ဗလာနီးပါးဖြစ်နေလို့ Zombie ရဲ့ ကိုက်ဖြတ်တာကို ခံလိုက်ရပါပြီ။ သင့်ခန္ဓာကိုယ်ထဲကို ဗိုင်းရပ်စ်တွေ ပျံ့နှံ့သွားပါပြီ။<br><br><b>(Game Over: သင် Zombie အဖြစ်သို့ ပြောင်းလဲသွားပါပြီ)</b>";
+        function year1_hide() {
+            document.getElementById("timeline-title").innerText = "ဂိမ်းဆုံးခန်း (Game Over - Year 1)";
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ဗီရိုထဲမှာ အလွန်အမင်း ပုန်းနေခဲ့ပေမဲ့ အစာရေစာပြတ်လပ်လာပြီး အားအင်ကုန်ခန်းကာ Zombie တွေရဲ့ ဝိုင်းဝဲမှုကို ခံလိုက်ရပါတယ်။<br><br><b>(Game Over: ပထမနှစ်အတွင်းမှာတင် အသက်ဆုံးရှုံးခဲ့ရပါပြီ)</b>";
             document.getElementById("button-container").innerHTML = `
                 <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
             `;
         }
 
-        function choice2B() {
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> တံခါးကို အလ급ပြန်ပိတ်နိုင်ခဲ့ပေမဲ့ Zombie တွေက အုပ်စုလိုက် ဝိုင်းထုနေလို့ တံခါးကျိုးတော့မယ့် အနေအထားဖြစ်နေပါပြီ။<br><br>အခု ဘယ်လိုဆက်လုပ်မလဲ?";
+        // ==========================================
+        // ဒုတိယနှစ် (Year 2) ဇာတ်လမ်းခွဲများ
+        // ==========================================
+        function year2_phaseA() {
+            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: ဒုတိယနှစ် (Year 2) - ဆေးရုံဟောင်းနှင့် အန္တရာယ်";
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ကပ်ဘေးဒုတိယနှစ်ရောက်လာပါပြီ။ ဆေးရုံဟောင်းထဲမှာ ဆေးဝါးနဲ့ အစားအသောက်ရှာရင်း အသက်ရှင်ကျန်ရစ်သူအချို့နဲ့ ဆုံတွေ့ခဲ့ပါတယ်။ ဒါပေမဲ့ အဲ့ဒီနေရာကို Zombie အုပ်စုကြီး ဝင်ရောက်လာပါပြီ။<br><br>ဘယ်လို ဆက်လုပ်မလဲ?";
             document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="choice3A()">🪟 နောက်ဖေးပြတင်းပေါက်ကနေ ခုန်ထွက်မည်</button>
-                <button class="btn" onclick="choice3B()">🛏️ ရေချိုးခန်းထဲ ဝင်ပုန်းပြီး တံခါးခလောက်ချမည်</button>
+                <button class="btn" onclick="year3_ending1()">🤝 အသက်ရှင်ကျန်ရစ်သူတွေနဲ့ လက်တွဲပြီး ခုခံတိုက်ခိုက်မည်</button>
+                <button class="btn" onclick="year3_fail1()">🏃‍♂️ တစ်ယောက်တည်း ထွက်ပြေးဖို့ ကြိုးစားစဉ် မိသွားသည် (Game Over)</button>
             `;
         }
 
-        function choice2C() {
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> လှေကားအတိုင်း ပြေးဆင်းရင်း လမ်းမှာ Zombie နှစ်ကောင်နဲ့ တိုးပေမဲ့ အလွန်အမင်း ကံကောင်းထောက်မစွာနဲ့ မြေညီထပ်ကို အောင်မြင်စွာ ဆင်းနိုင်ခဲ့ပါတယ်။ လမ်းပေါ်မှာ ကားတစ်စီးနဲ့ စူပါမားကတ်တစ်ခုကို တွေ့လိုက်ရပါတယ်။<br><br>ဘယ်ကိုသွားမလဲ?";
+        function year2_phaseB() {
+            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: ဒုတိယနှစ် (Year 2) - တောစပ်စခန်း တည်ဆောက်ခြင်း";
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ကပ်ဘေးဒုတိယနှစ်မှာ မြို့ပြင်တောစပ်မှာ တဲငယ်လေးထိုးပြီး အစားအသောက်စိုက်ပျိုးကာ အေးချမ်းစွာ ရှင်သန်နေထိုင်နိုင်ခဲ့ပါတယ်။ ဒါပေမဲ့ ဆောင်းတွင်းရောက်လာပြီး ရိက္ခာတွေ ရှားပါးလာပါပြီ။<br><br>ဘာလုပ်မလဲ?";
             document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="choice3C()">🛒 စူပါမားကတ်ထဲဝင်ပြီး ရိက္ခာရှာမည်</button>
-                <button class="btn" onclick="choice3D()">🚗 ရပ်ထားတဲ့ ကားကို စက်နှိုးပြီး မြို့ပြင်ထွက်မည်</button>
+                <button class="btn" onclick="year3_ending2()">🔍 အနီးအနားက မြို့ပျက်ထဲကို ရိက္ခာထွက်ရှာမည်</button>
+                <button class="btn" onclick="year3_fail2()">❄️ အလွန်အမင်း အေးခဲပြီး အားအင်ကုန်ခန်းသွားသည် (Game Over)</button>
             `;
         }
 
-        function choice2D() {
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> သံဓားမြှောင်ငယ်နဲ့ Zombie ရဲ့ ဦးခေါင်းကို အချက်ကျကျ ထိုးနိုင်ခဲ့လို့ Zombie လဲကျသွားပါတယ်။ သင် အသက်ဆက်ရှင်ဖို့ အခွင့်အရေး ရသွားပါပြီ!<br><br>အခု တိုက်ခန်းထဲကနေ ဘယ်လိုထွက်မလဲ?";
+        function year2_phaseC() {
+            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: ဒုတိယနှစ် (Year 2) - စစ်တပ်စခန်းဟောင်း";
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> စစ်တပ်စခန်းဟောင်းကို ရောက်တဲ့အခါ လက်နက်ခဲယမ်းအချို့နဲ့ ရေဒီယိုစက်တစ်လုံးကို တွေ့ရှိခဲ့ပါတယ်။ ရေဒီယိုကနေ ကယ်ဆယ်ရေးအသံ လွှင့်နေတာကို ကြားလိုက်ရပါပြီ။<br><br>ဘယ်လို ဆက်လုပ်မလဲ?";
             document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="choice3E()">🚪 အဓိက တံခါးပေါက်ကနေ ငြိမ်ငြိမ်လေး ထွက်မည်</button>
-                <button class="btn" onclick="choice3F()">🎒 လိုအပ်တဲ့ ပစ္စည်းတွေ ထပ်သိမ်းပြီး နေထိုင်ရာပြောင်းမည်</button>
+                <button class="btn" onclick="year3_ending3()">📻 ရေဒီယိုက တဆင့် အချက်ပြပေးပို့ပြီး စောင့်မည်</button>
+                <button class="btn" onclick="year3_fail3()">⚡ စခန်းထဲက မပေါက်ကွဲသေးတဲ့ မိုင်းတွင်းကို နင်းမိသွားသည် (Game Over)</button>
             `;
         }
 
-        function choice2E() {
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ဒုတိယထပ်ကနေ အسرအမြန် ခုန်ချလိုက်တာကြောင့် ခြေထောက် အပြင်းအထန် ထိခိုက်နာကျင်သွားပြီး လမ်းပေါ်မှာ မလှုပ်နိုင်တော့ပါဘူး။<br><br><b>(Game Over: ခြေထောက်ကျိုးသွားပြီး Zombie တွေရဲ့ ဝိုင်းဝဲခြင်းကို ခံလိုက်ရပါပြီ)</b>";
+        // ==========================================
+        // တတိယနှစ် (Year 3) - နောက်ဆုံး အဆုံးသတ်များ (Victories / Game Overs)
+        // ==========================================
+        function year3_ending1() {
+            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: တတိယနှစ် (Year 3) - အသက်ရှင်လွတ်မြောက်ခြင်း";
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> (၃) နှစ်တိုင်တိုင် ကြံ့ကြံ့ခံ တိုက်ခိုက်ပြီးနောက် အဖွဲ့လိုက်ပူးပေါင်းကာ ကယ်ဆယ်ရေး ရဟတ်ယာဉ်ဆီ အောင်မြင်စွာ ရောက်ရှိသွားနိုင်ခဲ့ပါပြီ။ ကပ်ဘေးကြီးကို အောင်မြင်စွာ ကျော်ဖြတ်နိုင်ခဲ့ပါပြီ! 🎉<br><br><b>🏆 (True Ending: 3 နှစ်တာ ရှင်သန်ခြင်း အောင်မြင်စွာ ပြီးဆုံးပါပြီ!)</b>";
             document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
+                <button class="btn" onclick="resetGame()">🔄 ဂိမ်းကို အစကနေ ထပ်ဆော့မည်</button>
             `;
         }
 
-        // --- အပိုင်း (၃) နှင့် အဆုံးသတ်များ ---
-        function choice3A() {
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> နောက်ဖေးပြတင်းပေါက်ကနေ အိမ်င်္ကျီစုတ်တွေကို ကြိုးလိုချည်ပြီး ဖြည်းညင်းစွာ ဆင်းသက်နိုင်ခဲ့ပါတယ်။ လမ်းပေါ်ရောက်တော့ လုံခြုံတဲ့ နေရာတစ်ခုဆီ ရောက်သွားပါပြီ။<br><br><b>🏆 (Victory: အသက်ရှင်ကျန်ရစ်သူများရှိရာ စခန်းကို အောင်မြင်စွာ ရောက်ရှိသွားပါပြီ!)</b>";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 အစကနေ ထပ်ဆော့မည်</button>
-            `;
-        }
-
-        function choice3B() {
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ရေချိုးခန်းထဲမှာ ပုန်းနေပေမဲ့ အပြင်ဘက်က တိုက်ခန်းပါ ထွက်ပေါက်မရှိတော့လို့ ပိတ်မိနေဆဲပါပဲ။ နောက်ဆုံးမှာ အစားအသောက်ပြတ်ပြီး အညတရ အဆုံးသတ်သွားခဲ့ရပါတယ်။<br><br><b>(Game Over: ရေချိုးခန်းထဲမှာ ပိတ်မိပြီး ဆုံးပါးသွားပါပြီ)</b>";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
-            `;
-        }
-
-        function choice3C() {
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> စူပါမားကတ်ထဲ ဝင်လိုက်တာနဲ့ အစားအသောက်တွေ အလုံအလောက် တွေ့ရပေမဲ့ ဆူညံသံကြောင့် Zombie အုပ်စုကြီးက သင့်ကို ဝိုင်းပတ်မိသွားပါပြီ။<br><br><b>(Game Over: စူပါမားကတ်ထဲမှာ Zombie တွေနဲ့ တိုးပြီး ပိတ်မိသွားပါပြီ)</b>";
+        function year3_fail1() {
+            document.getElementById("timeline-title").innerText = "ဂိမ်းဆုံးခန်း (Game Over - Year 3)";
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> အချင်းချင်း မယုံကြည်ဘဲ တစ်ယောက်တည်း ထွက်ပြေးဖို့ ကြိုးစားရင်း Zombie တွေရဲ့ ဝိုင်းဝဲမှုကို ခံလိုက်ရပါတယ်။<br><br><b>(Game Over: တတိယနှစ်အရောက်မှာ အသက်ဆုံးရှုံးခဲ့ရပါပြီ)</b>";
             document.getElementById("button-container").innerHTML = `
                 <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
             `;
         }
 
-        function choice3D() {
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ကားစတီယာရင်အောက်မှာ ဝှက်ထားတဲ့ သော့ကို တွေ့တာနဲ့ ကားစက်နှိုးပြီး မြို့ပြင်အလုံခြုံဆုံး တောင်ပေါ်စခန်းဆီကို အောင်မြင်စွာ မောင်းနှင်ထွက်ပြေးနိုင်ခဲ့ပါပြီ!<br><br><b>🏆 (True Ending - Victory: လွတ်မြောက်နယ်မြေသို့ ဘေးကင်းစွာ ရောက်ရှိသွားပါပြီ!)</b>";
+        function year3_ending2() {
+            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: တတိယနှစ် (Year 3) - လွတ်မြောက်နယ်မြေသို့";
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> မြို့ပျက်ထဲမှာ ရိက္ခာရှာရင်း အခြားလုံခြုံတဲ့ နိုင်ငံတကာ ကယ်ဆယ်ရေးစခန်း (Safe Zone) တစ်ခုနဲ့ တိုက်ဆိုင်စွာ ဆုံတွေ့သွားပါတယ်။ (၃) နှစ်တာ ဆာလောင်မွတ်သိပ်မှုတွေ ပြီးဆုံးသွားပါပြီ။<br><br><b>🏆 (Victory: 3 နှစ်တာကာလကို ကျော်ဖြတ်ပြီး Safe Zone သို့ ရောက်ရှိသွားပါပြီ!)</b>";
             document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 အစကနေ ထပ်ဆော့မည်</button>
+                <button class="btn" onclick="resetGame()">🔄 ဂိမ်းကို အစကနေ ထပ်ဆော့မည်</button>
             `;
         }
 
-        function choice3E() {
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> စင်္ကြန်လမ်းမှာ ကျန်နေတဲ့ Zombie တွေကို အသာအယာ ရှောင်ကွင်းပြီး အောက်ထပ်ကနေ မြို့ပြင်လမ်းမဆီ အောင်မြင်စွာ ထွက်လာနိုင်ခဲ့ပါတယ်။<br><br><b>🏆 (Victory: ဉာဏ်ကောင်းမှုကြောင့် အသက်ရှင် ကျန်ရစ်ခဲ့ပါပြီ!)</b>";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 အစကနေ ထပ်ဆော့မည်</button>
-            `;
-        }
-
-        function choice3F() {
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ပစ္စည်းတွေ အများကြီး ထပ်သိမ်းနေတုန်း အချိန်ကြာသွားတာကြောင့် အခြား Zombie တွေ ထပ်ရောက်လာပြီး တိုက်ခန်းထဲမှာ တဝိုင်းလည်မိသွားပါပြီ။<br><br><b>(Game Over: အချိန်ဆွဲလွန်းလို့ အသက်ဆုံးရှုံးခဲ့ရပါပြီ)</b>";
+        function year3_fail2() {
+            document.getElementById("timeline-title").innerText = "ဂိမ်းဆုံးခန်း (Game Over - Year 3)";
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ဆောင်းတွင်းမှာ ရိက္ခာမလုံလောက်ဘဲ အပြင်ထွက်ခဲ့တာကြောင့် အအေးမိပြီး အားအင်ကုန်ခန်းကာ လဲကျသွားခဲ့ပါတယ်။<br><br><b>(Game Over: ရာသီဥတုနဲ့ အစာရေစာဒဏ်ကြောင့် ဆုံးပါးသွားပါပြီ)</b>";
             document.getElementById("button-container").innerHTML = `
                 <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
             `;
         }
 
+        function year3_ending3() {
+            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: တတိယနှစ် (Year 3) - ကယ်ဆယ်ရေး ရောက်ရှိလာခြင်း";
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ရေဒီယို အချက်ပြမှုကြောင့် စစ်တပ်ရဲ့ ကယ်ဆယ်ရေး သင်္ဘောတစ်စီး ကမ်းခြေကို ရောက်ရှိလာပြီး ကျန်ရစ်သူတွေကို လုံခြုံရာနေရာဆီ ခေါ်ဆောင်သွားခဲ့ပါပြီ။<br><br><b>🏆 (Victory: 3 နှစ်တိတိ ခက်ခဲမှုကို ဖြတ်ကျော်ပြီး အောင်မြင်စွာ လွတ်မြောက်သွားပါပြီ!)</b>";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="resetGame()">🔄 ဂိမ်းကို အစကနေ ထပ်ဆော့မည်</button>
+            `;
+        }
+
+        function year3_fail3() {
+            document.getElementById("timeline-title").innerText = "ဂိမ်းဆုံးခန်း (Game Over - Year 3)";
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> သတိမထားမိဘဲ စခန်းအတွင်းက ကာကွယ်ရေး မိုင်းတွင်းကို နင်းမိသွားလို့ ပေါက်ကွဲမှုနဲ့အတူ အဆုံးသတ်သွားခဲ့ရပါတယ်။<br><br><b>(Game Over: ကံမကောင်းစွာနဲ့ အသက်ဆုံးရှုံးခဲ့ရပါပြီ)</b>";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
+            `;
+        }
+
+        // ==========================================
         // ဂိမ်းအစသို့ ပြန်သွားရန်
+        // ==========================================
         function resetGame() {
-            document.getElementById("story-text").innerHTML = "သင်ဟာ တိတ်ဆိတ်ခြောက်ချားနေတဲ့ မြို့တစ်မြို့က တိုက်ခန်းကျဉ်းလေးထဲမှာ နိုးလာခဲ့ပါတယ်။ အပြင်ဘက်ကနေ လူသားတွေရဲ့ အော်ဟစ်သံတွေနဲ့ ခြေသံပြင်းပြင်းတွေကို ကြားနေရပါပြီ။ ကမ္ဘာကြီး ပျက်သုဉ်းသွားပါပြီ။ သင် ဘာလုပ်မလဲ?";
+            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: ပထမနှစ် (Year 1) - ကပ်ရောဂါစတင်ချိန်";
+            document.getElementById("story-text").innerHTML = "<b>ရက်စွဲ (Day 1):</b> ကမ္ဘာပေါ်မှာ လူသားတွေကို Zombie အဖြစ်ပြောင်းလဲစေတဲ့ ဗိုင်းရပ်စ်ဆိုးကြီး တိုက်ခိုက်ခံရပါပြီ။ သင်ဟာ တိုက်ခန်းကျဉ်းလေးထဲမှာ ပိတ်မိနေပြီး အပြင်ဘက်မှာ အော်ဟစ်သံတွေနဲ့ ပြည့်နှက်နေပါပြီ။ တံခါးကို Zombie တွေ လာထုနေချိန်မှာ သင် ဘာလုပ်မလဲ?";
             document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="choice1A()">🚪 အခန်းတံခါးကို ဖြည်းညင်းစွာ ဖွင့်ပြီး အခြေအနေကြည့်မည်</button>
-                <button class="btn" onclick="choice1B()">🎒 ကျောပိုးအိတ်ထဲက ပစ္စည်းများကို အရင်စစ်ဆေးမည်</button>
-                <button class="btn" onclick="choice1C()">🛏️ ကြောက်လန့်ပြီး ခုတင်အောက်မှာ ဆက်ပုန်းနေမည်</button>
+                <button class="btn" onclick="year1_fight()">⚔️ အနီးအနားက သံချောင်းကိုယူပြီး တံခါးဝမှာ စောင့်တိုက်မည်</button>
+                <button class="btn" onclick="year1_window()">🪟 နောက်ဖေးပြတင်းပေါက်ကနေ အောက်ကို ဆင်းပြေးမည်</button>
+                <button class="btn" onclick="year1_hide()">🛏️ ဗီရိုထဲမှာ အလောတကြီး ပုန်းအောင်းနေမည်</button>
             `;
         }
     </script>
