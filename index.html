@@ -3,42 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zombie Apocalypse: 3 Years Survival</title>
+    <title>Zombie Apocalypse: 3 Years Hardcore Survival</title>
     <style>
         body {
-            background-color: #070707;
-            color: #f1f1f1;
+            background-color: #050505;
+            color: #e1e1e1;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             padding: 20px;
         }
         .game-container {
-            max-width: 650px;
+            max-width: 700px;
             margin: 0 auto;
-            background: #151515;
-            padding: 25px;
+            background: #121212;
+            padding: 30px;
             border-radius: 12px;
-            box-shadow: 0 0 20px rgba(255, 0, 0, 0.5);
+            box-shadow: 0 0 25px rgba(255, 0, 0, 0.4);
             border: 1px solid #333;
         }
         h2 {
             color: #ff4757;
             margin-bottom: 5px;
         }
-        #timeline-title {
+        #stats-bar {
+            display: flex;
+            justify-content: space-around;
+            background: #1e1e1e;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
             color: #2ed573;
-            font-size: 16px;
+            border: 1px solid #444;
+        }
+        #timeline-title {
+            color: #ffa502;
+            font-size: 15px;
             font-weight: bold;
             margin-bottom: 15px;
             text-transform: uppercase;
         }
         #story-text {
-            font-size: 17px;
-            line-height: 1.6;
+            font-size: 16px;
+            line-height: 1.7;
             margin-bottom: 25px;
             text-align: left;
-            background: #1e1e1e;
-            padding: 18px;
+            background: #1a1a1a;
+            padding: 20px;
             border-radius: 8px;
             border-left: 4px solid #ff4757;
         }
@@ -46,12 +57,12 @@
             display: block;
             width: 100%;
             padding: 14px;
-            margin: 12px 0;
-            background-color: #2f3542;
+            margin: 10px 0;
+            background-color: #1e1e1e;
             color: white;
             border: 1px solid #ff4757;
             border-radius: 6px;
-            font-size: 16px;
+            font-size: 15px;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: left;
@@ -66,140 +77,176 @@
 <body>
 
     <div class="game-container">
-        <h2>🧟‍♂️ Zombie Apocalypse</h2>
-        <div id="timeline-title">ကာလအပိုင်းအခြား: ပထမနှစ် (Year 1) - ကပ်ရောဂါစတင်ချိန်</div>
+        <h2>🧟‍♂️ 3 Years Hardcore Survival</h2>
+        <div id="stats-bar">
+            <span>📅 ကာလ: <b id="stat-day">Day 1 (Year 1)</b></span>
+            <span>🥫 ရိက္ခာ: <b id="stat-food">၁ ရက်စာ (နည်းပါး)</b></span>
+            <span>❤️ ကျန်းမာရေး: <b id="stat-health">ကောင်းမွန်</b></span>
+        </div>
+        <div id="timeline-title">ပထမနှစ် - ရက်စွဲ: နေ့ ၁ (Day 1)</div>
         <div id="story-text">
-            <b>ရက်စွဲ (Day 1):</b> ကမ္ဘာပေါ်မှာ လူသားတွေကို Zombie အဖြစ်ပြောင်းလဲစေတဲ့ ဗိုင်းရပ်စ်ဆိုးကြီး တိုက်ခိုက်ခံရပါပြီ။ သင်ဟာ တိုက်ခန်းကျဉ်းလေးထဲမှာ ပိတ်မိနေပြီး အပြင်ဘက်မှာ အော်ဟစ်သံတွေနဲ့ ပြည့်နှက်နေပါပြီ။ တံခါးကို Zombie တွေ လာထုနေချိန်မှာ သင် ဘာလုပ်မလဲ?
+            <b>ရက်စွဲ - Day 1:</b> ကမ္ဘာကြီး ရုတ်တရက် ပျက်သုဉ်းသွားပါပြီ။ လူတွေဟာ အသားစိမ်းစား Zombie တွေအဖြစ် ပြောင်းလဲကုန်ကြပါပြီ။ သင်ဟာ တိုက်ခန်းကျဉ်းလေးထဲမှာ ပိတ်မိနေပါတယ်။ အပြင်ဘက်က Zombie တွေ တံခါးလာထုနေတဲ့အချိန်မှာ သင့်အိတ်ထဲမှာ ရေတစ်ဘူးနဲ့ ကွတ်ကီးတစ်ထုတ်ပဲ ကျန်ပါတော့တယ်။ 
+            <br><br>ဒီနေ့အတွက် အသက်ဆက်ရှင်ဖို့ ရွေးချယ်စရာ (၅) ခု ရှိပါတယ်။ တစ်ခုကို ရွေးပါ -
         </div>
         
         <div id="button-container">
-            <button class="btn" onclick="year1_fight()">⚔️ အနီးအနားက သံချောင်းကိုယူပြီး တံခါးဝမှာ စောင့်တိုက်မည်</button>
-            <button class="btn" onclick="year1_window()">🪟 နောက်ဖေးပြတင်းပေါက်ကနေ အောက်ကို ဆင်းပြေးမည်</button>
-            <button class="btn" onclick="year1_hide()">🛏️ ဗီရိုထဲမှာ အလောတကြီး ပုန်းအောင်းနေမည်</button>
+            <button class="btn" onclick="executeStage('day1_fight')">1️⃣ သံချောင်းကိုင်ပြီး တံခါးဝမှာ Zombie ကို စောင့်တိုက်မည်</button>
+            <button class="btn" onclick="executeStage('day1_window')">2️⃣ နောက်ဖေးပြတင်းပေါက်ကနေ အောက်ကို ခြေချဆင်းမည်</button>
+            <button class="btn" onclick="executeStage('day1_hide')">3️⃣ ဗီရိုထဲမှာ အသံမထွက်ဘဲ တိတ်တဆိတ် ပုန်းအောင်းနေမည်</button>
+            <button class="btn" onclick="executeStage('day1_roof')">4️⃣ အမိုးပေါ်တက်တဲ့ လှေကားထစ်ဆီ အမြန်ပြေးမည်</button>
+            <button class="btn" onclick="executeStage('day1_market')">5️⃣ အချိန်မဆွဲဘဲ အောက်ထပ် ကုန်စုံဆိုင်ဆီ ချက်ချင်းဆင်းမည်</button>
         </div>
     </div>
 
     <script>
-        // ==========================================
-        // ပထမနှစ် (Year 1) ဇာတ်လမ်းခွဲများ
-        // ==========================================
-        function year1_fight() {
-            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: ပထမနှစ် (Year 1) - မြို့တွင်းမှ ထွက်မြောက်ခြင်း";
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> တံခါးဝမှာ ဝင်လာတဲ့ Zombie ကို သံချောင်းနဲ့ ရှင်းထုတ်နိုင်ခဲ့ပါတယ်။ ဒါပေမဲ့ မြို့ထဲမှာ ဆက်နေဖို့ မဖြစ်နိုင်တော့တာကြောင့် ခရီးစတင်ထွက်ဖို့ ဆုံးဖြတ်လိုက်ပါတယ်။<br><br>ဘယ်ကို ဦးတည်သွားမလဲ?";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="year2_phaseA()">🏥 စွန့်ပစ်ထားတဲ့ ဆေးရုံဆီသို့ ရိက္ခာရှာရန် သွားမည်</button>
-                <button class="btn" onclick="year2_phaseB()">🌲 မြို့ပြင်တောစပ်လမ်းအတိုင်း ခြေလျင်ထွက်မည်</button>
-            `;
+        let gameState = {
+            day: "Day 1 (Year 1)",
+            food: "၁ ရက်စာ",
+            health: "ကောင်းမွန်"
+        };
+
+        function updateStats(day, food, health) {
+            gameState.day = day;
+            gameState.food = food;
+            gameState.health = health;
+            document.getElementById("stat-day").innerText = gameState.day;
+            document.getElementById("stat-food").innerText = gameState.food;
+            document.getElementById("stat-health").innerText = gameState.health;
         }
 
-        function year1_window() {
-            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: ပထမနှစ် (Year 1) - ဒဏ်ရာနှင့် ထွက်ပြေးခြင်း";
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ပြတင်းပေါက်ကနေ ဆင်းရာမှာ အမြင့်ကခုန်ချမိလို့ ခြေထောက်အနည်းငယ် ထိခိုက်သွားပါတယ်။ ဒါပေမဲ့ ကံကောင်းထောက်မစွာနဲ့ လမ်းပေါ်က စွန့်ပစ်ကားတစ်စီးဆီ ရောက်သွားပါတယ်။<br><br>ဘာဆက်လုပ်မလဲ?";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="year2_phaseB()">🚗 ကားစက်နှိုးပြီး မြို့ပြင်တောစပ်ဆီ မောင်းမည်</button>
-                <button class="btn" onclick="year2_phaseC()">🗺️ မြေပုံကိုကြည့်ပြီး စစ်တပ်စခန်းဟောင်းဆီ သွားမည်</button>
-            `;
+        function executeStage(choice) {
+            let title = document.getElementById("timeline-title");
+            let text = document.getElementById("story-text");
+            let buttons = document.getElementById("button-container");
+
+            // --- DAY 1 CHOICES ---
+            if (choice === 'day1_fight') {
+                updateStats("Day 2 (Year 1)", "ရိက္ခာကုန်", "ဒဏ်ရာအနည်းငယ်ရှိ");
+                title.innerText = "ပထမနှစ် - ရက်စွဲ: နေ့ ၂ (Day 2)";
+                text.innerHTML = "<b>ရက်စွဲ - Day 2:</b> တံခါးဝက Zombie ကို သံချောင်းနဲ့ ရိုက်သတ်နိုင်ခဲ့ပေမဲ့ အစားအသောက် လုံးဝကုန်သွားပါပြီ။ အပြင်ထွက်ပြီး ကုန်စုံဆိုင် (Supermarket) ကို ဝင်မလား၊ အခန်းထဲမှာပဲ ဆက်နေမလား စဉ်းစားရပါမယ်။<br><br>ရွေးချယ်စရာ (၅) ခု -";
+                buttons.innerHTML = `
+                    <button class="btn" onclick="executeStage('day2_market_yes')">1️⃣ ကုန်စုံဆိုင်ထဲ သတ္တိရှိရှိ ဝင်ပြီး အစားအသောက်ရှာမည်</button>
+                    <button class="btn" onclick="executeStage('day2_market_no')">2️⃣ ဆိုင်မဝင်ဘဲ အခန်းထဲမှာပဲ ဆက်ပုန်းနေမည် (အစာငတ်သေရန်)</button>
+                    <button class="btn" onclick="executeStage('day2_car_search')">3️⃣ လမ်းပေါ်က ရပ်ထားတဲ့ ကားဆီသွားပြီး ကံစမ်းမည် (50% ကားသော့ရှိနိုင်)</button>
+                    <button class="btn" onclick="executeStage('day2_neighbor')">4️⃣ ဘေးခန်းက တံခါးကို ခေါက်ပြီး အဖော်ရှာမည်</button>
+                    <button class="btn" onclick="executeStage('day2_giveup')">5️⃣ အခြေအနေလက်လျှော့ပြီး အိပ်ယာပေါ် လဲလျောင်းမည် (Game Over)</button>
+                `;
+            }
+            else if (choice === 'day1_window') {
+                updateStats("Day 2 (Year 1)", "ရိက္ခာမရှိ", "ခြေထောက်ကျိုး");
+                title.innerText = "ဂိမ်းဆုံးခန်း (Game Over)";
+                text.innerHTML = "<b>အကျိုးဆက်:</b> ပြတင်းပေါက်ကနေ အسرအမြန် ခုန်ချလိုက်တာကြောင့် ခြေထောက် အပြင်းအထန် ထိခိုက်နာကျင်သွားပြီး လမ်းပေါ်မှာ မလှုပ်နိုင်ဘဲ Zombie တွေရဲ့ ဝိုင်းဝဲမှုကို ခံလိုက်ရပါတယ်။<br><br><b>(Game Over: ခြေထောက်ကျိုးပြီး အသက်ဆုံးရှုံးခြင်း)</b>";
+                buttons.innerHTML = `<button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>`;
+            }
+            else if (choice === 'day1_hide') {
+                updateStats("Day 5 (Year 1)", "လုံးဝမရှိ", "အစာငတ်သေဆုံး");
+                title.innerText = "ဂိမ်းဆုံးခန်း (Game Over)";
+                text.innerHTML = "<b>အကျိုးဆက်:</b> ဗီရိုထဲမှာ အပြင်မထွက်ဘဲ ဆက်ပုန်းနေတာကြောင့် အိမ်မှာရှိတဲ့ ရိက္ခာပြတ်လပ်ပြီး အစာငတ်၊ ရေငတ်နဲ့ အခန်းထဲမှာတင် ဆုံးပါးသွားခဲ့ရပါတယ်။ (အစားအသောက် မရှိလို့ သေတာပါ)<br><br><b>(Game Over)</b>";
+                buttons.innerHTML = `<button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>`;
+            }
+            else if (choice === 'day1_roof') {
+                updateStats("Day 2 (Year 1)", "မရှိ", "ပိတ်မိ");
+                title.innerText = "ဂိမ်းဆုံးခန်း (Game Over)";
+                text.innerHTML = "<b>အကျိုးဆက်:</b> အမိုးပေါ်တက်တဲ့ တံခါးက သော့ခတ်ထားပါတယ်။ နောက်ကနေ လိုက်လာတဲ့ Zombie တွေက အမိုးပေါ်မှာ ဝိုင်းပတ်မိသွားပါပြီ။<br><br><b>(Game Over: ထွက်ပေါက်ပိတ်မိပြီး ဆုံးပါးခြင်း)</b>";
+                buttons.innerHTML = `<button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>`;
+            }
+            else if (choice === 'day1_market') {
+                updateStats("Day 2 (Year 1)", "အလုံအလောက်", "ကောင်းမွန်");
+                title.innerText = "ပထမနှစ် - ရက်စွဲ: နေ့ ၁၀ (Year 1)";
+                text.innerHTML = "<b>ရက်စွဲ - Day 10:</b> ကုန်စုံဆိုင်ထဲ အစောကြီး ဝင်ခဲ့လို့ အစားအသောက်တွေ အလုံအလောက် ရခဲ့ပါတယ်။ ယခု အိမ်ပြန်မလား၊ တခြားနေရာ ပြောင်းမလား?<br><br>ရွေးချယ်စရာ (၅) ခု -";
+                buttons.innerHTML = `
+                    <button class="btn" onclick="executeStage('year2_progress')">1️⃣ စားစရာတွေယူပြီး မြို့ပြင်တောစပ်ဆီ ခရီးဆက်မည် (Year 2 သို့)</button>
+                    <button class="btn" onclick="executeStage('day2_market_no')">2️⃣ ဆိုင်ထဲမှာပဲ ဆက်ပုန်းနေမည် (Zombie ဝိုင်းခံရ)</button>
+                    <button class="btn" onclick="executeStage('day1_hide')">3️⃣ အခန်းဟောင်းဆီ ညတွင်းချင်း ပြန်သွားမည်</button>
+                    <button class="btn" onclick="executeStage('day2_car_search')">4️⃣ ရပ်ထားတဲ့ ကားတစ်စီးကို ကံစမ်းပြီး စက်နှိုးမည်</button>
+                    <button class="btn" onclick="executeStage('day1_window')">5️⃣ အဆောက်အအုံပေါ် ပြန်တက်မည်</button>
+                `;
+            }
+
+            // --- DAY 2 / YEAR 1 & 2 BRANCHES ---
+            else if (choice === 'day2_market_yes') {
+                updateStats("Day 30 (Year 1)", "အသင့်အတင့်", "ကောင်းမွန်");
+                title.innerText = "ပထမနှစ် - ရက်စွဲ: နေ့ ၅၀ (Year 1)";
+                text.innerHTML = "<b>ရက်စွဲ - Day 50:</b> ကုန်စုံဆိုင်ထဲကနေ အစားအသောက်တွေ ယူနိုင်ခဲ့လို့ အသက်ဆက်ရှင်လာနိုင်ခဲ့ပါပြီ။ ကပ်ဘေးကာလ ပထမနှစ်ကို အောင်မြင်စွာ ဖြတ်သန်းပြီး ဒုတိယနှစ် (Year 2) သို့ ကူးပြောင်းပါတော့မယ်။<br><br>ရွေးချယ်စရာ (၅) ခု -";
+                buttons.innerHTML = `
+                    <button class="btn" onclick="executeStage('year2_progress')">1️⃣ ဒုတိယနှစ်အတွက် တောစပ်မှာ စခန်းငယ် တည်ဆောက်မည်</button>
+                    <button class="btn" onclick="executeStage('day2_car_search')">2️⃣ ဒုတိယနှစ်မှာ ကားတစ်စီးရှာပြီး မြို့ထဲထွက်မည်</button>
+                    <button class="btn" onclick="executeStage('day1_hide')">3️⃣ စားစရာကုန်လို့ အခန်းထဲမှာ ဆက်လှောင်ပုန်းမည် (Game Over)</button>
+                    <button class="btn" onclick="executeStage('year3_victory')">4️⃣ နိုင်ငံတကာ ကယ်ဆယ်ရေးစခန်းဆီ တိုက်ရိုက်သွားမည်</button>
+                    <button class="btn" onclick="executeStage('day1_window')">5️⃣ အခြားအသက်ရှင်သူတွေဆီ သွားပူးပေါင်းရန် ကြိုးစားမည်</button>
+                `;
+            }
+            else if (choice === 'day2_market_no') {
+                updateStats("Day 60 (Year 1)", "လုံးဝမရှိ", "အစာငတ်သေဆုံး");
+                title.innerText = "ဂိမ်းဆုံးခန်း (Game Over)";
+                text.innerHTML = "<b>အကျိုးဆက်:</b> ကုန်စုံဆိုင်ထဲ မဝင်ခဲ့ဘဲ အခန်းထဲမှာပဲ ဆက်ပုန်းနေတာကြောင့် အစာရေစာ လုံးဝပြတ်လပ်ပြီး ရက်ပေါင်းများစွာ ဆာလောင်မွတ်သိပ်ကာ အညတရ သေဆုံးသွားခဲ့ရပါပြီ။ (အစားအသောက်မရှိလို့ သေတာပါ)<br><br><b>(Game Over)</b>";
+                buttons.innerHTML = `<button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>`;
+            }
+            else if (choice === 'day2_car_search') {
+                // 50/50 Chance for Car Key
+                let luck = Math.random();
+                if (luck > 0.5) {
+                    updateStats("Day 100 (Year 1)", "ကောင်းမွန်", "ကောင်းမွန်");
+                    title.innerText = "ပထမနှစ် - ကားသော့ ကံကောင်းခြင်း (50/50 Success)";
+                    text.innerHTML = "<b>အကျိုးဆက်:</b> ကားစတီယာရင်အောက်မှာ ဝှက်ထားတဲ့ <b>ကားသော့ကို ကံကောင်းထောက်မစွာ ရှာတွေ့ခဲ့ပါတယ်! (50% Success)</b> ကားစက်နှိုးပြီး မြို့ပြင်လွတ်မြောက်နယ်မြေဆီ အောင်မြင်စွာ မောင်းနှင်ထွက်ပြေးနိုင်ခဲ့ပါတယ်။<br><br>ရွေးချယ်စရာ (၅) ခု -";
+                    buttons.innerHTML = `
+                        <button class="btn" onclick="executeStage('year2_progress')">1️⃣ ဒုတိယနှစ် (Year 2) သို့ ဆက်လက် ကူးပြောင်းမည်</button>
+                        <button class="btn" onclick="executeStage('year3_victory')">2️⃣ တတိယနှစ် (Year 3) Safe Zone သို့ တိုက်ရိုက်သွားမည်</button>
+                        <button class="btn" onclick="executeStage('day1_hide')">3️⃣ ကားကို လမ်းမှာပစ်ပြီး ခြေလျင်လျှောက်မည်</button>
+                        <button class="btn" onclick="executeStage('day2_market_no')">4️⃣ စားစရာရှာဖို့ ကုန်စုံဆိုင်ကို ကားနဲ့ ဝင်တိုက်မည်</button>
+                        <button class="btn" onclick="executeStage('day1_window')">5️⃣ ကားကိုရပ်ပြီး အိပ်စက်အနားယူမည်</button>
+                    `;
+                } else {
+                    updateStats("Day 15 (Year 1)", "မရှိ", "Zombie မိ");
+                    title.innerText = "ဂိမ်းဆုံးခန်း (ကားသော့ မရှိခြင်း - 50% Fail)";
+                    text.innerHTML = "<b>အကျိုးဆက်:</b> ကားတံခါးကို ဆွဲဖွင့်ကြည့်ပေမဲ့ <b>ကားသော့ မပါလာပါဘူး (သို့မဟုတ် စက်မနှိုးနိုင်ပါ)။</b> အချိန်ဆွဲမိတာကြောင့် ဆူညံသံကြားပြီး ရောက်လာတဲ့ Zombie တွေရဲ့ ဝိုင်းဝဲမှုကို ခံလိုက်ရပါတယ်။<br><br><b>(Game Over: ကားသော့ မရှိလို့ ထွက်ပြေးမရခြင်း)</b>";
+                    buttons.innerHTML = `<button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>`;
+                }
+            }
+            else if (choice === 'day2_neighbor') {
+                updateStats("Day 12 (Year 1)", "အနည်းငယ်", "Zombie အဖြစ်ပြောင်းလဲ");
+                title.innerText = "ဂိမ်းဆုံးခန်း (Game Over)";
+                text.innerHTML = "<b>အကျိုးဆက်:</b> ဘေးခန်းတံခါးကို ခေါက်လိုက်ချိန်မှာ အထဲမှာရှိတဲ့သူက Zombie ဖြစ်နေပြီးသားဖြစ်နေလို့ သင့်ကို ရုတ်တရက် ခုန်ကိုက်လိုက်ပါတယ်။ ဗိုင်းရပ်စ် ကူးစက်ခံလိုက်ရပါပြီ။<br><br><b>(Game Over)</b>";
+                buttons.innerHTML = `<button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>`;
+            }
+            else if (choice === 'day2_giveup') {
+                updateStats("Day 1 (Year 1)", "မရှိ", "ကိုယ်တိုင်အဆုံးစီရင်");
+                title.innerText = "ဂိမ်းဆုံးခန်း (Game Over)";
+                text.innerHTML = "<b>အကျိုးဆက်:</b> အခြေအနေကို မရင်ဆိုင်နိုင်ဘဲ လက်လျှော့အရှုံးပေးလိုက်တာကြောင့် ဇာတ်လမ်း အစောပိုင်းမှာတင် အဆုံးသတ်သွားခဲ့ရပါတယ်။<br><br><b>(Game Over)</b>";
+                buttons.innerHTML = `<button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>`;
+            }
+
+            // --- YEAR 2 & 3 PROGRESS ---
+            else if (choice === 'year2_progress') {
+                updateStats("Day 500 (Year 2)", "အလွန်လုံခြုံ", "ကောင်းမွန်");
+                title.innerText = "ဒုတိယနှစ် (Year 2) ပြီးဆုံးခြင်း";
+                text.innerHTML = "<b>ရက်စွဲ - Year 2:</b> ဒုတိယနှစ် တာရှည်ကာလအတွင်း ကုန်စုံဆိုင်တွေမှာ ရိက္ခာရှာခြင်း၊ အန္တရာယ်တွေကို ကျော်ဖြတ်ခြင်းတို့နဲ့ အသက်ရှင်ရပ်တည်နိုင်ခဲ့ပါပြီ။ ယခု တတိယနှစ် (Year 3 - Day 1095) သို့ ရောက်ရှိလာပါပြီ။<br><br>ရွေးချယ်စရာ (၅) ခု -";
+                buttons.innerHTML = `
+                    <button class="btn" onclick="executeStage('year3_victory')">1️⃣ နိုင်ငံတကာ ကယ်ဆယ်ရေးစခန်း (Safe Zone) သို့ ဝင်ရောက်မည်</button>
+                    <button class="btn" onclick="executeStage('day2_market_no')">2️⃣ တတိယနှစ်မှာ အစားအသောက်ပြတ်ပြီး ဆက်မသွားနိုင်တော့ပါ (Game Over)</button>
+                    <button class="btn" onclick="executeStage('day1_hide')">3️⃣ တောစပ်မှာ ဆက်ပုန်းနေမည်</button>
+                    <button class="btn" onclick="executeStage('day2_car_search')">4️⃣ မြို့ပျက်ထဲ ကားနဲ့ ထပ်မံကံစမ်းမည်</button>
+                    <button class="btn" onclick="executeStage('day1_window')">5️⃣ အခြား Survivor တွေနဲ့ ခိုက်ရန်ဖြစ်ပွားမည်</button>
+                `;
+            }
+            else if (choice === 'year3_victory') {
+                updateStats("Day 1095 (Year 3)", "အပြည့်အစုံ", "အကောင်းဆုံး");
+                title.innerText = "အောင်မြင်မှု (True Ending - 3 Years Completed)";
+                text.innerHTML = "<b>ရက်စွဲ - Year 3 (1095 Days):</b> (၃) နှစ်တိတိ ကြာမြင့်ခဲ့ပါပြီ။ နေ့စဉ်ရက်ဆက် ရွေးချယ်မှုများ၊ ကုန်စုံဆိုင်များသို့ သတ္တိရှိရှိ ဝင်ရောက်ခြင်း၊ ကားသော့ ကံစမ်းခြင်းစတဲ့ အခက်အခဲအားလုံးကို ကျော်ဖြတ်ပြီး ယခုအခါ <b>Safe Zone</b> သို့ အောင်မြင်စွာ ရောက်ရှိသွားပါပြီ။ <b>သင်ဟာ Zombie ကမ္ဘာဘေးကြီးမှာ ၃ နှစ်တိတိ အသက်ရှင်ရပ်တည်နိုင်ခဲ့တဲ့ စစ်မှန်တဲ့ Survivor တစ်ယောက် ဖြစ်ပါပြီ! 🏆</b><br><br><b>🏆 (Victory - Safe Zone Reached)</b>";
+                buttons.innerHTML = `<button class="btn" onclick="resetGame()">🔄 ဂိမ်းကို အစကနေ ထပ်ဆော့မည်</button>`;
+            }
         }
 
-        function year1_hide() {
-            document.getElementById("timeline-title").innerText = "ဂိမ်းဆုံးခန်း (Game Over - Year 1)";
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ဗီရိုထဲမှာ အလွန်အမင်း ပုန်းနေခဲ့ပေမဲ့ အစာရေစာပြတ်လပ်လာပြီး အားအင်ကုန်ခန်းကာ Zombie တွေရဲ့ ဝိုင်းဝဲမှုကို ခံလိုက်ရပါတယ်။<br><br><b>(Game Over: ပထမနှစ်အတွင်းမှာတင် အသက်ဆုံးရှုံးခဲ့ရပါပြီ)</b>";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
-            `;
-        }
-
-        // ==========================================
-        // ဒုတိယနှစ် (Year 2) ဇာတ်လမ်းခွဲများ
-        // ==========================================
-        function year2_phaseA() {
-            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: ဒုတိယနှစ် (Year 2) - ဆေးရုံဟောင်းနှင့် အန္တရာယ်";
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ကပ်ဘေးဒုတိယနှစ်ရောက်လာပါပြီ။ ဆေးရုံဟောင်းထဲမှာ ဆေးဝါးနဲ့ အစားအသောက်ရှာရင်း အသက်ရှင်ကျန်ရစ်သူအချို့နဲ့ ဆုံတွေ့ခဲ့ပါတယ်။ ဒါပေမဲ့ အဲ့ဒီနေရာကို Zombie အုပ်စုကြီး ဝင်ရောက်လာပါပြီ။<br><br>ဘယ်လို ဆက်လုပ်မလဲ?";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="year3_ending1()">🤝 အသက်ရှင်ကျန်ရစ်သူတွေနဲ့ လက်တွဲပြီး ခုခံတိုက်ခိုက်မည်</button>
-                <button class="btn" onclick="year3_fail1()">🏃‍♂️ တစ်ယောက်တည်း ထွက်ပြေးဖို့ ကြိုးစားစဉ် မိသွားသည် (Game Over)</button>
-            `;
-        }
-
-        function year2_phaseB() {
-            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: ဒုတိယနှစ် (Year 2) - တောစပ်စခန်း တည်ဆောက်ခြင်း";
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ကပ်ဘေးဒုတိယနှစ်မှာ မြို့ပြင်တောစပ်မှာ တဲငယ်လေးထိုးပြီး အစားအသောက်စိုက်ပျိုးကာ အေးချမ်းစွာ ရှင်သန်နေထိုင်နိုင်ခဲ့ပါတယ်။ ဒါပေမဲ့ ဆောင်းတွင်းရောက်လာပြီး ရိက္ခာတွေ ရှားပါးလာပါပြီ။<br><br>ဘာလုပ်မလဲ?";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="year3_ending2()">🔍 အနီးအနားက မြို့ပျက်ထဲကို ရိက္ခာထွက်ရှာမည်</button>
-                <button class="btn" onclick="year3_fail2()">❄️ အလွန်အမင်း အေးခဲပြီး အားအင်ကုန်ခန်းသွားသည် (Game Over)</button>
-            `;
-        }
-
-        function year2_phaseC() {
-            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: ဒုတိယနှစ် (Year 2) - စစ်တပ်စခန်းဟောင်း";
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> စစ်တပ်စခန်းဟောင်းကို ရောက်တဲ့အခါ လက်နက်ခဲယမ်းအချို့နဲ့ ရေဒီယိုစက်တစ်လုံးကို တွေ့ရှိခဲ့ပါတယ်။ ရေဒီယိုကနေ ကယ်ဆယ်ရေးအသံ လွှင့်နေတာကို ကြားလိုက်ရပါပြီ။<br><br>ဘယ်လို ဆက်လုပ်မလဲ?";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="year3_ending3()">📻 ရေဒီယိုက တဆင့် အချက်ပြပေးပို့ပြီး စောင့်မည်</button>
-                <button class="btn" onclick="year3_fail3()">⚡ စခန်းထဲက မပေါက်ကွဲသေးတဲ့ မိုင်းတွင်းကို နင်းမိသွားသည် (Game Over)</button>
-            `;
-        }
-
-        // ==========================================
-        // တတိယနှစ် (Year 3) - နောက်ဆုံး အဆုံးသတ်များ (Victories / Game Overs)
-        // ==========================================
-        function year3_ending1() {
-            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: တတိယနှစ် (Year 3) - အသက်ရှင်လွတ်မြောက်ခြင်း";
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> (၃) နှစ်တိုင်တိုင် ကြံ့ကြံ့ခံ တိုက်ခိုက်ပြီးနောက် အဖွဲ့လိုက်ပူးပေါင်းကာ ကယ်ဆယ်ရေး ရဟတ်ယာဉ်ဆီ အောင်မြင်စွာ ရောက်ရှိသွားနိုင်ခဲ့ပါပြီ။ ကပ်ဘေးကြီးကို အောင်မြင်စွာ ကျော်ဖြတ်နိုင်ခဲ့ပါပြီ! 🎉<br><br><b>🏆 (True Ending: 3 နှစ်တာ ရှင်သန်ခြင်း အောင်မြင်စွာ ပြီးဆုံးပါပြီ!)</b>";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 ဂိမ်းကို အစကနေ ထပ်ဆော့မည်</button>
-            `;
-        }
-
-        function year3_fail1() {
-            document.getElementById("timeline-title").innerText = "ဂိမ်းဆုံးခန်း (Game Over - Year 3)";
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> အချင်းချင်း မယုံကြည်ဘဲ တစ်ယောက်တည်း ထွက်ပြေးဖို့ ကြိုးစားရင်း Zombie တွေရဲ့ ဝိုင်းဝဲမှုကို ခံလိုက်ရပါတယ်။<br><br><b>(Game Over: တတိယနှစ်အရောက်မှာ အသက်ဆုံးရှုံးခဲ့ရပါပြီ)</b>";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
-            `;
-        }
-
-        function year3_ending2() {
-            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: တတိယနှစ် (Year 3) - လွတ်မြောက်နယ်မြေသို့";
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> မြို့ပျက်ထဲမှာ ရိက္ခာရှာရင်း အခြားလုံခြုံတဲ့ နိုင်ငံတကာ ကယ်ဆယ်ရေးစခန်း (Safe Zone) တစ်ခုနဲ့ တိုက်ဆိုင်စွာ ဆုံတွေ့သွားပါတယ်။ (၃) နှစ်တာ ဆာလောင်မွတ်သိပ်မှုတွေ ပြီးဆုံးသွားပါပြီ။<br><br><b>🏆 (Victory: 3 နှစ်တာကာလကို ကျော်ဖြတ်ပြီး Safe Zone သို့ ရောက်ရှိသွားပါပြီ!)</b>";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 ဂိမ်းကို အစကနေ ထပ်ဆော့မည်</button>
-            `;
-        }
-
-        function year3_fail2() {
-            document.getElementById("timeline-title").innerText = "ဂိမ်းဆုံးခန်း (Game Over - Year 3)";
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ဆောင်းတွင်းမှာ ရိက္ခာမလုံလောက်ဘဲ အပြင်ထွက်ခဲ့တာကြောင့် အအေးမိပြီး အားအင်ကုန်ခန်းကာ လဲကျသွားခဲ့ပါတယ်။<br><br><b>(Game Over: ရာသီဥတုနဲ့ အစာရေစာဒဏ်ကြောင့် ဆုံးပါးသွားပါပြီ)</b>";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
-            `;
-        }
-
-        function year3_ending3() {
-            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: တတိယနှစ် (Year 3) - ကယ်ဆယ်ရေး ရောက်ရှိလာခြင်း";
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ရေဒီယို အချက်ပြမှုကြောင့် စစ်တပ်ရဲ့ ကယ်ဆယ်ရေး သင်္ဘောတစ်စီး ကမ်းခြေကို ရောက်ရှိလာပြီး ကျန်ရစ်သူတွေကို လုံခြုံရာနေရာဆီ ခေါ်ဆောင်သွားခဲ့ပါပြီ။<br><br><b>🏆 (Victory: 3 နှစ်တိတိ ခက်ခဲမှုကို ဖြတ်ကျော်ပြီး အောင်မြင်စွာ လွတ်မြောက်သွားပါပြီ!)</b>";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 ဂိမ်းကို အစကနေ ထပ်ဆော့မည်</button>
-            `;
-        }
-
-        function year3_fail3() {
-            document.getElementById("timeline-title").innerText = "ဂိမ်းဆုံးခန်း (Game Over - Year 3)";
-            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> သတိမထားမိဘဲ စခန်းအတွင်းက ကာကွယ်ရေး မိုင်းတွင်းကို နင်းမိသွားလို့ ပေါက်ကွဲမှုနဲ့အတူ အဆုံးသတ်သွားခဲ့ရပါတယ်။<br><br><b>(Game Over: ကံမကောင်းစွာနဲ့ အသက်ဆုံးရှုံးခဲ့ရပါပြီ)</b>";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
-            `;
-        }
-
-        // ==========================================
-        // ဂိမ်းအစသို့ ပြန်သွားရန်
-        // ==========================================
         function resetGame() {
-            document.getElementById("timeline-title").innerText = "ကာလအပိုင်းအခြား: ပထမနှစ် (Year 1) - ကပ်ရောဂါစတင်ချိန်";
-            document.getElementById("story-text").innerHTML = "<b>ရက်စွဲ (Day 1):</b> ကမ္ဘာပေါ်မှာ လူသားတွေကို Zombie အဖြစ်ပြောင်းလဲစေတဲ့ ဗိုင်းရပ်စ်ဆိုးကြီး တိုက်ခိုက်ခံရပါပြီ။ သင်ဟာ တိုက်ခန်းကျဉ်းလေးထဲမှာ ပိတ်မိနေပြီး အပြင်ဘက်မှာ အော်ဟစ်သံတွေနဲ့ ပြည့်နှက်နေပါပြီ။ တံခါးကို Zombie တွေ လာထုနေချိန်မှာ သင် ဘာလုပ်မလဲ?";
+            updateStats("Day 1 (Year 1)", "၁ ရက်စာ", "ကောင်းမွန်");
+            document.getElementById("timeline-title").innerText = "ပထမနှစ် - ရက်စွဲ: နေ့ ၁ (Day 1)";
+            document.getElementById("story-text").innerHTML = "<b>ရက်စွဲ - Day 1:</b> ကမ္ဘာကြီး ရုတ်တရက် ပျက်သုဉ်းသွားပါပြီ။ လူတွေဟာ အသားစိမ်းစား Zombie တွေအဖြစ် ပြောင်းလဲကုန်ကြပါပြီ။ သင်ဟာ တိတ်ဆိတ်ခြောက်ချားနေတဲ့ တိုက်ခန်းကျဉ်းလေးထဲမှာ ပိတ်မိနေပါတယ်။ အပြင်ဘက်က Zombie တွေ တံခါးလာထုနေတဲ့အချိန်မှာ သင့်အိတ်ထဲမှာ ရေတစ်ဘူးနဲ့ ကွတ်ကီးတစ်ထုတ်ပဲ ကျန်ပါတော့တယ်။<br><br>ဒီနေ့အတွက် အသက်ဆက်ရှင်ဖို့ ရွေးချယ်စရာ (၅) ခု ရှိပါတယ်။ တစ်ခုကို ရွေးပါ -";
             document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="year1_fight()">⚔️ အနီးအနားက သံချောင်းကိုယူပြီး တံခါးဝမှာ စောင့်တိုက်မည်</button>
-                <button class="btn" onclick="year1_window()">🪟 နောက်ဖေးပြတင်းပေါက်ကနေ အောက်ကို ဆင်းပြေးမည်</button>
-                <button class="btn" onclick="year1_hide()">🛏️ ဗီရိုထဲမှာ အလောတကြီး ပုန်းအောင်းနေမည်</button>
+                <button class="btn" onclick="executeStage('day1_fight')">1️⃣ သံချောင်းကိုင်ပြီး တံခါးဝမှာ Zombie ကို စောင့်တိုက်မည်</button>
+                <button class="btn" onclick="executeStage('day1_window')">2️⃣ နောက်ဖေးပြတင်းပေါက်ကနေ အောက်ကို ခြေချဆင်းမည်</button>
+                <button class="btn" onclick="executeStage('day1_hide')">3️⃣ ဗီရိုထဲမှာ အသံမထွက်ဘဲ တိတ်တဆိတ် ပုန်းအောင်းနေမည်</button>
+                <button class="btn" onclick="executeStage('day1_roof')">4️⃣ အမိုးပေါ်တက်တဲ့ လှေကားထစ်ဆီ အမြန်ပြေးမည်</button>
+                <button class="btn" onclick="executeStage('day1_market')">5️⃣ အချိန်မဆွဲဘဲ အောက်ထပ် ကုန်စုံဆိုင်ဆီ ချက်ချင်းဆင်းမည်</button>
             `;
         }
     </script>
