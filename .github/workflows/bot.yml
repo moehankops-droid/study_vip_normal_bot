@@ -21,9 +21,9 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install aiogram==2.15 aiohttp
+          pip install -r requirements.txt
 
-      - name: Run Bot
+      - name: Run bot
         run: |
-          python bot.py
+          python main.py
           
