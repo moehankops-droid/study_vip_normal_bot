@@ -1,101 +1,103 @@
-import asyncio
-import logging
-import sys
-from aiogram import Bot, Dispatcher, F, Router
-from aiogram.filters import Command
-from aiogram.types import Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zombie Apocalypse Game</title>
+    <style>
+        body {
+            background-color: #121212;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .game-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,255,0,0.3);
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background-color: #ff4757;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background-color: #ff6b81;
+        }
+    </style>
+</head>
+<body>
 
-# Bot Token ထည့်ပေးထားပြီးပါပြီ
-TOKEN = "8437112340:AAEgXfvJ07jeBnGCtTsZgG69zHLCDBaOjRI"
+    <div class="game-container">
+        <h2>🧟‍♂️ Zombie Apocalypse</h2>
+        <p id="story-text">သင်ဟာ မှောင်မည်းနေတဲ့ အခန်းတစ်ခန်းထဲမှာ ရောက်နေပါတယ်။ အပြင်မှာ ဇာတ်ကောင်တွေရဲ့ အသံတွေ ကြားနေရတယ်။</p>
+        
+        <div id="button-container">
+            <button class="btn" onclick="chooseRoom1()">🚪 အခန်း (၁) ကို စူးစမ်းမည်</button>
+            <button class="btn" onclick="chooseBag()">🎒 အိတ်ထဲတွင် ဘာပါလဲ စစ်မည်</button>
+            <button class="btn" onclick="chooseRun()">🏃‍♂️ အပြင်သို့ ထွက်ပြေးမည်</button>
+        </div>
+    </div>
 
-router = Router()
+    <script>
+        function chooseRoom1() {
+            document.getElementById("story-text").innerText = "🚪 သင်ဟာ အခန်းထဲမှာ ဗီရိုတစ်ခုနဲ့ ပြတင်းပေါက်တစ်ခုကို တွေ့လိုက်ရပါတယ်။ ဘာဆက်လုပ်မလဲ?";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="searchWardrobe()">🗄️ ဗီရိုကို ရှာမည်</button>
+                <button class="btn" onclick="escapeWindow()">🪟 ပြတင်းပေါက်မှ ထွက်မည်</button>
+                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
+            `;
+        }
 
-# /start နှိပ်လိုက်သောအခါ ပေါ်လာမည့် Zombie ဇာတ်လမ်း အစ
-@router.message(Command("start"))
-async def cmd_start(message: Message):
-    game_keyboard = InlineKeyboardMarkup(
-        inline_keyboard=[
-            [InlineKeyboardButton(text="🚪 အခန်း (၁) သို့ ဝင်မည်", callback_data="room_1")],
-            [InlineKeyboardButton(text="🎒 အိတ်ထဲတွင် ဘာပါလဲ စစ်မည်", callback_data="check_bag")],
-            [InlineKeyboardButton(text="🏃‍♂️ ထွက်ပြေးမည်", callback_data="run_away")]
-        ]
-    )
-    await message.answer(
-        "🧟‍♂️ **Zombie Apocalypse** ဇာတ်လမ်းမှ ကြိုဆိုပါတယ်။\n\n"
-        "သင် ဘာလုပ်မလဲ? အောက်ပါတို့မှ တစ်ခုခုကို ရွေးချယ်ပါ -",
-        reply_markup=game_keyboard
-    )
+        function chooseBag() {
+            document.getElementById("story-text").innerText = "🎒 သင့်အိတ်ထဲမှာ ရေဘူးတစ်ဘူးနဲ့ ဓားမြှောင်ငယ် တစ်လက် ပါလာပါတယ်။";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="resetGame()">🔄 ပင်မမီနူးသို့ ပြန်ရန်</button>
+            `;
+        }
 
-# အခန်း (၁) ရွေးချယ်သည့်အခါ
-@router.callback_query(F.data == "room_1")
-async def room_one_chosen(callback: CallbackQuery):
-    keyboard = InlineKeyboardMarkup(
-        inline_keyboard=[
-            [InlineKeyboardButton(text="🗄️ ဗီရိုကို ရှာမည်", callback_data="search_wardrobe")],
-            [InlineKeyboardButton(text="🪟 ပြတင်းပေါက်မှ ထွက်မည်", callback_data="escape_window")],
-            [InlineKeyboardButton(text="🔙 ပင်မမီနူးသို့ ပြန်ရန်", callback_data="back_to_start")]
-        ]
-    )
-    await callback.message.edit_text(
-        "🚪 သင်ဟာ မှောင်မည်းနေတဲ့ အခန်းတစ်ခန်းထဲကို ဝင်လာခဲ့ပါတယ်။ အပြင်မှာ ဇာတ်ကောင်တွေရဲ့ အသံတွေ ကြားနေရတယ်။\n\n"
-        "ဘာဆက်လုပ်မလဲ?",
-        reply_markup=keyboard
-    )
-    await callback.answer()
+        function chooseRun() {
+            document.getElementById("story-text").innerText = "🏃‍♂️ သင် အပြင်ကို ထွက်ပြေးဖို့ ကြိုးစားပေမဲ့ ဇာတ်လမ်းက ချက်ချင်းဆိုသလို Zombie တွေနဲ့တိုးပြီး အဆုံးသတ်သွားခဲ့ပါပြီ! (Game Over)";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
+            `;
+        }
 
-# အိတ်စစ်ဆေးသည့်အခါ
-@router.callback_query(F.data == "check_bag")
-async def check_bag_chosen(callback: CallbackQuery):
-    keyboard = InlineKeyboardMarkup(
-        inline_keyboard=[
-            [InlineKeyboardButton(text="🔙 ပင်မမီနူးသို့ ပြန်ရန်", callback_data="back_to_start")]
-        ]
-    )
-    await callback.message.edit_text(
-        "🎒 သင့်အိတ်ထဲမှာ ရေဘူးတစ်ဘူးနဲ့ ဓားမြှောင်ငယ် တစ်လက် ပါလာပါတယ်။",
-        reply_markup=keyboard
-    )
-    await callback.answer()
+        function searchWardrobe() {
+            document.getElementById("story-text").innerText = "🎉 ဗီရိုထဲမှာ ကျည်ဆန်အနည်းငယ်နဲ့ သေနတ်တစ်လက်ကို တွေ့ရှိခဲ့ပါတယ်။ သင် အသက်ဆက်ရှင်ဖို့ အခွင့်အရေး ရသွားပါပြီ! (Victory)";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="resetGame()">🔄 ထပ်ဆော့မည်</button>
+            `;
+        }
 
-# ထွက်ပြေးမည့်အခါ
-@router.callback_query(F.data == "run_away")
-async def run_away_chosen(callback: CallbackQuery):
-    keyboard = InlineKeyboardMarkup(
-        inline_keyboard=[
-            [InlineKeyboardButton(text="🔄 အစကနေ ပြန်စမည်", callback_data="back_to_start")]
-        ]
-    )
-    await callback.message.edit_text(
-        "🏃‍♂️ သင် အပြင်ကို ထွက်ပြေးဖို့ ကြိုးစားပေမဲ့ ဇာတ်လမ်းက ချက်ချင်းဆိုသလို အဆုံးသတ်သွားခဲ့ပါပြီ (Game Over)!",
-        reply_markup=keyboard
-    )
-    await callback.answer()
+        function escapeWindow() {
+            document.getElementById("story-text").innerText = "💥 ပြတင်းပေါက်ကနေ ခုန်ချလိုက်တာ ပစ္စည်းထိခိုက်ပြီး ခြေထောက်နာသွားပါတယ်။ ဇာတ်လမ်း ပြီးဆုံးသွားပါပြီ။ (Game Over)";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
+            `;
+        }
 
-# ပင်မမီနူးသို့ ပြန်ရန်
-@router.callback_query(F.data == "back_to_start")
-async def back_to_start(callback: CallbackQuery):
-    game_keyboard = InlineKeyboardMarkup(
-        inline_keyboard=[
-            [InlineKeyboardButton(text="🚪 အခန်း (၁) သို့ ဝင်မည်", callback_data="room_1")],
-            [InlineKeyboardButton(text="🎒 အိတ်ထဲတွင် ဘာပါလဲ စစ်မည်", callback_data="check_bag")],
-            [InlineKeyboardButton(text="🏃‍♂️ ထွက်ပြေးမည်", callback_data="run_away")]
-        ]
-    )
-    await callback.message.edit_text(
-        "🧟‍♂️ **Zombie Apocalypse** ဇာတ်လမ်းမှ ကြိုဆိုပါတယ်။\n\n"
-        "သင် ဘာလုပ်မလဲ? အောက်ပါတို့မှ တစ်ခုခုကို ရွေးချယ်ပါ -",
-        reply_markup=game_keyboard
-    )
-    await callback.answer()
+        function resetGame() {
+            document.getElementById("story-text").innerText = "သင်ဟာ မှောင်မည်းနေတဲ့ အခန်းတစ်ခန်းထဲမှာ ရောက်နေပါတယ်။ အပြင်မှာ ဇာတ်ကောင်တွေရဲ့ အသံတွေ ကြားနေရတယ်။";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="chooseRoom1()">🚪 အခန်း (၁) ကို စူးစမ်းမည်</button>
+                <button class="btn" onclick="chooseBag()">🎒 အိတ်ထဲတွင် ဘာပါလဲ စစ်မည်</button>
+                <button class="btn" onclick="chooseRun()">🏃‍♂️ အပြင်သို့ ထွက်ပြေးမည်</button>
+            `;
+        }
+    </script>
 
-async def main():
-    bot = Bot(token=TOKEN)
-    dp = Dispatcher()
-    dp.include_router(router)
-    await bot.delete_webhook(drop_pending_updates=True)
-    await dp.start_polling(bot)
-
-if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
-    asyncio.run(main())
-    
+</body>
+</html>
