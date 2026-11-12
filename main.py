@@ -5,7 +5,8 @@ from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
 from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 
-TOKEN = "9059876499:AAE0cPC0nDRxOYqkwDf49ftNPgm2aIzwUAM"
+# Bot Token အသစ်ကို ထည့်သွင်းပြီးပါပြီ
+TOKEN = "8437112340:AAEgXfvJ07jeBnGCtTsZgG69zHLCDBaOjRI"
 
 logging.basicConfig(level=logging.INFO)
 bot = Bot(token=TOKEN)
@@ -149,9 +150,9 @@ async def process_status(callback: CallbackQuery):
     await callback.answer()
 
 async def main():
-    init_db()  # Bot စစချင်း Database တည်ဆောက်ရန်
+    init_db()  # Database စတင်ဖန်တီးရန်
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
     asyncio.run(main())
-    
+
