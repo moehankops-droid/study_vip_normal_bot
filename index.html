@@ -3,98 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zombie Apocalypse Game</title>
+    <title>Zombie Apocalypse: Choices & Consequences</title>
     <style>
         body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
+            background-color: #0b0b0b;
+            color: #f1f1f1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             text-align: center;
             padding: 20px;
         }
         .game-container {
-            max-width: 500px;
+            max-width: 600px;
             margin: 0 auto;
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,255,0,0.3);
+            background: #1a1a1a;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
+            border: 1px solid #333;
+        }
+        h2 {
+            color: #ff4757;
+            margin-bottom: 20px;
+        }
+        #story-text {
+            font-size: 17px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            text-align: left;
+            background: #262626;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ff4757;
         }
         .btn {
             display: block;
             width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            background-color: #ff4757;
+            padding: 14px;
+            margin: 12px 0;
+            background-color: #2f3542;
             color: white;
-            border: none;
-            border-radius: 5px;
+            border: 1px solid #ff4757;
+            border-radius: 6px;
             font-size: 16px;
             cursor: pointer;
-            transition: 0.3s;
+            transition: all 0.3s ease;
+            text-align: left;
         }
         .btn:hover {
-            background-color: #ff6b81;
+            background-color: #ff4757;
+            color: #fff;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
 
     <div class="game-container">
-        <h2>🧟‍♂️ Zombie Apocalypse</h2>
-        <p id="story-text">သင်ဟာ မှောင်မည်းနေတဲ့ အခန်းတစ်ခန်းထဲမှာ ရောက်နေပါတယ်။ အပြင်မှာ ဇာတ်ကောင်တွေရဲ့ အသံတွေ ကြားနေရတယ်။</p>
+        <h2>🧟‍♂️ Zombie Apocalypse: Survival</h2>
+        <div id="story-text">
+            သင်ဟာ တိတ်ဆိတ်ခြောက်ချားနေတဲ့ မြို့တစ်မြို့က တိုက်ခန်းကျဉ်းလေးထဲမှာ နိုးလာခဲ့ပါတယ်။ အပြင်ဘက်ကနေ လူသားတွေရဲ့ အော်ဟစ်သံတွေနဲ့ ခြေသံပြင်းပြင်းတွေကို ကြားနေရပါပြီ။ ကမ္ဘာကြီး ပျက်သုဉ်းသွားပါပြီ။ သင် ဘာလုပ်မလဲ?
+        </div>
         
         <div id="button-container">
-            <button class="btn" onclick="chooseRoom1()">🚪 အခန်း (၁) ကို စူးစမ်းမည်</button>
-            <button class="btn" onclick="chooseBag()">🎒 အိတ်ထဲတွင် ဘာပါလဲ စစ်မည်</button>
-            <button class="btn" onclick="chooseRun()">🏃‍♂️ အပြင်သို့ ထွက်ပြေးမည်</button>
+            <button class="btn" onclick="choice1A()">🚪 အခန်းတံခါးကို ဖြည်းညင်းစွာ ဖွင့်ပြီး အခြေအနေကြည့်မည်</button>
+            <button class="btn" onclick="choice1B()">🎒 ကျောပိုးအိတ်ထဲက ပစ္စည်းများကို အရင်စစ်ဆေးမည်</button>
+            <button class="btn" onclick="choice1C()">🛏️ ကြောက်လန့်ပြီး ခုတင်အောက်မှာ ဆက်ပုန်းနေမည်</button>
         </div>
     </div>
 
     <script>
-        function chooseRoom1() {
-            document.getElementById("story-text").innerText = "🚪 သင်ဟာ အခန်းထဲမှာ ဗီရိုတစ်ခုနဲ့ ပြတင်းပေါက်တစ်ခုကို တွေ့လိုက်ရပါတယ်။ ဘာဆက်လုပ်မလဲ?";
+        // --- အပိုင်း (၁) ---
+        function choice1A() {
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> သင်တံခါးကို ဖွင့်လိုက်တဲ့အခါ ဆူညံသံကြောင့် စင်္ကြန်လမ်းက Zombie တစ်ကောင်က သင့်ဘက်ကို တဟုန်ထိုး ပြေးလာပါပြီ!<br><br>လျင်မြန်စွာ ဆုံးဖြတ်ရပါတော့မယ် ဘာလုပ်မလဲ?";
             document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="searchWardrobe()">🗄️ ဗီရိုကို ရှာမည်</button>
-                <button class="btn" onclick="escapeWindow()">🪟 ပြတင်းပေါက်မှ ထွက်မည်</button>
-                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
+                <button class="btn" onclick="choice2A()">⚔️ အနီးအနားမှာ ရှိတဲ့ သံချောင်းနဲ့ ဝင်ရောက်တိုက်ခိုက်မည်</button>
+                <button class="btn" onclick="choice2B()">🚪 တံခါးကို အမြန်ပြန်ပိတ်ပြီး သော့ခတ်လိုက်မည်</button>
+                <button class="btn" onclick="choice2C()">🏃‍♂️ လှေကားအတိုင်း အောက်ထပ်ကို အလောတကြီး ပြေးဆင်းမည်</button>
             `;
         }
 
-        function chooseBag() {
-            document.getElementById("story-text").innerText = "🎒 သင့်အိတ်ထဲမှာ ရေဘူးတစ်ဘူးနဲ့ ဓားမြှောင်ငယ် တစ်လက် ပါလာပါတယ်။";
+        function choice1B() {
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> အိတ်ကိုစစ်ဆေးကြည့်တော့ ရေဘူးတစ်ဘူးနဲ့ သံဓားမြှောင်ငယ် တစ်လက် တွေ့ရပါတယ်။ ဒါပေမဲ့ အိတ်ဇစ်ဖွင့်တဲ့အသံကြောင့် ပြတင်းပေါက်ကနေ Zombie တစ်ကောင်က တိုက်ခန်းထဲ ခုန်ဝင်လာပါပြီ!<br><br>ဘာလုပ်မလဲ?";
             document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 ပင်မမီနူးသို့ ပြန်ရန်</button>
+                <button class="btn" onclick="choice2D()">🔪 လက်ထဲက သံဓားမြှောင်နဲ့ ဓားထိုးခုခံမည်</button>
+                <button class="btn" onclick="choice2E()">🪟 ပြတင်းပေါက်ကနေ အပြင်ဘက် လမ်းမပေါ်ကို ခုန်ချထွက်ပြေးမည်</button>
             `;
         }
 
-        function chooseRun() {
-            document.getElementById("story-text").innerText = "🏃‍♂️ သင် အပြင်ကို ထွက်ပြေးဖို့ ကြိုးစားပေမဲ့ ဇာတ်လမ်းက ချက်ချင်းဆိုသလို Zombie တွေနဲ့တိုးပြီး အဆုံးသတ်သွားခဲ့ပါပြီ! (Game Over)";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
-            `;
-        }
-
-        function searchWardrobe() {
-            document.getElementById("story-text").innerText = "🎉 ဗီရိုထဲမှာ ကျည်ဆန်အနည်းငယ်နဲ့ သေနတ်တစ်လက်ကို တွေ့ရှိခဲ့ပါတယ်။ သင် အသက်ဆက်ရှင်ဖို့ အခွင့်အရေး ရသွားပါပြီ! (Victory)";
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="resetGame()">🔄 ထပ်ဆော့မည်</button>
-            `;
-        }
-
-        function escapeWindow() {
-            document.getElementById("story-text").innerText = "💥 ပြတင်းပေါက်ကနေ ခုန်ချလိုက်တာ ပစ္စည်းထိခိုက်ပြီး ခြေထောက်နာသွားပါတယ်။ ဇာတ်လမ်း ပြီးဆုံးသွားပါပြီ။ (Game Over)";
+        function choice1C() {
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> သင်ဟာ ကြောက်လန့်ပြီး ခုတင်အောက်မှာ တိတ်တဆိတ် ဆက်ပုန်းနေခဲ့ပါတယ်။ နာရီပေါင်းများစွာကြာတော့ ရေငတ်လာပြီး ဆာလောင်လာတဲ့အပြင် Zombie တွေက တိုက်ခန်းထဲကို ဖောက်ဝင်လာပါပြီ။<br><br><b>(Game Over: အစာရေစာပြတ်လပ်ပြီး Zombie ရဲ့ သားကောင်ဖြစ်သွားပါပြီ)</b>";
             document.getElementById("button-container").innerHTML = `
                 <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
             `;
         }
 
+        // --- အပိုင်း (၂) ---
+        function choice2A() {
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> သင်ရဲရင့်စွာ တိုက်ခိုက်ခဲ့ပေမဲ့ လက်ဗလာနီးပါးဖြစ်နေလို့ Zombie ရဲ့ ကိုက်ဖြတ်တာကို ခံလိုက်ရပါပြီ။ သင့်ခန္ဓာကိုယ်ထဲကို ဗိုင်းရပ်စ်တွေ ပျံ့နှံ့သွားပါပြီ။<br><br><b>(Game Over: သင် Zombie အဖြစ်သို့ ပြောင်းလဲသွားပါပြီ)</b>";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
+            `;
+        }
+
+        function choice2B() {
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> တံခါးကို အလ급ပြန်ပိတ်နိုင်ခဲ့ပေမဲ့ Zombie တွေက အုပ်စုလိုက် ဝိုင်းထုနေလို့ တံခါးကျိုးတော့မယ့် အနေအထားဖြစ်နေပါပြီ။<br><br>အခု ဘယ်လိုဆက်လုပ်မလဲ?";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="choice3A()">🪟 နောက်ဖေးပြတင်းပေါက်ကနေ ခုန်ထွက်မည်</button>
+                <button class="btn" onclick="choice3B()">🛏️ ရေချိုးခန်းထဲ ဝင်ပုန်းပြီး တံခါးခလောက်ချမည်</button>
+            `;
+        }
+
+        function choice2C() {
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> လှေကားအတိုင်း ပြေးဆင်းရင်း လမ်းမှာ Zombie နှစ်ကောင်နဲ့ တိုးပေမဲ့ အလွန်အမင်း ကံကောင်းထောက်မစွာနဲ့ မြေညီထပ်ကို အောင်မြင်စွာ ဆင်းနိုင်ခဲ့ပါတယ်။ လမ်းပေါ်မှာ ကားတစ်စီးနဲ့ စူပါမားကတ်တစ်ခုကို တွေ့လိုက်ရပါတယ်။<br><br>ဘယ်ကိုသွားမလဲ?";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="choice3C()">🛒 စူပါမားကတ်ထဲဝင်ပြီး ရိက္ခာရှာမည်</button>
+                <button class="btn" onclick="choice3D()">🚗 ရပ်ထားတဲ့ ကားကို စက်နှိုးပြီး မြို့ပြင်ထွက်မည်</button>
+            `;
+        }
+
+        function choice2D() {
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> သံဓားမြှောင်ငယ်နဲ့ Zombie ရဲ့ ဦးခေါင်းကို အချက်ကျကျ ထိုးနိုင်ခဲ့လို့ Zombie လဲကျသွားပါတယ်။ သင် အသက်ဆက်ရှင်ဖို့ အခွင့်အရေး ရသွားပါပြီ!<br><br>အခု တိုက်ခန်းထဲကနေ ဘယ်လိုထွက်မလဲ?";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="choice3E()">🚪 အဓိက တံခါးပေါက်ကနေ ငြိမ်ငြိမ်လေး ထွက်မည်</button>
+                <button class="btn" onclick="choice3F()">🎒 လိုအပ်တဲ့ ပစ္စည်းတွေ ထပ်သိမ်းပြီး နေထိုင်ရာပြောင်းမည်</button>
+            `;
+        }
+
+        function choice2E() {
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ဒုတိယထပ်ကနေ အسرအမြန် ခုန်ချလိုက်တာကြောင့် ခြေထောက် အပြင်းအထန် ထိခိုက်နာကျင်သွားပြီး လမ်းပေါ်မှာ မလှုပ်နိုင်တော့ပါဘူး။<br><br><b>(Game Over: ခြေထောက်ကျိုးသွားပြီး Zombie တွေရဲ့ ဝိုင်းဝဲခြင်းကို ခံလိုက်ရပါပြီ)</b>";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
+            `;
+        }
+
+        // --- အပိုင်း (၃) နှင့် အဆုံးသတ်များ ---
+        function choice3A() {
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> နောက်ဖေးပြတင်းပေါက်ကနေ အိမ်င်္ကျီစုတ်တွေကို ကြိုးလိုချည်ပြီး ဖြည်းညင်းစွာ ဆင်းသက်နိုင်ခဲ့ပါတယ်။ လမ်းပေါ်ရောက်တော့ လုံခြုံတဲ့ နေရာတစ်ခုဆီ ရောက်သွားပါပြီ။<br><br><b>🏆 (Victory: အသက်ရှင်ကျန်ရစ်သူများရှိရာ စခန်းကို အောင်မြင်စွာ ရောက်ရှိသွားပါပြီ!)</b>";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="resetGame()">🔄 အစကနေ ထပ်ဆော့မည်</button>
+            `;
+        }
+
+        function choice3B() {
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ရေချိုးခန်းထဲမှာ ပုန်းနေပေမဲ့ အပြင်ဘက်က တိုက်ခန်းပါ ထွက်ပေါက်မရှိတော့လို့ ပိတ်မိနေဆဲပါပဲ။ နောက်ဆုံးမှာ အစားအသောက်ပြတ်ပြီး အညတရ အဆုံးသတ်သွားခဲ့ရပါတယ်။<br><br><b>(Game Over: ရေချိုးခန်းထဲမှာ ပိတ်မိပြီး ဆုံးပါးသွားပါပြီ)</b>";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
+            `;
+        }
+
+        function choice3C() {
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> စူပါမားကတ်ထဲ ဝင်လိုက်တာနဲ့ အစားအသောက်တွေ အလုံအလောက် တွေ့ရပေမဲ့ ဆူညံသံကြောင့် Zombie အုပ်စုကြီးက သင့်ကို ဝိုင်းပတ်မိသွားပါပြီ။<br><br><b>(Game Over: စူပါမားကတ်ထဲမှာ Zombie တွေနဲ့ တိုးပြီး ပိတ်မိသွားပါပြီ)</b>";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
+            `;
+        }
+
+        function choice3D() {
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ကားစတီယာရင်အောက်မှာ ဝှက်ထားတဲ့ သော့ကို တွေ့တာနဲ့ ကားစက်နှိုးပြီး မြို့ပြင်အလုံခြုံဆုံး တောင်ပေါ်စခန်းဆီကို အောင်မြင်စွာ မောင်းနှင်ထွက်ပြေးနိုင်ခဲ့ပါပြီ!<br><br><b>🏆 (True Ending - Victory: လွတ်မြောက်နယ်မြေသို့ ဘေးကင်းစွာ ရောက်ရှိသွားပါပြီ!)</b>";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="resetGame()">🔄 အစကနေ ထပ်ဆော့မည်</button>
+            `;
+        }
+
+        function choice3E() {
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> စင်္ကြန်လမ်းမှာ ကျန်နေတဲ့ Zombie တွေကို အသာအယာ ရှောင်ကွင်းပြီး အောက်ထပ်ကနေ မြို့ပြင်လမ်းမဆီ အောင်မြင်စွာ ထွက်လာနိုင်ခဲ့ပါတယ်။<br><br><b>🏆 (Victory: ဉာဏ်ကောင်းမှုကြောင့် အသက်ရှင် ကျန်ရစ်ခဲ့ပါပြီ!)</b>";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="resetGame()">🔄 အစကနေ ထပ်ဆော့မည်</button>
+            `;
+        }
+
+        function choice3F() {
+            document.getElementById("story-text").innerHTML = "<b>အကျိုးဆက်:</b> ပစ္စည်းတွေ အများကြီး ထပ်သိမ်းနေတုန်း အချိန်ကြာသွားတာကြောင့် အခြား Zombie တွေ ထပ်ရောက်လာပြီး တိုက်ခန်းထဲမှာ တဝိုင်းလည်မိသွားပါပြီ။<br><br><b>(Game Over: အချိန်ဆွဲလွန်းလို့ အသက်ဆုံးရှုံးခဲ့ရပါပြီ)</b>";
+            document.getElementById("button-container").innerHTML = `
+                <button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>
+            `;
+        }
+
+        // ဂိမ်းအစသို့ ပြန်သွားရန်
         function resetGame() {
-            document.getElementById("story-text").innerText = "သင်ဟာ မှောင်မည်းနေတဲ့ အခန်းတစ်ခန်းထဲမှာ ရောက်နေပါတယ်။ အပြင်မှာ ဇာတ်ကောင်တွေရဲ့ အသံတွေ ကြားနေရတယ်။";
+            document.getElementById("story-text").innerHTML = "သင်ဟာ တိတ်ဆိတ်ခြောက်ချားနေတဲ့ မြို့တစ်မြို့က တိုက်ခန်းကျဉ်းလေးထဲမှာ နိုးလာခဲ့ပါတယ်။ အပြင်ဘက်ကနေ လူသားတွေရဲ့ အော်ဟစ်သံတွေနဲ့ ခြေသံပြင်းပြင်းတွေကို ကြားနေရပါပြီ။ ကမ္ဘာကြီး ပျက်သုဉ်းသွားပါပြီ။ သင် ဘာလုပ်မလဲ?";
             document.getElementById("button-container").innerHTML = `
-                <button class="btn" onclick="chooseRoom1()">🚪 အခန်း (၁) ကို စူးစမ်းမည်</button>
-                <button class="btn" onclick="chooseBag()">🎒 အိတ်ထဲတွင် ဘာပါလဲ စစ်မည်</button>
-                <button class="btn" onclick="chooseRun()">🏃‍♂️ အပြင်သို့ ထွက်ပြေးမည်</button>
+                <button class="btn" onclick="choice1A()">🚪 အခန်းတံခါးကို ဖြည်းညင်းစွာ ဖွင့်ပြီး အခြေအနေကြည့်မည်</button>
+                <button class="btn" onclick="choice1B()">🎒 ကျောပိုးအိတ်ထဲက ပစ္စည်းများကို အရင်စစ်ဆေးမည်</button>
+                <button class="btn" onclick="choice1C()">🛏️ ကြောက်လန့်ပြီး ခုတင်အောက်မှာ ဆက်ပုန်းနေမည်</button>
             `;
         }
     </script>
