@@ -1,58 +1,106 @@
 import asyncio
 import logging
+import sqlite3
 from aiogram import Bot, Dispatcher, F
 from aiogram.filters import Command
-from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton
+from aiogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 
-# Telegram Bot Token ကို ဤနေရာတွင် ထည့်ပါ
 TOKEN = "9059876499:AAE0cPC0nDRxOYqkwDf49ftNPgm2aIzwUAM"
 
-# Logging ကို စတင်ရန်
 logging.basicConfig(level=logging.INFO)
-
 bot = Bot(token=TOKEN)
 dp = Dispatcher()
 
-# ကစားသမားများ၏ အချက်အလက်များကို သိမ်းဆည်းရန် Dictionary
-user_data = {}
+# ----------------- DATABASE SETUP -----------------
+def init_db():
+    conn = sqlite3.connect("zombie_game.db")
+    cursor = conn.cursor()
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS players (
+            user_id INTEGER PRIMARY KEY,
+            hp INTEGER,
+            food INTEGER
+        )
+    ''')
+    conn.commit()
+    conn.close()
 
-# ပင်မ မီနူး ခလုတ်များ
+def get_player(user_id):
+    conn = sqlite3.connect("zombie_game.db")
+    cursor = conn.cursor()
+    cursor.execute("SELECT hp, food FROM players WHERE user_id = ?", (user_id,))
+    row = cursor.fetchone()
+    if not row:
+        cursor.execute("INSERT INTO players (user_id, hp, food) VALUES (?, ?, ?)", (user_id, 100, 50))
+        conn.commit()
+        hp, food = 100, 50
+    else:
+        hp, food = row
+    conn.close()
+    return hp, food
+
+def update_player(user_id, hp, food):
+    conn = sqlite3.connect("zombie_game.db")
+    cursor = conn.cursor()
+    cursor.execute("UPDATE players SET hp = ?, food = ? WHERE user_id = ?", (hp, food, user_id))
+    conn.commit()
+    conn.close()
+
+# ----------------- KEYBOARDS -----------------
 def get_game_keyboard():
-    keyboard = InlineKeyboardMarkup(
+    return InlineKeyboardMarkup(
         inline_keyboard=[
             [InlineKeyboardButton(text="🔍 ရိက္ခာရှာမည် (Scavenge)", callback_data="scavenge")],
             [InlineKeyboardButton(text="💤 အနားယူမည် (Rest)", callback_data="rest")],
             [InlineKeyboardButton(text="📊 အခြေအနေစစ်ဆေးမည် (Status)", callback_data="status")]
         ]
     )
-    return keyboard
 
+def get_restart_keyboard():
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="🔄 အစကပြန်စမည် (Restart)", callback_data="restart")]
+        ]
+    )
+
+# ----------------- HANDLERS -----------------
 @dp.message(Command("start"))
 async def cmd_start(message: Message):
     user_id = message.from_user.id
-    # ကစားသမား အသစ်စတင်လျှင် HP နှင့် Food ကို သတ်မှတ်ပေးမည်
-    user_data[user_id] = {"hp": 100, "food": 50}
+    update_player(user_id, 100, 50)
     
     welcome_text = (
         "🧟‍♂️ **Zombie Survival RPG သို့ ကြိုဆိုပါတယ်!** 🧟‍♂️\n\n"
-        "မြို့တစ်စခန်းလုံး ဇိုဘီတွေ ၀ိုင်းနေပါပြီ။ သင် အသက်ဆက်ရှင်နိုင်မလား?\n"
+        "မြို့တစ်စခန်းလုံး ဇိုဘီတွေ ၀ိုင်းနေပါပြီ။ သင် အသက်ရှင်နိုင်မလား?\n"
         "သင့်ရဲ့ HP နဲ့ Food ကို ထိန်းချုပ်ပြီး ရှင်သန်အောင် ကြိုးစားပါ။"
     )
     await message.answer(welcome_text, reply_markup=get_game_keyboard(), parse_mode="Markdown")
 
-@dp.callback_query(F.data == "scavenge")
-async def process_scavenge(callback: Message):
+@dp.callback_query(F.data == "restart")
+async def process_restart(callback: CallbackQuery):
     user_id = callback.from_user.id
-    if user_id not in user_data:
-        user_data[user_id] = {"hp": 100, "food": 50}
+    update_player(user_id, 100, 50)
     
-    # ရိက္ခာရှာဖွေရာတွင် အစားအစာရနိုင်သလို ဇိုဘီနှင့်တွေ့ပြီး HP လျော့နိုင်သည်
-    user_data[user_id]["food"] += 10
-    user_data[user_id]["hp"] -= 15
+    text = "🧟‍♂️ **Zombie Survival RPG (ပြန်လည်စတင်သည်)** 🧟‍♂️\n\nရှင်သန်ရန်အတွက် မီနူးမှ ရွေးချယ်ပါ။"
+    await callback.message.edit_text(text, reply_markup=get_game_keyboard(), parse_mode="Markdown")
+    await callback.answer()
+
+@dp.callback_query(F.data == "scavenge")
+async def process_scavenge(callback: CallbackQuery):
+    user_id = callback.from_user.id
+    hp, food = get_player(user_id)
     
-    hp = user_data[user_id]["hp"]
-    food = user_data[user_id]["food"]
+    food += 10
+    hp -= 25
     
+    if hp <= 0:
+        update_player(user_id, 0, food)
+        text = "💀 **Game Over!**\n\nရိက္ခာထွက်ရှာရင်း ဇိုဘီအုပ်စုနဲ့ တိုးပြီး ပြင်းထန်တဲ့ ဒဏ်ရာတွေနဲ့ သေဆုံးသွားပါပြီ..."
+        await callback.message.edit_text(text, reply_markup=get_restart_keyboard(), parse_mode="Markdown")
+        await callback.answer()
+        return
+
+    update_player(user_id, hp, food)
     text = (
         "🔍 **ရိက္ခာရှာဖွေခြင်း:**\n"
         "သင့်မှာ စားစရာအနည်းငယ် ရလိုက်ပါတယ်၊ ဒါပေမဲ့ ဇိုဘီနဲ့ တိုက်ပွဲဖြစ်လို့ ထိခိုက်ဒဏ်ရာ ရသွားပါတယ်။\n\n"
@@ -63,17 +111,24 @@ async def process_scavenge(callback: Message):
     await callback.answer()
 
 @dp.callback_query(F.data == "rest")
-async def process_rest(callback: Message):
+async def process_rest(callback: CallbackQuery):
     user_id = callback.from_user.id
-    if user_id not in user_data:
-        user_data[user_id] = {"hp": 100, "food": 50}
+    hp, food = get_player(user_id)
     
-    # အနားယူပါက HP ပြန်တက်မည်၊ Food လျော့မည်
-    user_data[user_id]["hp"] = min(100, user_data[user_id]["hp"] + 20)
-    user_data[user_id]["food"] = max(0, user_data[user_id]["food"] - 10)
-    
-    hp = user_data[user_id]["hp"]
-    food = user_data[user_id]["food"]
+    if food <= 0:
+        text = (
+            "⚠️ **သတိပေးချက်:**\n"
+            "သင့်မှာ ရိက္ခာလုံးဝ မရှိတော့ပါ! အနားယူရန် ရိက္ခာလိုပါသည်။ ကျေးဇူးပြု၍ ရိက္ခာ အမြန်ရှာပါ။\n\n"
+            f"❤️ HP: {hp}/100\n"
+            f"🍞 Food: 0"
+        )
+        await callback.message.edit_text(text, reply_markup=get_game_keyboard(), parse_mode="Markdown")
+        await callback.answer()
+        return
+
+    hp = min(100, hp + 20)
+    food = max(0, food - 10)
+    update_player(user_id, hp, food)
     
     text = (
         "💤 **အနားယူခြင်း:**\n"
@@ -85,26 +140,18 @@ async def process_rest(callback: Message):
     await callback.answer()
 
 @dp.callback_query(F.data == "status")
-async def process_status(callback: Message):
+async def process_status(callback: CallbackQuery):
     user_id = callback.from_user.id
-    if user_id not in user_data:
-        user_data[user_id] = {"hp": 100, "food": 50}
+    hp, food = get_player(user_id)
     
-    hp = user_data[user_id]["hp"]
-    food = user_data[user_id]["food"]
-    
-    text = (
-        "📊 **သင့်ရဲ့ လက်ရှိအခြေအနေ:**\n\n"
-        f"❤️ HP: {hp}/100\n"
-        f"🍞 Food: {food}"
-    )
+    text = f"📊 **သင့်ရဲ့ လက်ရှိအခြေအနေ:**\n\n❤️ HP: {hp}/100\n🍞 Food: {food}"
     await callback.message.edit_text(text, reply_markup=get_game_keyboard(), parse_mode="Markdown")
     await callback.answer()
 
 async def main():
-    # Bot ကို စတင် Run မည့် Polling ပုံစံ
+    init_db()  # Bot စစချင်း Database တည်ဆောက်ရန်
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
     asyncio.run(main())
-
+    
