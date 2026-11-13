@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>20 Days Zombie Cinematic Survival</title>
+    <title>20 Days Zombie Cinematic Survival with Tools</title>
     <style>
         body {
             background-color: #050505;
@@ -32,9 +32,19 @@
             padding: 10px;
             border-radius: 6px;
             margin-bottom: 15px;
-            font-size: 14px;
+            font-size: 13px;
             color: #2ed573;
             border: 1px solid #444;
+        }
+        #environment-box {
+            background: #1a1a1a;
+            border: 1px dashed #ffa502;
+            padding: 10px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #ffa502;
+            text-align: left;
         }
         #timeline-title {
             color: #ffa502;
@@ -72,6 +82,18 @@
             color: #fff;
             transform: translateY(-2px);
         }
+        .tool-btn {
+            background-color: #2f3542;
+            border: 1px solid #70a1ff;
+            color: #70a1ff;
+            margin-bottom: 15px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .tool-btn:hover {
+            background-color: #70a1ff;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -83,12 +105,22 @@
             <span>🥫 ရိက္ခာ: <b id="stat-food">၃ ရက်စာ</b></span>
             <span>❤️ ကျန်းမာရေး: <b id="stat-health">ကောင်းမွန်</b></span>
         </div>
+        
+        <!-- အခြေအနေစစ်ဆေးသည့် Tool Panel -->
+        <div id="environment-box">
+            🌤️ <b>ပတ်ဝန်းကျင် အခြေအနေ (Condition Tool):</b><br>
+            - ရာသီဥတု: <span id="env-weather">မိုးအုံ့၊ လေပြင်းတိုက်ခတ်နေသည်</span><br>
+            - လမ်းပန်း/ဆိုင်များ အခြေအနေ: <span id="env-traffic">အပြင်ဘက်တွင် Zombie ၃ ကောင်ကင်းလှည့်နေသည်</span>
+        </div>
+
         <div id="timeline-title">ရက်စွဲ: နေ့ ၁ (Day 1)</div>
         <div id="story-text">
             <b>ရက်စွဲ - Day 1:</b> ကမ္ဘာကြီး ရုတ်တရက် ပျက်သုဉ်းသွားပါပြီ။ လူတွေဟာ သွေးဆာနေတဲ့ Zombie တွေအဖြစ် ပြောင်းလဲကုန်ကြပါပြီ။ သင်ဟာ တိုက်ခန်းကျဉ်းလေးထဲမှာ ပိတ်မိနေပြီး အိတ်ထဲမှာ ရေနဲ့ ကွတ်ကီးအနည်းငယ် ကျန်ပါတော့တယ်။ အပြင်ဘက်က Zombie တွေ တံခါးလာထုနေပါပြီ။
             <br><br><b>ဒီနေ့ (Day 1) အတွက် ရွေးချယ်စရာ (၃) ခု -</b>
         </div>
         
+        <button class="btn tool-btn" onclick="checkEnvironmentTool()">🔍 အပြင်ဘက် ဆိုင်များနှင့် လမ်းပန်းအခြေအနေကို စစ်ဆေးမည် (Condition Tool)</button>
+
         <div id="button-container">
             <button class="btn" onclick="makeChoice(1)">1️⃣ တံခါးကို ဗီရိုနဲ့ ခိုင်ခံ့အောင် ပိတ်ဆို့ပြီး အခန်းထဲမှာ တိတ်တဆိတ် ပုန်းအောင်းနေမည်</button>
             <button class="btn" onclick="makeChoice(2)">2️⃣ အောက်ထပ် ကုန်စုံဆိုင်ဆီ အလောတကြီး ဆင်းပြီး ရိက္ခာရှာမည် (50/50 ကံစမ်းရန်)</button>
@@ -100,11 +132,34 @@
         let currentDay = 1;
         let foodDays = 3;
         let healthStatus = "ကောင်းမွန်";
+        
+        let weatherList = [
+            "မိုးသည်းထန်စွာ ရွာသွန်းနေသည် (အသံတိတ်ရန် လွယ်ကူ)",
+            "နေပြင်းပြီး ပတ်ဝန်းကျင် အလွန်ထင်ရှားနေသည် (အလွယ်တကူ မြင်နိုင်)",
+            "မြူထူများ ဆိုင်းနေသည် (အကအဝေး ကောင်းစွာမမြင်ရ)",
+            "လေပြင်းတိုက်ခတ်နေပြီး တံခါးခေါက်သံများ ဖုံးလွှမ်းနေသည်"
+        ];
+
+        let trafficList = [
+            "အပြင်ဘက်လမ်းမပေါ်တွင် Zombie တွေ ကင်းလှည့်နေသည်",
+            "အနီးအနားရှိ စားသောက်ဆိုင်/ကုန်စုံဆိုင်များ ပိတ်ထားပြီး လူသူကင်းမဲ့နေသည်",
+            "လမ်းမပေါ်တွင် ပျက်စီးနေသော ကားများ ပိတ်ဆို့နေသည်",
+            "အနီးအနားတွင် အန္တရာယ်ကင်းစင်ပုံရသည် (ခဏတာ ငြိမ်သက်)"
+        ];
+
+        let currentWeather = weatherList[0];
+        let currentTraffic = trafficList[0];
 
         function updateDisplay() {
             document.getElementById("stat-day").innerText = `Day ${currentDay} / 20`;
             document.getElementById("stat-food").innerText = foodDays > 0 ? `${foodDays} ရက်စာကျန်` : "ရိက္ခာ လုံးဝပြတ်လပ်";
             document.getElementById("stat-health").innerText = healthStatus;
+            document.getElementById("env-weather").innerText = currentWeather;
+            document.getElementById("env-traffic").innerText = currentTraffic;
+        }
+
+        function checkEnvironmentTool() {
+            alert(`🔍 [Condition Tool Report]\n- ရာသီဥတု: ${currentWeather}\n- လမ်းများနှင့် ဆိုင်များအခြေအနေ: ${currentTraffic}\n- လက်ရှိရိက္ခာ: ${foodDays} ရက်စာကျန်ရှိသည်။`);
         }
 
         function makeChoice(choiceNum) {
@@ -118,260 +173,209 @@
                 return;
             }
 
+            // ရက်သစ်အတွက် ရာသီဥတုနှင့် လမ်းအခြေအနေအသစ် ဖန်တီးမည်
+            currentWeather = weatherList[Math.floor(Math.random() * weatherList.length)];
+            currentTraffic = trafficList[Math.floor(Math.random() * trafficList.length)];
+
             let consequence = "";
             let nextStory = "";
             let btn1 = "", btn2 = "", btn3 = "";
 
-            // --- DAY 1 ---
-            if (currentDay === 1) {
-                if (choiceNum === 1) {
-                    foodDays--;
-                    currentDay = 2;
-                    consequence = "<b>အကျိုးဆက်:</b> တစ်ညလုံး တံခါးလာထုသံတွေကို စိုးရိမ်တကြီး နားစွင့်ရင်း ဖြတ်သန်းခဲ့ရပါတယ်။ ရိက္ခာ (၁) ရက်စာ ကုန်သွားပါတယ်။";
-                    nextStory = "<b>ရက်စွဲ - Day 2:</b> မိုးလင်းလာပါပြီ။ အပြင်ဘက် တိုက်ခန်းစင်္ကြံမှာ Zombie တွေ ဝင်ထွက်သွားလာနေဆဲပါ။ ဗိုက်ဆာလာတဲ့အတွက် ဆုံးဖြတ်ချက်ချဖို့ လိုပါပြီ။";
-                    btn1 = "1️⃣ Day 2 - အခန်းထဲမှာပဲ တိတ်ဆိတ်စွာ ဆက်ပုန်းနေမည် (ရိက္ခာ -1 ရက်)";
-                    btn2 = "2️⃣ Day 2 - အောက်ထပ် ကုန်စုံဆိုင်ဆီ ဆင်းပြီး ရိက္ခာရှာရန် 50/50 ကံစမ်းရန်";
-                    btn3 = "3️⃣ Day 2 - ရပ်ထားတဲ့ ကားသော့ရှာရန် 50/50 ကံစမ်းရန်";
-                } else if (choiceNum === 2) {
-                    let luck = Math.random();
-                    if (luck > 0.5) {
-                        foodDays += 3;
-                        currentDay = 2;
-                        consequence = "<b>အကျိုးဆက် (50/50 Success):</b> ကုန်စုံဆိုင်ထဲ တိတ်တဆိတ် ဝင်နိုင်ခဲ့ပြီး အစားအသောက်တွေ ကောက်ယူလာနိုင်ခဲ့ပါတယ်။";
-                        nextStory = "<b>ရက်စွဲ - Day 2:</b> ရိက္ခာရလာလို့ စိတ်အေးသွားပေမဲ့ ညဘက်ရောက်ရင် ဆူညံသံကြားလို့ Zombie တွေ စုလာနိုင်ပါတယ်။";
-                        btn1 = "1️⃣ Day 2 - ရိက္ခာကို ချွေတာစားသုံးပြီး အခန်းထဲ ငြိမ်ငြိမ်နေမည်";
-                        btn2 = "2️⃣ Day 2 - ရပ်ထားတဲ့ ကားဆီသွားပြီး ကားသော့ရှာရန် 50/50 ကံစမ်းရန်";
-                        btn3 = "3️⃣ Day 2 - အမိုးပေါ်တက်ပြီး အခြား Survivor တွေ ရှိမရှိ ကြည့်မည်";
-                    } else {
-                        gameOver("Day 1 - ကုန်စုံဆိုင်ထဲ ဝင်တဲ့အချိန်မှာ ပုန်းနေတဲ့ Zombie တစ်ကောင်က အလစ်အငိုက် ဝင်ကိုက်လို့ အသက်ဆုံးရှုံးခဲ့ရပါတယ်။ (ဆိုင်ထဲမှာ Zombie နဲ့တိုးလို့ သေဆုံးခြင်း)");
-                        return;
-                    }
-                } else {
-                    let luck = Math.random();
-                    if (luck > 0.5) {
-                        foodDays += 2;
-                        currentDay = 2;
-                        consequence = "<b>အကျိုးဆက် (50/50 Success):</b> ပြတင်းပေါက်ကနေ အောက်ထပ် အမှိုက်ပုံပေါ်ကို ဘေးကင်းစွာ ခုန်ဆင်းနိုင်ခဲ့ပါတယ်။";
-                        nextStory = "<b>ရက်စွဲ - Day 2:</b> လမ်းမပေါ်ရောက်နေပြီဖြစ်လို့ အမြန်ဆုံး နေရာလုံခြုံရာ ရှာရပါမယ်။";
-                        btn1 = "1️⃣ Day 2 - လူမရှိတဲ့ စာကြည့်တိုက်ဟောင်းထဲ ဝင်ပုန်းမည်";
-                        btn2 = "2️⃣ Day 2 - ကားတစ်စီးထဲ ဝင်ပြီး ကားသော့ 50/50 ကံစမ်းမည်";
-                        btn3 = "3️⃣ Day 2 - မြို့ပြင်တောစပ်ဆီ ခြေလျင်ဆက်လျှောက်မည်";
-                    } else {
-                        gameOver("Day 1 - ပြတင်းပေါက်ကနေ ခုန်ချချိန်မှာ ခြေထောက်ပြင်းထန်စွာ ကျိုးသွားပြီး Zombie တွေ ဝိုင်းလာလို့ အသက်ဆုံးရှုံးခဲ့ရပါတယ်။ (ပြတင်းပေါက်ကခုန်ချလို့ ခြေထောက်ကျိုးပြီး သေဆုံးခြင်း)");
-                        return;
-                    }
-                }
+            currentDay++;
+
+            if (currentDay > 20) {
+                currentDay = 20;
+                updateDisplay();
+                title.innerText = "အောင်မြင်မှု (True Ending - Safe Zone Reached)";
+                text.innerHTML = `<b>ရက်စွဲ - Day 20 (ဇာတ်သိမ်းပိုင်း):</b> ရက်ပေါင်း (၂၀) ရက်တိတိ ပတ်ဝန်းကျင် အခြေအနေများကို တူးလ်များဖြင့် စစ်ဆေးကာ အန္တရာယ်များကို ကျော်ဖြတ်နိုင်ခဲ့ပါပြီ။ <b>Safe Zone</b> သို့ အောင်မြင်စွာ ဝင်ရောက်နိုင်ခဲ့ပါပြီ။ <b>သင်ဟာ Zombie ကမ္ဘာဘေးကြီးမှာ ရက် ၂၀ တိတိ အသက်ရှင်ကျန်ရစ်ခဲ့တဲ့ စစ်မှန်တဲ့ Survivor တစ်ယောက် ဖြစ်လာပါပြီ! 🏆</b><br><br><b>🏆 (Victory - Safe Zone Reached)</b>`;
+                buttons.innerHTML = `<button class="btn" onclick="resetGame()">🔄 ဂိမ်းကို အစကနေ ပြန်စမည်</button>`;
+                return;
             }
-            // --- DAY 2 ---
-            else if (currentDay === 2) {
-                if (choiceNum === 1) { foodDays--; currentDay = 3; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=3; } else { gameOver("Day 2 - ကားသော့ရှာစဉ် Zombie တွေ ဝိုင်းသွားလို့ ဆုံးပါးပါတယ်။ (ကားသော့ရှာရင်း Zombie မိလို့ သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=3; } else { gameOver("Day 2 - အမိုးပေါ်မှာ Zombie နဲ့ တိုးပြီး အဆုံးသတ်သွားပါတယ်။ (အမိုးပေါ်မှာ ပိတ်မိလို့ သေဆုံးခြင်း)"); return; } }
+
+            // --- DAY 1 to DAY 20 ဇာတ်လမ်းများနှင့် အကျိုးဆက်များ ---
+            if (currentDay === 2) {
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 2 - ကုန်စုံဆိုင်ထဲမှာ Zombie နဲ့တိုးလို့ အသက်ဆုံးရှုံးခဲ့ရပါတယ်။ (ဆိုင်တွင်း Zombie မိလို့ သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 2 - ပြတင်းပေါက်ကခုန်ချစဉ် ခြေထောက်ကျိုးပြီး Zombie ဝိုင်းခံရလို့ သေဆုံးပါတယ်။ (ပြတင်းပေါက်ခုန်ချလို့ သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 2 ကို အန္တရာယ်ကင်းစွာ ကျော်ဖြတ်နိုင်ခဲ့ပါတယ်။";
-                nextStory = "<b>ရက်စွဲ - Day 3:</b> မြို့ထဲမှာ မီးခိုးတွေ ထွက်ပေါ်နေပြီး အခြေအနေ ပိုဆိုးလာပါတယ်။";
+                nextStory = "<b>ရက်စွဲ - Day 3:</b> မြို့ထဲမှာ မီးခိုးတွေ ထွက်ပေါ်နေပြီး အခြေအနေ ပိုဆိုးလာပါတယ်။ အပြင်ထွက်ဖို့ အခြေအနေ စစ်ဆေးဖို့ လိုပါပြီ။";
                 btn1 = "1️⃣ Day 3 - အခန်းတွင်း ဆက်ပုန်းနေမည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 3 - ဆေးဆိုင်ထဲ ဝင်ရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 3 - အခြား Survivor တစ်ဦးနဲ့ မိတ်ဆွေဖွဲ့ရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 3 ---
             else if (currentDay === 3) {
-                if (choiceNum === 1) { foodDays--; currentDay = 4; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=4; } else { gameOver("Day 3 - ဆေးဆိုင်ထဲမှာ Zombie နဲ့ တိုးပြီး သေဆုံးပါတယ်။ (ဆေးဆိုင်တွင်း Zombie မိလို့ သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=4; } else { gameOver("Day 3 - မိတ်ဆွေလုပ်သူက သစ္စာဖောက်လို့ သေဆုံးပါတယ်။ (မိတ်ဆွေဆိုးကြောင့် သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 3 - ဆေးဆိုင်ထဲမှာ Zombie နဲ့ တိုးပြီး သေဆုံးပါတယ်။ (ဆေးဆိုင်တွင်း Zombie မိလို့ သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 3 - မိတ်ဆွေလုပ်သူက သစ္စာဖောက်လို့ သေဆုံးပါတယ်။ (မိတ်ဆွေဆိုးကြောင့် သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 3 ကို အောင်မြင်စွာ ဖြတ်သန်းနိုင်ခဲ့ပါတယ်။";
                 nextStory = "<b>ရက်စွဲ - Day 4:</b> အစားအသောက်တွေ နည်းပါးလာပြီး အပြင်ထွက်ဖို့ အရေးတကြီး လိုအပ်လာပါပြီ။";
                 btn1 = "1️⃣ Day 4 - တိတ်တဆိတ် ပုန်းအောင်းနေမည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 4 - စူပါမားကတ်ထဲ ဝင်ရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 4 - ကားတစ်စီးယူပြီး ထွက်ပြေးရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 4 ---
             else if (currentDay === 4) {
-                if (choiceNum === 1) { foodDays--; currentDay = 5; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=5; } else { gameOver("Day 4 - စူပါမားကတ်မှာ Zombie ဝိုင်းခံရလို့ သေဆုံးပါတယ်။ (စူပါမားကတ်တွင်း အဖမ်းခံရလို့ သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=5; } else { gameOver("Day 4 - ကားမောင်းထွက်စဉ် တိုက်မိပြီး သေဆုံးပါတယ်။ (ကားမောင်းရင်း လမ်းမှာတိုက်မိလို့ သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 4 - စူပါမားကတ်မှာ Zombie ဝိုင်းခံရလို့ သေဆုံးပါတယ်။ (စူပါမားကတ်တွင်း အဖမ်းခံရလို့ သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 4 - ကားမောင်းထွက်စဉ် တိုက်မိပြီး သေဆုံးပါတယ်။ (ကားမောင်းရင်း လမ်းမှာတိုက်မိလို့ သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 4 ကို အောင်မြင်စွာ ကျော်ဖြတ်နိုင်ခဲ့ပါတယ်။";
                 nextStory = "<b>ရက်စွဲ - Day 5:</b> ကပ်ဘေးကာလ (၅) ရက်မြောက်နေ့သို့ ရောက်ရှိလာပါပြီ။ လမ်းမတွေပေါ်မှာ Zombie တွေ ပိုများလာပါတယ်။";
                 btn1 = "1️⃣ Day 5 - အခန်းတွင်း ငြိမ်ဝပ်စွာ နေထိုင်မည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 5 - ကုန်စုံဆိုင် ဝင်ရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 5 - အမိုးပေါ်ကနေ အချက်ပြရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 5 ---
             else if (currentDay === 5) {
-                if (choiceNum === 1) { foodDays--; currentDay = 6; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=6; } else { gameOver("Day 5 - ကုန်စုံဆိုင်မှာ Zombie မိလို့ သေဆုံးပါတယ်။ (ဆိုင်တွင်း Zombie တိုက်ခိုက်ခံရလို့ သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=6; } else { gameOver("Day 5 - အချက်ပြမီးကြောင့် Zombie တွေ ဝိုင်းလာပြီး သေဆုံးပါတယ်။ (မီးခိုးအချက်ပြလို့ Zombie ဝိုင်းခံရပြီး သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 5 - ကုန်စုံဆိုင်မှာ Zombie မိလို့ သေဆုံးပါတယ်။ (ဆိုင်တွင်း Zombie တိုက်ခိုက်ခံရလို့ သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 5 - အချက်ပြမီးကြောင့် Zombie တွေ ဝိုင်းလာပြီး သေဆုံးပါတယ်။ (မီးခိုးအချက်ပြလို့ Zombie ဝိုင်းခံရပြီး သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 5 ကို အောင်မြင်စွာ ကျော်ဖြတ်နိုင်ခဲ့ပါတယ်။";
                 nextStory = "<b>ရက်စွဲ - Day 6:</b> မြို့ထဲမှာ အစားအသောက်တွေ ရှားပါးလာပြီး အခြေအနေ ပိုတင်းမာလာပါပြီ။";
                 btn1 = "1️⃣ Day 6 - သည်းခံပြီး တိတ်တဆိတ် ပုန်းအောင်းနေမည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 6 - စူပါမားကတ်ကြီးထဲ ဝင်ရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 6 - Survivor တစ်ဦးနဲ့ မိတ်ဆွေဖွဲ့ရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 6 ---
             else if (currentDay === 6) {
-                if (choiceNum === 1) { foodDays--; currentDay = 7; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=7; } else { gameOver("Day 6 - စူပါမားကတ်မှာ Zombie မိပါတယ်။ (စူပါမားကတ်ကြီးထဲမှာ ဝိုင်းတိုက်ခံရလို့ သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=7; } else { gameOver("Day 6 - သစ္စာဖောက်ခံရလို့ ဆုံးပါးပါတယ်။ (မိတ်ဆွေက သစ္စာဖောက်ပြီး သတ်သွားလို့ သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 6 - စူပါမားကတ်မှာ Zombie မိပါတယ်။ (စူပါမားကတ်ကြီးထဲမှာ ဝိုင်းတိုက်ခံရလို့ သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 6 - သစ္စာဖောက်ခံရလို့ ဆုံးပါးပါတယ်။ (မိတ်ဆွေက သစ္စာဖောက်ပြီး သတ်သွားလို့ သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 6 ကို အောင်မြင်စွာ ကျော်ဖြတ်လာနိုင်ခဲ့ပါပြီ။";
                 nextStory = "<b>ရက်စွဲ - Day 7:</b> ကပ်ဘေးကာလ (၇) ရက်မြောက်နေ့သို့ ရောက်ရှိလာပါပြီ။";
                 btn1 = "1️⃣ Day 7 - တိတ်တဆိတ် ပုန်းအောင်းကာ အနားယူမည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 7 - ကုန်စုံဆိုင် ဝင်ရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 7 - ကားသော့ 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 7 ---
             else if (currentDay === 7) {
-                if (choiceNum === 1) { foodDays--; currentDay = 8; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=8; } else { gameOver("Day 7 - ကုန်စုံဆိုင်မှာ Zombie နဲ့ တိုးပါတယ်။ (ဆိုင်မှာ အဖမ်းခံရလို့ သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=8; } else { gameOver("Day 7 - ကားမောင်းထွက်စဉ် တိုက်မိပါတယ်။ (ကားမောင်းရင်း လမ်းမှာတိုက်မိပြီး သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 7 - ကုန်စုံဆိုင်မှာ Zombie နဲ့ တိုးပါတယ်။ (ဆိုင်မှာ အဖမ်းခံရလို့ သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 7 - ကားမောင်းထွက်စဉ် တိုက်မိပါတယ်။ (ကားမောင်းရင်း လမ်းမှာတိုက်မိပြီး သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 7 ကို ကျော်ဖြတ်ပြီး ရှေ့ဆက်လာနိုင်ခဲ့ပါပြီ။";
                 nextStory = "<b>ရက်စွဲ - Day 8:</b> စစ်တပ်ရဲ့ ကယ်ဆယ်ရေးအသံလွှင့်ချက်ကို ရေဒီယိုကနေ ကြားလိုက်ရပါပြီ။";
                 btn1 = "1️⃣ Day 8 - အမိန့်အတိုင်း အခန်းတွင်း ဆက်ပုန်းနေမည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 8 - ကယ်ဆယ်ရေးစခန်းဆီ သွားရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 8 - လမ်းမှာအဖော်ရှာရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 8 ---
             else if (currentDay === 8) {
-                if (choiceNum === 1) { foodDays--; currentDay = 9; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=9; } else { gameOver("Day 8 - ကယ်ဆယ်ရေးစခန်းသွားစဉ် Zombie ဝိုင်းခံရပါတယ်။ (လမ်းမှာ Zombie ဝိုင်းခံရလို့ သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=9; } else { gameOver("Day 8 - မိတ်ဆွေဖွဲ့ရာတွင် သစ္စာဖောက်ခံရပါတယ်။ (အဖော်လုပ်သူက သစ္စာဖောက်လို့ သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 8 - ကယ်ဆယ်ရေးစခန်းသွားစဉ် Zombie ဝိုင်းခံရပါတယ်။ (လမ်းမှာ Zombie ဝိုင်းခံရလို့ သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 8 - မိတ်ဆွေဖွဲ့ရာတွင် သစ္စာဖောက်ခံရပါတယ်။ (အဖော်လုပ်သူက သစ္စာဖောက်လို့ သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 8 ကို အောင်မြင်စွာ ကျော်ဖြတ်နိုင်ခဲ့ပါပြီ။";
                 nextStory = "<b>ရက်စွဲ - Day 9:</b> လမ်းတစ်ဝက်ကျော် လွတ်မြောက်နယ်မြေဆီ ချဉ်းကပ်လာနေပါပြီ။";
                 btn1 = "1️⃣ Day 9 - ရိက္ခာစုဆောင်းကာ တိတ်ဆိတ်စွာ နေမည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 9 - အမြန်ဆုံးပြေးရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 9 - အကူအညီတောင်းရန် အချက်ပြမီးပြမည် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 9 ---
             else if (currentDay === 9) {
-                if (choiceNum === 1) { foodDays--; currentDay = 10; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=10; } else { gameOver("Day 9 - ထွက်ပြေးစဉ် အဖမ်းခံရပါတယ်။ (ပြေးလွှားရင်း Zombie တွေနဲ့တိုးလို့ သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=10; } else { gameOver("Day 9 - အချက်ပြမီးကြောင့် Zombie တွေ စုလာပါတယ်။ (မီးခိုးအချက်ပြလို့ Zombie တွေဝိုင်းလာပြီး သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 9 - ထွက်ပြေးစဉ် အဖမ်းခံရပါတယ်။ (ပြေးလွှားရင်း Zombie တွေနဲ့တိုးလို့ သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 9 - အချက်ပြမီးကြောင့် Zombie တွေ စုလာပါတယ်။ (မီးခိုးအချက်ပြလို့ Zombie တွေဝိုင်းလာပြီး သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> (၁၀) ရက်ပြည့်မြောက်တဲ့ နေ့သို့ ရောက်ရှိလာပါပြီ။";
                 nextStory = "<b>ရက်စွဲ - Day 10 (ထက်ဝက်ခရီး):</b> ခရီးစဉ်ရဲ့ အလယ်ပိုင်းကို အောင်မြင်စွာ ရောက်ရှိလာပါပြီ။";
                 btn1 = "1️⃣ Day 10 - အခန်းတွင်း တိတ်တဆိတ် အနားယူမည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 10 - အပြင်ထွက်ပြီး ရိက္ခာရှာရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 10 - ကားတစ်စီးယူပြီး ရှေ့ဆက်ရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 10 ---
             else if (currentDay === 10) {
-                if (choiceNum === 1) { foodDays--; currentDay = 11; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=11; } else { gameOver("Day 10 - ရိက္ခာရှာစဉ် Zombie မိလို့ သေဆုံးပါတယ်။ (အပြင်ထွက်စဉ် Zombie တိုက်ခိုက်ခံရလို့ သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=11; } else { gameOver("Day 10 - ကားလမ်းမှာ ပိတ်မိပြီး သေဆုံးပါတယ်။ (ကားလမ်းပိတ်မိပြီး Zombie ဝိုင်းခံရလို့ သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 10 - ရိက္ခာရှာစဉ် Zombie မိလို့ သေဆုံးပါတယ်။ (အပြင်ထွက်စဉ် Zombie တိုက်ခိုက်ခံရလို့ သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 10 - ကားလမ်းမှာ ပိတ်မိပြီး သေဆုံးပါတယ်။ (ကားလမ်းပိတ်မိပြီး Zombie ဝိုင်းခံရလို့ သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 10 ကို ကျော်ဖြတ်ပြီး ရှေ့ဆက်လာနိုင်ခဲ့ပါပြီ။";
                 nextStory = "<b>ရက်စွဲ - Day 11:</b> စစ်စခန်းဟောင်းတစ်ခုအနီးကို ရောက်ရှိလာပါပြီ။";
                 btn1 = "1️⃣ Day 11 - စစ်စခန်းအနီးမှာ တိတ်တဆိတ် ပုန်းအောင်းမည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 11 - စစ်စခန်းထဲ ဝင်ပြီး ပစ္စည်းရှာရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 11 - အခြား Survivor အဖွဲ့နဲ့ ပူးပေါင်းရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 11 ---
             else if (currentDay === 11) {
-                if (choiceNum === 1) { foodDays--; currentDay = 12; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=12; } else { gameOver("Day 11 - စစ်စခန်းထဲမှာ Zombie တွေနဲ့ တိုးပြီး သေဆုံးပါတယ်။ (စစ်စခန်းတွင်း Zombie မိလို့ သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=12; } else { gameOver("Day 11 - ပူးပေါင်းတဲ့အဖွဲ့က လှည့်စားပြီး သတ်ပစ်လို့ သေဆုံးပါတယ်။ (အဖွဲ့သစ်ရဲ့ သစ္စာဖောက်မှုကြောင့် သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 11 - စစ်စခန်းထဲမှာ Zombie တွေနဲ့ တိုးပြီး သေဆုံးပါတယ်။ (စစ်စခန်းတွင်း Zombie မိလို့ သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 11 - ပူးပေါင်းတဲ့အဖွဲ့က လှည့်စားပြီး သတ်ပစ်လို့ သေဆုံးပါတယ်။ (အဖွဲ့သစ်ရဲ့ သစ္စာဖောက်မှုကြောင့် သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 11 ကို အောင်မြင်စွာ ကျော်ဖြတ်နိုင်ခဲ့ပါပြီ။";
                 nextStory = "<b>ရက်စွဲ - Day 12:</b> မြို့ပြင်တောစပ်ဆီကို ခြေလျင် ဆက်လျှောက်လာနေရပါပြီ။";
                 btn1 = "1️⃣ Day 12 - သစ်ပင်ပေါ်မှာ တိတ်ဆိတ်စွာ အိပ်စက်မည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 12 - တောစပ်က တဲငယ်လေးကို ဝင်ရှာရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 12 - ရေစီးကြောင်းအတိုင်း လိုက်သွားရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 12 ---
             else if (currentDay === 12) {
-                if (choiceNum === 1) { foodDays--; currentDay = 13; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=13; } else { gameOver("Day 12 - တဲငယ်လေးထဲမှာ ပိတ်မိပြီး Zombie မိလို့ သေဆုံးပါတယ်။ (တဲထဲမှာ Zombie နဲ့တိုးလို့ သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=13; } else { gameOver("Day 12 - ရေစီးကြောင်းထဲ မျောပါပြီး အသက်ဆုံးရှုံးပါတယ်။ (ရေစီးပြင်းလို့ မျောပါသေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 12 - တဲငယ်လေးထဲမှာ ပိတ်မိပြီး Zombie မိလို့ သေဆုံးပါတယ်။ (တဲထဲမှာ Zombie နဲ့တိုးလို့ သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 12 - ရေစီးကြောင်းထဲ မျောပါပြီး အသက်ဆုံးရှုံးပါတယ်။ (ရေစီးပြင်းလို့ မျောပါသေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 12 ကို အောင်မြင်စွာ ဖြတ်သန်းနိုင်ခဲ့ပါတယ်။";
                 nextStory = "<b>ရက်စွဲ - Day 13:</b> တောစပ်ကို ကျော်လွန်ပြီး အဝေးပြေးလမ်းမကြီးပေါ် ရောက်ရှိလာပါပြီ။";
                 btn1 = "1️⃣ Day 13 - လမ်းဘေး တိုက်ခန်းဟောင်းတစ်ခုမှာ ပုန်းမည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 13 - ဖြတ်သွားတဲ့ ကားတစ်စီးကို တားရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 13 - လမ်းမကြီးအတိုင်း ခြေလျင်ဆက်လျှောက်ရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 13 ---
             else if (currentDay === 13) {
-                if (choiceNum === 1) { foodDays--; currentDay = 14; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=14; } else { gameOver("Day 13 - တားတဲ့ကားက လူဆိုးတွေဖြစ်နေပြီး သတ်ပစ်လို့ သေဆုံးပါတယ်။ (လူဆိုးတွေရဲ့ သတ်ဖြတ်ခြင်းခံရလို့ သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=14; } else { gameOver("Day 13 - လမ်းမှာ Zombie အုပ်စုနဲ့တိုးပြီး သေဆုံးပါတယ်။ (လမ်းမကြီးပေါ်မှာ Zombie ဝိုင်းခံရလို့ သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 13 - တားတဲ့ကားက လူဆိုးတွေဖြစ်နေပြီး သတ်ပစ်လို့ သေဆုံးပါတယ်။ (လူဆိုးတွေရဲ့ သတ်ဖြတ်ခြင်းခံရလို့ သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 13 - လမ်းမှာ Zombie အုပ်စုနဲ့တိုးပြီး သေဆုံးပါတယ်။ (လမ်းမကြီးပေါ်မှာ Zombie ဝိုင်းခံရလို့ သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 13 ကို အောင်မြင်စွာ ကျော်ဖြတ်နိုင်ခဲ့ပါပြီ။";
                 nextStory = "<b>ရက်စွဲ - Day 14:</b> Safe Zone တည်ရှိရာ မြို့တော်စပ်ဆီ အလွန်နီးကပ်လာပါပြီ။";
                 btn1 = "1️⃣ Day 14 - ညဘက်ဖြစ်လို့ တစ်နေရာရာမှာ တိတ်တဆိတ် ပုန်းမည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 14 - ကင်းလှည့်စစ်တပ်နဲ့ တွေ့ဆုံရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 14 - ခြံစည်းရိုးကို ခုန်ကျော်ဝင်ရောက်ရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 14 ---
             else if (currentDay === 14) {
-                if (choiceNum === 1) { foodDays--; currentDay = 15; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=15; } else { gameOver("Day 14 - စစ်တပ်က မှားယွင်းပစ်ခတ်လို့ အသက်ဆုံးရှုံးပါတယ်။ (ကင်းလှည့်စစ်တပ်ရဲ့ မှားယွင်းပစ်ခတ်မှုကြောင့် သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=15; } else { gameOver("Day 14 - ခြံစည်းရိုးကျော်စဉ် လျှပ်စစ်မိပြီး သေဆုံးပါတယ်။ (လျှပ်စစ်ဝါယာကြိုးမိလို့ သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 14 - စစ်တပ်က မှားယွင်းပစ်ခတ်လို့ အသက်ဆုံးရှုံးပါတယ်။ (ကင်းလှည့်စစ်တပ်ရဲ့ မှားယွင်းပစ်ခတ်မှုကြောင့် သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 14 - ခြံစည်းရိုးကျော်စဉ် လျှပ်စစ်မိပြီး သေဆုံးပါတယ်။ (လျှပ်စစ်ဝါယာကြိုးမိလို့ သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 14 ကို အောင်မြင်စွာ ကျော်ဖြတ်နိုင်ခဲ့ပါပြီ။";
                 nextStory = "<b>ရက်စွဲ - Day 15:</b> Safe Zone ရဲ့ အပြင်ဘက် ပတ်ဝန်းကျင်ကို ရောက်ရှိနေပါပြီ။";
                 btn1 = "1️⃣ Day 15 - အမှောင်ထဲမှာ တိတ်တဆိတ် စောင့်ဆိုင်းမည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 15 - အဓိကတံခါးပေါက်ဆီ အရောက်သွားရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 15 - ကုန်တင်ကားနောက်ခန်းထဲ ခိုးဝင်ရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 15 ---
             else if (currentDay === 15) {
-                if (choiceNum === 1) { foodDays--; currentDay = 16; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=16; } else { gameOver("Day 15 - တံခါးပေါက်မှာ Zombie တွေနဲ့ အတူပစ်ခတ်ခံရလို့ သေဆုံးပါတယ်။ (တံခါးဝမှာ ပစ်ခတ်မှုကြားထဲမိပြီး သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=16; } else { gameOver("Day 15 - ကုန်တင်ကားထဲမှာ Zombie ပါလာလို့ အတူသေဆုံးပါတယ်။ (ကားထဲက Zombie ကိုက်လို့ သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 15 - တံခါးပေါက်မှာ Zombie တွေနဲ့ အတူပစ်ခတ်ခံရလို့ သေဆုံးပါတယ်။ (တံခါးဝမှာ ပစ်ခတ်မှုကြားထဲမိပြီး သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 15 - ကုန်တင်ကားထဲမှာ Zombie ပါလာလို့ အတူသေဆုံးပါတယ်။ (ကားထဲက Zombie ကိုက်လို့ သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 15 ကို ကျော်ဖြတ်ပြီး နောက်ဆုံးဇုန်ဆီ ချဉ်းကပ်နေပါပြီ။";
                 nextStory = "<b>ရက်စွဲ - Day 16:</b> နောက်ဆုံး (၅) ရက်သာ လိုတော့တဲ့အတွက် အစွမ်းကုန် ကြိုးစားရပါမယ်။";
                 btn1 = "1️⃣ Day 16 - အခန်းတွင်း တိတ်တဆိတ် အနားယူမည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 16 - အစောင့်တပ်ဖွဲ့ဆီ အချက်ပြရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 16 - လိုဏ်ခေါင်းဟောင်းတစ်ခုထဲ ဝင်ရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 16 ---
             else if (currentDay === 16) {
-                if (choiceNum === 1) { foodDays--; currentDay = 17; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=17; } else { gameOver("Day 16 - အချက်ပြတာကို အထင်မှားပြီး ပစ်ခတ်ခံရလို့ သေဆုံးပါတယ်။ (စစ်တပ်ကရန်သူအထင်မှားလို့ ပစ်သတ်ခံရပြီး သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=17; } else { gameOver("Day 16 - လိုဏ်ခေါင်းထဲမှာ Zombie အုပ်စုနဲ့တိုးပြီး သေဆုံးပါတယ်။ (လိုဏ်ခေါင်းထဲ Zombie မိလို့ သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 16 - အချက်ပြတာကို အထင်မှားပြီး ပစ်ခတ်ခံရလို့ သေဆုံးပါတယ်။ (စစ်တပ်ကရန်သူအထင်မှားလို့ ပစ်သတ်ခံရပြီး သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 16 - လိုဏ်ခေါင်းထဲမှာ Zombie အုပ်စုနဲ့တိုးပြီး သေဆုံးပါတယ်။ (လိုဏ်ခေါင်းထဲ Zombie မိလို့ သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 16 ကို အောင်မြင်စွာ ကျော်ဖြတ်နိုင်ခဲ့ပါပြီ။";
                 nextStory = "<b>ရက်စွဲ - Day 17:</b> Safe Zone ရဲ့ အတွင်းပိုင်း စစ်ဆေးရေးဂိတ်နဲ့ အလွန်နီးကပ်လာပါပြီ။";
                 btn1 = "1️⃣ Day 17 - တိတ်ဆိတ်စွာ စောင့်ဆိုင်းနေမည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 17 - စစ်ဆေးရေးဂိတ်ကို အတင်းတိုးဝင်ရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 17 - အခြားလွတ်မြောက်သူတွေနဲ့ ပူးပေါင်းရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 17 ---
             else if (currentDay === 17) {
-                if (choiceNum === 1) { foodDays--; currentDay = 18; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=18; } else { gameOver("Day 17 - စစ်ဆေးရေးဂိတ်မှာ အတင်းတိုးလို့ ပစ်သတ်ခံရပါတယ်။ (ဂိတ်မှာ အတင်းတိုးဝင်လို့ ပစ်ခတ်ခံရပြီး သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=18; } else { gameOver("Day 17 - ပူးပေါင်းတဲ့သူတွေက ရိက္ခာလုပြီး သတ်သွားလို့ သေဆုံးပါတယ်။ (အဖော်တွေရဲ့ သစ္စာဖောက်မှုကြောင့် သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 17 - စစ်ဆေးရေးဂိတ်မှာ အတင်းတိုးလို့ ပစ်သတ်ခံရပါတယ်။ (ဂိတ်မှာ အတင်းတိုးဝင်လို့ ပစ်ခတ်ခံရပြီး သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 17 - ပူးပေါင်းတဲ့သူတွေက ရိက္ခာလုပြီး သတ်သွားလို့ သေဆုံးပါတယ်။ (အဖော်တွေရဲ့ သစ္စာဖောက်မှုကြောင့် သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 17 ကို ကျော်ဖြတ်လာနိုင်ခဲ့ပါပြီ။";
                 nextStory = "<b>ရက်စွဲ - Day 18:</b> နောက်ဆုံး (၃) ရက်သာ လိုတော့တဲ့ အရေးကြီးဆုံး အချိန်ဖြစ်ပါတယ်။";
                 btn1 = "1️⃣ Day 18 - အမိုးအကာအောက်မှာ တိတ်တဆိတ် ပုန်းမည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 18 - ကယ်ဆယ်ရေးရဟတ်ယာဉ်ဆီ ပြေးရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 18 - အဓိကဂိတ်ပေါက်ဆီ အလံဖြူပြပြီး သွားရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 18 ---
             else if (currentDay === 18) {
-                if (choiceNum === 1) { foodDays--; currentDay = 19; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=19; } else { gameOver("Day 18 - ရဟတ်ယာဉ်ဆီပြေးစဉ် Zombie တွေ ဝိုင်းသွားလို့ သေဆုံးပါတယ်။ (ရဟတ်ယာဉ်ဆီပြေးရင်း Zombie ဝိုင်းခံရပြီး သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=19; } else { gameOver("Day 18 - အလံဖြူပြပေမဲ့ ကင်းစောင့်တွေက ပစ်ခတ်လို့ သေဆုံးပါတယ်။ (စစ်တပ်ရဲ့ ပစ်ခတ်မှုကြောင့် သေဆုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 18 - ရဟတ်ယာဉ်ဆီပြေးစဉ် Zombie တွေ ဝိုင်းသွားလို့ သေဆုံးပါတယ်။ (ရဟတ်ယာဉ်ဆီပြေးရင်း Zombie ဝိုင်းခံရပြီး သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 18 - အလံဖြူပြပေမဲ့ ကင်းစောင့်တွေက ပစ်ခတ်လို့ သေဆုံးပါတယ်။ (စစ်တပ်ရဲ့ ပစ်ခတ်မှုကြောင့် သေဆုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> Day 18 ကို အောင်မြင်စွာ ကျော်ဖြတ်နိုင်ခဲ့ပါပြီ။";
                 nextStory = "<b>ရက်စွဲ - Day 19 (နောက်ဆုံးတစ်ရက်အလို):</b> လွတ်မြောက်ဖို့အတွက် နောက်ဆုံးအဆင့်ကို ရောက်ရှိလာပါပြီ။";
                 btn1 = "1️⃣ Day 19 - နောက်ဆုံးတစ်ရက်အတွက် အခန်းတွင်း တိတ်ဆိတ်စွာ စောင့်မည် (ရိက္ခာ -1 ရက်)";
                 btn2 = "2️⃣ Day 19 - Safe Zone အစွန်းဘက်ကနေ ခုန်ဝင်ရန် 50/50 ကံစမ်းမည်";
                 btn3 = "3️⃣ Day 19 - စစ်တပ်ကင်းလှည့်ကားကို တားဆီးရန် 50/50 ကံစမ်းမည်";
             }
-            // --- DAY 19 ---
             else if (currentDay === 19) {
-                if (choiceNum === 1) { foodDays--; currentDay = 20; }
-                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; currentDay=20; } else { gameOver("Day 19 - ခြံစည်းရိုးခုန်ကျော်စဉ် Zombie တွေ ဆွဲချလို့ သေဆုံးပါတယ်။ (ခုန်ကျော်ရင်း Zombie ဆွဲချခံရပြီး သေဆုံးခြင်း)"); return; } }
-                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; currentDay=20; } else { gameOver("Day 19 - ကင်းလှည့်ကားက မရပ်ဘဲ တိုက်သွားလို့ သေဆုံးပါတယ်။ (စစ်ကားတိုက်မိလို့ အသက်ဆုံးရှုံးခြင်း)"); return; } }
+                if (choiceNum === 1) { foodDays--; }
+                else if (choiceNum === 2) { let luck = Math.random(); if(luck > 0.5) { foodDays+=3; } else { gameOver("Day 19 - ခြံစည်းရိုးခုန်ကျော်စဉ် Zombie တွေ ဆွဲချလို့ သေဆုံးပါတယ်။ (ခုန်ကျော်ရင်း Zombie ဆွဲချခံရပြီး သေဆုံးခြင်း)"); return; } }
+                else { let luck = Math.random(); if(luck > 0.5) { foodDays+=2; } else { gameOver("Day 19 - ကင်းလှည့်ကားက မရပ်ဘဲ တိုက်သွားလို့ သေဆုံးပါတယ်။ (စစ်ကားတိုက်မိလို့ အသက်ဆုံးရှုံးခြင်း)"); return; } }
                 consequence = "<b>အကျိုးဆက်:</b> နောက်ဆုံးနေ့ (Day 20) သို့ အောင်မြင်စွာ ရောက်ရှိလာပါပြီ။";
                 nextStory = "<b>ရက်စွဲ - Day 20 (နောက်ဆုံးရက် / ဇာတ်သိမ်းပိုင်း):</b> စစ်တပ်ရဲ့ အဓိက Safe Zone ကြီးရဲ့ တံခါးဝသို့ ရောက်ရှိပါတော့မည်။";
                 btn1 = "1️⃣ Day 20 - သတိကြီးစွာဖြင့် စစ်ဆေးရေးဂိတ်ဆီ ဝင်ရောက်မည်";
                 btn2 = "2️⃣ Day 20 - အပြေးအလွှားဖြင့် Safe Zone ထဲသို့ ခုန်ဝင်မည် (50/50 ကံစမ်းရန်)";
                 btn3 = "3️⃣ Day 20 - ကယ်ဆယ်ရေးအဖွဲ့ကို အချက်ပြအလံပြမည် (50/50 ကံစမ်းရန်)";
             }
-            // --- DAY 20 VICTORY ---
-            else if (currentDay === 20) {
-                updateDisplay();
-                title.innerText = "အောင်မြင်မှု (True Ending - Safe Zone Reached)";
-                text.innerHTML = `<b>ရက်စွဲ - Day 20 (ဇာတ်သိမ်းပိုင်း):</b> ရက်ပေါင်း (၂၀) ရက်တိတိ ပြင်းထန်တဲ့ အတားအဆီးများ၊ အစာခေါင်းပါးမှုများနှင့် Zombie ဘေးအန္တရာယ်များကို အောင်မြင်စွာ ကျော်ဖြတ်နိုင်ခဲ့ပါပြီ။ စစ်တပ်ရဲ့ လုံခြုံရေးဇုန်သို့ အရောက်သွားနိုင်ခဲ့ပြီး <b>Safe Zone</b> ကို အောင်မြင်စွာ ဝင်ရောက်နိုင်ခဲ့ပါပြီ။ <b>သင်ဟာ Zombie ကမ္ဘာဘေးကြီးမှာ ရက် ၂၀ တိတိ အသက်ရှင်ကျန်ရစ်ခဲ့တဲ့ စစ်မှန်တဲ့ Survivor တစ်ယောက် ဖြစ်လာပါပြီ! 🏆</b><br><br><b>🏆 (Victory - 20 Days Safe Zone Reached)</b>`;
-                buttons.innerHTML = `<button class="btn" onclick="resetGame()">🔄 ဂိမ်းကို အစကနေ ပြန်စမည်</button>`;
-                return;
-            }
 
             updateDisplay();
 
-            // မျက်နှာပြင်ပေါ်သို့ အကျိုးဆက်နှင့် ဇာတ်လမ်းအသစ် ထည့်သွင်းခြင်း
             title.innerText = `ရက်စွဲ: နေ့ ${currentDay} (Day ${currentDay} / 20)`;
             text.innerHTML = `
                 ${consequence}<br><br>
@@ -394,13 +398,15 @@
             updateDisplay();
             title.innerText = "ဂိမ်းဆုံးခန်း (Game Over)";
             text.innerHTML = `<b>အကျိုးဆက်:</b> ${reason}<br><br><b>(Game Over - ရက်စွဲ Day ${currentDay} တွင် ကျရှုံးသည်)</b>`;
-            buttons.innerHTML = `<button class="btn" onclick="resetGame()">🔄 ဂိမ်းကို အစကနေ ပြန်စမည်</button>`;
+            buttons.innerHTML = `<button class="btn" onclick="resetGame()">🔄 အစကနေ ပြန်စမည်</button>`;
         }
 
         function resetGame() {
             currentDay = 1;
             foodDays = 3;
             healthStatus = "ကောင်းမွန်";
+            currentWeather = weatherList[0];
+            currentTraffic = trafficList[0];
             updateDisplay();
             document.getElementById("timeline-title").innerText = "ရက်စွဲ: နေ့ ၁ (Day 1)";
             document.getElementById("story-text").innerHTML = `
