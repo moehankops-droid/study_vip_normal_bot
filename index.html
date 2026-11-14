@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>20-Day Yard Survival - Ultimate Edition</title>
+    <title>20-Day Yard Survival - Pick 5 & Map Edition</title>
     <style>
         body {
             background-color: #050505;
@@ -56,7 +56,7 @@
             text-transform: uppercase;
         }
         #story-text {
-            font-size: 16px;
+            font-size: 15px;
             line-height: 1.8;
             margin-bottom: 25px;
             text-align: left;
@@ -64,6 +64,26 @@
             padding: 20px;
             border-radius: 8px;
             border-left: 4px solid #ff4757;
+        }
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ffa502;
+            font-size: 14px;
+        }
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            background: #1e1e1e;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 6px;
+            font-size: 14px;
+            box-sizing: border-box;
         }
         .btn {
             display: block;
@@ -84,89 +104,174 @@
             color: #fff;
             transform: translateY(-2px);
         }
-        .night-btn {
-            border-color: #70a1ff;
-        }
-        .night-btn:hover {
-            background-color: #70a1ff;
-            color: #fff;
-        }
-        .loot-btn {
-            border-color: #2ed573;
-            color: #2ed573;
-        }
-        .loot-btn:hover {
-            background-color: #2ed573;
-            color: #fff;
-        }
-        .car-btn {
-            border-color: #ffa502;
-            color: #ffa502;
-        }
-        .car-btn:hover {
-            background-color: #ffa502;
-            color: #fff;
-        }
-        .walk-btn {
-            border-color: #ff4757;
-            color: #ff4757;
-        }
-        .walk-btn:hover {
-            background-color: #ff4757;
-            color: #fff;
-        }
-        .craft-btn {
-            border-color: #3498db;
-            color: #3498db;
-        }
-        .craft-btn:hover {
-            background-color: #3498db;
-            color: #fff;
-        }
-        .yard-btn {
-            border-color: #2ed573;
-            color: #2ed573;
-        }
-        .yard-btn:hover {
-            background-color: #2ed573;
-            color: #fff;
-        }
-        .mission-btn {
-            border-color: #9b59b6;
-            color: #9b59b6;
-        }
-        .mission-btn:hover {
-            background-color: #9b59b6;
-            color: #fff;
-        }
+        .night-btn { border-color: #70a1ff; }
+        .night-btn:hover { background-color: #70a1ff; color: #fff; }
+        .loot-btn { border-color: #2ed573; color: #2ed573; }
+        .loot-btn:hover { background-color: #2ed573; color: #fff; }
+        .car-btn { border-color: #ffa502; color: #ffa502; }
+        .car-btn:hover { background-color: #ffa502; color: #fff; }
+        .walk-btn { border-color: #ff4757; color: #ff4757; }
+        .walk-btn:hover { background-color: #ff4757; color: #fff; }
+        .craft-btn { border-color: #3498db; color: #3498db; }
+        .craft-btn:hover { background-color: #3498db; color: #fff; }
+        .yard-btn { border-color: #2ed573; color: #2ed573; }
+        .yard-btn:hover { background-color: #2ed573; color: #fff; }
+        .mission-btn { border-color: #9b59b6; color: #9b59b6; }
+        .mission-btn:hover { background-color: #9b59b6; color: #fff; }
+        .cook-btn { border-color: #ffa502; color: #ffa502; background-color: #2b2318; }
+        .cook-btn:hover { background-color: #ffa502; color: #000; }
+        .dog-btn { border-color: #eccc68; color: #eccc68; background-color: #252318; }
+        .dog-btn:hover { background-color: #eccc68; color: #000; }
+        .gun-btn { border-color: #ff4757; color: #ff4757; background-color: #2c1a1d; }
+        .gun-btn:hover { background-color: #ff4757; color: #fff; }
+        .knife-btn { border-color: #1e90ff; color: #1e90ff; background-color: #18222f; }
+        .knife-btn:hover { background-color: #1e90ff; color: #fff; }
+        .bat-btn { border-color: #eccc68; color: #eccc68; background-color: #2b2618; }
+        .bat-btn:hover { background-color: #eccc68; color: #000; }
         .select-item-btn {
             background-color: #2f3542;
-            border: 1px solid #2ed573;
-            color: #2ed573;
+            border: 1px solid #555;
+            color: #aaa;
             margin: 6px 0;
         }
         .select-item-btn.selected {
             background-color: #2ed573;
+            border-color: #2ed573;
             color: #000;
             font-weight: bold;
         }
+
+        #combat-arena {
+            background: #181010;
+            border: 2px solid #ff4757;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 15px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .zombie-sprite {
+            font-size: 85px;
+            display: inline-block;
+            transition: transform 0.2s;
+            margin: 15px 0;
+            filter: drop-shadow(0 0 10px rgba(255, 0, 0, 0.6));
+        }
+        .hp-bar-container {
+            width: 85%;
+            height: 22px;
+            background: #222;
+            border-radius: 11px;
+            margin: 12px auto;
+            overflow: hidden;
+            border: 1px solid #555;
+        }
+        .hp-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff4757, #ff6b81);
+            width: 100%;
+            transition: width 0.3s ease;
+        }
+        #combat-effect-text {
+            font-size: 17px;
+            font-weight: bold;
+            min-height: 45px;
+            margin-bottom: 10px;
+            color: #ffa502;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            20% { transform: translate(-8px, -3px) rotate(-8deg); }
+            40% { transform: translate(8px, 3px) rotate(8deg); }
+            60% { transform: translate(-8px, 3px) rotate(-5deg); }
+            80% { transform: translate(8px, -3px) rotate(5deg); }
+            100% { transform: translate(0px, 0px) rotate(0deg); }
+        }
+        @keyframes flashRed {
+            0% { background-color: rgba(255, 0, 0, 0.6); }
+            100% { background-color: #181010; }
+        }
+        @keyframes slashEffect {
+            0% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.4) rotate(-20deg); filter: brightness(2.5) drop-shadow(0 0 15px #00a8ff); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        .anim-shake { animation: shake 0.4s ease-in-out; }
+        .anim-flash { animation: flashRed 0.4s ease-out; }
+        .anim-slash { animation: slashEffect 0.35s ease-in-out; }
     </style>
 </head>
 <body>
 
     <div class="game-container">
-        <h2>🏡 20-Day Yard Survival - Ultimate Edition</h2>
+        <h2>🏡 20-Day Yard Survival - Map & Pick 5 Edition</h2>
         
+        <div id="char-creation-screen">
+            <div id="timeline-title">🛠️ ဇာတ်ကောင်ဖန်တီးမှု (Character Creation)</div>
+            <div id="story-text">
+                ကမ္ဘာကြီး ပျက်သုဉ်းပြီးနောက် **တစ်ရက်လျှင် ၄၈ နာရီ** ဖြစ်လာခဲ့သည်။ မြေပုံနှင့် ခွေးလေးကို အသုံးချ၍ ဆိုင်များသို့ ဘေးကင်းစွာသွားရောက်ခြင်းနှင့် ရက် ၂၀ ရှင်သန်ခြင်းတို့ကို ဆောင်ရွက်ပါ။ သင်၏ ဇာတ်ကောင်အချက်အလက်များကို ဖြည့်သွင်းပါ -
+            </div>
+            <div class="form-group">
+                <label>နာမည် (Name):</label>
+                <input type="text" id="input-name" class="form-control" value="နိုင်လင်းထက်">
+            </div>
+            <div class="form-group">
+                <label>အသက် (Age):</label>
+                <input type="text" id="input-age" class="form-control" value="၁၄ နှစ်">
+            </div>
+            <div class="form-group">
+                <label>ရှင်သန်ရေး ကျွမ်းကျင်မှု (Survival Skill):</label>
+                <input type="text" id="input-skill" class="form-control" value="ကွန်ပျူတာနှင့် နည်းပညာ ကျွမ်းကျင်မှု">
+            </div>
+            <div class="form-group">
+                <label>စတင်မည့်အဖွဲ့အစည်း (Starting Faction):</label>
+                <select id="input-faction" class="form-control">
+                    <option value="Lone Wolf (လွတ်လပ်သော ရှင်သန်သူ)">🐺 Lone Wolf (ဘယ်သူ့ကိုမှ မမှီခိုဘဲ လွတ်လပ်စွာ ရှင်သန်ခြင်း)</option>
+                    <option value="Sentinels (တင်းကျပ်သော လုံခြုံရေးအဖွဲ့)">🛡️ Sentinels (စည်းမျဉ်းတင်းကျပ်သော်လည်း လုံခြုံမှုရှိသော အဖွဲ့)</option>
+                    <option value="Scavengers (လွတ်လပ်၍ အတိုက်အခံများ)">🏴‍☠️ Scavengers (လွတ်လပ်သော်လည်း အန္တရာယ်များသော အဖွဲ့)</option>
+                </select>
+            </div>
+            <button class="btn" style="background-color: #2ed573; color: #000; font-weight: bold; margin-top: 15px;" onclick="saveCharacterAndProceed()">🚀 ဇာတ်ကောင်အချက်အလက် အတည်ပြုမည် (ပစ္စည်း ၅ ခုရွေးရန်)</button>
+        </div>
+
+        <div id="item-selection-screen" style="display: none;">
+            <div id="timeline-title">🎒 အစပိုင်း အဆင့် - ပစ္စည်း (၅) ခု ရွေးချယ်ခြင်း</div>
+            <div id="story-text">
+                <b>👤 ကစားသူ Profile:</b> <span id="profile-summary" style="color: #2ed573;"></span><br><br>
+                ခြံဝင်းထဲတွင် သယ်ဆောင်မည့် အရေးကြီး ပစ္စည်း **အတိအကျ (၅) ခု** ကို ရွေးချယ်ပါ (မြေပုံပါရှိပါက မြို့ထဲသွားရာတွင် လမ်းခုလတ်တိုက်ပွဲ သက်သာမည်) -
+            </div>
+            <div id="button-container">
+                <button class="btn select-item-btn" id="item-0" onclick="toggleItem(0, '🔪 အမဲလိုက်ဓား')">❌ 🔪 အမဲလိုက်ဓား</button>
+                <button class="btn select-item-btn" id="item-1" onclick="toggleItem(1, '💊 ဆေးဘူး')">❌ 💊 ဆေးဘူး</button>
+                <button class="btn select-item-btn" id="item-2" onclick="toggleItem(2, '🍜 ခေါက်ဆွဲခြောက်')">❌ 🍜 ခေါက်ဆွဲခြောက်</button>
+                <button class="btn select-item-btn" id="item-3" onclick="toggleItem(3, '💧 သောက်ရေသန့်ဗူး')">❌ 💧 သောက်ရေသန့်ဗူး</button>
+                <button class="btn select-item-btn" id="item-4" onclick="toggleItem(4, '🔦 လက်နှိပ်ဓာတ်မီး')">❌ 🔦 လက်နှိပ်ဓာတ်မီး</button>
+                <button class="btn select-item-btn" id="item-5" onclick="toggleItem(5, '🪵 အပိုသစ်သားတုံး')">❌ 🪵 အပိုသစ်သားတုံး</button>
+                <button class="btn select-item-btn" id="item-6" onclick="toggleItem(6, '📻 အရေးပေါ်ရေဒီယို')">❌ 📻 အရေးပေါ်ရေဒီယို</button>
+                <button class="btn select-item-btn" id="item-7" onclick="toggleItem(7, '🔫 ပစ္တိုသေနတ်')">❌ 🔫 ပစ္တိုသေနတ်</button>
+                <button class="btn select-item-btn" id="item-8" onclick="toggleItem(8, '🪓 တူနှင့် သံချောင်းများ')">❌ 🪓 တူနှင့် သံချောင်းများ</button>
+                <button class="btn select-item-btn" id="item-9" onclick="toggleItem(9, '🗺️ မြို့ပြမြေပုံ')">❌ 🗺️ မြို့ပြမြေပုံ</button>
+                
+                <button class="btn" style="background-color: #2ed573; color: #000; font-weight: bold; margin-top: 15px;" onclick="confirmSetup()">🚀 ရှင်သန်ရေးခရီး စတင်မည်</button>
+            </div>
+        </div>
+
         <div id="game-ui" style="display: none;">
             <div id="stats-bar">
+                <span>👤 နာမည်: <b id="stat-name"></b></span>
+                <span>🛡️ Faction: <b id="stat-faction"></b></span>
                 <span>📅 ရက်စွဲ: <b id="stat-day">Day 1 / 20</b></span>
-                <span>⏰ အချိန်: <b id="stat-time">08:00 AM</b></span>
-                <span>🌤️ ရာသီဥတု: <b id="stat-weather">☀️ သာယာခြင်း</b></span>
-                <span>👥 အဖော်: <b id="stat-companion">🐕 ကင်းစောင့်ခွေး</b></span>
-                <span>🥫 စားစရာ: <b id="stat-food">၅ ရက်စာ</b></span>
-                <span>💧 သောက်ရေ: <b id="stat-water">၅ ရက်စာ</b></span>
-                <span>🔫 ကျည်ဆံ: <b id="stat-ammo">၆ တောင့်</b></span>
+                <span>⏰ ၄၈ နာရီစနစ်: <b id="stat-time">08:00</b></span>
+                <span>🐶 ခွေးလေး: <b id="stat-dog">ကျန်းမာ (100%)</b></span>
+                <span>🛒 ဆိုင်သွားရန်: <b id="stat-shop-cooldown">သွားလို့ရပြီ ✅</b></span>
+                <span>🍽️ ဗိုက်ဝခြင်း (Hungry): <b id="stat-hungry">100%</b></span>
+                <span>💧 ရေရှိခြင်း (Thirst): <b id="stat-thirst">100%</b></span>
+                <span>🔫 ဂန်းကျည်ဆံ: <b id="stat-ammo">၆ တောင့်</b></span>
+                <span>🍳 ဟင်းချက်ဆီ: <b id="stat-oil">၃ ပုလင်း</b></span>
                 <span>🧱 နံရံအဆင့်: <b id="stat-wall">Level 1</b></span>
+                <span>⚡ ခြံတိုးတက်မှု: <b id="stat-yard-upgrades">မရှိသေး</b></span>
                 <span>⛽ ကားဆီ: <b id="stat-fuel">100%</b></span>
                 <span>🪵 သစ်သား: <b id="stat-wood">၅ ခု</b> | 🔩 သံချောင်း: <b id="stat-nails">၃ ခု</b></span>
                 <span>⚡ သက်လုံ: <b id="stat-stamina">100%</b></span>
@@ -174,57 +279,170 @@
             </div>
 
             <div id="inventory-bar">
-                🎒 <b>Inventory:</b> <span id="stat-inventory">အလွတ်</span>
+                🎒 <b>Inventory & Equipment:</b> <span id="stat-inventory">အလွတ်</span>
             </div>
-        </div>
 
-        <div id="timeline-title">အစပိုင်း အဆင့် - ပစ္စည်း (၈) ခု ရွေးချယ်ခြင်း</div>
-        <div id="story-text">
-            <b>🏡 လုံခြုံသော ခြံဝင်းအတွင်း ရှင်သန်ခြင်း:</b><br>
-            ကမ္ဘာကြီး ပျက်သုဉ်းသွားပါပြီ။ သင့်မှာ သေနတ်၊ ကျည်ဆံများ၊ အဖော်ခွေးလေးနဲ့အတူ ခြံဝင်းထဲမှာ ခိုလှုံနေပါတယ်။ ပထမဦးစွာ အိတ်ထဲတွင် သယ်ဆောင်မည့် ပစ္စည်း (၈) ခုကို ရွေးချယ်ပါ -
-        </div>
-
-        <div id="button-container">
-            <button class="btn select-item-btn selected" id="item-0" onclick="toggleItem(0, '🔪 အမဲလိုက်ဓား')">✅ ၁။ 🔪 အမဲလိုက်ဓား</button>
-            <button class="btn select-item-btn selected" id="item-1" onclick="toggleItem(1, '💊 ဆေးဘူး')">✅ ၂။ 💊 ဆေးဘူး</button>
-            <button class="btn select-item-btn selected" id="item-2" onclick="toggleItem(2, '🥫 စားစရာဘူးခွံ')">✅ ၃။ 🥫 စားစရာဘူးခွံ</button>
-            <button class="btn select-item-btn selected" id="item-3" onclick="toggleItem(3, '💧 သောက်ရေသန့်ဗူး')">✅ ၄။ 💧 သောက်ရေသန့်ဗူး</button>
-            <button class="btn select-item-btn selected" id="item-4" onclick="toggleItem(4, '🔦 လက်နှိပ်ဓာတ်မီး')">✅ ၅။ 🔦 လက်နှိပ်ဓာတ်မီး</button>
-            <button class="btn select-item-btn selected" id="item-5" onclick="toggleItem(5, '🪵 အပိုသစ်သားတုံး')">✅ ၆။ 🪵 အပိုသစ်သားတုံး</button>
-            <button class="btn select-item-btn selected" id="item-6" onclick="toggleItem(6, '📻 အရေးပေါ်ရေဒီယို')">✅ ၇။ 📻 အရေးပေါ်ရေဒီယို</button>
-            <button class="btn select-item-btn selected" id="item-7" onclick="toggleItem(7, '🔫 ပစ္တိုသေနတ်')">✅ ၈။ 🔫 ပစ္တိုသေနတ်</button>
-            <button class="btn select-item-btn selected" id="item-8" onclick="toggleItem(8, '🪓 တူနှင့် သံချောင်းများ')">✅ ၉။ 🪓 တူနှင့် သံချောင်းများ</button>
-            <button class="btn select-item-btn selected" id="item-9" onclick="toggleItem(9, '🗺️ မြို့ပြမြေပုံ')">✅ ၁၀။ 🗺️ မြို့ပြမြေပုံ</button>
-            
-            <button class="btn" style="background-color: #2ed573; color: #000; font-weight: bold; margin-top: 15px;" onclick="confirmSetup()">🚀 ရွေးချယ်မှု ပြီးဆုံးပြီ (ဂိမ်းစတင်မည်)</button>
+            <div id="timeline-title">ခြံဝင်းအခြေစိုက်စနစ်</div>
+            <div id="story-text">ဂိမ်းစတင်နေပါပြီ...</div>
+            <div id="game-button-container"></div>
         </div>
     </div>
 
     <script>
+        let playerName = "နိုင်လင်းထက်";
+        let playerAge = "၁၄ နှစ်";
+        let playerSkill = "ကွန်ပျူတာနှင့် နည်းပညာ ကျွမ်းကျင်မှု";
+        let playerFaction = "Lone Wolf";
+
         let currentDay = 1;
         let timeHour = 8; 
-        let foodDays = 5;
-        let waterDays = 5;
-        let ammoCount = 6; // သေနတ်ကျည်ဆံ
+        
+        let hungryPercent = 100;
+        let thirstPercent = 100;
+        let dogHealth = 100;
+
+        let foodItems = {
+            instantNoodles: 2, 
+            cannedFood: 2,     
+            beefJerky: 1,      
+            chocolateBar: 1    
+        };
+
+        let harvestedCrops = {
+            tomato: 0,
+            potato: 0,
+            corn: 0
+        };
+
+        let cookingOilCount = 3; 
+        let waterBottles = 3;  
+        let seeds = {
+            tomatoSeeds: 1,    
+            potatoSeeds: 1,    
+            cornSeeds: 1       
+        };
+
+        let activeCrop = null; 
+        let cropGrowthHours = 0; 
+
+        let medKitCount = 1; 
+        let ammoCount = 6; 
         let fuelPercent = 100; 
         let woodCount = 5;
         let nailsCount = 3;
         let wallLevel = 1; 
-        let currentWeather = "☀️ သာယာခြင်း";
-        let companionName = "🐕 ကင်းစောင့်ခွေး";
+        let hasCarArmor = false;
+        
+        let hasSolarPanel = false; 
+        let hasWaterWell = false;  
+        let hasBarbedWire = false; 
+        let hasWatchtower = false;  
+        let hasSpikeTraps = false;  
+        let hasGreenhouse = false;  
+
+        let currentWeather = "☀️ နေသာခြင်း";
+        let lastShopDay = 0; 
         let hasActiveMission = false;
         let stamina = 100;
         let health = 100;
         let healthStatus = "ကောင်းမွန်";
         let currentTravelMode = 'car';
+        let selectedStoreType = 'grocery';
+        let gameStarted = false;
+
+        let inCombat = false;
+        let enemyHP = 100;
+        let enemyQueue = 1;
+        let combatContext = 'outbound'; 
+
+        let itemsTakenCount = 0;
 
         let allAvailableItems = [
-            "🔪 အမဲလိုက်ဓား", "💊 ဆေးဘူး", "🥫 စားစရာဘူးခွံ", "💧 သောက်ရေသန့်ဗူး", 
+            "🔪 အမဲလိုက်ဓား", "💊 ဆေးဘူး", "🍜 ခေါက်ဆွဲခြောက်", "💧 သောက်ရေသန့်ဗူး", 
             "🔦 လက်နှိပ်ဓာတ်မီး", "🪵 အပိုသစ်သားတုံး", "📻 အရေးပေါ်ရေဒီယို", 
             "🔫 ပစ္တိုသေနတ်", "🪓 တူနှင့် သံချောင်းများ", "🗺️ မြို့ပြမြေပုံ"
         ];
+        let selectedItems = [];
 
-        let selectedItems = [...allAvailableItems];
+        function saveGame() {
+            let gameState = {
+                playerName, playerAge, playerSkill, playerFaction,
+                currentDay, timeHour, hungryPercent, thirstPercent, dogHealth, foodItems, harvestedCrops, cookingOilCount, waterBottles, seeds,
+                activeCrop, cropGrowthHours, medKitCount, ammoCount,
+                fuelPercent, woodCount, nailsCount, wallLevel, hasCarArmor,
+                hasSolarPanel, hasWaterWell, hasBarbedWire, hasWatchtower, hasSpikeTraps, hasGreenhouse,
+                currentWeather, lastShopDay, stamina, health, healthStatus, selectedItems, gameStarted
+            };
+            localStorage.setItem('yardSurvivalMapEditionSave', JSON.stringify(gameState));
+        }
+
+        function loadGame() {
+            let saved = localStorage.getItem('yardSurvivalMapEditionSave');
+            if (saved) {
+                let data = JSON.parse(saved);
+                playerName = data.playerName || "နိုင်လင်းထက်";
+                playerAge = data.playerAge || "၁၄ နှစ်";
+                playerSkill = data.playerSkill || "နည်းပညာကျွမ်းကျင်မှု";
+                playerFaction = data.playerFaction || "Lone Wolf";
+                currentDay = data.currentDay;
+                timeHour = data.timeHour !== undefined ? data.timeHour : 8;
+                hungryPercent = data.hungryPercent !== undefined ? data.hungryPercent : 100;
+                thirstPercent = data.thirstPercent !== undefined ? data.thirstPercent : 100;
+                dogHealth = data.dogHealth !== undefined ? data.dogHealth : 100;
+                foodItems = data.foodItems || { instantNoodles: 2, cannedFood: 2, beefJerky: 1, chocolateBar: 1 };
+                harvestedCrops = data.harvestedCrops || { tomato: 0, potato: 0, corn: 0 };
+                cookingOilCount = data.cookingOilCount !== undefined ? data.cookingOilCount : 3;
+                waterBottles = data.waterBottles !== undefined ? data.waterBottles : 3;
+                seeds = data.seeds || { tomatoSeeds: 1, potatoSeeds: 1, cornSeeds: 1 };
+                activeCrop = data.activeCrop || null;
+                cropGrowthHours = data.cropGrowthHours || 0;
+                medKitCount = data.medKitCount;
+                ammoCount = data.ammoCount !== undefined ? data.ammoCount : 6;
+                fuelPercent = data.fuelPercent;
+                woodCount = data.woodCount;
+                nailsCount = data.nailsCount;
+                wallLevel = data.wallLevel;
+                hasCarArmor = data.hasCarArmor || false;
+                hasSolarPanel = data.hasSolarPanel || false;
+                hasWaterWell = data.hasWaterWell || false;
+                hasBarbedWire = data.hasBarbedWire || false;
+                hasWatchtower = data.hasWatchtower || false;
+                hasSpikeTraps = data.hasSpikeTraps || false;
+                hasGreenhouse = data.hasGreenhouse || false;
+                currentWeather = data.currentWeather;
+                lastShopDay = data.lastShopDay || 0;
+                stamina = data.stamina;
+                health = data.health;
+                healthStatus = data.healthStatus;
+                selectedItems = data.selectedItems || [];
+                gameStarted = data.gameStarted;
+
+                if (gameStarted) {
+                    document.getElementById("char-creation-screen").style.display = "none";
+                    document.getElementById("item-selection-screen").style.display = "none";
+                    document.getElementById("game-ui").style.display = "block";
+                    updateDisplay();
+                    loadActions();
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        window.onload = function() {
+            loadGame();
+        };
+
+        function saveCharacterAndProceed() {
+            playerName = document.getElementById("input-name").value.trim() || "နိုင်လင်းထက်";
+            playerAge = document.getElementById("input-age").value.trim() || "၁၄ နှစ်";
+            playerSkill = document.getElementById("input-skill").value.trim() || "နည်းပညာကျွမ်းကျင်မှု";
+            playerFaction = document.getElementById("input-faction").value;
+
+            document.getElementById("char-creation-screen").style.display = "none";
+            document.getElementById("item-selection-screen").style.display = "block";
+            document.getElementById("profile-summary").innerText = `${playerName} (${playerAge}) | ကျွမ်းကျင်မှု: ${playerSkill} | Faction: ${playerFaction}`;
+        }
 
         function toggleItem(index, itemName) {
             let btn = document.getElementById(`item-${index}`);
@@ -233,10 +451,10 @@
             if (itemIndex > -1) {
                 selectedItems.splice(itemIndex, 1);
                 btn.classList.remove('selected');
-                btn.innerHTML = `❌ ချန်လှပ်ထားသည်: ${itemName}`;
+                btn.innerHTML = `❌ ${itemName}`;
             } else {
-                if (selectedItems.length >= 8) {
-                    alert("⚠️ အိတ်ထဲတွင် အများဆုံး (၈) ခုသာ ဆံ့ပါမည်။");
+                if (selectedItems.length >= 5) {
+                    alert("⚠️ ပစ္စည်း (၅) ခုသာ အများဆုံး ရွေးချယ်နိုင်ပါသည်။");
                     return;
                 }
                 selectedItems.push(itemName);
@@ -246,342 +464,556 @@
         }
 
         function confirmSetup() {
-            if (selectedItems.length !== 8) {
-                alert(`⚠️ ကျေးဇူးပြု၍ အတိအကျ ပစ္စည်း (၈) ခုသာ ရွေးချယ်ပါ။ (လက်ရှိ: ${selectedItems.length} ခု)`);
+            if (selectedItems.length !== 5) {
+                alert(`⚠️ ကျေးဇူးပြု၍ ပစ္စည်း အတိအကျ (၅) ခု ရွေးချယ်ပါ။ (လက်ရှိရွေးထားသည်: ${selectedItems.length} ခု)`);
                 return;
             }
 
-            document.getElementById("game-ui").style.display = "grid";
+            gameStarted = true;
+            saveGame();
+            document.getElementById("item-selection-screen").style.display = "none";
+            document.getElementById("game-ui").style.display = "block";
             updateDisplay();
             loadActions();
         }
 
         function updateDisplay() {
-            let timeString = "";
-            if (timeHour >= 6 && timeHour < 12) timeString = `☀️ ${timeHour}:00 AM`;
-            else if (timeHour >= 12 && timeHour < 18) timeString = `🌤️ ${timeHour}:00 PM`;
-            else if (timeHour >= 18 && timeHour < 22) timeString = `🌇 ${timeHour}:00 PM`;
-            else timeString = `🌙 ${timeHour < 10 ? '0' + timeHour : timeHour}:00 PM`;
+            if (health >= 80) healthStatus = "ကောင်းမွန်";
+            else if (health >= 40) healthStatus = "ဒဏ်ရာရ";
+            else healthStatus = "အလွန်အမင်း ထိခိုက်";
 
+            let timeString = `${timeHour < 10 ? '0' + timeHour : timeHour}:00 နာရီ (48-Hr Mode)`;
+            let daysSinceLastShop = currentDay - lastShopDay;
+            let shopStatusText = daysSinceLastShop >= 2 ? "သွားလို့ရပြီ ✅" : `စောင့်ဆိုင်းဆဲ (${2 - daysSinceLastShop} ရက်လိုသေး)`;
+
+            let upgradesArr = [];
+            if (hasSolarPanel) upgradesArr.push("ဆိုလာ ☀️");
+            if (hasWaterWell) upgradesArr.push("ရေတွင်း 🚰");
+            if (hasBarbedWire) upgradesArr.push("ဝါယာ ⚡");
+            if (hasWatchtower) upgradesArr.push("စင်မြင့် 🗼");
+            if (hasSpikeTraps) upgradesArr.push("ဆူးထောင် 🪵");
+            if (hasGreenhouse) upgradesArr.push("စိုက်ခင်း 🌱");
+            let yardUpgradesText = upgradesArr.length > 0 ? upgradesArr.join(", ") : "မရှိသေး ❌";
+
+            let inventorySummaryText = `🎒 ပစ္စည်းများ: ${selectedItems.join(', ')}`;
+
+            document.getElementById("stat-name").innerText = playerName;
+            document.getElementById("stat-faction").innerText = playerFaction.split(" ")[0];
             document.getElementById("stat-day").innerText = `Day ${currentDay} / 20`;
             document.getElementById("stat-time").innerText = timeString;
-            document.getElementById("stat-weather").innerText = currentWeather;
-            document.getElementById("stat-companion").innerText = companionName;
-            document.getElementById("stat-food").innerText = foodDays > 0 ? `${foodDays} ရက်စာ` : "ပြတ်လပ်နေသည် ❌";
-            document.getElementById("stat-water").innerText = waterDays > 0 ? `${waterDays} ရက်စာ` : "ပြတ်လပ်နေသည် ❌";
+            document.getElementById("stat-dog").innerText = `${dogHealth}%`;
+            document.getElementById("stat-shop-cooldown").innerText = shopStatusText;
+            document.getElementById("stat-hungry").innerText = `${hungryPercent}%`;
+            document.getElementById("stat-thirst").innerText = `${thirstPercent}%`;
             document.getElementById("stat-ammo").innerText = `${ammoCount} တောင့်`;
+            document.getElementById("stat-oil").innerText = `${cookingOilCount} ပုလင်း`;
             document.getElementById("stat-wall").innerText = `Level ${wallLevel}`;
+            document.getElementById("stat-yard-upgrades").innerText = yardUpgradesText;
             document.getElementById("stat-fuel").innerText = `${fuelPercent}%`;
             document.getElementById("stat-wood").innerText = `${woodCount} ခု`;
             document.getElementById("stat-nails").innerText = `${nailsCount} ခု`;
             document.getElementById("stat-stamina").innerText = `${stamina}%`;
             document.getElementById("stat-health").innerText = `${healthStatus} (${health}%)`;
-            document.getElementById("stat-inventory").innerText = selectedItems.join(", ");
+            document.getElementById("stat-inventory").innerText = inventorySummaryText;
+            saveGame();
         }
 
         function loadActions() {
-            let isNight = (timeHour >= 18 || timeHour < 6);
+            inCombat = false;
+            let isNight = (timeHour >= 24 && timeHour < 48);
             let isHordeNight = (currentDay === 5 || currentDay === 10 || currentDay === 15);
             
-            document.getElementById("timeline-title").innerText = `ရက်စွဲ: နေ့ ${currentDay} (${timeHour}:00 နာရီ) - ${isHordeNight && isNight ? '⚠️ အထူး Zombie အုပ်စုကြီး ဝင်တိုက်မည့်ည!' : (isNight ? '🌙 ညပိုင်း' : '☀️ နေ့ဘက်')}`;
+            document.getElementById("timeline-title").innerText = `${playerName} - နေ့ ${currentDay} (${timeHour}:00 နာရီ)`;
 
             if (!isNight) {
                 document.getElementById("story-text").innerHTML = `
                     <b>🏡 ခြံဝင်းအတွင်း နေ့ဘက်အချိန် (${timeHour}:00 နာရီ):</b><br>
-                    ရာသီဥတု: <b>${currentWeather}</b> | နံရံအဆင့်: <b>Level ${wallLevel}</b>။ လုပ်ဆောင်မည့် အစီအစဉ်ကို ရွေးချယ်ပါ -
+                    ရှင်သန်သူ: <b>${playerName}</b> | ရာသီဥတု: <b>${currentWeather}</b> | Faction: <b>${playerFaction}</b>။ လုပ်ဆောင်မည့် အစီအစဉ်ကို ရွေးချယ်ပါ -
                 `;
                 
-                let missionHTML = hasActiveMission ? `<button class="btn mission-btn" onclick="doRadioMission()">📻 <b>အရေးပေါ် ရေဒီယိုမစ်ရှင်သို့ သွားရောက်မည် (ရှားပါးပစ္စည်းရှာရန်)</b></button>` : "";
+                let missionHTML = hasActiveMission ? `<button class="btn mission-btn" onclick="doRadioMission()">📻 <b>အရေးပေါ် ရေဒီယိုမစ်ရှင်သို့ သွားရောက်မည်</b></button>` : "";
 
-                document.getElementById("button-container").innerHTML = `
-                    <button class="btn" onclick="takeAction('eat')">🍽️ စားစရာ စားသုံးမည် (သက်လုံ +15%)</button>
-                    <button class="btn" onclick="drinkWater()">💧 <b>ရေသန့်ဗူး သောက်သုံးမည် (သက်လုံ ၁၀၀% ပြန်တက်မည်)</b></button>
+                document.getElementById("game-button-container").innerHTML = `
+                    <button class="btn cook-btn" onclick="openCookMenu()">🍳 <b>မီးဖိုချောင် - ဟင်းချက်ဆီသုံး၍ ချက်ပြုတ်စားသုံးမည်</b> (Hungry% တက်မည်)</button>
+                    <button class="btn dog-btn" onclick="feedDog()">🐶 <b>အိမ်မွေးခွေးလေးကို အစာကျွေးမည်</b> (ခွေးလေး ကျန်းမာရေး +25%)</button>
+                    <button class="btn" onclick="drinkWaterPct()">💧 <b>သောက်ရေသန့်ဗူး သောက်သုံးမည်</b> (Thirst% +40%)</button>
+                    <button class="btn" style="border-color: #2ed573; color: #2ed573;" onclick="healWithMedKit()">💊 <b>ဆေးဘူးသုံး၍ ကျန်းမာရေး ကုသမည်</b> (ကျန်းမာရေး +40%)</button>
                     ${missionHTML}
+                    <button class="btn loot-btn" onclick="scavengeRuins()">🔍 <b>အနီးအနားရှိ အိမ်ဟောင်း/အမှိုက်ပုံများကို ရှာဖွေမည်</b> (Scavenge Ruins)</button>
                     <button class="btn craft-btn" onclick="upgradeWall()">🧱 <b>ခြံစည်းရိုးနံရံ Level မြှင့်တင်မည်</b> (သစ်သား ၃ + သံချောင်း ၂)</button>
-                    <button class="btn yard-btn" onclick="openYardMenu()">🌿 <b>ခြံဝင်းအတွင်း မိုးရေစု / ဟင်းခင်းစိုက်မည်</b></button>
-                    <button class="btn car-btn" onclick="tryTravel('car')">🚗 <b>ကားဖြင့် ကုန်စုံဆိုင်သို့ သွားမည်</b> (${fuelPercent >= 20 ? 'ကားဆီ -20%' : 'ဆီမလုံလောက်ပါ ❌'})</button>
-                    <button class="btn walk-btn" onclick="tryTravel('walk')">🚶 <b>ခြေလျင်ဖြင့် ကုန်စုံဆိုင်သို့ သွားမည်</b> (သက်လုံ -35%)</button>
+                    <button class="btn craft-btn" onclick="openYardUpgradeMenu()">🛠️ <b>ခြံဝင်း အဆင်မြှင့်တင်မှုများနှင့် အဆောက်အအုံများ</b></button>
+                    <button class="btn yard-btn" onclick="openFarmingMenu()">🌱 <b>ခြံဝင်းအတွင်း သီးနှံစိုက်ခင်း စီမံမည်</b> ${activeCrop ? '(အပင်ရှင်သန်ဆဲ 🌱)' : '(စိုက်ပျိုးရန် လွတ်နေသည်)'}</button>
+                    <button class="btn car-btn" onclick="openStoreSelectionMenu('car')">🚗 <b>ကားဖြင့် မြို့ထဲသို့ ဆိုင်များသို့ သွားမည်</b> (၂ ရက်မှ ၁ ခါ)</button>
+                    <button class="btn walk-btn" onclick="openStoreSelectionMenu('walk')">🚶 <b>ခြေလျင်ဖြင့် မြို့ထဲသို့ ဆိုင်များသို့ သွားမည်</b> (၂ ရက်မှ ၁ ခါ)</button>
+                    <button class="btn" style="background-color: #333; border-color: #555; color: #aaa; margin-top: 20px;" onclick="debugCheatMode()">🧪 [Test Mode] ပစ္စည်းများနှင့် အရင်းအမြစ်များ အလကားယူမည်</button>
                 `;
             } else {
                 document.getElementById("story-text").innerHTML = `
                     <b>🌙 ညပိုင်းရောက်ရှိလာပြီ (${timeHour}:00 နာရီ):</b><br>
-                    ${isHordeNight ? '<b style="color: #ff4757;">⚠️ သတိပြုရန် - ယနေ့ညသည် ခြံဝင်းကို Zombie အုပ်စုကြီး (Horde) ဝင်တိုက်မည့် အထူးညဖြစ်သည်!</b>' : 'ခြံဝင်းအပြင်ဘက်တွင် Zombie တွေ လှည့်လည်နေပါပြီ။'}
+                    ${isHordeNight ? '<b style="color: #ff4757;">⚠️ သတိပြုရန် - ယနေ့ညသည် ခြံဝင်းကို Zombie အုပ်စုကြီး (Horde) ဝင်တိုက်မည့် အထူးညဖြစ်သည်!</b>' : '၄၈ နာရီစနစ်၏ ရှည်လျားသော ညဉ့်ယံတွင် 🐶 ခွေးလေးက ခြံဝင်းအစွန်မှ ဟောင်၍ သတိပေးနေသည်။'}
                 `;
-                document.getElementById("button-container").innerHTML = `
+                document.getElementById("game-button-container").innerHTML = `
                     <button class="btn night-btn" onclick="takeAction('night_sleep')">🛌 ခြံဝင်းထဲတွင် အိပ်စက်အနားယူမည်</button>
                     <button class="btn night-btn" onclick="takeAction('night_watch')">👀 ခွေးလေးနှင့်အတူ ကင်းစောင့်မည်</button>
                 `;
             }
         }
 
-        // --- ရာသီဥတုနှင့် ရေဒီယိုမစ်ရှင် ကျပန်းစနစ် ---
-        function updateWeatherAndEvents() {
+        function feedDog() {
+            if (foodItems.beefJerky > 0) {
+                foodItems.beefJerky--;
+                dogHealth = Math.min(100, dogHealth + 25);
+                stamina = Math.min(100, stamina + 10);
+                timeHour += 1;
+                alert("🐶 ခွေးလေးကို အမဲသားခြောက် ကျွေးလိုက်ရာ ကျန်းမာရေး +25% တက်လာပါပြီ။");
+                updateDisplay(); loadActions();
+            } else if (foodItems.cannedFood > 0) {
+                foodItems.cannedFood--;
+                dogHealth = Math.min(100, dogHealth + 20);
+                timeHour += 1;
+                alert("🐶 ခွေးလေးကို ဘူးခွံအစာ ကျွေးလိုက်ပါပြီ။");
+                updateDisplay(); loadActions();
+            } else {
+                alert("⚠️ ခွေးလေးကျွေးရန် အသားခြောက် သို့မဟုတ် စားစရာဘူးခွံ မရှိပါ။");
+            }
+        }
+
+        function scavengeRuins() {
+            if (stamina < 20) { alert("⚠️ သက်လုံ နည်းနေပါသည်"); return; }
+            stamina -= 20; timeHour += 4;
+
             let rand = Math.random();
             if (rand < 0.4) {
-                currentWeather = "☀️ နေသာထိန်လင်းခြင်း";
+                woodCount += 3; nailsCount += 2;
+                alert("🔍 အိမ်ဟောင်းများကို ရှာဖွေရာမှ သစ်သား ၃ ခုနှင့် သံချောင်း ၂ ခု ရှာဖွေတွေ့ရှိခဲ့သည်။");
             } else if (rand < 0.7) {
-                currentWeather = "🌧️ မိုးသည်းထန်စွာ ရွာသွန်းခြင်း";
-                waterDays += 2;
+                waterBottles += 2; cookingOilCount += 1;
+                alert("🔍 အဆောက်အအုံဟောင်းတစ်ခုထဲမှ သောက်ရေဗူး ၂ ဘူးနှင့် ဟင်းချက်ဆီ ၁ ပုလင်း တွေ့ရှိခဲ့သည်။");
             } else {
-                currentWeather = "🌫️ မြူထူဆိုင်းခြင်း (အန္တရာယ်များ)";
+                health -= 10;
+                alert("⚠️ အမှိုက်ပုံကို ရှာဖွေစဉ် Zombie တစ်ကောင်နှင့် တိုး၍ ဒဏ်ရာ (-10%) ရခဲ့သည်။");
             }
-
-            // ရေဒီယိုမှ အချက်ပြသံ (Mission) ကျပန်းပေါ်လာခြင်း
-            if (Math.random() < 0.4 && !hasActiveMission) {
-                hasActiveMission = true;
-                alert("📻 အရေးပေါ်ရေဒီယိုမှ အချက်ပြသံ ထွက်ပေါ်လာသည်! အနီးအနားရှိ စွန့်ပစ်ခံ သိုလှောင်ရုံတွင် ပစ္စည်းများရှိနေကြောင်း ကြားလိုက်ရပါသည်။ (မစ်ရှင်ပွင့်သွားပါပြီ)");
-            }
+            checkTimeAndProgress("အနီးအနားရှိ အိမ်ဟောင်းများကို ရှာဖွေခဲ့သည်။");
         }
 
-        function doRadioMission() {
-            stamina -= 20;
-            timeHour += 3;
-            hasActiveMission = false;
-
-            let success = Math.random() < 0.7;
-            if (success) {
-                ammoCount += 4;
-                foodDays += 2;
-                checkTimeAndProgress("📻 ရေဒီယိုမစ်ရှင်ကို အောင်မြင်စွာ လုပ်ဆောင်နိုင်ခဲ့ပြီး ကျည်ဆံ (၄) တောင့်နှင့် စားစရာများ ရယူနိုင်ခဲ့သည်။");
-            } else {
-                health -= 15;
-                checkTimeAndProgress("📻 ရေဒီယိုမစ်ရှင်သို့ သွားရောက်စဉ် Zombie များနှင့် တိုးမိကာ ထိခိုက်ဒဏ်ရာ ရရှိခဲ့သည်။");
-            }
+        function openCookMenu() {
+            document.getElementById("timeline-title").innerText = `🍳 မီးဖိုချောင် (ဆီ: ${cookingOilCount} ပုလင်း)`;
+            document.getElementById("story-text").innerHTML = `<b>ကြော်လှော်ချက်ပြုတ်ရန်အတွက် ဟင်းချက်ဆီ (၁) ပုလင်း လိုအပ်ပါသည်:</b>`;
+            
+            let html = `
+                <button class="btn cook-btn" onclick="cookAndEat('noodles')">🍜 <b>ခေါက်ဆွဲခြောက်ပြုတ်စားမည်</b> (Hungry +35%)</button>
+                <button class="btn cook-btn" onclick="cookAndEat('canned')">🥫 <b>ဘူးခွံ အပူပေးစားမည်</b> (Hungry +45%)</button>
+                <button class="btn cook-btn" onclick="cookAndEat('beef')">🥩 <b>အမဲသားခြောက် ကြော်စားမည်</b> (Hungry +50%)</button>
+                <button class="btn cook-btn" onclick="cookAndEat('tomato')">🍅 <b>ခရမ်းချဉ်သီးဟင်း ချက်စားမည်</b> (ကျန်: ${harvestedCrops.tomato} ခု)</button>
+                <button class="btn cook-btn" onclick="cookAndEat('potato')">🥔 <b>အာလူးကြော်စားမည်</b> (ကျန်: ${harvestedCrops.potato} ခု)</button>
+                <button class="btn" style="margin-top: 15px;" onclick="loadActions()">🔙 ပင်မမီနူးသို့ ပြန်သွားမည်</button>
+            `;
+            document.getElementById("game-button-container").innerHTML = html;
         }
 
-        function upgradeWall() {
-            if (wallLevel >= 4) {
-                alert("✨ သင့်ခြံစည်းရိုးနံရံသည် အမြင့်ဆုံးအဆင့် (Level 4) သို့ ရောက်ရှိပြီး ဖြစ်ပါသည်။");
+        function cookAndEat(type) {
+            if (cookingOilCount <= 0) {
+                alert("⚠️ ဟင်းချက်ဆီ လုံးဝ ကုန်ဆုံးနေပါပြီ! ကုန်စုံဆိုင်သို့ သွားပါ။");
                 return;
             }
 
-            if (woodCount >= 3 && nailsCount >= 2) {
-                woodCount -= 3;
-                nailsCount -= 2;
-                wallLevel++;
-                stamina -= 15;
-                timeHour += 3;
-                alert(`🎉 အောင်မြင်သည်! ခြံစည်းရိုးနံရံကို Level ${wallLevel} သို့ အဆင့်မြှင့်တင်ပြီးပါပြီ။`);
-                checkTimeAndProgress("ခြံစည်းရိုးနံရံကို အဆင့်မြှင့်တင်ခဲ့သည်။");
+            let gained = 0, name = "";
+            if (type === 'noodles' && foodItems.instantNoodles > 0) { foodItems.instantNoodles--; gained = 35; name = "ပြုတ်ထားသော ခေါက်ဆွဲ"; }
+            else if (type === 'canned' && foodItems.cannedFood > 0) { foodItems.cannedFood--; gained = 45; name = "အပူပေးထားသော ဘူးခွံ"; }
+            else if (type === 'beef' && foodItems.beefJerky > 0) { foodItems.beefJerky--; gained = 50; name = "ကြော်ထားသော အမဲသား"; }
+            else if (type === 'tomato' && harvestedCrops.tomato > 0) { harvestedCrops.tomato--; gained = 30; name = "ခရမ်းချဉ်သီးဟင်း"; }
+            else if (type === 'potato' && harvestedCrops.potato > 0) { harvestedCrops.potato--; gained = 40; name = "ကြော်ထားသော အာလူး"; }
+            else { alert("⚠️ အဆိုပါ စားစရာ မရှိပါ။"); return; }
+
+            cookingOilCount--; 
+            hungryPercent = Math.min(100, hungryPercent + gained);
+            health = Math.min(100, health + 15);
+            stamina = Math.min(100, stamina + 20);
+            timeHour += 3;
+
+            alert(`🍳 "${name}" ကို ချက်ပြုတ်စားသုံးလိုက်ရာ Hungry +${gained}% တက်လာပါပြီ။`);
+            checkTimeAndProgress(`စားစရာ (${name}) ကို ချက်ပြုတ်စားသုံးခဲ့သည်။`);
+        }
+
+        function drinkWaterPct() {
+            if (waterBottles > 0) {
+                waterBottles--;
+                thirstPercent = Math.min(100, thirstPercent + 40);
+                stamina = Math.min(100, stamina + 20);
+                timeHour += 2;
+                alert("💧 သောက်ရေသန့်ဗူး သောက်သုံးလိုက်သဖြင့် Thirst +40% ပြန်ပြည့်လာပါပြီ။");
+                checkTimeAndProgress("သောက်ရေသန့် သောက်သုံးခဲ့သည်။");
             } else {
-                alert("⚠️ ပစ္စည်း မလုံလောက်ပါ။ (သစ်သား ၃ ခု နှင့် သံချောင်း ၂ ခု လိုအပ်သည်)");
+                alert("⚠️ သောက်ရေဗူး မရှိတော့ပါ။");
             }
         }
 
-        function openYardMenu() {
-            document.getElementById("timeline-title").innerText = `🌿 ခြံဝင်းတွင်း စီမံခန့်ခွဲမှု`;
-            document.getElementById("story-text").innerHTML = `<b>ခြံဝင်းထဲတွင် ရှိနေသော အရာများကို အသုံးချခြင်း:</b>`;
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn yard-btn" onclick="yardAction('collect_rain')">🌧️ <b>မိုးရေစုစည်ပိုင်းမှ ရေစုဆောင်းမည်</b> (သောက်ရေ +2 ရက်စာ)</button>
-                <button class="btn yard-btn" onclick="yardAction('harvest_garden')">🌱 <b>ဟင်းသီးဟင်းရွက်စိုက်ခင်းမှ စားစရာ ခူးဆွတ်မည်</b> (စားစရာ +1 ရက်စာ)</button>
-                <button class="btn yard-btn" onclick="yardAction('gather_yard_wood')">🪵 <b>ခြံထဲက သစ်ပင်ခြောက်များမှ သစ်သားစုဆောင်းမည်</b> (သစ်သား +3 ခု)</button>
+        function openFarmingMenu() {
+            document.getElementById("timeline-title").innerText = `🌱 ခြံဝင်းတွင်း စိုက်ပျိုးရေး`;
+            let cropStatusText = activeCrop ? `စိုက်ပျိုးဆဲအပင်: <b>${activeCrop.name}</b> (ကျန်နာရီ: ${activeCrop.hours} နာရီ)` : `စိုက်ကွင်း လွတ်နေပါသည် ❌`;
+            
+            let html = `<b>ခြံထဲတွင် အသီးအနှံများ စိုက်ပျိုးခြင်း:</b><br>${cropStatusText}<br><br>`;
+
+            if (!activeCrop) {
+                html += `<b>စိုက်ပျိုးရန် ပျိုးစေ့များ ရွေးချယ်ပါ:</b><br>`;
+                if (seeds.tomatoSeeds > 0) html += `<button class="btn yard-btn" onclick="plantCrop('tomato', 'ခရမ်းချဉ်သီး', 16)">🍅 <b>ခရမ်းချဉ်သီးစိုက်မည်</b> (စေ့ကျန်: ${seeds.tomatoSeeds})</button>`;
+                if (seeds.potatoSeeds > 0) html += `<button class="btn yard-btn" onclick="plantCrop('potato', 'အာလူး', 20)">🥔 <b>အာလူးစိုက်မည်</b> (စေ့ကျန်: ${seeds.potatoSeeds})</button>`;
+                if (seeds.cornSeeds > 0) html += `<button class="btn yard-btn" onclick="plantCrop('corn', 'ပြောင်းဖူး', 24)">🌽 <b>ပြောင်းဖူးစိုက်မည်</b> (စေ့ကျန်: ${seeds.cornSeeds})</button>`;
+                if (seeds.tomatoSeeds === 0 && seeds.potatoSeeds === 0 && seeds.cornSeeds === 0) {
+                    html += `<p style="color: #ff4757;">⚠️ ပျိုးစေ့များ ကုန်ဆုံးနေပါသည်။</p>`;
+                }
+            } else {
+                if (activeCrop.hours <= 0) {
+                    html += `<button class="btn" style="background-color: #2ed573; color: #000; font-weight: bold;" onclick="harvestCrop()">✨ <b>အသီးအနှံများကို ခူးဆွတ်မည်</b></button>`;
+                } else {
+                    html += `<button class="btn yard-btn" onclick="waterCrop()">💧 <b>အပင်ကို ရေလောင်းမည်</b> (ရေဗူး ၁ ဘူးသုံးမည်)</button>`;
+                }
+            }
+
+            html += `<button class="btn" style="margin-top: 15px;" onclick="loadActions()">🔙 ပင်မမီနူးသို့ ပြန်သွားမည်</button>`;
+            document.getElementById("game-button-container").innerHTML = html;
+        }
+
+        function plantCrop(type, name, hours) {
+            if (type === 'tomato') seeds.tomatoSeeds--;
+            else if (type === 'potato') seeds.potatoSeeds--;
+            else if (type === 'corn') seeds.cornSeeds--;
+
+            activeCrop = { type: type, name: name, hours: hours };
+            stamina -= 5; timeHour += 2;
+            alert(`🌱 ${name} ကို စိုက်ပျိုးပြီးပါပြီ။`);
+            checkTimeAndProgress(`${name} ကို စိုက်ပျိုးခဲ့သည်။`);
+        }
+
+        function waterCrop() {
+            if (waterBottles > 0) {
+                waterBottles--;
+                activeCrop.hours = Math.max(0, activeCrop.hours - 4);
+                timeHour += 1;
+                alert("💧 အပင်ကို ရေလောင်းပေးလိုက်ပါသည်။");
+                openFarmingMenu();
+            } else { alert("⚠️ ရေဗူး မရှိပါ။"); }
+        }
+
+        function harvestCrop() {
+            let type = activeCrop.type, name = activeCrop.name;
+            if (type === 'tomato') harvestedCrops.tomato += 3;
+            else if (type === 'potato') harvestedCrops.potato += 3;
+            else if (type === 'corn') foodItems.instantNoodles += 3;
+
+            alert(`🎉 အောင်မြင်သည်! ခြံစိုက်ခင်းမှ ${name} များကို ခူးဆွတ်ရရှိခဲ့သည်။`);
+            activeCrop = null; loadActions();
+        }
+
+        function debugCheatMode() {
+            woodCount += 30; nailsCount += 30; ammoCount += 15; waterBottles += 10;
+            cookingOilCount += 5; dogHealth = 100;
+            alert("🧪 [Test Mode] အရင်းအမြစ်များနှင့် ခွေးကျန်းမာရေး အပြည့်အစုံ ထည့်ပေးလိုက်ပါပြီ။");
+            updateDisplay();
+        }
+
+        function openYardUpgradeMenu() {
+            document.getElementById("timeline-title").innerText = `🛠️ ခြံဝင်း အဆင်မြှင့်တင်မှုများ`;
+            document.getElementById("story-text").innerHTML = `<b>ခြံဝင်း လုံခြုံရေး အဆောက်အအုံများ:</b>`;
+            document.getElementById("game-button-container").innerHTML = `
+                <button class="btn craft-btn" onclick="buyYardUpgrade('well')">🚰 <b>ရေတွင်းတူးမည်</b> ${hasWaterWell ? '(ပြီးပြီ ✅)' : '(သစ်သား ၄ + သံချောင်း ၄)'}</button>
+                <button class="btn craft-btn" onclick="buyYardUpgrade('solar')">☀️ <b>ဆိုလာပြား တပ်ဆင်မည်</b> ${hasSolarPanel ? '(ပြီးပြီ ✅)' : '(သစ်သား ၅ + သံချောင်း ၃)'}</button>
+                <button class="btn craft-btn" onclick="buyYardUpgrade('wire')">⚡ <b>ဝါယာကြိုး ကာရံမည်</b> ${hasBarbedWire ? '(ပြီးပြီ ✅)' : '(သစ်သား ၃ + သံချောင်း ၅)'}</button>
+                <button class="btn craft-btn" onclick="buyYardUpgrade('watchtower')">🗼 <b>ရေဒါစင်မြင့် ဆောက်မည်</b> ${hasWatchtower ? '(ပြီးပြီ ✅)' : '(သစ်သား ၆ + သံချောင်း ၄)'}</button>
+                <button class="btn craft-btn" onclick="buyYardUpgrade('spike')">🪵 <b>သစ်သားဆူး ထောင်မည်</b> ${hasSpikeTraps ? '(ပြီးပြီ ✅)' : '(သစ်သား ၅ + သံချောင်း ၂)'}</button>
+                <button class="btn craft-btn" onclick="buyYardUpgrade('greenhouse')">🌱 <b>မိုးလုံစိုက်ခင်းလုပ်မည်</b> ${hasGreenhouse ? '(ပြီးပြီ ✅)' : '(သစ်သား ၆ + သံချောင်း ၃)'}</button>
                 <button class="btn" onclick="loadActions()">🔙 ပင်မမီနူးသို့ ပြန်သွားမည်</button>
             `;
         }
 
-        function yardAction(actionType) {
-            stamina -= 10;
-            timeHour += 2;
-            let msg = "";
-
-            if (actionType === 'collect_rain') {
-                waterDays += 2;
-                msg = "🌧️ မိုးရေစုစည်ပိုင်းမှ သောက်ရေသန့်များကို စုဆောင်းနိုင်ခဲ့သည်။";
-            } else if (actionType === 'harvest_garden') {
-                foodDays += 1;
-                msg = "🌱 ဟင်းသီးဟင်းရွက်စိုက်ခင်းမှ အစားအစာများကို ခူးဆွတ်ရရှိခဲ့သည်။";
-            } else if (actionType === 'gather_yard_wood') {
-                woodCount += 3;
-                msg = "🪵 ခြံထဲက သစ်ပင်ခြောက်များမှ သစ်သား (၃) ခု ရယူခဲ့သည်။";
-            }
-
-            checkTimeAndProgress(msg);
+        function buyYardUpgrade(type) {
+            if (type === 'well' && !hasWaterWell && woodCount >= 4 && nailsCount >= 4) { woodCount -= 4; nailsCount -= 4; hasWaterWell = true; alert("🎉 ရေတွင်း တူးပြီးပါပြီ!"); }
+            else if (type === 'solar' && !hasSolarPanel && woodCount >= 5 && nailsCount >= 3) { woodCount -= 5; nailsCount -= 3; hasSolarPanel = true; alert("🎉 ဆိုလာပြား တပ်ဆင်ပြီးပါပြီ!"); }
+            else if (type === 'wire' && !hasBarbedWire && woodCount >= 3 && nailsCount >= 5) { woodCount -= 3; nailsCount -= 5; hasBarbedWire = true; alert("🎉 ဝါယာကြိုး ကာရံပြီးပါပြီ!"); }
+            else if (type === 'watchtower' && !hasWatchtower && woodCount >= 6 && nailsCount >= 4) { woodCount -= 6; nailsCount -= 4; hasWatchtower = true; alert("🎉 ရေဒါစင်မြင့် ဆောက်ပြီးပါပြီ!"); }
+            else if (type === 'spike' && !hasSpikeTraps && woodCount >= 5 && nailsCount >= 2) { woodCount -= 5; nailsCount -= 2; hasSpikeTraps = true; alert("🎉 ဆူးထောင်ပြီးပါပြီ!"); }
+            else if (type === 'greenhouse' && !hasGreenhouse && woodCount >= 6 && nailsCount >= 3) { woodCount -= 6; nailsCount -= 3; hasGreenhouse = true; alert("🎉 မိုးလုံစိုက်ခင်း ပြီးပါပြီ!"); }
+            else { alert("⚠️ ပစ္စည်း မလုံလောက်ပါ။"); return; }
+            updateDisplay(); openYardUpgradeMenu();
         }
 
-        function drinkWater() {
-            if (waterDays > 0) {
-                waterDays--;
-                stamina = 100;
-                alert("💧 သောက်ရေသန့်ကို သောက်သုံးလိုက်သဖြင့် သက်လုံ ၁၀၀% ပြန်လည်ပြည့်တင်းလာပါပြီ။");
-                updateDisplay();
-            } else {
-                alert("⚠️ သောက်ရေ ပြတ်လပ်နေပါပြီ။");
+        function healWithMedKit() {
+            if (medKitCount > 0) {
+                if (health >= 100) { alert("❤️ ကျန်းမာရေး ပြည့်ဝနေပါသည်။"); return; }
+                medKitCount--; health = Math.min(100, health + 40);
+                alert("💊 ဆေးဘူးသုံး၍ ကျန်းမာရေး ကောင်းမွန်လာပါပြီ။");
+                updateDisplay(); loadActions();
+            } else { alert("⚠️ ဆေးဘူး မရှိပါ။"); }
+        }
+
+        function updateWeatherAndEvents() {
+            let rand = Math.random();
+            if (rand < 0.4) currentWeather = "☀️ နေသာခြင်း";
+            else if (rand < 0.7) { currentWeather = "🌧️ မိုးသည်းထန်ခြင်း"; waterBottles += 3; }
+            else currentWeather = "🌫️ မြူထူဆိုင်းခြင်း";
+
+            if (hasWaterWell) waterBottles += 2; 
+
+            hungryPercent = Math.max(0, hungryPercent - 25);
+            thirstPercent = Math.max(0, thirstPercent - 30);
+            dogHealth = Math.max(0, dogHealth - 15);
+            if (hungryPercent <= 0 || thirstPercent <= 0) health -= 15;
+
+            if (activeCrop && activeCrop.hours > 0) {
+                activeCrop.hours = Math.max(0, activeCrop.hours - 12);
             }
         }
 
-        function tryTravel(mode) {
+        function upgradeWall() {
+            if (wallLevel >= 4) { alert("✨ နံရံ အမြင့်ဆုံးအဆင့် ရောက်နေပါပြီ။"); return; }
+            if (woodCount >= 3 && nailsCount >= 2) {
+                woodCount -= 3; nailsCount -= 2; wallLevel++; stamina -= 15; timeHour += 6;
+                alert(`🎉 ခြံစည်းရိုး Level ${wallLevel} သို့ မြှင့်တင်ပြီးပါပြီ။`);
+                checkTimeAndProgress("ခြံစည်းရိုး မြှင့်တင်ခဲ့သည်။");
+            } else { alert("⚠️ ပစ္စည်း မလုံလောက်ပါ။"); }
+        }
+
+        function openStoreSelectionMenu(mode) {
+            let daysSinceLastShop = currentDay - lastShopDay;
+            if (daysSinceLastShop < 2) {
+                alert(`⚠️ နောက်ထပ် (${2 - daysSinceLastShop} ရက်) ထပ်စောင့်ပါ။`);
+                return;
+            }
+
             currentTravelMode = mode;
-            if (mode === 'car') {
-                if (fuelPercent < 20) {
-                    alert("⚠️ ကားဆီ မရှိတော့ပါ။ ခြေလျင်သာ သွားရပါမည်။");
-                    return;
-                }
-                fuelPercent -= 20;
-                stamina -= 5;
-            } else {
-                let staminaCost = currentWeather.includes("မိုး") ? 45 : 35;
-                if (stamina < staminaCost) {
-                    alert("⚠️ သက်လုံ အလွန်နည်းနေပါသည်၊ ရေအရင်သောက်ပါ။");
-                    return;
-                }
-                stamina -= staminaCost;
-            }
-
-            timeHour += 2;
-            let encounterChance = currentWeather.includes("မြူ") ? 0.7 : (mode === 'car' ? 0.3 : 0.5);
-            let zombieEncountered = Math.random() < encounterChance;
-
-            if (zombieEncountered) {
-                // ကျည်ဆံရှိရင် ပစ်သတ်နိုင်မလား စစ်ဆေးခြင်း
-                if (ammoCount > 0) {
-                    ammoCount--;
-                    document.getElementById("timeline-title").innerText = `🔫 Zombie နှင့်တိုး၍ ပစ္တိုသေနတ်ဖြင့် ပစ်ခတ်ရှင်းလင်းခဲ့သည်!`;
-                    document.getElementById("story-text").innerHTML = `<b>လမ်းခုလတ်တွင် Zombie နှင့် တိုးမိသဖြင့် ပစ္တိုသေနတ်ကို သုံးကာ ကျည်တစ်တောင့်ပစ်ဖောက် ရှင်းလင်းခဲ့ရပါသည်။ (ကျည်ဆံ -1၊ ကျန်ရှိ: ${ammoCount} တောင့်)</b>`;
-                    if (mode === 'car') fuelPercent = Math.max(0, fuelPercent - 10);
-                    document.getElementById("button-container").innerHTML = `<button class="btn loot-btn" onclick="openManualLooting()">🛒 ဆိုင်ထဲသို့ ဝင်ရောက်ပြီး ပစ္စည်းရှာမည်</button>`;
-                } else {
-                    document.getElementById("timeline-title").innerText = `⚠️ <b>ကျည်ဆံကုန်နေသဖြင့် အလုအယက် ပြေးလွှားခဲ့ရသည်!</b>`;
-                    document.getElementById("story-text").innerHTML = `<b>လမ်းတွင် Zombie နှင့် တိုးပြီး ကျည်ဆံလည်း မရှိတော့သဖြင့် သက်လုံများ အလွန်အမင်း ကုန်ခမ်းစွာ ထွက်ပြေးခဲ့ရပါသည်။</b>`;
-                    document.getElementById("button-container").innerHTML = `<button class="btn loot-btn" onclick="openManualLooting()">🛒 ဆိုင်ထဲသို့ ဝင်ရောက်ပြီး ပစ္စည်းရှာမည်</button>`;
-                }
-            } else {
-                document.getElementById("timeline-title").innerText = `✅ ဆိုင်သို့ ဘေးကင်းစွာ ရောက်ရှိပြီ`;
-                document.getElementById("story-text").innerHTML = `<b>လမ်းတွင် Zombie လုံးဝမတွေ့ဘဲ ကုန်စုံဆိုင်သို့ ချောမွေ့စွာ ရောက်ရှိလာပါပြီ။</b>`;
-                document.getElementById("button-container").innerHTML = `<button class="btn loot-btn" onclick="openManualLooting()">🛒 ဆိုင်ထဲသို့ ဝင်ရောက်ပြီး ပစ္စည်းရှာမည်</button>`;
-            }
-        }
-
-        function openManualLooting() {
-            document.getElementById("timeline-title").innerText = `🛒 ကုန်စုံဆိုင် (Manual Looting)`;
-            document.getElementById("story-text").innerHTML = `<b>ကုန်စုံဆိုင်အတွင်း ပစ္စည်းရှာဖွေခြင်း:</b><br>လိုချင်သောပစ္စည်း (၁) ခုကို ရွေးချယ်သိမ်းဆည်းပါ။`;
-            document.getElementById("button-container").innerHTML = `
-                <button class="btn loot-btn" onclick="manualClaim('food', '🥫 စားစရာဘူးခွံ', 2)">🥫 <b>စားစရာဘူးခွံ</b> (ရိက္ခာ +2 ရက်စာ)</button>
-                <button class="btn loot-btn" onclick="manualClaim('water', '💧 သောက်ရေသန့်ဗူး', 3)">💧 <b>သောက်ရေသန့်ဗူး</b> (ရေ +3 ရက်စာ)</button>
-                <button class="btn loot-btn" onclick="manualClaim('ammo', '🔫 သေနတ်ကျည်ဆံများ', 5)">🔫 <b>သေနတ်ကျည်ဆံများ (၅ တောင့်)</b></button>
-                <button class="btn wood-btn" onclick="manualClaim('wood', '🪵 သစ်သားတုံးများ', 4)">🪵 <b>သစ်သားတုံးများ (၄ ခု)</b></button>
-                <button class="btn wood-btn" onclick="manualClaim('nails', '🔩 သံချောင်းများ', 4)">🔩 <b>သံချောင်းများ (၄ ခု)</b></button>
-                <button class="btn wood-btn" onclick="manualClaim('fuel', '⛽ ဆီပုံး (Fuel)', 40)">⛽ <b>ကားဆီပုံး</b> (ကားဆီ +40%)</button>
-                <button class="btn" onclick="tryReturnTrip()">🏠 <b>ပစ္စည်းယူပြီး ခြံဝင်းသို့ ပြန်မည် (Return Trip)</b></button>
+            document.getElementById("timeline-title").innerText = `🏬 မြို့ထဲသို့ ထွက်ခွာခြင်း - ဆိုင်ရွေးချယ်ရန်`;
+            document.getElementById("story-text").innerHTML = `<b>သွားရောက်လိုသော ဆိုင်အမျိုးအစားကို ရွေးချယ်ပါ:</b>`;
+            document.getElementById("game-button-container").innerHTML = `
+                <button class="btn loot-btn" onclick="travelToStore('grocery')">🛒 <b>ကုန်စုံဆိုင် (General Store)</b> (ဆီ၊ စားစရာ၊ ရေ၊ ပျိုးစေ့)</button>
+                <button class="btn craft-btn" onclick="travelToStore('pharmacy')">💊 <b>ဆေးဆိုင် (Pharmacy)</b> (ဆေးဘူးများ)</button>
+                <button class="btn car-btn" onclick="travelToStore('hardware')">🔧 <b>ပစ္စည်းကိရိယာဆိုင် (Hardware Store)</b> (သစ်သား၊ သံ၊ ကျည်ဆံ)</button>
+                <button class="btn" style="margin-top: 15px;" onclick="loadActions()">🔙 ပင်မမီနူးသို့ ပြန်သွားမည်</button>
             `;
         }
 
-        function manualClaim(type, itemName, amount) {
-            if (type === 'wood') woodCount += amount;
-            else if (type === 'nails') nailsCount += amount;
-            else if (type === 'ammo') ammoCount += amount;
-            else if (type === 'fuel') {
-                fuelPercent = Math.min(100, fuelPercent + amount);
-                alert("⛽ ကားဆီ ပြန်လည်ဖြည့်တင်းပြီးပါပြီ။");
+        function travelToStore(storeType) {
+            lastShopDay = currentDay;
+            selectedStoreType = storeType;
+
+            if (currentTravelMode === 'car') {
+                let fuelCost = hasCarArmor ? 15 : 20;
+                if (fuelPercent < fuelCost) { alert("⚠️ ကားဆီ မရှိပါ။"); return; }
+                fuelPercent -= fuelCost; stamina -= 5;
             } else {
-                if (selectedItems.length >= 8) selectedItems.shift();
-                selectedItems.push(itemName);
-                if (type === 'food') foodDays += amount;
-                if (type === 'water') waterDays += amount;
+                if (stamina < 35) { alert("⚠️ သက်လုံ နည်းနေပါသည်"); return; }
+                stamina -= 35;
             }
-            alert(`✅ ${itemName} ကို သိမ်းဆည်းပြီးပါပြီ။`);
+
+            timeHour += 6; 
+            
+            // 🗺️ မြို့ပြမြေပုံပါရှိပါက လမ်းခုလတ် Zombie တွေ့နိုင်ခြေ (Ambush Rate) သိသိသာသာ လျော့နည်းမည်
+            let hasMap = selectedItems.includes("🗺️ မြို့ပြမြေပုံ");
+            let combatChance = hasMap ? (currentTravelMode === 'car' ? 0.20 : 0.35) : (currentTravelMode === 'car' ? 0.45 : 0.65);
+
+            if (Math.random() < combatChance) {
+                startBigAnimCombat('outbound');
+            } else {
+                startLootingSession();
+            }
+        }
+
+        function startBigAnimCombat(context) {
+            inCombat = true; combatContext = context; enemyHP = 100; enemyQueue = 1;
+            renderBigAnimCombatUI("🧟 တွေ့ဆုံတိုက်ပွဲ! ခွေးလေးနှင့်အတူ တိုက်ခိုက်မည်။");
+        }
+
+        function renderBigAnimCombatUI(effectMessage, animClass = "") {
+            document.getElementById("timeline-title").innerText = `⚔️ တိုက်ပွဲ (Zombie: ${enemyQueue} ကောင်ကျန်)`;
+            let hasGun = selectedItems.includes("🔫 ပစ္တိုသေနတ်") && ammoCount > 0;
+            let hasKnife = selectedItems.includes("🔪 အမဲလိုက်ဓား");
+
+            let html = `
+                <div id="combat-arena" class="${animClass === 'anim-flash' ? 'anim-flash' : ''}">
+                    <div id="combat-effect-text">${effectMessage}</div>
+                    <div id="zombie-visual" class="zombie-sprite ${animClass}">🧟</div>
+                    <div><b>Zombie HP: ${enemyHP}%</b></div>
+                    <div class="hp-bar-container"><div class="hp-bar-fill" style="width: ${enemyHP}%;"></div></div>
+                    <div style="font-size: 13px; color: #aaa;">🐶 ခွေးလေးက အသင့်စောင့်နေသည် | 🔫 ကျည်: ${ammoCount} တောင့်</div>
+                </div>
+            `;
+            document.getElementById("story-text").innerHTML = html;
+
+            let buttons = "";
+            if (hasGun) buttons += `<button class="btn gun-btn" onclick="bigAnimAttack('gun')">🔫 <b>သေနတ်ဖြင့် ပစ်မည်</b> (Headshot 100%)</button>`;
+            else buttons += `<button class="btn" style="opacity:0.5;" disabled>🔫 သေနတ် (ကျည်မရှိ)</button>`;
+            if (hasKnife) buttons += `<button class="btn knife-btn" onclick="bigAnimAttack('knife')">🔪 <b>ဓားဖြင့် ခုတ်မည်</b> (Damage: 30%)</button>`;
+            buttons += `<button class="btn bat-btn" onclick="bigAnimAttack('bat')">🪵 <b>တုတ်ဖြင့် ရိုက်မည်</b> (Damage: 20%)</button>`;
+            buttons += `<button class="btn" onclick="fleeBigAnimCombat()">🏃 <b>ထွက်ပြေးမည်</b></button>`;
+            document.getElementById("game-button-container").innerHTML = buttons;
+        }
+
+        function bigAnimAttack(weapon) {
+            let effectMsg = "", animClass = "", counter = true;
+
+            if (dogHealth > 50 && Math.random() < 0.4) {
+                enemyHP = Math.max(0, enemyHP - 20);
+                effectMsg += `🐶 ခွေးလေးက ဝင်ရောက်ကိုက်ခိုက်၍ Zombie HP -20% ထပ်လျော့သွားသည်!<br>`;
+            }
+
+            if (weapon === 'gun') {
+                ammoCount--; enemyQueue++;
+                if (Math.random() < 0.45) { enemyHP = 0; effectMsg += "💥 HEADSHOT!"; animClass = "anim-flash"; counter = false; }
+                else { enemyHP = Math.max(0, enemyHP - 50); effectMsg += "🔫 ကိုယ်ထည်မှန်၍ Damage 50%!"; animClass = "anim-shake"; }
+            } else if (weapon === 'knife') {
+                stamina = Math.max(0, stamina - 5); enemyHP = Math.max(0, enemyHP - 30);
+                effectMsg += "🔪 ဓားဖြင့်ခုတ်ရာ Damage 30%!"; animClass = "anim-slash";
+            } else if (weapon === 'bat') {
+                stamina = Math.max(0, stamina - 8); enemyHP = Math.max(0, enemyHP - 20);
+                effectMsg += "🪵 တုတ်ဖြင့်ရိုက်ရာ Damage 20%!"; animClass = "anim-shake";
+            }
+
+            if (enemyHP > 0 && counter) {
+                let dmg = Math.floor(Math.random() * 6) + 5;
+                health = Math.max(0, health - dmg);
+                effectMsg += `<br><span style="color:#ff4757;">🧟 Zombie ကိုက်၍ ကျန်းမာရေး -${dmg}%!</span>`;
+            }
+
+            updateDisplay();
+            if (health <= 0) { triggerGameOver("တိုက်ပွဲတွင် ကျဆုံးခဲ့ရပါသည်။"); return; }
+
+            if (enemyHP <= 0) {
+                enemyQueue--;
+                if (enemyQueue > 0) {
+                    enemyHP = 100; effectMsg += `<br><span style="color:#ffa502;">⚠️ နောက်ထပ် Zombie တစ်ကောင် လာနေပြီ!</span>`;
+                    renderBigAnimCombatUI(effectMsg, animClass);
+                } else {
+                    renderBigAnimCombatUI("🏆 Zombie များကို ရှင်းလင်းပြီးပါပြီ!", animClass);
+                    setTimeout(() => {
+                        inCombat = false;
+                        if (combatContext === 'outbound') startLootingSession();
+                        else checkTimeAndProgress("✅ ခြံဝင်းသို့ လုံခြုံစွာ ပြန်ရောက်လာပြီ။");
+                    }, 1500);
+                }
+            } else {
+                renderBigAnimCombatUI(effectMsg, animClass);
+            }
+        }
+
+        function fleeBigAnimCombat() {
+            health = Math.max(0, health - 20); stamina = Math.max(0, stamina - 25);
+            updateDisplay();
+            if (health <= 0) { triggerGameOver("ထွက်ပြေးစဉ် အသက်ဆုံးရှုံးခဲ့ရသည်။"); return; }
+            inCombat = false;
+            if (combatContext === 'outbound') startLootingSession();
+            else checkTimeAndProgress("🚶 ခြံသို့ ထွက်ပြေးပြန်ရောက်လာခဲ့သည်။");
+        }
+
+        function startLootingSession() {
+            itemsTakenCount = 0;
+            openMax3LootMenu();
+        }
+
+        function openMax3LootMenu() {
+            let storeTitle = "";
+            if (selectedStoreType === 'grocery') storeTitle = "🛒 ကုန်စုံဆိုင် (General Store)";
+            else if (selectedStoreType === 'pharmacy') storeTitle = "💊 ဆေးဆိုင် (Pharmacy)";
+            else storeTitle = "🔧 ပစ္စည်းကိရိယာဆိုင် (Hardware Store)";
+
+            document.getElementById("timeline-title").innerText = `${storeTitle} (ယူပြီး: ${itemsTakenCount}/3)`;
+            document.getElementById("story-text").innerHTML = `<b>ဆိုင်အတွင်းမှ ပစ္စည်း (၃) ခု ရွေးချယ်ပါ:</b>`;
+
+            let html = "";
+            if (selectedStoreType === 'grocery') {
+                html += `
+                    <button class="btn loot-btn" onclick="claimStoreItem('oil', '🍳 ဟင်းချက်ဆီ (+၂ ပုလင်း)', 2)">🍳 <b>ဟင်းချက်ဆီ (+၂ ပုလင်း) ယူမည်</b></button>
+                    <button class="btn loot-btn" onclick="claimStoreItem('food', '🍜 ခေါက်ဆွဲခြောက် (+၂ ခု)', 2)">🍜 <b>ခေါက်ဆွဲခြောက် (+၂ ခု) ယူမည်</b></button>
+                    <button class="btn loot-btn" onclick="claimStoreItem('water', '💧 သောက်ရေဗူး (+၃ ဘူး)', 3)">💧 <b>သောက်ရေဗူး (+၃ ဘူး) ယူမည်</b></button>
+                    <button class="btn loot-btn" onclick="claimStoreItem('seeds', '🌱 ပျိုးစေ့အစုံ (+၂ စေ့စီ)', 2)">🌱 <b>ပျိုးစေ့အစုံ (+၂ စေ့စီ) ယူမည်</b></button>
+                `;
+            } else if (selectedStoreType === 'pharmacy') {
+                html += `
+                    <button class="btn loot-btn" onclick="claimStoreItem('meds', '💊 ဆေးဘူး (+၂ ခု)', 2)">💊 <b>ဆေးဘူး (+၂ ခု) ယူမည်</b></button>
+                    <button class="btn loot-btn" onclick="claimStoreItem('meds1', '💊 အကိုက်အခဲပျောက်ဆေး (+၁ ခု)', 1)">💊 <b>အကိုက်အခဲပျောက်ဆေး (+၁ ခု) ယူမည်</b></button>
+                `;
+            } else {
+                html += `
+                    <button class="btn wood-btn" onclick="claimStoreItem('ammo', '🔫 ဂန်းကျည်ဆံ (+၅ တောင့်)', 5)">🔫 <b>ဂန်းကျည်ဆံ (+၅ တောင့်) ယူမည်</b></button>
+                    <button class="btn wood-btn" onclick="claimStoreItem('wood', '🪵 သစ်သားတုံး (+၄ ခု)', 4)">🪵 <b>သစ်သားတုံး (+၄ ခု) ယူမည်</b></button>
+                    <button class="btn wood-btn" onclick="claimStoreItem('nails', '🔩 သံချောင်း (+၄ ခု)', 4)">🔩 <b>သံချောင်း (+၄ ခု) ယူမည်</b></button>
+                    <button class="btn wood-btn" onclick="claimStoreItem('fuel', '⛽ ကားဆီ (+၄၀%)', 40)">⛽ <b>ကားဆီ (+၄၀%) ဖြည့်မည်</b></button>
+                `;
+            }
+
+            html += `<button class="btn" style="background-color: #2ed573; color: #000; font-weight: bold; margin-top: 15px;" onclick="tryReturnTrip()">🏠 <b>ခြံဝင်းသို့ ပြန်မည်</b></button>`;
+            document.getElementById("game-button-container").innerHTML = html;
+        }
+
+        function claimStoreItem(type, name, amt) {
+            if (itemsTakenCount >= 3) { alert("⚠️ (၃) ခု ပြည့်သွားပါပြီ။"); return; }
+
+            if (type === 'oil') cookingOilCount += amt;
+            else if (type === 'food') foodItems.instantNoodles += amt;
+            else if (type === 'water') waterBottles += amt;
+            else if (type === 'seeds') { seeds.tomatoSeeds += amt; seeds.potatoSeeds += amt; seeds.cornSeeds += amt; }
+            else if (type === 'meds' || type === 'meds1') medKitCount += amt;
+            else if (type === 'ammo') ammoCount += amt;
+            else if (type === 'wood') woodCount += amt;
+            else if (type === 'nails') nailsCount += amt;
+            else if (type === 'fuel') fuelPercent = Math.min(100, fuelPercent + amt);
+
+            itemsTakenCount++; updateDisplay();
+            alert(`✅ "${name}" ကို သိမ်းဆည်းပြီးပါပြီ။ (${itemsTakenCount}/3)`);
+            if (itemsTakenCount >= 3) tryReturnTrip();
+            else openMax3LootMenu();
         }
 
         function tryReturnTrip() {
-            timeHour += 2;
-            let returnMode = currentTravelMode; 
-            let returnEncounter = Math.random() < (returnMode === 'car' ? 0.35 : 0.65);
-            let returnMsg = "";
+            timeHour += 6;
+            let hasMap = selectedItems.includes("🗺️ မြို့ပြမြေပုံ");
+            let combatChance = hasMap ? 0.20 : 0.45;
 
-            if (returnEncounter) {
-                if (ammoCount > 0) {
-                    ammoCount--;
-                    returnMsg = `🔫 <b>အပြန်လမ်းတွင် Zombie နှင့် တိုးသဖြင့် ကျည် (၁) တောင့်သုံးကာ ရှင်းလင်းခဲ့သည်။ (ကျန်ကျည်: ${ammoCount} တောင့်)</b>`;
-                } else {
-                    stamina = Math.max(0, stamina - 35);
-                    returnMsg = `🚶 <b>အပြန်လမ်းတွင် Zombie နှင့် တိုးပြီး ကျည်မရှိတော့သဖြင့် အလုအယက် ပြေးလာခဲ့ရသည်။</b>`;
-                }
-            } else {
-                returnMsg = `✅ <b>အပြန်လမ်းတွင် အတားအဆီးမရှိဘဲ ခြံဝင်းသို့ လုံခြုံစွာ ပြန်ရောက်လာပါပြီ။</b>`;
-            }
-
-            checkTimeAndProgress(returnMsg);
+            if (Math.random() < combatChance) startBigAnimCombat('return');
+            else checkTimeAndProgress(`✅ <b>ခြံဝင်းသို့ လုံခြုံစွာ ပြန်ရောက်လာပါပြီ။</b>`);
         }
 
         function takeAction(actionType) {
             let consequence = "";
-
-            if (actionType === 'eat') {
-                if (foodDays > 0) {
-                    foodDays--;
-                    stamina = Math.min(100, stamina + 15);
-                    consequence = "စားစရာ စားသုံးခဲ့သည်။ (သက်လုံ +15%)";
-                } else {
-                    consequence = "စားစရာ မရှိပါ။";
-                }
-                timeHour += 2;
-            } 
-            else if (actionType === 'night_sleep') {
+            if (actionType === 'night_sleep') {
                 stamina = Math.min(100, stamina + 30);
-                
-                let isHordeNight = (currentDay === 5 || currentDay === 10 || currentDay === 15);
-                let baseDamage = isHordeNight ? 30 : 15;
-                let damageTaken = Math.max(0, baseDamage - (wallLevel * 5)); 
-                damageTaken = Math.max(0, damageTaken - 5); // ခွေးလေးရဲ့ ကာကွယ်မှု
+                let isHorde = (currentDay === 5 || currentDay === 10 || currentDay === 15);
+                let baseDmg = isHorde ? 30 : 15;
+                let def = (hasSolarPanel?3:0) + (hasBarbedWire?8:0) + (hasWatchtower?10:0) + (hasSpikeTraps?7:0) + (dogHealth > 30 ? 5 : 0);
+                let dmg = Math.max(0, baseDmg - (wallLevel * 4) - def);
 
-                let attackChance = isHordeNight ? 0.9 : (0.3 - (wallLevel * 0.05));
-
-                if (Math.random() < attackChance && damageTaken > 0) {
-                    health -= damageTaken;
-                    consequence = `🌙 ${isHordeNight ? '<b>[Horde Night]</b> ကြီးမားသော Zombie အုပ်စုကြီး' : 'Zombie တွေ'} ခြံစည်းရိုး (Level ${wallLevel}) ကို ဝင်ရောက်တိုက်ခိုက်သဖြင့် ကျန်းမာရေး ${damageTaken}% ထိခိုက်ခဲ့သည်။`;
-                } else {
-                    consequence = `🌙 ခြံစည်းရိုး (Level ${wallLevel}) နှင့် ခွေးလေး Buddy တို့၏ အကာအကွယ်ကြောင့် ${isHordeNight ? 'Horde Night တိုက်ခိုက်မှုကို အောင်မြင်စွာ ခုခံနိုင်ခဲ့သည်' : 'လုံခြုံစွာ အိပ်စက်နိုင်ခဲ့သည်'}။`;
-                }
-                timeHour += 8; 
+                if (Math.random() < (isHorde?0.9:0.3) && dmg > 0) {
+                    health -= dmg; consequence = `🌙 ${isHorde?'Horde Night': 'Zombie'} ဝင်တိုက်၍ ကျန်းမာရေး -${dmg}%!`;
+                } else { consequence = `🌙 ခွေးလေး၏ ကင်းစောင့်မှုဖြင့် လုံခြုံစွာ အိပ်စက်နိုင်ခဲ့သည်။`; }
+                timeHour += 16;
+            } else if (actionType === 'night_watch') {
+                stamina -= 15; consequence = "ခွေးလေးနှင့်အတူ ညတစ်ညလုံး ကင်းစောင့်ခဲ့သည်။"; timeHour += 10;
             }
-            else if (actionType === 'night_watch') {
-                stamina -= 15;
-                consequence = "ညတစ်ညလုံး ခွေးလေး Buddy နဲ့အတူ ခြံစည်းရိုးကို ကင်းစောင့်ခဲ့သည်။";
-                timeHour += 6;
-            }
-
             checkTimeAndProgress(consequence);
         }
 
         function checkTimeAndProgress(consequence) {
-            if (timeHour >= 24) {
-                timeHour -= 24;
-                currentDay++;
-                updateWeatherAndEvents(); // ရက်သစ်စရင် ရာသီဥတုနဲ့ မစ်ရှင်အသစ် စစ်မည်
-                
-                if (currentDay > 20) {
-                    triggerVictory();
-                    return;
-                }
+            if (timeHour >= 48) {
+                timeHour -= 48; currentDay++; updateWeatherAndEvents(); 
+                if (currentDay > 20) { triggerVictory(); return; }
             }
-
             if (stamina <= 0 || health <= 0) {
-                triggerGameOver("သက်လုံ (Stamina) သို့မဟုတ် ကျန်းမာရေး လုံးဝကုန်ဆုံးသွားကာ မလှုပ်ရှားနိုင်တော့ဘဲ အသက်ဆုံးရှုံးခဲ့ရပါသည်။");
-                return;
+                triggerGameOver("သက်လုံ သို့မဟုတ် ကျန်းမာရေး ကုန်ဆုံးသွားပါသည်။"); return;
             }
-
-            updateDisplay();
-            loadActions();
-            
-            document.getElementById("story-text").innerHTML = `
-                <b>လုပ်ဆောင်ချက် အကျိုးဆက်:</b><br>
-                ${consequence}<br><br>
-                <b>လက်ရှိ အနေအထား:</b><br>
-                - လက်ရှိအချိန်နာရီ: ${timeHour}:00 နာရီ<br>
-                - သက်လုံအခြေအနေ: ${stamina}%<br>
-                - ဆက်လက်လုပ်ဆောင်ရန် ရွေးချယ်ပါ။
-            `;
+            updateDisplay(); loadActions();
+            document.getElementById("story-text").innerHTML = `<b>အကျိုးဆက်:</b><br>${consequence}<br><br><b>လက်ရှိ:</b> ရှင်သန်သူ: ${playerName} | နာရီ: ${timeHour}:00 | ခွေးကျန်းမာ: ${dogHealth}% | Hungry: ${hungryPercent}%`;
         }
 
         function triggerVictory() {
-            document.getElementById("timeline-title").innerText = "အောင်မြင်မှု (True Ending - Safe Zone Reached)";
-            document.getElementById("story-text").innerHTML = `<b>ဇာတ်သိမ်းပိုင်း:</b> ခွေးလေး Buddy နှင့်အတူ ရာသီဥတုဒဏ်၊ မစ်ရှင်များနှင့် Horde Night များကို ကျော်ဖြတ်ကာ ရက်ပေါင်း (၂၀) ရှင်သန်နိုင်ခဲ့ပြီး <b>Safe Zone</b> သို့ အောင်မြင်စွာ ရောက်ရှိခဲ့ပါပြီ။ <b>🏆 (Victory - Safe Zone Reached)</b>`;
-            document.getElementById("button-container").innerHTML = `<button class="btn" onclick="location.reload()">🔄 ဂိမ်းကို အစကနေ ပြန်စမည်</button>`;
+            localStorage.removeItem('yardSurvivalMapEditionSave');
+            document.getElementById("timeline-title").innerText = "အောင်မြင်မှု (Victory - Safe Zone Reached)";
+            document.getElementById("story-text").innerHTML = `<b>ဇာတ်သိမ်းပိုင်း:</b> ${playerName} သည် ခွေးလေးနဲ့အတူ ရက်ပေါင်း (၂၀) ရှင်သန်နိုင်ခဲ့ပြီး Safe Zone သို့ အောင်မြင်စွာ ရောက်ရှိခဲ့ပါပြီ! 🏆`;
+            document.getElementById("game-button-container").innerHTML = `<button class="btn" onclick="localStorage.removeItem('yardSurvivalMapEditionSave'); location.reload();">🔄 ဂိမ်းကို အစကနေ ပြန်စမည်</button>`;
         }
 
         function triggerGameOver(reason) {
+            localStorage.removeItem('yardSurvivalMapEditionSave');
             document.getElementById("timeline-title").innerText = "ဂိမ်းဆုံးခန်း (Game Over)";
-            document.getElementById("story-text").innerHTML = `<b>အကျိုးဆက်:</b> ${reason}<br><br><b>(Game Over - ရှင်သန်မှု ကျရှုံးသည်)</b>`;
-            document.getElementById("button-container").innerHTML = `<button class="btn" onclick="location.reload()">🔄 ဂိမ်းကို အစကနေ ပြန်စမည်</button>`;
+            document.getElementById("story-text").innerHTML = `<b>အကျိုးဆက်:</b> ${reason}<br><br><b>(${playerName} ၏ ရှင်သန်မှု ကျရှုံးသည်)</b>`;
+            document.getElementById("game-button-container").innerHTML = `<button class="btn" onclick="localStorage.removeItem('yardSurvivalMapEditionSave'); location.reload();">🔄 ဂိမ်းကို အစကနေ ပြန်စမည်</button>`;
         }
     </script>
 
