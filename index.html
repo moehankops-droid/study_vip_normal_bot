@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>20-Day Yard Survival - Full Grid Edition</title>
+    <title>20-Day Yard Survival - Separated Inventory Edition</title>
     <style>
         body {
             background-color: #050505;
@@ -29,7 +29,6 @@
             margin-top: 0;
             margin-bottom: 10px;
         }
-        /* --- Clean Grid Stats Layout --- */
         #stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -52,18 +51,19 @@
             color: #fff;
         }
 
-        /* --- Supplies & Food Quick View --- */
+        /* --- Separated Boxes --- */
         .section-box {
             background: #1a1816;
             border: 1px solid #444;
-            padding: 8px 10px;
+            padding: 9px 11px;
             border-radius: 6px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             font-size: 12px;
             text-align: left;
             line-height: 1.6;
         }
-        .food-box { border-color: #ffa502; color: #ffa502; }
+        .food-box { border-color: #ff4757; color: #ff4757; }
+        .cook-material-box { border-color: #ffa502; color: #ffa502; }
         .inv-box { border-color: #70a1ff; color: #70a1ff; }
 
         #timeline-title {
@@ -120,25 +120,16 @@
         }
         .btn:hover { background-color: #ff4757; color: #fff; }
         .night-btn { border-color: #70a1ff; }
-        .night-btn:hover { background-color: #70a1ff; }
         .loot-btn { border-color: #2ed573; color: #2ed573; }
-        .loot-btn:hover { background-color: #2ed573; color: #000; }
         .car-btn { border-color: #ffa502; color: #ffa502; }
-        .car-btn:hover { background-color: #ffa502; color: #000; }
         .walk-btn { border-color: #ff4757; color: #ff4757; }
         .craft-btn { border-color: #3498db; color: #3498db; }
-        .craft-btn:hover { background-color: #3498db; }
         .yard-btn { border-color: #2ed573; color: #2ed573; }
-        .yard-btn:hover { background-color: #2ed573; color: #000; }
         .cook-btn { border-color: #ffa502; color: #ffa502; background-color: #2b2318; }
-        .cook-btn:hover { background-color: #ffa502; color: #000; }
         .dog-btn { border-color: #eccc68; color: #eccc68; background-color: #252318; }
-        .dog-btn:hover { background-color: #eccc68; color: #000; }
         .gun-btn { border-color: #ff4757; color: #ff4757; background-color: #2c1a1d; }
         .knife-btn { border-color: #1e90ff; color: #1e90ff; background-color: #18222f; }
-        .knife-btn:hover { background-color: #1e90ff; }
         .bat-btn { border-color: #eccc68; color: #eccc68; background-color: #2b2618; }
-        .bat-btn:hover { background-color: #eccc68; color: #000; }
         .select-item-btn {
             background-color: #2f3542;
             border: 1px solid #555;
@@ -176,21 +167,6 @@
             width: 100%;
             transition: width 0.3s ease;
         }
-
-        @keyframes shake {
-            0% { transform: translate(1px, 1px) rotate(0deg); }
-            25% { transform: translate(-6px, -2px) rotate(-6deg); }
-            50% { transform: translate(6px, 2px) rotate(6deg); }
-            75% { transform: translate(-6px, 2px) rotate(-4deg); }
-            100% { transform: translate(0px, 0px) rotate(0deg); }
-        }
-        @keyframes slashEffect {
-            0% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.3) rotate(-15deg); filter: brightness(2); }
-            100% { transform: scale(1) rotate(0deg); }
-        }
-        .anim-shake { animation: shake 0.35s ease-in-out; }
-        .anim-slash { animation: slashEffect 0.3s ease-in-out; }
     </style>
 </head>
 <body>
@@ -248,7 +224,7 @@
         </div>
 
         <div id="game-ui" style="display: none;">
-            <!-- အကွက်လေးများဖြင့် ရှင်းလင်းစွာ ပြသထားသော Stats -->
+            <!-- Player Stats Grid -->
             <div id="stats-grid">
                 <div class="stat-card"><span>👤 နာမည်</span><b id="stat-name"></b></div>
                 <div class="stat-card"><span>🛡️ Faction</span><b id="stat-faction"></b></div>
@@ -262,21 +238,24 @@
                 <div class="stat-card"><span>🛒 ဆိုင်သွားရန်</span><b id="stat-shop-cooldown">ရပြီ ✅</b></div>
                 <div class="stat-card"><span>🧱 နံရံအဆင့်</span><b id="stat-wall">Level 1</b></div>
                 <div class="stat-card"><span>⛽ ကားဆီ</span><b id="stat-fuel">100%</b></div>
-                <div class="stat-card"><span>🪵 သစ်သား</span><b id="stat-wood">5 ခု</b></div>
-                <div class="stat-card"><span>🔩 သံချောင်း</span><b id="stat-nails">3 ခု</b></div>
-                <div class="stat-card"><span>🔫 ကျည်ဆံ</span><b id="stat-ammo">6 တောင့်</b></div>
-                <div class="stat-card"><span>💊 ဆေးဘူး</span><b id="stat-meds">1 ခု</b></div>
             </div>
 
-            <!-- စားစရာနှင့် ရိက္ခာ သီးသန့်ကြည့်ရန် အကွက် -->
+            <!-- ၁။ အစားအသောက်သက်သက် (Food Section) -->
             <div class="section-box food-box">
-                <b>🍱 စားစရာနှင့် ရိက္ခာများ:</b> <span id="stat-food-list"></span>
+                <b>🍱 စားသုံးရန် အစားအစာများ (Food):</b><br>
+                <span id="stat-food-list">ခေါက်ဆွဲခြောက်: ၂ ခု | ဘူးခွံအစာ: ၂ ခု | အသားခြောက်: ၁ ခု</span>
             </div>
 
-            <!-- လက်နက်နှင့် ပစ္စည်းများ သီးသန့်ကြည့်ရန် အကွက် -->
+            <!-- ၂။ ချက်ပြုတ်စရာနှင့် ပစ္စည်းရိက္ခာသက်သက် (Cooking & Materials Section) -->
+            <div class="section-box cook-material-box">
+                <b>🍳 ချက်ပြုတ်စရာနှင့် ရိက္ခာပစ္စည်းများ (Materials & Cooking):</b><br>
+                <span id="stat-materials-list">ဟင်းချက်ဆီ: ၃ ပုလင်း | ရေဗူး: ၃ ဘူး | ဆေးဘူး: ၁ ခု | ကျည်ဆံ: ၆ တောင့် | သစ်: ၅ | သံ: ၃</span>
+            </div>
+
+            <!-- ၃. ဇာတ်ကောင်ပစ္စည်းများနှင့် ခြံတိုးတက်မှု (Inventory & Upgrades) -->
             <div class="section-box inv-box">
-                <b>🎒 ပစ္စည်းများ:</b> <span id="stat-inventory"></span><br>
-                <b>🏗️ ခြံတိုးတက်မှု:</b> <span id="stat-yard-upgrades">မရှိသေး</span>
+                <b>🎒 သယ်ဆောင်လာသော ပစ္စည်းများ:</b> <span id="stat-inventory"></span><br>
+                <b>🏗️ ခြံတိုးတက်မှု အဆောက်အအုံများ:</b> <span id="stat-yard-upgrades">မရှိသေး</span>
             </div>
 
             <div id="timeline-title">ခြံဝင်းအခြေစိုက်စနစ်</div>
@@ -355,11 +334,11 @@
                 hasSolarPanel, hasWaterWell, hasBarbedWire, hasWatchtower, hasSpikeTraps, hasGreenhouse,
                 currentWeather, lastShopDay, stamina, health, selectedItems, gameStarted
             };
-            localStorage.setItem('yardSurvivalFullGridSave', JSON.stringify(gameState));
+            localStorage.setItem('yardSurvivalSeparatedSave', JSON.stringify(gameState));
         }
 
         function loadGame() {
-            let saved = localStorage.getItem('yardSurvivalFullGridSave');
+            let saved = localStorage.getItem('yardSurvivalSeparatedSave');
             if (saved) {
                 let data = JSON.parse(saved);
                 playerName = data.playerName || "နိုင်လင်းထက်";
@@ -459,11 +438,14 @@
             if (hasGreenhouse) upgradesArr.push("စိုက်ခင်း🌱");
             let yardUpgradesText = upgradesArr.length > 0 ? upgradesArr.join(", ") : "မရှိသေး";
 
-            // စားစရာနှင့် ရိက္ခာစာရင်း အစုံအလင်
-            let foodSummary = `🍜 ခေါက်ဆွဲ (${foodItems.instantNoodles}) | 🥫 ဘူးခွံ (${foodItems.cannedFood}) | 🥩 အသားခြောက် (${foodItems.beefJerky}) | 💧 ရေ (${waterBottles}) | 🍳 ဆီ (${cookingOilCount})`;
-            if (harvestedCrops.tomato > 0 || harvestedCrops.potato > 0) {
-                foodSummary += ` | 🍅 ခရမ်းချဉ် (${harvestedCrops.tomato}) | 🥔 အာလူး (${harvestedCrops.potato})`;
+            // ၁။ အစားအစာ သက်သက်စာရင်း
+            let foodSummary = `🍜 ခေါက်ဆွဲခြောက်: ${foodItems.instantNoodles} ခု | 🥫 ဘူးခွံအစာ: ${foodItems.cannedFood} ခု | 🥩 အသားခြောက်: ${foodItems.beefJerky} ခု`;
+            if (harvestedCrops.tomato > 0 || harvestedCrops.potato > 0 || harvestedCrops.corn > 0) {
+                foodSummary += ` | 🍅 ခရမ်းချဉ်: ${harvestedCrops.tomato} | 🥔 အာလူး: ${harvestedCrops.potato}`;
             }
+
+            // ၂။ ချက်ပြုတ်စရာနှင့် ပစ္စည်းရိက္ခာ သက်သက်စာရင်း
+            let materialsSummary = `🍳 ဆီ: ${cookingOilCount} ပုလင်း | 💧 ရေဗူး: ${waterBottles} ဘူး | 💊 ဆေးဘူး: ${medKitCount} ခု | 🔫 ကျည်ဆံ: ${ammoCount} တောင့် | 🪵 သစ်သား: ${woodCount} ခု | 🔩 သံချောင်း: ${nailsCount} ခု`;
 
             document.getElementById("stat-name").innerText = playerName;
             document.getElementById("stat-faction").innerText = playerFaction;
@@ -477,12 +459,9 @@
             document.getElementById("stat-shop-cooldown").innerText = shopStatusText;
             document.getElementById("stat-wall").innerText = `Level ${wallLevel}`;
             document.getElementById("stat-fuel").innerText = `${fuelPercent}%`;
-            document.getElementById("stat-wood").innerText = `${woodCount} ခု`;
-            document.getElementById("stat-nails").innerText = `${nailsCount} ခု`;
-            document.getElementById("stat-ammo").innerText = `${ammoCount} တောင့်`;
-            document.getElementById("stat-meds").innerText = `${medKitCount} ခု`;
             
             document.getElementById("stat-food-list").innerText = foodSummary;
+            document.getElementById("stat-materials-list").innerText = materialsSummary;
             document.getElementById("stat-inventory").innerText = selectedItems.join(', ');
             document.getElementById("stat-yard-upgrades").innerText = yardUpgradesText;
             saveGame();
